@@ -1,0 +1,116 @@
+
+<ion-header>
+
+  <div class="cabeceraGeneral">
+
+    <div style="display: inline; width: 15%;"></div>
+
+    <!-- <div style="display: inline; width: 10%;"></div> -->
+
+    <div style="display: inline; width: 70%;">
+      <ion-img src="./../../assets/images/titulo.png" style="height: 100%;"></ion-img>
+    </div>
+
+    <!-- <div style="display: inline; width: 10%;">
+    </div>
+
+    <div style="display: inline; width: 10%">
+    </div> -->
+
+    <div style="display: inline; width: 15%;"></div>
+
+  </div>
+
+
+
+  <div class="cabeceraTitulo">
+    ¡Bienvenido!
+  </div>
+
+</ion-header>
+
+<ion-content>
+  <div style="height: 100%; width: 100%;background-color: white;">
+    <ion-img src="./../../assets/images/pasajeros.jpg" style="height: 100%; object-fit: cover;"></ion-img>
+  </div>
+</ion-content>
+
+<ion-footer>
+
+  <div style="width: 100%;  display: flex;  text-align: center;height: 23vh; ">
+    <div class="botonMenu">
+
+      <ion-grid fixed style="height: 100%;">
+        <ion-row class="btnMenuIcono">
+          <ion-icon name="md-bus"></ion-icon>
+        </ion-row>
+        <ion-row class="btnMenuTexto">
+          Comprar Pasaje
+        </ion-row>
+      </ion-grid>
+
+    </div>
+    <div class="botonMenu">
+
+      <ion-grid fixed style="height: 100%;">
+        <ion-row class="btnMenuIcono">
+          <ion-icon name="md-person"></ion-icon>
+        </ion-row>
+        <ion-row class="btnMenuTexto">
+          Mis datos
+        </ion-row>
+      </ion-grid>
+
+    </div>
+    <div class="botonMenu" routerLink="/my-tickets">
+
+      <ion-grid fixed style="height: 100%;">
+        <ion-row class="btnMenuIcono">
+          <ion-icon name="md-list-box"></ion-icon>
+        </ion-row>
+        <ion-row class="btnMenuTexto">
+          Mis tickets
+        </ion-row>
+      </ion-grid>
+
+    </div>
+  </div>
+  <div style="width: 100%;  display: flex;  text-align: center;height: 23vh; " routerLink="/login">
+    <div class="botonMenu">
+
+      <ion-grid fixed style="height: 100%;">
+        <ion-row class="btnMenuIcono">
+          <ion-icon name="md-log-in"></ion-icon>
+        </ion-row>
+        <ion-row class="btnMenuTexto">
+          Registrarse
+        </ion-row>
+      </ion-grid>
+
+    </div>
+    <div class="botonMenu">
+
+      <ion-grid fixed style="height: 100%;">
+        <ion-row class="btnMenuIcono">
+          <ion-icon name="md-call"></ion-icon>
+        </ion-row>
+        <ion-row class="btnMenuTexto">
+          Contacto
+        </ion-row>
+      </ion-grid>
+
+    </div>
+    <div class="botonMenu">
+
+      <ion-grid fixed style="height: 100%;">
+        <ion-row class="btnMenuIcono">
+          <ion-icon name="md-information-circle"></ion-icon>
+        </ion-row>
+        <ion-row class="btnMenuTexto">
+          Términos
+        </ion-row>
+      </ion-grid>
+
+    </div>
+  </div>
+</ion-footer>
