@@ -1,5 +1,7 @@
 {
   "name": "pullmanbus",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

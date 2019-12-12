@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginPage implements OnInit {
 
-  mydata = { username: "mauricio.fuentes@pullmancosta.cl", password: "CostaGps+2019" }
+  // mydata = { username: "mauricio.fuentes@pullmancosta.cl", password: "CostaGps+2019" }
   constructor() { }
 
   ngOnInit() {

@@ -1,4 +1,3 @@
-
 <ion-header>
 
   <div class="cabeceraGeneral">
@@ -38,8 +37,7 @@
 <ion-footer>
 
   <div style="width: 100%;  display: flex;  text-align: center;height: 23vh; ">
-    <div class="botonMenu">
-
+    <div class="botonMenu" routerLink="/buy-your-ticket">
       <ion-grid fixed style="height: 100%;">
         <ion-row class="btnMenuIcono">
           <ion-icon name="md-bus"></ion-icon>
@@ -50,8 +48,7 @@
       </ion-grid>
 
     </div>
-    <div class="botonMenu">
-
+    <div class="botonMenu" routerLink="/my-data">
       <ion-grid fixed style="height: 100%;">
         <ion-row class="btnMenuIcono">
           <ion-icon name="md-person"></ion-icon>
@@ -75,9 +72,9 @@
 
     </div>
   </div>
-  <div style="width: 100%;  display: flex;  text-align: center;height: 23vh; " routerLink="/login">
-    <div class="botonMenu">
 
+  <div style="width: 100%;  display: flex;  text-align: center;height: 23vh; ">
+    <div class="botonMenu" routerLink="/login" >
       <ion-grid fixed style="height: 100%;">
         <ion-row class="btnMenuIcono">
           <ion-icon name="md-log-in"></ion-icon>
@@ -86,22 +83,20 @@
           Registrarse
         </ion-row>
       </ion-grid>
-
     </div>
-    <div class="botonMenu">
 
-      <ion-grid fixed style="height: 100%;">
-        <ion-row class="btnMenuIcono">
+    <div class="botonMenu" > 
+      <ion-grid fixed style="height: 100%;" routerLink="/contact" >
+        <ion-row class="btnMenuIcono"> 
           <ion-icon name="md-call"></ion-icon>
         </ion-row>
         <ion-row class="btnMenuTexto">
           Contacto
         </ion-row>
       </ion-grid>
-
     </div>
-    <div class="botonMenu">
 
+    <div class="botonMenu" routerLink="/terms-conditions">
       <ion-grid fixed style="height: 100%;">
         <ion-row class="btnMenuIcono">
           <ion-icon name="md-information-circle"></ion-icon>
@@ -110,7 +105,24 @@
           Términos
         </ion-row>
       </ion-grid>
+    </div>
+  </div>
+
+  <!-- footer botones  regresar continuar -->
+  <div>
+    <div style="height:7vh; width: 100%; display: flex;align-items: center;justify-content: center;">
+
+      <ion-button fill="clear" style="color: orangered; height: 100%; width: 50%; outline: none;" routerLink="/">
+        <ion-icon src="../../../assets/icon/previous.svg"></ion-icon>
+        <div style="display: inline; text-align: left ;padding-left: 10px; text-transform: none;">Regresar</div>
+      </ion-button>
+
+      <ion-button fill="clear" style="color: orangered; height: 100%; width: 50%; outline: none;" routerLink="/">
+        <div style="display: inline;  text-align: right;padding-right: 7px;  text-transform: none">Continuar</div>
+        <ion-icon src="../../../assets/icon/previous.svg" style="transform: rotate(180deg);"></ion-icon>
+      </ion-button>
 
     </div>
   </div>
+  
 </ion-footer>

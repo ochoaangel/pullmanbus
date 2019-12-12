@@ -29,9 +29,10 @@
   </div>
 
 </ion-header>
+
 <ion-content>
-  <div style="width: 100%;height: 100%; background-color: orange;padding: 3vw;">
-    <div style=" height: 75vh; background-color: white ;margin: 0px 0px 0px 0px;">
+  <div style="width: 100%;height: 100%; background-color: orange;padding: 0px 3vw;">
+    <div style=" height: 100%; background-color: white ;margin: 0px 0px 0px 0px;">
       <ion-grid style="height: 100%;">
         <ion-row justify-content-center align-items-center style="height: 100%">
           <ion-col size="12" style="text-align: center;">
@@ -41,10 +42,10 @@
               </ion-col>
             </ion-row>
             <ion-row>
-              <ion-col size="12">
-                <div style="margin-bottom: 5px;"><input placeholder="Correo electrónico"
-                    [(ngModel)]="mydata.username" /></div>
-                <div style="margin-bottom: 5px;"><input placeholder="Contraseña" [(ngModel)]="mydata.password"
+              <ion-col size="12"> 
+                <div style="margin-bottom: 5px; "><input placeholder="Correo electrónico" 
+                     /></div>
+                <div style="margin-bottom: 5px; "><input placeholder="Contraseña"  
                     type="password" /></div>
                 <div style="display: inline; font-size: 3vw;">Registro</div>
                 <div style="display: inline;font-size: 3vw;padding-left: 20vw;">¿Olvidó su contraseña?</div>
@@ -52,7 +53,7 @@
             </ion-row>
             <ion-row>
               <ion-col size="12" style="margin-top: 6vh; margin-bottom: 6vh;"><input type="button" class="ingresar"
-                  value="Ingresar" routerLink="/user-panel"/></ion-col>
+                  value="Ingresar" routerLink="/user-panel" /></ion-col>
             </ion-row>
             <ion-row>
               <ion-col size="12" style=" font-size: 14px;">Call Center 600 600 00 18</ion-col>
@@ -61,7 +62,7 @@
               <ion-col size="12" style="color: lightgrey; font-size: 10px;">
                 <div>Conoce tus derechos</div>
                 <div>Términos y condiciones del pasaje</div>
-                <div>Politica de privacidad</div> 
+                <div>Politica de privacidad</div>
               </ion-col>
             </ion-row>
           </ion-col>
@@ -70,3 +71,16 @@
     </div>
   </div>
 </ion-content>
+
+<ion-footer no-border>
+  <div style="width: 100%; display: flex;justify-content: center;">
+
+    <ion-button slot="start" fill="clear" style="color: white; width: 50%; outline: none;" routerLink="/">
+      <ion-icon src="../../../assets/icon/previous.svg"></ion-icon>
+      <div style="display: inline; text-align: left ;padding-left: 10px; text-transform: none;">Regresar</div>
+    </ion-button>
+
+    <div style="width: 50%;"> </div>
+
+  </div>
+</ion-footer>

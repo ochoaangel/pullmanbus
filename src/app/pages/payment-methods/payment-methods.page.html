@@ -25,87 +25,23 @@
 
 
   <div class="cabeceraTitulo">
-    Anulación de boletos
+    Medios de pago
   </div>
 
 </ion-header>
 
 <ion-content>
   <div style="width: 100%;height: 100%; background-color: orange">
-    <div style=" height: 75vh; background-color: white ;padding: 20px;">
+    <div style=" height: 100%; background-color: white ;padding: 20px;">
       <ion-grid no-padding no-margin style="height: 100%;">
         <ion-row no-padding no-margin justify-content-center align-items-center style="height: 100%">
-          <ion-col no-padding no-margin size="12" style="text-align: center;">
+          <ion-col no-padding no-margin size="12" style="text-align: center; background-color: white;">
 
 
 
 
 
 
-
-
-
-
-            <ion-row>
-              <ion-text color="primary">
-                <p>Debe seleccionar el o los boletos que desea anula. La anulación debe ser realizada por lo menos 4 hrs
-                  antes de la salida del servicio</p>
-              </ion-text>
-            </ion-row>
-
-
-            <ion-row>
-              <ion-col size="6">
-                <ion-input type="text" placeholder="Código de transacción"></ion-input>
-              </ion-col>
-              <ion-col size="6">
-                <ion-button style="width: -webkit-fill-available; transform: none;">
-                  Consultar
-                </ion-button>
-              </ion-col>
-            </ion-row>
-
-            <div style="background-color: lightgray; width: 100%; margin-top: 5vh;">
-              <ion-row no-margin no-padding justify-content-center align-items-center style="height: 5vh;">
-                <div style="display: inline-block;width: 15%; font-size: 3vw;">Boleto</div>
-                <div style="display: inline-block;width: 15%; font-size: 3vw;">Fecha</div>
-                <div style="display: inline-block;width: 15%; font-size: 3vw;">Hr.salida</div>
-                <div style="display: inline-block;width: 15%; font-size: 3vw;">Origen</div>
-                <div style="display: inline-block;width: 15%; font-size: 3vw;">Destino</div>
-                <div style="display: inline-block;width: 15%; font-size: 3vw;">Asiento</div>
-                <div style="display: inline-block;width: 10%; font-size: 3vw;">Valor</div>
-              </ion-row>
-              <ion-row no-margin no-padding justify-content-center align-items-center style="height: 4vh;">
-                <div style="display: inline-block;width: 15%; font-size: 2vw;">XDALAWF125</div>
-                <div style="display: inline-block;width: 15%; font-size: 2vw;">22/11/2019</div>
-                <div style="display: inline-block;width: 15%; font-size: 2vw;">23:50</div>
-                <div style="display: inline-block;width: 15%; font-size: 2vw;">Term. sur</div>
-                <div style="display: inline-block;width: 15%; font-size: 2vw;">Concepción</div>
-                <div style="display: inline-block;width: 15%; font-size: 2vw;">9</div>
-                <div style="display: inline-block;width: 10%; font-size: 2vw;">$7.700</div>
-              </ion-row>
-            </div>
-
-
-            <ion-row>
-              <ion-text color="primary">
-                <p>* Si la compra se Realizó con tarjeta de crédito, se generará una reversa en su cuenta, si se realizó
-                  con tarjeta de débito, se realizaréá una transferencia a la cuenta que entregue para este fin. La
-                  devolucion o reversa se hará en un plazo máximo de 6 días hábiles.</p>
-              </ion-text>
-            </ion-row>
-
-
-            <ion-row>
-              <ion-col size="6">
-                <ion-input type="text" placeholder="Código de transacción"></ion-input>
-              </ion-col>
-              <ion-col size="6">
-                <ion-button style="width: -webkit-fill-available; transform: none;">
-                  Anular
-                </ion-button>
-              </ion-col>
-            </ion-row>
 
 
 
@@ -118,3 +54,20 @@
     </div>
   </div>
 </ion-content>
+
+<ion-footer>
+    <div style=" width: 100%; display: flex;align-items: center;justify-content: center; background-color: orange;">
+
+        <ion-button fill="clear" style="color: white;  width: 50%; outline: none;"  routerLink="/my-tickets">
+          <ion-icon src="../../../assets/icon/previous.svg"></ion-icon>
+          <div style="display: inline; text-align: left ;padding-left: 10px; text-transform: none;">Regresar</div>
+        </ion-button>
+
+        <!-- <div style="width: 50%;"></div> -->
+          <ion-button fill="clear" style="color: white;  width: 50%; outline: none;"  routerLink="/payment-confirmation">
+          <div style="display: inline;  text-align: right;padding-right: 7px;  text-transform: none">Continuar</div>
+          <ion-icon src="../../../assets/icon/previous.svg" style="transform: rotate(180deg);"></ion-icon>
+        </ion-button>
+  
+      </div>
+</ion-footer>

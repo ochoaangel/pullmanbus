@@ -31,8 +31,8 @@
 </ion-header>
 
 <ion-content>
-  <div style="width: 100%;height: 100%; background-color: orange;padding: 3vw;">
-    <div style=" height: 75vh; background-color: white ;margin: 0px 0px 0px 0px;">
+  <div style="width: 100%;height: 100%; background-color: orange;padding: 0px 3vw;">
+    <div style=" height: 100%; background-color: white ;margin: 0px 0px 0px 0px;">
       <ion-grid style="height: 100%;">
         <ion-row justify-content-center align-items-center style="height: 100%">
           <ion-col size="12" style="text-align: center;">
@@ -50,18 +50,18 @@
               <ion-col size="12">
                 <ion-icon name="ios-person" style="font-size: 15vh;color: orange;"></ion-icon>
                 <ion-text color="primary">
-                  <h1>Carlos Pérez</h1>
+                  <h4>Carlos Pérez</h4>
                 </ion-text>
               </ion-col>
             </ion-row>
 
 
             <ion-row>
-              <ion-col size="6" style="margin-top: 6vh; margin-bottom: 6vh;">
+              <ion-col size="6" style="margin-top: 3vh; margin-bottom: 3vh;">
                 <input type="button" class="ingresar" value="Mis datos" routerLink="/my-data" />
                 <input type="button" class="ingresar" value="Anulaciones" routerLink="/my-cancellations" />
               </ion-col>
-              <ion-col size="6" style="margin-top: 6vh; margin-bottom: 6vh;">
+              <ion-col size="6" style="margin-top: 3vh; margin-bottom: 3vh;">
                 <input type="button" class="ingresar" value="Mis tickets" routerLink="/my-tickets" />
                 <input type="button" class="ingresar" value="Cambiar password" routerLink="/my-change-password" />
               </ion-col>
@@ -70,8 +70,9 @@
 
 
             <ion-row>
-              <ion-col size="12" style="margin-bottom: 6vh;">
-                <input type="button" class="ingresar" value="Cerrar sesión"  style="background-color: gray;"/>
+              <ion-col size="12" style="margin-bottom: 3vh;">
+                <input type="button" class="ingresar" value="Cerrar sesión" style="background-color: gray;"
+                  routerLink="/home" />
               </ion-col>
             </ion-row>
 
@@ -107,3 +108,16 @@
     </div>
   </div>
 </ion-content>
+
+<ion-footer no-border style=" width: 100vw;background-color: orange;color: white;">
+  <div style="width: 100%; display: flex;justify-content: center;">
+
+    <ion-button slot="start" fill="clear" style="color: white; width: 50%; outline: none;" routerLink="/home">
+      <ion-icon src="../../../assets/icon/previous.svg"></ion-icon>
+      <div style="display: inline; text-align: left ;padding-left: 10px; text-transform: none;">Regresar</div>
+    </ion-button>
+
+    <div style="width: 50%;"> </div>
+
+  </div>
+</ion-footer>

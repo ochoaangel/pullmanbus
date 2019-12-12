@@ -25,24 +25,24 @@
 
 
   <div class="cabeceraTitulo">
-    Confirmación de pago
+    Confirmación de transacción
   </div>
 
 </ion-header>
 <ion-content>
-  <div style="width: 100%;height: 100%; background-color: orange;padding: 3vw;">
-    <div style=" height: 75vh; background-color: white ;margin: 0px 0px 0px 0px;">
+  <div style="width: 100%;height: 100%; background-color: orange;padding: 0px 3vw;">
+    <div style=" height: 100%; background-color: white ;margin: 0px 0px 0px 0px;">
       <ion-grid style="height: 100%;">
         <ion-row justify-content-center align-items-center style="height: 100%">
           <ion-col size="12" style="text-align: center;">
 
             <ion-row style="justify-content: center;">
               <ion-text color="primary">
-                <h6>¡Felicidades!</h6>
+                <h3>¡Felicidades!</h3>
               </ion-text>
             </ion-row>
             <ion-row>
-              <ion-col size="12" style="color: lightgrey; font-size: 10px;">
+              <ion-col size="12" style="color: lightgrey; font-size: 16px;">
                 <div>Su compra ha sido realizada con éxito</div>
 
               </ion-col>
@@ -65,3 +65,22 @@
     </div>
   </div>
 </ion-content>
+
+
+
+<ion-footer>
+    <div style=" width: 100%; display: flex;align-items: center;justify-content: center; background-color: orange;">
+
+        <ion-button fill="clear" style="color: white;  width: 50%; outline: none;"  routerLink="/user-panel">
+          <ion-icon src="../../../assets/icon/previous.svg"></ion-icon>
+          <div style="display: inline; text-align: left ;padding-left: 10px; text-transform: none;">Regresar</div>
+        </ion-button>
+
+        <div style="width: 50%;"></div>
+          <!-- <ion-button fill="clear" style="color: white;  width: 50%; outline: none;"  routerLink="/user-panel">
+          <div style="display: inline;  text-align: right;padding-right: 7px;  text-transform: none">Continuar</div>
+          <ion-icon src="../../../assets/icon/previous.svg" style="transform: rotate(180deg);"></ion-icon>
+        </ion-button> -->
+  
+      </div>
+</ion-footer>
