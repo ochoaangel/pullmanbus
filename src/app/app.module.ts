@@ -9,10 +9,18 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
+import { ClickOutsideModule } from 'ng-click-outside';
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule],
+  imports: [
+    BrowserModule,
+     IonicModule.forRoot(), 
+     AppRoutingModule,
+     ClickOutsideModule
+    
+    ],
   providers: [
     StatusBar,
     SplashScreen,

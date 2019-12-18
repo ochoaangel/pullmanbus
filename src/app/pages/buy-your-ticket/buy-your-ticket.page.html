@@ -25,16 +25,124 @@
 
 
   <div class="cabeceraTitulo">
-   Compra tu pasaje
+    Compra tu pasaje
   </div>
 
 </ion-header>
+
 <ion-content>
   <div style="width: 100%;height: 100%; background-color: orange;padding: 0px 3vw;">
     <div style=" height: 100%; background-color: white ;margin: 0px 0px 0px 0px;">
-      <ion-grid style="height: 100%;">
-        <ion-row justify-content-center align-items-center style="height: 100%">
-          <ion-col size="12" style="text-align: center;">
+      <ion-grid style="height: 100%;" class="ion-no-margin ion-no-padding">
+        <ion-row style="height: 100%"
+          class="ion-no-margin ion-no-padding ion-justify-content-center ion-align-items-center">
+          <ion-col size="12" style="text-align: center;" class="ion-no-margin ion-no-padding">
+
+            <ion-row style="background-color: lightgray;" class="ion-no-margin ion-no-padding">
+              <ion-col size="6" style="display: flex; align-items: center; justify-content: center;">
+                <ion-checkbox mode="ios" style="position: relative; left: -7px;"></ion-checkbox>
+                Solo ida
+              </ion-col>
+              <ion-col size="6" style="display: flex; align-items: center; justify-content: center;">
+                <ion-checkbox mode="ios" style="position: relative; left: -7px;"></ion-checkbox>
+                Ida y vuelta
+              </ion-col>
+            </ion-row>
+
+            <ion-row style="margin-top: 3vh;">
+
+              <ion-col size="6" (click)="select1()" style="border: 1px solid; border-color: blue;">
+                Origen
+
+                <div #select1div *ngIf="select1show"
+                  style="position: absolute; background-color: blue;  width: 100%; height: 15vh; top: 100%; left: 0px; z-index: 9;">
+                  uyfufty
+                </div>
+                
+              </ion-col>
+
+              <ion-col size="6">
+                Destino
+              </ion-col>
+
+            </ion-row>
+
+            <ion-row>
+              <ion-col size="6">
+                <div>
+                  <ion-select class="ion-no-padding ion-no-margin" multiple="false" placeholder="Seleccione.."
+                    cancel-text="Cancelar" style="font-size: 4vw;">
+                    <ion-select-option value="Santiago-Curico">Santiago-Curico</ion-select-option>
+                    <ion-select-option value="Santiago-La Serena">Santiago-La Serena</ion-select-option>
+                    <ion-select-option value="Santiago-Concepción">Santiago-Concepción</ion-select-option>
+                  </ion-select>
+                </div>
+              </ion-col>
+              <ion-col size="6">
+                <div>
+                  <ion-select class="ion-no-padding ion-no-margin" multiple="false" placeholder="Seleccione.."
+                    cancel-text="Cancelar" style="font-size: 4vw;">
+                    <ion-select-option value="Santiago-Curico">Santiago-Curico</ion-select-option>
+                    <ion-select-option value="Santiago-La Serena">Santiago-La Serena</ion-select-option>
+                    <ion-select-option value="Santiago-Concepción">Santiago-Concepción</ion-select-option>
+                  </ion-select>
+                </div>
+              </ion-col>
+            </ion-row>
+
+            <ion-row style="background-color: lightgray; margin-top: 5vh;" class="ion-no-margin ion-no-padding">
+
+              <ion-col size="6" style="display: flex;align-items: center;" class="ion-no-margin ion-no-padding">
+                <ion-icon name="bus" class="iconEditable" style="margin: 0px 2vw 0 1vw;"></ion-icon>
+                <ion-text>Fecha ida </ion-text>
+              </ion-col>
+
+              <ion-col size="6" style="display: flex;align-items: center;  " class="ion-no-margin ion-no-padding">
+                <ion-icon name="bus" class="iconEditable" style="margin: 0px 2vw 0 1vw;"></ion-icon>
+                <ion-text>Fecha regreso </ion-text>
+              </ion-col>
+
+            </ion-row>
+
+            <ion-row style="background-color: lightgray; margin-top: 1vh; padding: 10px 0px 10px 0px;"
+              class=" ion-no-margin ion-no-padding">
+
+              <ion-col size="6" class="ion-no-margin ion-no-padding">
+
+                <ion-row style="display: flex; align-items: center; justify-content: center;">
+
+                  <ion-col size="2" class="ion-no-margin ion-no-padding">
+                    <ion-icon name="calendar" class="iconEditable"></ion-icon>
+                  </ion-col>
+
+                  <ion-col size="2" class="dia" class="ion-no-margin ion-no-padding">30</ion-col>
+
+                  <ion-col size="8" class="fecha" class="ion-no-margin ion-no-padding">
+                    <div>Noviembre 2019</div>
+                    <div>Miércoles</div>
+                  </ion-col>
+
+                </ion-row>
+
+              </ion-col>
+
+              <ion-col size="6" class="ion-no-margin ion-no-padding">
+                <ion-row style="display: flex; align-items: center; justify-content: center;">
+                  <ion-col size="2" class="ion-no-margin ion-no-padding">
+                    <ion-icon class="iconEditable" name="calendar"></ion-icon>
+                  </ion-col>
+                  <ion-col size="2" class="dia" class="ion-no-margin ion-no-padding">28</ion-col>
+                  <ion-col size="8" class="fecha" class="ion-no-margin ion-no-padding">
+                    <div>Noviembre 2019</div>
+                    <div>Lunes</div>
+                  </ion-col>
+                </ion-row>
+              </ion-col>
+
+            </ion-row>
+
+
+
 
 
           </ion-col>
@@ -43,17 +151,15 @@
     </div>
   </div>
 </ion-content>
-  
+
 
 <ion-footer no-border style=" width: 100vw;background-color: orange;color: white;">
-    <div style="width: 100%; display: flex;justify-content: center;">
-  
-      <ion-button slot="start" fill="clear" style="color: white; width: 100%; outline: none;"  routerLink="/home">
-        <ion-icon name="md-search"></ion-icon>
-        <div style="display: inline; text-align: left ;padding-left: 10px; text-transform: none;">Buscar pasajes</div>
-      </ion-button>
-  
-      <!-- <div style="width: 50%;"> </div> -->
-  
-    </div>
-  </ion-footer>
+  <div style="width: 100%; display: flex;justify-content: center;">
+
+    <ion-button slot="start" fill="clear" style="color: white; width: 100%; outline: none;" routerLink="/home">
+      <ion-icon name="md-search"></ion-icon>
+      <div style="display: inline; text-align: left ;padding-left: 10px; text-transform: none;">Buscar pasajes</div>
+    </ion-button>
+
+  </div>
+</ion-footer>

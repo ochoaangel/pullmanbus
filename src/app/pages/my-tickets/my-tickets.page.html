@@ -38,7 +38,7 @@
           <ion-col no-padding no-margin size="12" style="text-align: center;">
 
 
-            <ion-row no-padding no-margin class="ticket">
+            <ion-row no-padding no-margin class="ticket" *ngFor="let item of [1,1,1,1,1,1]">
               <ion-row no-padding no-margin style="width: 100%;">
                 <ion-col size="3" no-padding no-margin class="cabeceraCadaTicket">Origen/Terminal</ion-col>
                 <ion-col size="3" no-padding no-margin class="cabeceraCadaTicket">Destino/Terminal</ion-col>
@@ -47,115 +47,16 @@
                 <ion-col size="1" no-padding no-margin class="cabeceraCadaTicket"></ion-col>
               </ion-row>
               <ion-row no-padding no-margin style="width: 100%;">
-                <ion-col size="3" no-padding no-margin class="infoCadaTicket">Santiago / Term. Alameda</ion-col>
-                <ion-col size="3" no-padding no-margin class="infoCadaTicket">Algarrobo / Algarrobo</ion-col>
-                <ion-col size="3" no-padding no-margin class="infoCadaTicket">21-nov-19 / 22:30</ion-col>
+                <ion-col size="3" no-padding no-margin class="infoCadaTicket">Santiago /<br> Term. Alameda</ion-col>
+                <ion-col size="3" no-padding no-margin class="infoCadaTicket">Algarrobo /<br> Algarrobo</ion-col>
+                <ion-col size="3" no-padding no-margin class="infoCadaTicket">21-nov-19 /<br> 22:30</ion-col>
                 <ion-col size="2" no-padding no-margin class="infoCadaTicket">23-24</ion-col>
                 <ion-col size="1" no-padding no-margin class="infoCadaTicket">
-                  <ion-checkbox mode="ios"></ion-checkbox>
+                  <ion-checkbox mode="ios" style="position: relative; left: -7px;"></ion-checkbox>
                 </ion-col>
               </ion-row>
             </ion-row>
 
-
-            <ion-row no-padding no-margin class="ticket">
-              <ion-row no-padding no-margin style="width: 100%;">
-                <ion-col size="3" no-padding no-margin class="cabeceraCadaTicket">Origen/Terminal</ion-col>
-                <ion-col size="3" no-padding no-margin class="cabeceraCadaTicket">Destino/Terminal</ion-col>
-                <ion-col size="3" no-padding no-margin class="cabeceraCadaTicket">Fecha/Hora Salida</ion-col>
-                <ion-col size="2" no-padding no-margin class="cabeceraCadaTicket">Asiento</ion-col>
-                <ion-col size="1" no-padding no-margin class="cabeceraCadaTicket"></ion-col>
-              </ion-row>
-              <ion-row no-padding no-margin style="width: 100%;">
-                <ion-col size="3" no-padding no-margin class="infoCadaTicket">Santiago / Term. Alameda</ion-col>
-                <ion-col size="3" no-padding no-margin class="infoCadaTicket">Algarrobo / Algarrobo</ion-col>
-                <ion-col size="3" no-padding no-margin class="infoCadaTicket">21-nov-19 / 22:30</ion-col>
-                <ion-col size="2" no-padding no-margin class="infoCadaTicket">23-24</ion-col>
-                <ion-col size="1" no-padding no-margin class="infoCadaTicket">
-                  <ion-checkbox mode="ios"></ion-checkbox>
-                </ion-col>
-              </ion-row>
-            </ion-row>
-
-
-            <ion-row no-padding no-margin class="ticket">
-              <ion-row no-padding no-margin style="width: 100%;">
-                <ion-col size="3" no-padding no-margin class="cabeceraCadaTicket">Origen/Terminal</ion-col>
-                <ion-col size="3" no-padding no-margin class="cabeceraCadaTicket">Destino/Terminal</ion-col>
-                <ion-col size="3" no-padding no-margin class="cabeceraCadaTicket">Fecha/Hora Salida</ion-col>
-                <ion-col size="2" no-padding no-margin class="cabeceraCadaTicket">Asiento</ion-col>
-                <ion-col size="1" no-padding no-margin class="cabeceraCadaTicket"></ion-col>
-              </ion-row>
-              <ion-row no-padding no-margin style="width: 100%;">
-                <ion-col size="3" no-padding no-margin class="infoCadaTicket">Santiago / Term. Alameda</ion-col>
-                <ion-col size="3" no-padding no-margin class="infoCadaTicket">Algarrobo / Algarrobo</ion-col>
-                <ion-col size="3" no-padding no-margin class="infoCadaTicket">21-nov-19 / 22:30</ion-col>
-                <ion-col size="2" no-padding no-margin class="infoCadaTicket">23-24</ion-col>
-                <ion-col size="1" no-padding no-margin class="infoCadaTicket">
-                  <ion-checkbox mode="ios"></ion-checkbox>
-                </ion-col>
-              </ion-row>
-            </ion-row>
-
-
-            <ion-row no-padding no-margin class="ticket">
-              <ion-row no-padding no-margin style="width: 100%;">
-                <ion-col size="3" no-padding no-margin class="cabeceraCadaTicket">Origen/Terminal</ion-col>
-                <ion-col size="3" no-padding no-margin class="cabeceraCadaTicket">Destino/Terminal</ion-col>
-                <ion-col size="3" no-padding no-margin class="cabeceraCadaTicket">Fecha/Hora Salida</ion-col>
-                <ion-col size="2" no-padding no-margin class="cabeceraCadaTicket">Asiento</ion-col>
-                <ion-col size="1" no-padding no-margin class="cabeceraCadaTicket"></ion-col>
-              </ion-row>
-              <ion-row no-padding no-margin style="width: 100%;">
-                <ion-col size="3" no-padding no-margin class="infoCadaTicket">Santiago / Term. Alameda</ion-col>
-                <ion-col size="3" no-padding no-margin class="infoCadaTicket">Algarrobo / Algarrobo</ion-col>
-                <ion-col size="3" no-padding no-margin class="infoCadaTicket">21-nov-19 / 22:30</ion-col>
-                <ion-col size="2" no-padding no-margin class="infoCadaTicket">23-24</ion-col>
-                <ion-col size="1" no-padding no-margin class="infoCadaTicket">
-                  <ion-checkbox mode="ios"></ion-checkbox>
-                </ion-col>
-              </ion-row>
-            </ion-row>
-
-
-            <ion-row no-padding no-margin class="ticket">
-              <ion-row no-padding no-margin style="width: 100%;">
-                <ion-col size="3" no-padding no-margin class="cabeceraCadaTicket">Origen/Terminal</ion-col>
-                <ion-col size="3" no-padding no-margin class="cabeceraCadaTicket">Destino/Terminal</ion-col>
-                <ion-col size="3" no-padding no-margin class="cabeceraCadaTicket">Fecha/Hora Salida</ion-col>
-                <ion-col size="2" no-padding no-margin class="cabeceraCadaTicket">Asiento</ion-col>
-                <ion-col size="1" no-padding no-margin class="cabeceraCadaTicket"></ion-col>
-              </ion-row>
-              <ion-row no-padding no-margin style="width: 100%;">
-                <ion-col size="3" no-padding no-margin class="infoCadaTicket">Santiago / Term. Alameda</ion-col>
-                <ion-col size="3" no-padding no-margin class="infoCadaTicket">Algarrobo / Algarrobo</ion-col>
-                <ion-col size="3" no-padding no-margin class="infoCadaTicket">21-nov-19 / 22:30</ion-col>
-                <ion-col size="2" no-padding no-margin class="infoCadaTicket">23-24</ion-col>
-                <ion-col size="1" no-padding no-margin class="infoCadaTicket">
-                  <ion-checkbox mode="ios"></ion-checkbox>
-                </ion-col>
-              </ion-row>
-            </ion-row>
-
-
-            <ion-row no-padding no-margin class="ticket">
-              <ion-row no-padding no-margin style="width: 100%;">
-                <ion-col size="3" no-padding no-margin class="cabeceraCadaTicket">Origen/Terminal</ion-col>
-                <ion-col size="3" no-padding no-margin class="cabeceraCadaTicket">Destino/Terminal</ion-col>
-                <ion-col size="3" no-padding no-margin class="cabeceraCadaTicket">Fecha/Hora Salida</ion-col>
-                <ion-col size="2" no-padding no-margin class="cabeceraCadaTicket">Asiento</ion-col>
-                <ion-col size="1" no-padding no-margin class="cabeceraCadaTicket"></ion-col>
-              </ion-row>
-              <ion-row no-padding no-margin style="width: 100%;">
-                <ion-col size="3" no-padding no-margin class="infoCadaTicket">Santiago / Term. Alameda</ion-col>
-                <ion-col size="3" no-padding no-margin class="infoCadaTicket">Algarrobo / Algarrobo</ion-col>
-                <ion-col size="3" no-padding no-margin class="infoCadaTicket">21-nov-19 / 22:30</ion-col>
-                <ion-col size="2" no-padding no-margin class="infoCadaTicket">23-24</ion-col>
-                <ion-col size="1" no-padding no-margin class="infoCadaTicket">
-                  <ion-checkbox mode="ios"></ion-checkbox>
-                </ion-col>
-              </ion-row>
-            </ion-row>
 
 
 
@@ -191,6 +92,7 @@
 
         <ion-button fill="clear" style="color: white;  width: 50%; outline: none;"  routerLink="/user-panel">
           <ion-icon src="../../../assets/icon/previous.svg"></ion-icon>
+          <!-- <ion-icon src="../../../assets/icon/asiento.svg" style="color: white;"></ion-icon> -->
           <div style="display: inline; text-align: left ;padding-left: 10px; text-transform: none;">Regresar</div>
         </ion-button>
 
