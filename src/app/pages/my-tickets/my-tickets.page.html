@@ -31,27 +31,27 @@
 </ion-header>
 
 <ion-content>
-  <div style="width: 100%;height: 100%; background-color: orange;">
+  <div style="width: 100%;height: 100%; background-color: orangered;">
     <div style=" height: 100%; background-color: white ;margin: 0px 0px 0px 0px;">
-      <ion-grid no-padding no-margin style="height: 100%;">
-        <ion-row no-padding no-margin justify-content-center  style="height: 100%">
-          <ion-col no-padding no-margin size="12" style="text-align: center;">
+      <ion-grid class=" ion-no-padding ion-no-margin" style="height: 100%;">
+        <ion-row class=" ion-no-padding  ion-no-margin ion-justify-content-center"  style="height: 100%">
+          <ion-col class=" ion-no-padding ion-no-margin" size="12" style="text-align: center;">
 
 
-            <ion-row no-padding no-margin class="ticket" *ngFor="let item of [1,1,1,1,1,1]">
-              <ion-row no-padding no-margin style="width: 100%;">
-                <ion-col size="3" no-padding no-margin class="cabeceraCadaTicket">Origen/Terminal</ion-col>
-                <ion-col size="3" no-padding no-margin class="cabeceraCadaTicket">Destino/Terminal</ion-col>
-                <ion-col size="3" no-padding no-margin class="cabeceraCadaTicket">Fecha/Hora Salida</ion-col>
-                <ion-col size="2" no-padding no-margin class="cabeceraCadaTicket">Asiento</ion-col>
-                <ion-col size="1" no-padding no-margin class="cabeceraCadaTicket"></ion-col>
+            <ion-row class=" ion-no-padding ion-no-margin" class="ticket" *ngFor="let item of [1,1,1,1,1,1]">
+              <ion-row class=" ion-no-padding ion-no-margin" style="width: 100%;">
+                <ion-col size="3" class=" ion-no-padding ion-no-margin" class="cabeceraCadaTicket">Origen/Terminal</ion-col>
+                <ion-col size="3" class=" ion-no-padding ion-no-margin" class="cabeceraCadaTicket">Destino/Terminal</ion-col>
+                <ion-col size="3" class=" ion-no-padding ion-no-margin" class="cabeceraCadaTicket">Fecha/Hora Salida</ion-col>
+                <ion-col size="2" class=" ion-no-padding ion-no-margin" class="cabeceraCadaTicket">Asiento</ion-col>
+                <ion-col size="1" class=" ion-no-padding ion-no-margin" class="cabeceraCadaTicket"></ion-col>
               </ion-row>
-              <ion-row no-padding no-margin style="width: 100%;">
-                <ion-col size="3" no-padding no-margin class="infoCadaTicket">Santiago /<br> Term. Alameda</ion-col>
-                <ion-col size="3" no-padding no-margin class="infoCadaTicket">Algarrobo /<br> Algarrobo</ion-col>
-                <ion-col size="3" no-padding no-margin class="infoCadaTicket">21-nov-19 /<br> 22:30</ion-col>
-                <ion-col size="2" no-padding no-margin class="infoCadaTicket">23-24</ion-col>
-                <ion-col size="1" no-padding no-margin class="infoCadaTicket">
+              <ion-row class=" ion-no-padding ion-no-margin" style="width: 100%;">
+                <ion-col size="3" class=" ion-no-padding ion-no-margin" class="infoCadaTicket">Santiago /<br> Term. Alameda</ion-col>
+                <ion-col size="3" class=" ion-no-padding ion-no-margin" class="infoCadaTicket">Algarrobo /<br> Algarrobo</ion-col>
+                <ion-col size="3" class=" ion-no-padding ion-no-margin" class="infoCadaTicket">21-nov-19 /<br> 22:30</ion-col>
+                <ion-col size="2" class=" ion-no-padding ion-no-margin" class="infoCadaTicket">23-24</ion-col>
+                <ion-col size="1" class=" ion-no-padding ion-no-margin" class="infoCadaTicket">
                   <ion-checkbox mode="ios" style="position: relative; left: -7px;"></ion-checkbox>
                 </ion-col>
               </ion-row>
@@ -88,7 +88,7 @@
 </ion-content>
 
 <ion-footer>
-    <div style=" width: 100%; display: flex;align-items: center;justify-content: center; background-color: orange;">
+    <div style=" width: 100%; display: flex;align-items: center;justify-content: center; background-color: orangered;">
 
         <ion-button fill="clear" style="color: white;  width: 50%; outline: none;"  routerLink="/user-panel">
           <ion-icon src="../../../assets/icon/previous.svg"></ion-icon>

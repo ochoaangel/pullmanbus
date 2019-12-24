@@ -32,16 +32,16 @@
 
 
 <ion-content>
-  <div style="height: 100%; width: 100%;background-color: orange;padding: 0px 3vw">
+  <div style="height: 100%; width: 100%;background-color: orangered;padding: 0px 3vw">
     <div style=" height: 100%; background-color: white ;margin: 0px 0px 0px 0px;">
       <ion-grid style="height: 100%;">
-        <ion-row justify-content-center align-items-center style="height: 100%">
+        <ion-row class=" ion-justify-content-center  ion-align-items-center" style="height: 100%">
           <ion-col size="12" style="text-align: center;">
 
 
             <ion-row>
               <ion-col size="12">
-                <ion-icon name="ios-person" style="font-size: 15vh;color: orange;"></ion-icon>
+                <ion-icon name="ios-person" style="font-size: 15vh;color: orangered;"></ion-icon>
                 <ion-text color="primary">
                   <h6>Carlos Pérez</h6>
                 </ion-text>
@@ -73,22 +73,22 @@
 
             <ion-row>
 
-              <ion-col no-padding no-margin size="6" class="columnaDoble"
+              <ion-col class=" ion-no-padding ion-no-margin" size="6" class="columnaDoble"
                 style="padding-left: 8px;padding-right: 3px;font-size: 80%;">
                 <div style="display: inline-block;width: 30%;">
-                  <ion-select no-padding no-margin multiple="false" placeholder="d" cancel-text="Cancelar">
+                  <ion-select class=" ion-no-padding ion-no-margin" multiple="false" placeholder="d" cancel-text="Cancelar">
                     <ion-select-option value="{{i+1}}" *ngFor="let dummy of ' '.repeat(31).split(''), let i = index">
                       {{i+1}}</ion-select-option>
                   </ion-select>
                 </div>
                 <div style="display: inline-block;width: 30%;">
-                  <ion-select no-padding no-margin multiple="false" placeholder="m"  cancel-text="Cancelar">
+                  <ion-select class=" ion-no-padding ion-no-margin" multiple="false" placeholder="m"  cancel-text="Cancelar">
                     <ion-select-option value="{{i+1}}" *ngFor="let dummy of ' '.repeat(12).split(''), let i = index">
                       {{i+1}}</ion-select-option>
                   </ion-select>
                 </div>
                 <div style="display: inline-block;width: 40%;">
-                  <ion-select no-padding no-margin multiple="false" placeholder="aaaa"  cancel-text="Cancelar">
+                  <ion-select class=" ion-no-padding ion-no-margin" multiple="false" placeholder="aaaa"  cancel-text="Cancelar">
                     <ion-select-option value="{{i+1+1900}}"
                       *ngFor="let dummy of ' '.repeat(120).split(''), let i = index">{{i+1+1900}}</ion-select-option>
                   </ion-select>
@@ -150,7 +150,7 @@
 </ion-content>
 
 <ion-footer>
-    <div style=" width: 100%; display: flex;align-items: center;justify-content: center; background-color: orange;">
+    <div style=" width: 100%; display: flex;align-items: center;justify-content: center; background-color: orangered;">
 
         <ion-button fill="clear" style="color: white;  width: 50%; outline: none;"  routerLink="/user-panel">
           <ion-icon src="../../../assets/icon/previous.svg"></ion-icon>

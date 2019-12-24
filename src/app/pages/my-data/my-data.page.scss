@@ -1,7 +1,7 @@
 ion-header {
   height: 15vh;
   width: 100vw;
-  background-color: orange;
+  background-color: orangered;
   text-align: center;
   color: white;
 }
@@ -39,7 +39,7 @@ ion-header {
   display: inline;
   width: 33%;
   border: solid 1px;
-  border-color: orange;
+  border-color: orangered;
   background-color: white;
   margin: 3px;
 }
@@ -93,7 +93,7 @@ input {
 }
 
 .fechax {
-  // border-color: Corange;
+  // border-color: Corangered;
   // border: orange solid;
   padding-right: -5px;
 }
@@ -104,7 +104,7 @@ ion-select {
   background-color: white;
   height: 7vw;
   padding: 4px 0px 0px 5px;
-  border: 1px solid orange;
+  border: 1px solid orangered;
 }
 
 ion-checkbox {

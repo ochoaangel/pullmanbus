@@ -66,9 +66,8 @@ ion-header {
     padding: 7px 10px;
     border: 1px solid #ff9900;
     -webkit-border-radius: 27px;
-    border-radius: 5px;
-    width: -webkit-fill-available;
-    margin: 1vw 3vw;
+    border-radius: 15px;
+    width: 60vw;
   }
   
   .ingresar {
@@ -78,25 +77,40 @@ ion-header {
     box-sizing: content-box;
     cursor: pointer;
     padding: 7px 10px;
-    //   border: 1px solid #018dc4;
+    border: 1px solid #018dc4;
     -webkit-border-radius: 11px;
     border-radius: 11px;
     color: rgba(255, 255, 255, 1);
-    background: orangered;
-    width: 38vw;
-    margin-top: 2vh;
-    height: 3vh;
+    background: #2727e8;
   }
   
-  p {
+  .iconEditable {
+    font-size: 4vh;
+    color: orangered;
+  }
+  
+  
+  
+  .dia {
+    font-size: 6vw;
+  }
+  
+  
+  .fecha {
     font-size: 3vw;
-    color: grey;
-    text-align: justify;
-    padding: 5%;
+    text-align: left;
   }
   
-  ion-input {
+  ion-checkbox{
+    height: auto;
+    width: 6vw;
+  }
+  
+  ion-select {
+    border-radius: 6px;
+    width: -webkit-fill-available;
+    background-color: white;
+    height: 7vw;
+    padding: 4px 0px 0px 5px;
     border: 1px solid orangered;
-    border-radius: 10px;
   }
-  
