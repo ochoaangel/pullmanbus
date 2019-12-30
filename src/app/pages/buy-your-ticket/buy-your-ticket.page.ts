@@ -1,48 +1,158 @@
-import { Component, OnInit, ElementRef, ViewChild, Renderer2 } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { HttpClient } from "@angular/common/http";
+
+import * as _ from 'underscore';
+import * as moment from 'moment';
+import { Router } from '@angular/router';
+import { MyserviceService } from 'src/app/service/myservice.service';
+
+
 
 @Component({
   selector: 'app-buy-your-ticket',
   templateUrl: './buy-your-ticket.page.html',
-  styleUrls: ['./buy-your-ticket.page.scss'],
+  styleUrls: ['./buy-your-ticket.page.scss']
 })
+
 export class BuyYourTicketPage implements OnInit {
 
-
-  select1show = true;
-  @ViewChild('select1div', { static: false }) select1div: ElementRef;
+  // show: boolean = true;
 
 
+  allOrigin = [];
+  allDestiny = [];
+
+  selectOrigin;
+  selectDestiny;
+
+  dateGo;
+  dateBack;
+
+  minDateGo;
+  maxDateGo;
+  minDateBack;
+  maxDateBack;
+
+  stringDateGo;
+  stringDateBack;
+
+  // condiciones iniciales
+  goOnly = true;
+  goBack = false;
+
+  constructor(
+    private httpClient: HttpClient,
+    private router: Router,
+    private mys: MyserviceService,
 
 
-  constructor(private renderer: Renderer2) {
-
-
-
-    this.renderer.listen('window', 'click', (e: Event) => {
-      if ((this.select1show && e.target !== this.select1div.nativeElement)) {
-        this.select1cerrar();
-      }
-    });
-
-
-
-
-  }
+  ) { }
 
   ngOnInit() {
+    this.getCityOrigin();
+    this.minDateGo = moment().format();
+    this.maxDateGo = moment().add(1, 'y').format();
+    this.minDateBack = moment().format();
+    this.maxDateBack = moment().add(1, 'y').format();
+
+
+
+
+
+    // setInterval(()=> {
+    //   this.show = !this.show;
+    // } ,1000);
+  }
+
+  getCityOrigin() {
+    this.httpClient.get<any>('assets/json/ciudades-codigo2.json').subscribe(data => {
+      this.allOrigin = data;
+    });
   }
 
 
-  select1() {
-    console.log('origen');
-    this.select1show = !this.select1show;
+  getCityDestination(value: string) {
+    // Falta el uso de value como ciudad de origen
+    this.httpClient.get<any>('assets/json/ciudades-codigo2.json').subscribe(data => {
+      this.allDestiny = data;
+    });
   }
 
 
-  select1cerrar() {
-    // console.log('fwfwefwgshrrdhrthrthrthtrh');
-    this.select1show = !this.select1show;
+  changeOrigin(value: string) {
+    this.allDestiny = [];
+    this.getCityDestination(value);
+    // coloco placeholder vacio en Destino
+    this.selectDestiny = null;
   }
+
+
+  checkChangeGoOnly() {
+    this.goOnly ? this.goBack = false : this.goBack = true;
+  }
+
+  checkChangeGoBack() {
+    this.goBack ? this.goOnly = false : this.goOnly = true;
+  }
+
+
+  btnSearch() {
+
+    // PREPARO VARIABLES para guardarlas en el service
+    let item;
+    this.mys.ticket = {};
+
+    // obtengo el origen completo
+    this.allOrigin.forEach(element => {
+      if (this.selectOrigin === element.codigo) { item = element; }
+    });
+    this.mys.ticket['origin'] = item;
+
+    // obtengo el Destino completo
+    this.allDestiny.forEach(element => {
+      if (this.selectDestiny === element.codigo) { item = element; }
+    });
+    this.mys.ticket['destiny'] = item;
+
+    // guardo el tipo de viaje
+    if (this.dateBack) {
+      this.mys.ticket['tripType'] = 'goBack'
+      this.mys.ticket['dateGo'] = this.dateGo;
+      this.mys.ticket['dateBack'] = this.dateBack;
+    } else {
+      this.mys.ticket['tripType'] = 'goOnly';
+      this.mys.ticket['dateGo'] = this.dateGo;
+    }
+
+    // iniciando la compra
+    this.mys.way = 'go';
+
+    // Verifico datos requeridos y redirijo a "pasaje ida"
+    if (!this.selectOrigin) {
+      this.mys.alertShow('Verifique', 'alert', 'Seleccione un origen<br> Intente nuevamente..');
+    } else if (!this.selectDestiny) {
+      this.mys.alertShow('Verifique', 'alert', 'Seleccione un destino<br> Intente nuevamente..');
+    } else if (!this.dateGo) {
+      this.mys.alertShow('Verifique', 'alert', 'Seleccione una Fecha de Ida<br> Intente nuevamente..');
+    // } else if (this.goBack && !this.dateBack) {
+    //   this.mys.alertShow('Verifique', 'alert', 'Seleccione una Fecha de Regreso<br> Intente nuevamente..');
+    } else if (this.dateBack && (moment(this.dateBack).isSameOrBefore(moment(this.dateGo)))) {
+      this.mys.alertShow('Verifique', 'alert', 'Fecha de ida debe ser <br> antes que <br>fecha de regreso<br> Intente nuevamente..');
+    } else {
+      console.log('this.mys.way', this.mys.way);
+      console.log('this.mys.ticket', this.mys.ticket);
+      this.router.navigateByUrl('/ticket');
+    }
+
+  }
+
+
+  dateChangeGo() {}
+
+  dateChangeBack() {}
+
+  noBack(){this.dateBack=null;}
+
 
 
 }

@@ -1,14 +1,14 @@
 ion-header {
     height: 15vh;
     width: 100vw;
-    background-color: orangered;
+    background-color: #fe5200;
     text-align: center;
     color: white;
   }
 
   ion-footer {
     width: 100vw;
-    background-color: orangered;
+    background-color: #fe5200;
     color: white;
   }
   
@@ -45,7 +45,7 @@ ion-header {
     display: inline;
     width: 33%;
     border: solid 1px;
-    border-color: orangered;
+    border-color: #fe5200;
     background-color: white;
     margin: 3px;
   }
@@ -54,7 +54,7 @@ ion-header {
     justify-content: center;
     height: 50%;
     padding-top: 3vh;
-    color: orangered;
+    color: #fe5200;
     font-size: 9vh;
   }
   
@@ -62,7 +62,7 @@ ion-header {
     justify-content: center;
     height: 50%;
     padding-top: 4vh;
-    color: orangered;
+    color: #fe5200;
     font-size: 2vh;
   }
   
@@ -88,5 +88,5 @@ ion-header {
       -webkit-border-radius: 11px;
       border-radius: 11px;
       color: rgba(255,255,255,1);
-      background: #2727e8;
+      background: #0247ac;
     }

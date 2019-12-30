@@ -6,7 +6,7 @@
 
     <!-- <div style="display: inline; width: 10%;"></div> -->
 
-    <div style="display: inline; width: 70%;">
+    <div style="display: inline; width: 20rem;">
       <ion-img src="./../../assets/images/titulo.png" style="height: 100%;"></ion-img>
     </div>
 
@@ -29,9 +29,20 @@
 </ion-header>
 
 <ion-content>
-  <div style="height: 100%; width: 100%;background-color: white;">
-    <ion-img src="./../../assets/images/pasajeros.jpg" style="height: 100%; object-fit: cover;"></ion-img>
-  </div>
+
+<ion-slides scrollbar="false" style="width: 100%; height: 100%;" [options]="options">
+
+  <ion-slide style="width: 100%; height: 100%;">
+    <img src="./../../assets/images/pasajeros.jpg" style="height: 100%; width: 100%; object-fit: cover;" >
+  </ion-slide>
+
+  <ion-slide style="width: 100%; height: 100%;">
+    <img src="./../../assets/images/pasajeros.jpg" style="height: 100%; width: 100%; object-fit: cover;" >
+  </ion-slide>
+
+</ion-slides>
+
+
 </ion-content>
 
 <ion-footer>
@@ -111,13 +122,13 @@
   <!-- footer botones  regresar continuar -->
   <div>
     <div style="height:7vh; width: 100%; display: flex;align-items: center;justify-content: center;">
-
-      <ion-button fill="clear" style="color: orangered; height: 100%; width: 50%; outline: none;" routerLink="/">
+ 
+      <ion-button fill="clear" style="color: #fe5200; height: 100%; width: 50%; outline: none;" (click)="prueba()">
         <ion-icon src="../../../assets/icon/previous.svg"></ion-icon>
         <div style="display: inline; text-align: left ;padding-left: 10px; text-transform: none;">Regresar</div>
       </ion-button>
 
-      <ion-button fill="clear" style="color: orangered; height: 100%; width: 50%; outline: none;" routerLink="/">
+      <ion-button fill="clear" style="color: #fe5200; height: 100%; width: 50%; outline: none;" routerLink="/">
         <div style="display: inline;  text-align: right;padding-right: 7px;  text-transform: none">Continuar</div>
         <ion-icon src="../../../assets/icon/previous.svg" style="transform: rotate(180deg);"></ion-icon>
       </ion-button>
@@ -126,3 +137,5 @@
   </div>
   
 </ion-footer>
+
+<ion-icon name="add-md"></ion-icon>

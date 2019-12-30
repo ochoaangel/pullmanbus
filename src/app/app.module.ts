@@ -10,6 +10,11 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
 import { ClickOutsideModule } from 'ng-click-outside';
+import { HttpClientModule } from '@angular/common/http';
+
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { PipesModule } from './pipes/pipes.module';
+
 
 @NgModule({
   declarations: [AppComponent],
@@ -18,7 +23,12 @@ import { ClickOutsideModule } from 'ng-click-outside';
     BrowserModule,
      IonicModule.forRoot(), 
      AppRoutingModule,
-     ClickOutsideModule
+     ClickOutsideModule,
+     HttpClientModule,
+     BrowserAnimationsModule,
+     PipesModule
+     
+     
     
     ],
   providers: [

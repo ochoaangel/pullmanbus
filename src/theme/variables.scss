@@ -75,3 +75,32 @@
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
 }
+
+
+ion-alert {
+  .alert-head {
+    background-color: #0247ac;
+  }
+  .alert-title {
+    text-align: center !important;
+    font-size: 1.5rem !important;
+    color: white !important;
+  }
+  .alert-message {
+    text-align: center !important;
+    font-size: 1rem !important;
+    color: darkgray !important;
+    ion-icon {
+      color: #0247ac;
+      font-size: 3rem;
+      margin: 1rem;
+    }
+  }
+}
+
+
+ion-select{
+  .alert-head {
+    background-color: red;
+  }
+}

@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { SeatSelectionPageRoutingModule } from './seat-selection-routing.module';
 
 import { SeatSelectionPage } from './seat-selection.page';
+import { PipesModule } from 'src/app/pipes/pipes.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    SeatSelectionPageRoutingModule
+    SeatSelectionPageRoutingModule,
+    PipesModule
   ],
   declarations: [SeatSelectionPage]
 })

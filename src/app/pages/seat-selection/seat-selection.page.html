@@ -1,13 +1,15 @@
 <ion-header no-border>
-
   <div class="cabeceraGeneral">
-
     <div style="display: inline; width: 5%;"></div>
 
-    <div style="display: inline; width: 10%;border-color: white; border: solid 1px;margin: 5px;">Es</div>
+    <div style="display: inline; width: 10%;border-color: white; border: solid
+      1px;margin: 5px;">
+      Es
+    </div>
 
     <div style="display: inline; width: 60%;">
-      <ion-img src="./../../../assets/images/titulo.png" style="height: 100%;height: 5vh;"></ion-img>
+      <ion-img src="./../../../assets/images/titulo.png" style="height:
+        100%;height: 5vh;"></ion-img>
     </div>
 
     <div style="display: inline; width: 10%;">
@@ -19,48 +21,63 @@
     </div>
 
     <div style="display: inline; width: 5%;"></div>
-
   </div>
 
   <div class="cabeceraTitulo">
     Selección de asiento ida
   </div>
 
-  <!-- <div class="cabeceraTitulo2"> -->
-  <div style="background-color: lightgray; font-size: 2vw;padding: 5px 0;color: black; width: 100%;">
 
+</ion-header>
+
+<ion-content>
+
+  <div style="background-color: #f2f2f2; font-size: 2vw;padding: 5px 0;color:
+  black; width: 100%;">
     <!-- 1ra fila -->
     <div style="width: 100%; display: flex;">
       <div style="display: inline; width: 15%; font-weight: bold;">
-        <div
-          style="display: flex;justify-content: center;align-items: center; font-weight: bold;font-size: 2.3vw;height: 100%;">
+        <div style="display: flex;justify-content: center;align-items: center;
+        font-weight: bold;font-size: 2.3vw;height: 100%;">
           Ida
         </div>
       </div>
       <div style="display: inline; width: 10%;">
-        <div
-          style="background-color: white; border: 2px solid orangered;border-radius: 3px;display: flex;justify-content: center;align-items: center; color:orangered; font-weight: bold;font-size: 2.3vw;height: 100%;margin: 0px 1px 0px 5px;">
+        <div style="background-color: white; border: 2px solid
+        #fe5200;border-radius: 3px;display: flex;justify-content:
+        center;align-items: center; color:#fe5200; font-weight:
+        bold;font-size: 2.3vw;height: 100%;margin: 0px 1px 0px 5px;">
           Piso 1
         </div>
       </div>
       <div style="display: inline; width: 15%; text-align: left;">
-        <div>Salon semicama</div>
-        <div style="font-weight: bold;">Valor: $3.500</div>
+        <div>{{nowService.servicioPrimerPiso | titlecase}}</div>
+        <div style="font-weight: bold;">
+          Valor: ${{nowService.tarifaPrimerPiso}}
+        </div>
       </div>
       <div style="display: inline; width: 10%;">
-        <div
-          style="background-color: orangered; border-radius: 3px;display: flex;justify-content: center;align-items: center; color:white; font-weight: bold;font-size: 2.3vw; height: 100%; margin: 0px 1px 0px 5px;">
+        <div *ngIf="nowService.tarifaSegundoPiso" style="background-color: #fe5200; border-radius: 3px;display:
+        flex;justify-content: center;align-items: center; color:white;
+        font-weight: bold;font-size: 2.3vw; height: 100%; margin: 0px 1px 0px
+        5px;">
           Piso 2
         </div>
       </div>
       <div style="display: inline; width: 15%; text-align: left;">
-        <div>Salon cama</div>
-        <div style="font-weight: bold;">Valor: $5.500</div>
+        <div *ngIf="nowService.tarifaSegundoPiso">
+          {{nowService.servicioSegundoPiso | titlecase}}
+        </div>
+        <div *ngIf="nowService.tarifaSegundoPiso" style="font-weight: bold;">
+          Valor: ${{nowService.tarifaSegundoPiso}}
+        </div>
       </div>
-      <div style="display: inline; width: 10%;"> </div>
+      <div style="display: inline; width: 10%;"></div>
       <div style="display: inline; width: 25%;">
-        <div style="display: flex;align-items: center; font-size: 2vw;height: 100%;font-size: 1.8vw">
-          <img src="../../../assets/images/Logo_003.jpg" style="width: 90%;border-radius: 2px;">
+        <div style="display: flex;align-items: center; font-size: 2vw;height:
+        100%;font-size: 1.8vw">
+          <img src="../../../assets/images/Logo_003.jpg" style="width:
+          90%;border-radius: 2px;" />
         </div>
       </div>
     </div>
@@ -68,9 +85,10 @@
     <!-- 2da fila -->
     <div style="width: 100%; display: flex;">
       <div style="display: inline; width: 15%; color: red;">
-        <div
-          style="display: flex;justify-content: center;align-items: center; font-weight: bold;font-size: 2.3vw;height: 100%;">
-          25 <ion-icon style="font-size: 12px;" name="close-circle"></ion-icon>
+        <div style="display: flex;justify-content: center;align-items: center;
+        font-weight: bold;font-size: 2.3vw;height: 100%;">
+          25
+          <ion-icon style="font-size: 12px;" src="../../../assets/icon/Porcentaje003.svg"></ion-icon>
         </div>
       </div>
       <div style="display: inline; width: 85%;"></div>
@@ -78,37 +96,44 @@
 
     <!-- 3ra fila -->
     <div style="width: 100%; display: flex;">
-      <div style="display: inline; width: 15%;">
-        <ion-icon style="font-size: 12px; color: red;    font-size: 6vw;" name="bus"></ion-icon>
+      <div style="display: inline; width: 15%; text-align: center;">
+        <ion-icon style="font-size: 12px; color: red; font-size: 6vw;" name="bus"></ion-icon>
       </div>
       <div style="display: inline; width: 15%;">
-        <div style="display: flex;align-items: center; font-size: 2vw;height: 100%;font-size: 2.3vw">
-          Santiago
+        <div style="display: flex;align-items: center; font-size: 2vw;height:
+        100%;font-size: 2.3vw">
+          {{this.ticket.origin.nombre | titlecase }}
         </div>
       </div>
       <div style="display: inline; width: 10%;">
-        <div style="display: flex;align-items: center; font-size: 2vw;height: 100%;font-size: 1.8vw">
-          6:26 AM
+        <div style="display: flex;align-items: center; font-size: 2vw;height:
+        100%;font-size: 1.8vw">
+          {{nowService.horaSalida | hh2ampm}}
         </div>
       </div>
       <div style="display: inline; width: 20%;">
-        <div style="display: flex;align-items: center; font-size: 2vw;height: 100%;font-size: 1.8vw">
-          <img src="../../../assets/images/flecha001.png" style="width: 85%;">
+        <div style="display: flex;align-items: center; font-size: 2vw;height:
+        100%;font-size: 1.8vw">
+          <img src="../../../assets/images/flecha001.png" style="width: 85%;" />
         </div>
       </div>
       <div style="display: inline; width: 20%;">
-        <div style="display: flex;align-items: center; font-size: 2vw;height: 100%;font-size: 2.3vw">
-          Concepción
+        <div style="display: flex;align-items: center; font-size: 2vw;height:
+        100%;font-size: 2.3vw">
+          {{this.ticket.destiny.nombre | titlecase }}
         </div>
       </div>
       <div style="display: inline; width: 10%;">
-        <div style="display: flex;align-items: center; font-size: 2vw;height: 100%;font-size: 1.8vw">
-          6:26 AM
+        <div style="display: flex;align-items: center; font-size: 2vw;height:
+        100%;font-size: 1.8vw">
+          {{nowService.horaLlegada | hh2ampm }}
         </div>
       </div>
       <div style="display: inline; width: 10%;">
-        <div style="display: flex;align-items: center; font-size: 2vw;height: 100%;font-size: 1.8vw">
-          <!-- <ion-checkbox mode="ios"></ion-checkbox> -->
+        <div style="display: flex;align-items: center; font-size: 2vw;height:
+        100%;font-size: 1.8vw">
+          <!-- <ion-checkbox mode="ios" [(ngModel)]="allServices[i].checked" (click)="myseleccion(i)"> -->
+          <!-- </ion-checkbox> -->
         </div>
       </div>
     </div>
@@ -116,21 +141,28 @@
     <!-- 4ta fila -->
     <div style="width: 100%; display: flex;">
       <div style="display: inline; width: 15%;"></div>
-      <div style="display: inline; width: 25%;text-align: left;"> Origen: TermSur</div>
+      <div style="display: inline; width: 25%;text-align: left;">
+        Origen: {{nowService.terminalSalida | titlecase }}
+      </div>
       <div style="display: inline; width: 20%;"></div>
-      <div style="display: inline; width: 30%;text-align: left;">Destino final: term Valpo</div>
+      <div style="display: inline; width: 30%;text-align: left;">
+        Destino final: {{nowService.terminaLlegada | titlecase}}
+      </div>
       <div style="display: inline; width: 10%;"></div>
     </div>
 
     <!-- 5ta fila -->
     <div style="width: 100%; display: flex;">
       <div style="display: inline; width: 15%;">
-        <div
-          style="display: flex;justify-content: center;align-items: center; font-weight: bold;font-size: 2.3vw;height: 100%;">
-          <ion-icon style="font-size: 12px;" name="clock"></ion-icon> 5Hrs.
+        <div style="display: flex;justify-content: center;align-items: center;
+        font-weight: bold;font-size: 2.3vw;height: 100%;flex-direction:
+        column;">
+          <ion-icon style="font-size: 12px;" name="clock"></ion-icon>
+          {{'X'| duration: nowService.fechaSalida : nowService.horaSalida :
+        nowService.fechaLlegada : nowService.horaLlegada}}
         </div>
       </div>
-      <div style="display: inline; width: 85%;"> </div>
+      <div style="display: inline; width: 85%;"></div>
     </div>
 
     <!-- 6ta fila -->
@@ -139,99 +171,109 @@
       <div style="display: inline; width: 5%;">
         <ion-icon style="font-size: 12px;" name="calendar"></ion-icon>
       </div>
-      <div style="display: inline; width: 80%; display: flex;align-items: center;font-size: 2.3vw;">Miercoles
-        13 de Noviembre 2019</div>
+      <div style="display: inline; width: 80%; display: flex;align-items:
+      center;font-size: 2.3vw;">
+        {{nowService.fechaSalida | date2line }}
+        <!-- Miercoles 13 de Noviembre 2019 -->
+      </div>
     </div>
-
   </div>
 
-</ion-header>
-
-
-<ion-content>
-  <div style="width: 100%;height: 100%; background-color: orangered;padding:  16vh 0 0 0">
-    <div style=" height: 100%; background-color: white ;margin: 0px 0px 0px 0px;">
+  <div style="width: 100%;height: 100%; background-color: #fe5200">
+    <div style="height: 100%; background-color: white ;margin: 0px 0px 0px
+      0px;">
       <ion-grid style="height: 100%;" class="ion-no-margin ion-no-padding">
-        <ion-row style="height: 100%"
-          class="ion-no-margin ion-no-padding ion-justify-content-center ion-align-items-center">
-          <ion-col size="12" style=" height: 100%;text-align: center;" class="ion-no-margin ion-no-padding">
+        <ion-row style="height: 100%" class="ion-no-margin ion-no-padding ion-justify-content-center
+          ion-align-items-center">
+          <ion-col size="12" style="height: 100%;text-align: center;" class="ion-no-margin ion-no-padding ion-justify-content-center">
+            
+            <div style="display: flex; flex-direction: row; margin-top: 1vh; height: 100%; max-width: 25rem; margin: 0 auto;">
+
+              <!-- pisos y asientos -->
+              <div style="width: 60vw;">
+
+                <!-- Botones seleccion para piso1 piso2 -->
+                <div style="width: 100%; display: flex;">
+                  <div style="width: 50%; text-align: -webkit-center;">
+                    <div [ngClass]="piso1 ? 'pisoShow' : 'pisoHiden'" (click)="cambiarPiso(1)">
+                      Piso 1
+                    </div>
+                  </div>
+                  <div style="width: 50%; text-align: -webkit-center;">
+                    <div [ngClass]="!piso1 ? 'pisoShow' : 'pisoHiden'" (click)="cambiarPiso(2)">
+                      Piso 2
+                    </div>
+                  </div>
+                </div>
+
+                <!-- piso1 -->
+                <div style="width: 100%;height: 90%; display: flex; align-items: center;" *ngIf="piso1">
+                  <div style="width: 100%;">
+                    <div style="width: 100%; display: flex;" *ngFor="let columna of bus['1'] ; let x= index">
+                      <div style="width: 100%; display: flex;" *ngFor="let asiento of columna ; let y= index">
+                        <!-- [style.width]="( asiento.estado ==='libre' || asiento.estado ==='ocupado'  || asiento.estado ==='seleccionado')? '100%':'50%'" -->
 
 
-            <div style="width: 100%; display: flex;">
-              <div style=" width: 50%;     text-align: -webkit-center;">
-                <div
-                  style="width: 15vw; background-color: blue; color: white; border-radius: 4px; padding: 0px;font-size: 3.5vw;text-align: center;margin: 1vw;">
-                  Piso 1
+                        <ion-button fill="clear" style="margin-left: 4vw; color: #fe5200; outline:
+                        none;padding:0;font-size: 0vw; display: contents;" (click)="presionado('1',y,x)">
+                          <img src="../../../assets/icon/png/Asiento-ocupado.png" *ngIf="asiento.estado==='ocupado'" />
+                          <img src="../../../assets/icon/png/Asiento-disponible.png" *ngIf="asiento.estado==='libre'" />
+                          <img src="../../../assets/icon/png/Asiento-seleccionado.png"
+                            *ngIf="asiento.estado==='seleccionado'" />
+                          <ion-text
+                            style="color: red; color: white;position: absolute;font-size: 0.8rem;top: 1rem;font-weight: bold;">
+                            {{asiento.asiento}}
+                          </ion-text>
+                        </ion-button>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- piso2 -->
+                <div style="width: 100%;height: 100%;" *ngIf="!piso1">
+                  <div style="width: 100%; display: flex;" *ngFor="let columna of bus['2'] ; let x= index">
+                    <div style="width: 100%; display: flex;" *ngFor="let asiento of columna ; let y= index">
+                      <!-- [style.width]="( asiento.estado ==='libre' || asiento.estado ==='ocupado'  || asiento.estado ==='seleccionado')? '100%':'50%'" > -->
+
+                      <ion-button fill="clear" style="margin-left: 4vw; color: #fe5200; outline:
+                        none;padding:0;font-size: 0vw;display: contents;" (click)="presionado('2',y,x)"
+                        *ngIf="asiento.estado ==='libre' || asiento.estado ==='ocupado'  || asiento.estado ==='seleccionado'">
+                        <img src="../../../assets/icon/png/Asiento-ocupado.png" *ngIf="asiento.estado==='ocupado'" />
+                        <img src="../../../assets/icon/png/Asiento-disponible.png" *ngIf="asiento.estado==='libre'" />
+                        <img src="../../../assets/icon/png/Asiento-seleccionado.png"
+                          *ngIf="asiento.estado==='seleccionado'" />
+                        <ion-text
+                          style="color: red; color: white;position: absolute;font-size: 0.8rem;top: 1rem;font-weight: bold;">
+                          {{asiento.asiento}}
+                        </ion-text>
+                      </ion-button>
+
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div style=" width: 50%;     text-align: -webkit-center;">
-                <div
-                  style="width: 15vw; background-color: blue; color: white; border-radius: 4px; padding: 0px; font-size: 3.5vw; text-align: center; margin: 1vw;">
-                  Piso 2
+
+              <!-- leyenda -->
+              <div style="width: 40vw; display: flex;justify-content:
+                center;align-items: center;border-left: 2px solid #f2f2f2;">
+                <div>
+                  <div style="display: flex;align-items: center;">
+                    <img style="height: 2rem;" src="../../../assets/icon/png/Asiento-disponible.png" />
+                    <ion-text>Disponible</ion-text>
+                  </div>
+                  <div style="display: flex;align-items: center;">
+                    <img style="height: 2rem;" src="../../../assets/icon/png/Asiento-ocupado.png" />
+                    <ion-text>Ocupado</ion-text>
+                  </div>
+                  <div style="display: flex;align-items: center;">
+                    <img style="height: 2rem;" src="../../../assets/icon/png/Asiento-seleccionado.png" />
+                    <ion-text>Seleccionado</ion-text>
+                  </div>
                 </div>
               </div>
             </div>
-
-
-
-
-
-            <div style="width: 100%; display: flex;" *ngFor="let item of [1,2,3,4,5,6,7,8,9]">
-
-              <ion-button fill="clear" style="margin-left: 4vw; color: orangered;   outline: none;padding:0;font-size: 0vw;">
-                <ion-icon style="font-size: 3vw; color: darkgrey;font-size: 8vw;"src="../../../assets/icon/seat003.svg"></ion-icon>
-                <ion-text style="color: red;    color: white;position: absolute;font-size: 3vw;top: 3vw;">34</ion-text>
-              </ion-button>
-
-              <ion-button fill="clear" style=" color: orangered;   outline: none;padding:0;font-size: 0vw;">
-                <ion-icon style="font-size: 3vw; color: darkgrey;font-size: 8vw;"src="../../../assets/icon/seat003.svg"></ion-icon>
-                <ion-text style="color: red;    color: white;position: absolute;font-size: 3vw;top: 3vw;">34</ion-text>
-              </ion-button>
-
-              <ion-button fill="clear" style="margin-left: 4vw; color: orangered; outline: none;padding:0;font-size: 0vw;">
-                <ion-icon style="font-size: 3vw; color: darkgrey;font-size: 8vw;"src="../../../assets/icon/seat003.svg"></ion-icon>
-                <ion-text style="color: red;    color: white;position: absolute;font-size: 3vw;top: 3vw;">34</ion-text>
-              </ion-button>
-
-              <ion-button fill="clear" style=" color: orangered;   outline: none;padding:0;font-size: 0vw;">
-                <ion-icon style="font-size: 3vw; color: darkgrey;font-size: 8vw;"src="../../../assets/icon/seat003.svg"></ion-icon>
-                <ion-text style="color: red;    color: white;position: absolute;font-size: 3vw;top: 3vw;">34</ion-text>
-              </ion-button>
-
-              <ion-button fill="clear" style="margin-left: 12vw; color: orangered;   outline: none;padding:0;font-size: 0vw;">
-                <ion-icon style="font-size: 3vw; color: darkgrey;font-size: 8vw;"src="../../../assets/icon/seat003.svg"></ion-icon>
-                <ion-text style="color: red;    color: white;position: absolute;font-size: 3vw;top: 3vw;">34</ion-text>
-              </ion-button>
-
-              <ion-button fill="clear" style=" color: orangered;   outline: none;padding:0;font-size: 0vw;">
-                <ion-icon style="font-size: 3vw; color: darkgrey;font-size: 8vw;"src="../../../assets/icon/seat003.svg"></ion-icon>
-                <ion-text style="color: red;    color: white;position: absolute;font-size: 3vw;top: 3vw;">34</ion-text>
-              </ion-button>
-
-              <ion-button fill="clear" style="margin-left: 4vw; color: orangered; outline: none;padding:0;font-size: 0vw;">
-                <ion-icon style="font-size: 3vw; color: darkgrey;font-size: 8vw;"src="../../../assets/icon/seat003.svg"></ion-icon>
-                <ion-text style="color: red;    color: white;position: absolute;font-size: 3vw;top: 3vw;">34</ion-text>
-              </ion-button>
-
-              <ion-button fill="clear" style=" color: orangered;   outline: none;padding:0;font-size: 0vw;">
-                <ion-icon style="font-size: 3vw; color: darkgrey;font-size: 8vw;"src="../../../assets/icon/seat003.svg"></ion-icon>
-                <ion-text style="color: red;    color: white;position: absolute;font-size: 3vw;top: 3vw;">34</ion-text>
-              </ion-button>
-
-
-
-
-
-
-
-
-
-
-            </div>
-
-
-
-
           </ion-col>
         </ion-row>
       </ion-grid>
@@ -239,47 +281,65 @@
   </div>
 </ion-content>
 
-
 <ion-footer>
-
-  <div style="width: 100%; display: flex;">
-
-    <ion-button fill="clear" style="color: orangered;  width: 25%; outline: none;">
-      <ion-icon src="../../../assets/icon/previous.svg" style="color: orangered;font-size: 2.5vw;padding: 3px;">
+  <!-- <div style="width: 100%; display: flex;">
+    <ion-button fill="clear" style="color: #fe5200; width: 25%; outline:
+      none;">
+      <ion-icon src="../../../assets/icon/previous.svg" style="color:
+        #fe5200;font-size: 2.5vw;padding: 3px;">
       </ion-icon>
-      <div style="display: inline;  text-align: right; text-transform: none;font-size: 3vw;">Atrás</div>
+      <div style="display: inline; text-align: right; text-transform:
+        none;font-size: 3vw;">
+        Atrás
+      </div>
     </ion-button>
 
-    <ion-button fill="clear" style="color: orangered;  width: 25%; outline: none;">
-      <ion-icon name="md-repeat" style="transform: rotate(90deg); color: orangered;font-size: 5vw;"></ion-icon>
-      <div style="display: inline;  text-align: right; text-transform: none;font-size: 3vw;">Ordenar</div>
+    <ion-button fill="clear" style="color: #fe5200; width: 25%; outline:
+      none;">
+      <ion-icon name="md-repeat" style="transform: rotate(90deg); color:
+        #fe5200;font-size: 5vw;"></ion-icon>
+      <div style="display: inline; text-align: right; text-transform:
+        none;font-size: 3vw;">
+        Ordenar
+      </div>
     </ion-button>
 
-    <ion-button fill="clear" style="color: orangered;  width: 25%; outline: none;">
-      <ion-icon name="md-code-download" style="color: orangered;font-size: 5vw;padding: 1px;"></ion-icon>
-      <div style="display: inline;  text-align: right; text-transform: none;font-size: 3vw;">Filtros</div>
+    <ion-button fill="clear" style="color: #fe5200; width: 25%; outline:
+      none;">
+      <ion-icon name="md-code-download" style="color: #fe5200;font-size:
+        5vw;padding: 1px;"></ion-icon>
+      <div style="display: inline; text-align: right; text-transform:
+        none;font-size: 3vw;">
+        Filtros
+      </div>
     </ion-button>
 
-    <ion-button fill="clear" style="color: orangered;  width: 25%; outline: none;">
-      <div style="display: inline;  text-align: right; text-transform: none;font-size: 3vw;">Siguiente</div>
+    <ion-button fill="clear" style="color: #fe5200; width: 25%; outline:
+      none;">
+      <div style="display: inline; text-align: right; text-transform:
+        none;font-size: 3vw;">
+        Siguiente
+      </div>
       <ion-icon src="../../../assets/icon/previous.svg"
-        style="transform: rotate(180deg); color: orangered;font-size: 3vw;"></ion-icon>
+        style="transform: rotate(180deg); color: #fe5200;font-size: 3vw;"></ion-icon>
     </ion-button>
+  </div> -->
 
-  </div>
-
-
-  <div style=" width: 100%; display: flex;align-items: center;justify-content: center; background-color: orangered;">
-
-    <div
-      style="width: 50%;display: inline;  text-align: left;padding-right: 7px;  text-transform: none;padding-left: 20px;font-size: 5vw;color: white;font-weight: bold; ">
-      Total: $5.500
+  <div style="width: 100%; display: flex;align-items: center;justify-content:
+    center; background-color: #fe5200;">
+    <div style="width: 50%;display: inline; text-align: left;padding-right: 7px;
+      text-transform: none;padding-left: 20px;font-size: 1.5rem;color:
+      white;font-weight: bold;">
+      Total: ${{tarifaTotal.toLocaleString('de-DE') }}
     </div>
 
-    <ion-button fill="clear" style="color: white;  width: 50%; outline: none;" routerLink="/purchase-detail">
-      <div style="display: inline;  text-align: right;padding-right: 7px;  text-transform: none">Continuar</div>
-      <ion-icon src="../../../assets/icon/previous.svg" style="transform: rotate(180deg);"></ion-icon>
+    <ion-button fill="clear" style="color: white; width: 50%; outline: none;" (click)="continuar()">
+      <div style="display: inline; text-align: right;padding-right: 7px;
+        text-transform: none">
+        Continuar
+      </div>
+      <ion-icon src="../../../assets/icon/previous.svg" style="transform:
+        rotate(180deg);"></ion-icon>
     </ion-button>
-
   </div>
 </ion-footer>

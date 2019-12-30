@@ -1,10 +1,10 @@
 <ion-header no-border>
-
   <div class="cabeceraGeneral">
-
     <div style="display: inline; width: 5%;"></div>
 
-    <div style="display: inline; width: 10%;border-color: white; border: solid 1px;margin: 5px;">Es</div>
+    <div style="display: inline; width: 10%;border-color: white; border: solid 1px;margin: 5px;">
+      Es
+    </div>
 
     <div style="display: inline; width: 60%;">
       <ion-img src="./../../../assets/images/titulo.png" style="height: 100%;height: 5vh;"></ion-img>
@@ -19,18 +19,15 @@
     </div>
 
     <div style="display: inline; width: 5%;"></div>
-
   </div>
 
   <div class="cabeceraTitulo">
     Pasaje de ida
   </div>
-
 </ion-header>
 
-
 <ion-content>
-  <div style="width: 100%;height: 100%; background-color: orangered;padding: 0">
+  <div style="width: 100%;height: 100%; background-color: #fe5200;padding: 0">
     <div style=" height: 100%; background-color: white ;margin: 0px 0px 0px 0px;">
       <ion-grid style="height: 100%;" class="ion-no-margin ion-no-padding">
         <ion-row style="height: 100%"
@@ -39,9 +36,10 @@
 
 
 
-            <div style="background-color: lightgray; font-size: 2vw;padding: 5px 0;margin: 3px 0px;"
-              *ngFor="let item of [1,1,1,1]">
 
+
+            <div style=" font-size: 2vw;padding: 5px 0;margin: 3px 0px;" [ngClass]="(i % 2 == 0) ? 'odd' : 'even'"
+              *ngFor="let svc of allServices; let i = index;">
               <!-- 1ra fila -->
               <div style="width: 100%; display: flex;">
                 <div style="display: inline; width: 15%; font-weight: bold;">
@@ -52,28 +50,28 @@
                 </div>
                 <div style="display: inline; width: 10%;">
                   <div
-                    style="background-color: white; border: 2px solid orangered;border-radius: 3px;display: flex;justify-content: center;align-items: center; color:orangered; font-weight: bold;font-size: 2.3vw;height: 100%;margin: 0px 1px 0px 5px;">
+                    style="background-color: white; border: 2px solid #fe5200;border-radius: 3px;display: flex;justify-content: center;align-items: center; color:#fe5200; font-weight: bold;font-size: 2.3vw;height: 100%;margin: 0px 1px 0px 5px;">
                     Piso 1
                   </div>
                 </div>
                 <div style="display: inline; width: 15%; text-align: left;">
-                  <div>Salon semicama</div>
-                  <div style="font-weight: bold;">Valor: $3.500</div>
+                  <div>{{svc.servicioPrimerPiso | titlecase}}</div>
+                  <div style="font-weight: bold;">Valor: ${{svc.tarifaPrimerPiso}}</div>
                 </div>
                 <div style="display: inline; width: 10%;">
-                  <div
-                    style="background-color: orangered; border-radius: 3px;display: flex;justify-content: center;align-items: center; color:white; font-weight: bold;font-size: 2.3vw; height: 100%; margin: 0px 1px 0px 5px;">
+                  <div *ngIf="svc.tarifaSegundoPiso"
+                    style="background-color: #fe5200; border-radius: 3px;display: flex;justify-content: center;align-items: center; color:white; font-weight: bold;font-size: 2.3vw; height: 100%; margin: 0px 1px 0px 5px;">
                     Piso 2
                   </div>
                 </div>
                 <div style="display: inline; width: 15%; text-align: left;">
-                  <div>Salon cama</div>
-                  <div style="font-weight: bold;">Valor: $5.500</div>
+                  <div *ngIf="svc.tarifaSegundoPiso">{{svc.servicioSegundoPiso | titlecase}}</div>
+                  <div *ngIf="svc.tarifaSegundoPiso" style="font-weight: bold;">Valor: ${{svc.tarifaSegundoPiso}}</div>
                 </div>
-                <div style="display: inline; width: 10%;"> </div>
+                <div style="display: inline; width: 10%;"></div>
                 <div style="display: inline; width: 25%;">
                   <div style="display: flex;align-items: center; font-size: 2vw;height: 100%;font-size: 1.8vw">
-                    <img src="../../../assets/images/Logo_003.jpg" style="width: 90%;border-radius: 2px;">
+                    <img src="../../../assets/images/Logo_003.jpg" style="width: 90%;border-radius: 2px;" />
                   </div>
                 </div>
               </div>
@@ -83,7 +81,8 @@
                 <div style="display: inline; width: 15%; color: red;">
                   <div
                     style="display: flex;justify-content: center;align-items: center; font-weight: bold;font-size: 2.3vw;height: 100%;">
-                    25 <ion-icon style="font-size: 12px;" name="close-circle"></ion-icon>
+                    25
+                    <ion-icon style="font-size: 12px;" src="../../../assets/icon/Porcentaje003.svg"></ion-icon>
                   </div>
                 </div>
                 <div style="display: inline; width: 85%;"></div>
@@ -96,32 +95,33 @@
                 </div>
                 <div style="display: inline; width: 15%;">
                   <div style="display: flex;align-items: center; font-size: 2vw;height: 100%;font-size: 2.3vw">
-                    Santiago
+                    {{this.ticket.origin.nombre  | titlecase }}
                   </div>
                 </div>
                 <div style="display: inline; width: 10%;">
                   <div style="display: flex;align-items: center; font-size: 2vw;height: 100%;font-size: 1.8vw">
-                    6:26 AM
+                    {{svc.horaSalida | hh2ampm}}
                   </div>
                 </div>
                 <div style="display: inline; width: 20%;">
                   <div style="display: flex;align-items: center; font-size: 2vw;height: 100%;font-size: 1.8vw">
-                    <img src="../../../assets/images/flecha001.png" style="width: 85%;">
+                    <img src="../../../assets/images/flecha001.png" style="width: 85%;" />
                   </div>
                 </div>
                 <div style="display: inline; width: 20%;">
                   <div style="display: flex;align-items: center; font-size: 2vw;height: 100%;font-size: 2.3vw">
-                    Concepción
+                    {{this.ticket.destiny.nombre  | titlecase }}
                   </div>
                 </div>
                 <div style="display: inline; width: 10%;">
                   <div style="display: flex;align-items: center; font-size: 2vw;height: 100%;font-size: 1.8vw">
-                    6:26 AM
+                    {{svc.horaLlegada | hh2ampm }}
                   </div>
                 </div>
                 <div style="display: inline; width: 10%;">
                   <div style="display: flex;align-items: center; font-size: 2vw;height: 100%;font-size: 1.8vw">
-                    <ion-checkbox mode="ios"></ion-checkbox>
+                    <ion-checkbox mode="ios" [(ngModel)]="allServices[i].checked" (click)="myseleccion(i)">
+                    </ion-checkbox>
                   </div>
                 </div>
               </div>
@@ -129,9 +129,13 @@
               <!-- 4ta fila -->
               <div style="width: 100%; display: flex;">
                 <div style="display: inline; width: 15%;"></div>
-                <div style="display: inline; width: 25%;text-align: left;"> Origen: TermSur</div>
+                <div style="display: inline; width: 25%;text-align: left;">
+                  Origen: {{svc.terminalSalida  | titlecase }}
+                </div>
                 <div style="display: inline; width: 20%;"></div>
-                <div style="display: inline; width: 30%;text-align: left;">Destino final: term Valpo</div>
+                <div style="display: inline; width: 30%;text-align: left;">
+                  Destino final: {{svc.terminaLlegada  | titlecase}}
+                </div>
                 <div style="display: inline; width: 10%;"></div>
               </div>
 
@@ -139,11 +143,12 @@
               <div style="width: 100%; display: flex;">
                 <div style="display: inline; width: 15%;">
                   <div
-                    style="display: flex;justify-content: center;align-items: center; font-weight: bold;font-size: 2.3vw;height: 100%;">
-                    <ion-icon style="font-size: 12px;" name="clock"></ion-icon> 5Hrs.
+                    style="display: flex;justify-content: center;align-items: center; font-weight: bold;font-size: 2.3vw;height: 100%;flex-direction: column;">
+                    <ion-icon style="font-size: 12px;" name="clock"></ion-icon>
+                    {{'X'| duration: svc.fechaSalida : svc.horaSalida : svc.fechaLlegada : svc.horaLlegada}}
                   </div>
                 </div>
-                <div style="display: inline; width: 85%;"> </div>
+                <div style="display: inline; width: 85%;"></div>
               </div>
 
               <!-- 6ta fila -->
@@ -152,16 +157,125 @@
                 <div style="display: inline; width: 5%;">
                   <ion-icon style="font-size: 12px;" name="calendar"></ion-icon>
                 </div>
-                <div style="display: inline; width: 80%; display: flex;align-items: center;font-size: 2.3vw;">Miercoles
-                  13 de Noviembre 2019</div>
+                <div style="display: inline; width: 80%; display: flex;align-items: center;font-size: 2.3vw;">
+                  {{svc.fechaSalida | date2line }}
+                  <!-- Miercoles 13 de Noviembre 2019 -->
+                </div>
               </div>
-
             </div>
 
+            <!-- <div style="background-color: #f2f2f2; font-size: 2vw;padding: 5px 0;margin: 3px 0px;"
+*ngFor="let item of [1,1,1,1]">
 
+<div style="width: 100%; display: flex;">
+  <div style="display: inline; width: 15%; font-weight: bold;">
+    <div
+      style="display: flex;justify-content: center;align-items: center; font-weight: bold;font-size: 2.3vw;height: 100%;">
+      Ida
+    </div>
+  </div>
+  <div style="display: inline; width: 10%;">
+    <div
+      style="background-color: white; border: 2px solid #fe5200;border-radius: 3px;display: flex;justify-content: center;align-items: center; color:#fe5200; font-weight: bold;font-size: 2.3vw;height: 100%;margin: 0px 1px 0px 5px;">
+      Piso 1
+    </div>
+  </div>
+  <div style="display: inline; width: 15%; text-align: left;">
+    <div>Salon semicama</div>
+    <div style="font-weight: bold;">Valor: $3.500</div>
+  </div>
+  <div style="display: inline; width: 10%;">
+    <div
+      style="background-color: #fe5200; border-radius: 3px;display: flex;justify-content: center;align-items: center; color:white; font-weight: bold;font-size: 2.3vw; height: 100%; margin: 0px 1px 0px 5px;">
+      Piso 2
+    </div>
+  </div>
+  <div style="display: inline; width: 15%; text-align: left;">
+    <div>Salon cama</div>
+    <div style="font-weight: bold;">Valor: $5.500</div>
+  </div>
+  <div style="display: inline; width: 10%;"> </div>
+  <div style="display: inline; width: 25%;">
+    <div style="display: flex;align-items: center; font-size: 2vw;height: 100%;font-size: 1.8vw">
+      <img src="../../../assets/images/Logo_003.jpg" style="width: 90%;border-radius: 2px;">
+    </div>
+  </div>
+</div>
 
+<div style="width: 100%; display: flex;">
+  <div style="display: inline; width: 15%; color: red;">
+    <div
+      style="display: flex;justify-content: center;align-items: center; font-weight: bold;font-size: 2.3vw;height: 100%;">
+      25 <ion-icon style="font-size: 12px;" name="close-circle"></ion-icon>
+    </div>
+  </div>
+  <div style="display: inline; width: 85%;"></div>
+</div>
 
+<div style="width: 100%; display: flex;">
+  <div style="display: inline; width: 15%;">
+    <ion-icon style="font-size: 12px; color: red;    font-size: 6vw;" name="bus"></ion-icon>
+  </div>
+  <div style="display: inline; width: 15%;">
+    <div style="display: flex;align-items: center; font-size: 2vw;height: 100%;font-size: 2.3vw">
+      Santiago
+    </div>
+  </div>
+  <div style="display: inline; width: 10%;">
+    <div style="display: flex;align-items: center; font-size: 2vw;height: 100%;font-size: 1.8vw">
+      6:26 AM
+    </div>
+  </div>
+  <div style="display: inline; width: 20%;">
+    <div style="display: flex;align-items: center; font-size: 2vw;height: 100%;font-size: 1.8vw">
+      <img src="../../../assets/images/flecha001.png" style="width: 85%;">
+    </div>
+  </div>
+  <div style="display: inline; width: 20%;">
+    <div style="display: flex;align-items: center; font-size: 2vw;height: 100%;font-size: 2.3vw">
+      Concepción
+    </div>
+  </div>
+  <div style="display: inline; width: 10%;">
+    <div style="display: flex;align-items: center; font-size: 2vw;height: 100%;font-size: 1.8vw">
+      6:26 AM
+    </div>
+  </div>
+  <div style="display: inline; width: 10%;">
+    <div style="display: flex;align-items: center; font-size: 2vw;height: 100%;font-size: 1.8vw">
+      <ion-checkbox mode="ios"></ion-checkbox>
+    </div>
+  </div>
+</div>
 
+<div style="width: 100%; display: flex;">
+  <div style="display: inline; width: 15%;"></div>
+  <div style="display: inline; width: 25%;text-align: left;"> Origen: TermSur</div>
+  <div style="display: inline; width: 20%;"></div>
+  <div style="display: inline; width: 30%;text-align: left;">Destino final: term Valpo</div>
+  <div style="display: inline; width: 10%;"></div>
+</div>
+
+<div style="width: 100%; display: flex;">
+  <div style="display: inline; width: 15%;">
+    <div
+      style="display: flex;justify-content: center;align-items: center; font-weight: bold;font-size: 2.3vw;height: 100%;">
+      <ion-icon style="font-size: 12px;" name="clock"></ion-icon> 5Hrs.
+    </div>
+  </div>
+  <div style="display: inline; width: 85%;"> </div>
+</div>
+
+<div style="width: 100%; display: flex;">
+  <div style="display: inline; width: 15%;"></div>
+  <div style="display: inline; width: 5%;">
+    <ion-icon style="font-size: 12px;" name="calendar"></ion-icon>
+  </div>
+  <div style="display: inline; width: 80%; display: flex;align-items: center;font-size: 2.3vw;">Miercoles
+    13 de Noviembre 2019</div>
+</div>
+
+</div> -->
           </ion-col>
         </ion-row>
       </ion-grid>
@@ -169,47 +283,50 @@
   </div>
 </ion-content>
 
-
 <ion-footer>
-
   <div style="width: 100%; display: flex;">
-
-    <ion-button fill="clear" style="color: orangered;  width: 25%; outline: none;">
-      <ion-icon src="../../../assets/icon/previous.svg" style="color: orangered;font-size: 2.5vw;padding: 3px;">
+    <ion-button fill="clear" style="color: #fe5200;  width: 25%; outline: none;">
+      <ion-icon src="../../../assets/icon/previous.svg" style="color: #fe5200;font-size: 2.5vw;padding: 3px;">
       </ion-icon>
-      <div style="display: inline;  text-align: right; text-transform: none;font-size: 3vw;">Atrás</div>
+      <div style="display: inline;  text-align: right; text-transform: none;font-size: 3vw;">
+        Atrás
+      </div>
     </ion-button>
 
-    <ion-button fill="clear" style="color: orangered;  width: 25%; outline: none;">
-      <ion-icon name="md-repeat" style="transform: rotate(90deg); color: orangered;font-size: 5vw;"></ion-icon>
-      <div style="display: inline;  text-align: right; text-transform: none;font-size: 3vw;">Ordenar</div>
+    <ion-button fill="clear" style="color: #fe5200;  width: 25%; outline: none;">
+      <ion-icon name="md-repeat" style="transform: rotate(90deg); color: #fe5200;font-size: 5vw;"></ion-icon>
+      <div style="display: inline;  text-align: right; text-transform: none;font-size: 3vw;">
+        Ordenar
+      </div>
     </ion-button>
 
-    <ion-button fill="clear" style="color: orangered;  width: 25%; outline: none;">
-      <ion-icon name="md-code-download" style="color: orangered;font-size: 5vw;padding: 1px;"></ion-icon>
-      <div style="display: inline;  text-align: right; text-transform: none;font-size: 3vw;">Filtros</div>
+    <ion-button fill="clear" style="color: #fe5200;  width: 25%; outline: none;">
+      <ion-icon name="md-code-download" style="color: #fe5200;font-size: 5vw;padding: 1px;"></ion-icon>
+      <div style="display: inline;  text-align: right; text-transform: none;font-size: 3vw;">
+        Filtros
+      </div>
     </ion-button>
 
-    <ion-button fill="clear" style="color: orangered;  width: 25%; outline: none;">
-      <div style="display: inline;  text-align: right; text-transform: none;font-size: 3vw;">Siguiente</div>
+    <ion-button fill="clear" style="color: #fe5200;  width: 25%; outline: none;">
+      <div style="display: inline;  text-align: right; text-transform: none;font-size: 3vw;">
+        Siguiente
+      </div>
       <ion-icon src="../../../assets/icon/previous.svg"
-        style="transform: rotate(180deg); color: orangered;font-size: 3vw;"></ion-icon>
+        style="transform: rotate(180deg); color: #fe5200;font-size: 3vw;"></ion-icon>
     </ion-button>
-
   </div>
 
-
-  <div style=" width: 100%; display: flex;align-items: center;justify-content: center; background-color: orangered;">
-
+  <div style=" width: 100%; display: flex;align-items: center;justify-content: center; background-color: #fe5200;">
     <div
-      style="width: 50%;display: inline;  text-align: left;padding-right: 7px;  text-transform: none;padding-left: 20px;font-size: 5vw;color: white;font-weight: bold; ">
+      style="width: 50%;display: inline;  text-align: left;padding-right: 7px;  text-transform: none;padding-left: 20px;font-size: 1.3rem;color: white;font-weight: bold; ">
       Total: $5.500
     </div>
 
-    <ion-button fill="clear" style="color: white;  width: 50%; outline: none;" routerLink="/seat-selection">
-      <div style="display: inline;  text-align: right;padding-right: 7px;  text-transform: none">Continuar</div>
+    <ion-button fill="clear" style="color: white;  width: 50%; outline: none;" (click)="continuar()">
+      <div style="display: inline;  text-align: right;padding-right: 7px;  text-transform: none">
+        Continuar
+      </div>
       <ion-icon src="../../../assets/icon/previous.svg" style="transform: rotate(180deg);"></ion-icon>
     </ion-button>
-
   </div>
 </ion-footer>

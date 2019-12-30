@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { PipesModule } from './pipes/pipes.module';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -68,10 +69,15 @@ const routes: Routes = [
     path: 'ticket',
     loadChildren: () => import('./pages/ticket/ticket.module').then( m => m.TicketPageModule)
   },
+  {
+    path: 'recover-password',
+    loadChildren: () => import('./pages/recover-password/recover-password.module').then( m => m.RecoverPasswordPageModule)
+  },
 ];
 
 @NgModule({
-  imports: [
+  imports: [ 
+    PipesModule,
     RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
   ],
   exports: [RouterModule]

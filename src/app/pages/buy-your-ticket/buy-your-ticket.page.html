@@ -1,13 +1,15 @@
 <ion-header no-border>
-
   <div class="cabeceraGeneral">
-
     <div style="display: inline; width: 5%;"></div>
 
-    <div style="display: inline; width: 10%;border-color: white; border: solid 1px;margin: 5px;">Es</div>
+    <div style="display: inline; width: 10%;border-color: white; border: solid
+      1px;margin: 5px;">
+      Es
+    </div>
 
     <div style="display: inline; width: 60%;">
-      <ion-img src="./../../../assets/images/titulo.png" style="height: 100%;height: 5vh;"></ion-img>
+      <ion-img src="./../../../assets/images/titulo.png" style="height:
+        100%;height: 5vh;"></ion-img>
     </div>
 
     <div style="display: inline; width: 10%;">
@@ -19,38 +21,44 @@
     </div>
 
     <div style="display: inline; width: 5%;"></div>
-
   </div>
-
-
-
+ 
   <div class="cabeceraTitulo">
     Compra tu pasaje
   </div>
-
 </ion-header>
-
 <ion-content>
-  <div style="width: 100%;height: 100%; background-color: orangered;padding: 0px 3vw;">
-    <div style=" height: 100%; background-color: white ;margin: 0px 0px 0px 0px;">
+  <div style="width: 100%;height: 100%; background-color: #fe5200;padding: 0px
+    3vw;">
+    <div style="height: 100%; background-color: white ;margin: 0px 0px 0px
+      0px;">
       <ion-grid style="height: 100%;" class="ion-no-margin ion-no-padding">
-        <ion-row style="height: 100%"
-          class="ion-no-margin ion-no-padding ion-justify-content-center ion-align-items-center">
-          <ion-col size="12" style="text-align: center;" class="ion-no-margin ion-no-padding">
+        <ion-row style="height: 100%" class="ion-no-margin ion-no-padding ion-justify-content-center
+          ion-align-items-center">
+          <ion-col size="12" style="text-align: center;" class="ion-no-margin
+            ion-no-padding">
 
-            <ion-row style="background-color: lightgray;" class="ion-no-margin ion-no-padding">
-              <ion-col size="6" style="display: flex; align-items: center; justify-content: center;">
-                <ion-checkbox mode="ios" style="position: relative; left: -7px;"></ion-checkbox>
+            <!-- <button *ngIf='show' style="height: 10vh;" [@simple]>דוגמא</button> -->
+
+
+
+            <!-- <ion-row style="background-color: #f2f2f2;" class="ion-no-margin
+              ion-no-padding">
+              <ion-col size="6" style="display: flex; align-items: center;
+                justify-content: center;">
+                <ion-checkbox mode="ios" style="position: relative; left: -7px;height: 1.5rem;width: 1.5rem;"
+                  (ionChange)="checkChangeGoOnly($event.detail.checked)" [(ngModel)]="goOnly"></ion-checkbox>
                 Solo ida
               </ion-col>
-              <ion-col size="6" style="display: flex; align-items: center; justify-content: center;">
-                <ion-checkbox mode="ios" style="position: relative; left: -7px;"></ion-checkbox>
+              <ion-col size="6" style="display: flex; align-items: center;
+                justify-content: center;">
+                <ion-checkbox mode="ios" style="position: relative; left: -7px;height: 1.5rem;width: 1.5rem;"
+                  (ionChange)="checkChangeGoBack($event.detail.checked)" [(ngModel)]="goBack"></ion-checkbox>
                 Ida y vuelta
               </ion-col>
-            </ion-row>
+            </ion-row> -->
 
-            <ion-row style="margin-top: 3vh;">
-
+            <!-- <ion-row style="margin-top: 3vh;">
               <ion-col size="6">
                 Origen
               </ion-col>
@@ -58,50 +66,180 @@
               <ion-col size="6">
                 Destino
               </ion-col>
+            </ion-row>
+ -->
 
+
+            <!-- Selects Origen -->
+            <ion-row style="margin-top: 2vh;" class="ion-no-margin
+            ion-no-padding ion-justify-content-center">
+              <ion-col size="12" class="ion-justify-content-center ion-no-margin
+              ion-no-padding ion-align-items-center" style="display: contents">
+                <div style="text-align: center; width: 97%; border: 1px solid #fe5200; border-radius: 5px;">
+                  <ion-item style="width: 100%;/*height: 8vh*/;border-radius: 8px;">
+                    <ion-icon class="iconEditable" name="locate"></ion-icon>
+                    <ion-label>Origen</ion-label>
+                    <ion-select class="ion-no-padding ion-no-margin" multiple="false" placeholder="Seleccione.."
+                      cancel-text="Cancelar" (ionChange)="changeOrigin($event.detail.value)" [(ngModel)]="selectOrigin">
+                      <ion-select-option value="{{item.codigo}}" *ngFor="let item of allOrigin">{{item.nombre}}
+                      </ion-select-option>
+                    </ion-select>
+                  </ion-item>
+                </div>
+              </ion-col>
             </ion-row>
 
-            <ion-row>
+
+
+            <!-- Selects Destino -->
+            <ion-row style="margin-top: 2vh;" class="ion-no-margin
+            ion-no-padding ion-justify-content-center">
+              <ion-col size="12" class="ion-justify-content-center ion-no-margin
+              ion-no-padding ion-align-items-center" style="display: contents">
+                <div style="text-align: center; width: 97%; border: 1px solid #fe5200; border-radius: 5px;">
+                  <ion-item style="width: 100%;/*height: 8vh*/;border-radius: 8px;">
+                    <ion-icon class="iconEditable" name="pin"></ion-icon>
+                    <ion-label>Destino</ion-label>
+                    <ion-select class="ion-no-padding ion-no-margin" multiple="false" placeholder="Seleccione.."
+                      cancel-text="Cancelar" [disabled]="allDestiny.length<1" [(ngModel)]="selectDestiny">
+                      <ion-select-option value="{{item.codigo}}" *ngFor="let item
+                      of allDestiny">{{item.nombre}}
+                      </ion-select-option>
+                    </ion-select>
+                  </ion-item>
+                </div>
+              </ion-col>
+            </ion-row>
+
+
+            <!-- <ion-row>
               <ion-col size="6">
                 <div>
                   <ion-select class="ion-no-padding ion-no-margin" multiple="false" placeholder="Seleccione.."
-                    cancel-text="Cancelar" style="font-size: 4vw;">
-                    <ion-select-option value="Santiago-Curico">Santiago-Curico</ion-select-option>
-                    <ion-select-option value="Santiago-La Serena">Santiago-La Serena</ion-select-option>
-                    <ion-select-option value="Santiago-Concepción">Santiago-Concepción</ion-select-option>
+                    cancel-text="Cancelar" (ionChange)="changeOrigin($event.detail.value)" [(ngModel)]="selectOrigin">
+                    <ion-select-option value="{{item.codigo}}" *ngFor="let item
+                      of allOrigin">{{item.nombre}}
+                    </ion-select-option>
                   </ion-select>
                 </div>
               </ion-col>
               <ion-col size="6">
                 <div>
                   <ion-select class="ion-no-padding ion-no-margin" multiple="false" placeholder="Seleccione.."
-                    cancel-text="Cancelar" style="font-size: 4vw;">
-                    <ion-select-option value="Santiago-Curico">Santiago-Curico</ion-select-option>
-                    <ion-select-option value="Santiago-La Serena">Santiago-La Serena</ion-select-option>
-                    <ion-select-option value="Santiago-Concepción">Santiago-Concepción</ion-select-option>
+                    cancel-text="Cancelar" [disabled]="allDestiny.length<1" [(ngModel)]="selectDestiny">
+                    <ion-select-option value="{{item.codigo}}" *ngFor="let item
+                      of allDestiny">{{item.nombre}}
+                    </ion-select-option>
                   </ion-select>
                 </div>
               </ion-col>
+            </ion-row> -->
+
+
+
+            <!-- Fecha de Ida -->
+            <ion-row style="margin-top: 2vh;" class="ion-no-margin
+              ion-no-padding ion-justify-content-center">
+              <ion-col size="12" class="ion-justify-content-center ion-no-margin
+                ion-no-padding ion-align-items-center" style="display: contents">
+
+                <div style="text-align: center; width: 97%; border: 1px solid #fe5200; border-radius: 5px;">
+
+                  <ion-item style="width: 100%;/*height: 8vh*/;border-radius: 8px;">
+                    <ion-icon class="iconEditable" name="calendar"></ion-icon>
+                    <ion-label>Fecha de Ida:</ion-label>
+                    <ion-datetime displayFormat="DD/MM/YYYY" placeholder="Seleccione.." cancelText="Cancelar"
+                      doneText="Listo" mode="ios" [(ngModel)]="dateGo" (ionChange)="dateChangeGo()" [min]="minDateGo"
+                      [max]="maxDateGo"></ion-datetime>
+                  </ion-item>
+
+                  <div style="width: 100%;background-color: #f2f2f2; border-radius: 0 0 5px 5px;padding: 0.4vh;"
+                    *ngIf="dateGo">
+                    <ion-text style="color: black;font-size: 1rem;">{{ dateGo | date2line}}</ion-text>
+                  </div>
+
+                </div>
+
+              </ion-col>
             </ion-row>
 
-            <ion-row style="background-color: lightgray; margin-top: 5vh;" class="ion-no-margin ion-no-padding">
+            
+            <!-- Fecha Retorno -->
+            <ion-row style="margin-top: 2vh;" class="ion-no-margin
+            ion-no-padding ion-justify-content-center">
+            <ion-col size="12" class="ion-justify-content-center ion-no-margin
+              ion-no-padding ion-align-items-center" style="display: contents">
 
-              <ion-col size="6" style="display: flex;align-items: center;" class="ion-no-margin ion-no-padding">
-                <ion-icon name="bus" class="iconEditable" style="margin: 0px 2vw 0 1vw;"></ion-icon>
+              <div style="text-align: center; width: 97%; border: 1px solid #fe5200; border-radius: 5px;">
+
+                <ion-item style="width: 100%;/*height: 8vh*/;border-radius: 8px;">
+                  <ion-icon class="iconEditable" name="calendar"></ion-icon>
+                  <ion-label>Fecha de regreso:</ion-label>
+                  <ion-datetime displayFormat="DD/MM/YYYY" placeholder="Opcional.." cancelText="Sin regreso" (ionCancel)="noBack()"
+                    doneText="Listo" mode="ios" [(ngModel)]="dateBack" (ionChange)="dateChangeBack()" [min]="minDateBack"
+                    [max]="maxDateBack"></ion-datetime>
+                </ion-item>
+
+                <div style="width: 100%;background-color: #f2f2f2; border-radius: 0 0 5px 5px;padding: 0.4vh;"
+                  *ngIf="dateBack">
+                  <ion-text style="color: black;font-size: 1rem;">{{ dateBack | date2line}}</ion-text>
+                </div>
+
+              </div>
+
+            </ion-col>
+          </ion-row>
+
+            <!-- <ion-row style="margin-top: 2vh;" class="ion-no-margin
+            ion-no-padding ion-justify-content-center" >
+              <ion-col size="12" class="ion-justify-content-center ion-no-margin
+              ion-no-padding ion-align-items-center" style="display: contents">
+
+                <div style="text-align: center; width: 97%; border: 1px solid #fe5200; border-radius: 5px;">
+
+                  <ion-item style="width: 100%;border-radius: 8px;">
+                    <ion-icon class="iconEditable" name="calendar"></ion-icon>
+                    <ion-label>Fecha de Regreso:</ion-label>
+                    <ion-datetime displayFormat="DD/MM/YYYY" placeholder="Seleccione.." cancelText="Cancelar"
+                      doneText="Listo" mode="ios" [(ngModel)]="dateBack" (ionChange)="dateChangeBack()"
+                      [min]="minDateBack" [max]="maxDateBack"></ion-datetime>
+                  </ion-item>
+
+                  <div style="width: 100%;background-color: #f2f2f2; border-radius: 0 0 5px 5px;padding: 0.4vh;"
+                    *ngIf="dateBack">
+                    <ion-text style="color: black;font-size: 1rem;">{{stringDateBack}}</ion-text>
+                  </div>
+                 
+                </div>
+
+              </ion-col>
+            </ion-row> -->
+
+            <!-- XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXx
+            XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXx -->
+
+            <!-- <ion-row style="background-color: #f2f2f2; margin-top: 3vh;padding: 1vh 0;"
+              class="ion-no-margin ion-no-padding ion-justify-content-center">
+
+              <ion-col size="6" style="display: flex;align-items: center;"
+                class="ion-no-margin ion-no-padding ion-justify-content-center">
                 <ion-text>Fecha ida </ion-text>
               </ion-col>
 
-              <ion-col size="6" style="display: flex;align-items: center;  " class="ion-no-margin ion-no-padding">
-                <ion-icon name="bus" class="iconEditable" style="margin: 0px 2vw 0 1vw;"></ion-icon>
+              <ion-col size="6" style="display: flex;align-items: center;  "
+                class="ion-no-margin ion-no-padding ion-justify-content-center" *ngIf="goBack">
                 <ion-text>Fecha regreso </ion-text>
               </ion-col>
 
             </ion-row>
 
-            <ion-row style="background-color: lightgray; margin-top: 1vh; padding: 10px 0px 10px 0px;"
-              class=" ion-no-margin ion-no-padding">
 
-              <ion-col size="6" class="ion-no-margin ion-no-padding">
+
+
+            <ion-row style="background-color: #f2f2f2; margin-top: 1vh; padding: 10px 0px 10px 0px;"
+              class=" ion-no-margin ion-no-padding ion-justify-content-center">
+
+              <ion-col size="6" class="ion-no-margin ion-no-padding ion-justify-content-center">
 
                 <ion-row style="display: flex; align-items: center; justify-content: center;">
 
@@ -109,36 +247,32 @@
                     <ion-icon name="calendar" class="iconEditable"></ion-icon>
                   </ion-col>
 
-                  <ion-col size="2" class="dia" class="ion-no-margin ion-no-padding">30</ion-col>
+                  <ion-col size="2" class="dia" class="ion-no-margin ion-no-padding">24</ion-col>
 
-                  <ion-col size="8" class="fecha" class="ion-no-margin ion-no-padding" style="text-align: left; font-size: 4vw;">
+                  <ion-col size="8" class="fecha" class="ion-no-margin ion-no-padding"
+                    style="text-align: left; font-size: 4vw;">
                     <div>Noviembre 2019</div>
                     <div>Miércoles</div>
                   </ion-col>
 
                 </ion-row>
-
               </ion-col>
 
-              <ion-col size="6" class="ion-no-margin ion-no-padding">
+              <ion-col size="6" class="ion-no-margin ion-no-padding ion-justify-content-center" *ngIf="goBack">
                 <ion-row style="display: flex; align-items: center; justify-content: center;">
                   <ion-col size="2" class="ion-no-margin ion-no-padding">
                     <ion-icon class="iconEditable" name="calendar"></ion-icon>
                   </ion-col>
-                  <ion-col size="2" class="dia" class="ion-no-margin ion-no-padding">28</ion-col>
-                  <ion-col size="8" class="fecha" class="ion-no-margin ion-no-padding" style="text-align: left; font-size: 4vw;">
+                  <ion-col size="2" class="dia" class="ion-no-margin ion-no-padding">30</ion-col>
+                  <ion-col size="8" class="fecha" class="ion-no-margin ion-no-padding"
+                    style="text-align: left; font-size: 4vw;">
                     <div>Noviembre 2019</div>
                     <div>Lunes</div>
                   </ion-col>
                 </ion-row>
               </ion-col>
 
-            </ion-row>
-
-
-
-
-
+            </ion-row> -->
           </ion-col>
         </ion-row>
       </ion-grid>
@@ -146,14 +280,16 @@
   </div>
 </ion-content>
 
-
-<ion-footer no-border style=" width: 100vw;background-color: orangered;color: white;">
+<ion-footer no-border style="width: 100vw;background-color: #fe5200;color:
+  white;">
   <div style="width: 100%; display: flex;justify-content: center;">
-
-    <ion-button slot="start" fill="clear" style="color: white; width: 100%; outline: none;" routerLink="/ticket">
+    <ion-button slot="start" fill="clear" style="color: white; width: 100%;
+      outline: none;" (click)="btnSearch()">
       <ion-icon name="md-search"></ion-icon>
-      <div style="display: inline; text-align: left ;padding-left: 10px; text-transform: none;">Buscar pasajes</div>
+      <div style="display: inline; text-align: left ;padding-left: 10px;
+        text-transform: none;">
+        Buscar pasajes
+      </div>
     </ion-button>
-
   </div>
 </ion-footer>
