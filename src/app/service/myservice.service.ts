@@ -11,7 +11,9 @@ export class MyserviceService {
 
   way = '';       // para saber si el servicio y asientos es de ida o regreso  ('go' 'back')
   idioma = 'es';
-  ticket = {};
+  ticket;
+  goTicket;
+  BackTicket;
 
   constructor(public alertController: AlertController) { }
 
