@@ -11,14 +11,17 @@ export class PurchaseDetailPage implements OnInit {
   constructor(private router: Router, private mys: MyserviceService) { }
 
   ticket;
+  way;
 
   ngOnInit() {
 
 
     if (this.mys.ticket) {
       this.ticket = this.mys.ticket;
+      this.way = this.mys.way;
     } else {
       // solo pruebas
+      console.log('Ejecutando con info de prueba');
       this.ticket = {
         origin: { nombre: "ALTO HOSPICIO", codigo: "01101002", region: null },
         destiny: { nombre: "CABRERO", codigo: "08303194", region: null },
@@ -56,11 +59,12 @@ export class PurchaseDetailPage implements OnInit {
           checked: true
         }
       };
-      this.mys.way = "go";
+      this.way = "go";
     }
 
+    // console.log('this.ticket(iniciando purchase-detail)', this.ticket);
+    // console.log('this.way(iniciando purchase-detail)', this.way);
 
-    console.log('this.ticket', this.ticket);
 
 
   }  // fin ngOnInit
@@ -72,7 +76,21 @@ export class PurchaseDetailPage implements OnInit {
 
 
 
+  continuar() {
 
+    if ((this.ticket.tripType === 'goBack' && this.way === 'back') || (this.ticket.tripType === 'goOnly')) {
+      this.router.navigateByUrl('/payment-methods');
+    } else if (this.ticket.tripType === 'goBack' && this.way === 'go') {
+      this.way = 'back'
+      this.mys.way = this.way;
+      this.mys.ticket = this.ticket;
+      this.router.navigateByUrl('/ticket');
+    }
+    // console.log('this.ticket(saliendo de purchace-detail)', this.ticket);
+    // console.log('this.way(saliendo de purchace-detail)', this.way);
+
+
+  }// fin continuar
 
 
 

@@ -112,30 +112,6 @@
             </ion-row>
 
 
-            <!-- <ion-row>
-              <ion-col size="6">
-                <div>
-                  <ion-select class="ion-no-padding ion-no-margin" multiple="false" placeholder="Seleccione.."
-                    cancel-text="Cancelar" (ionChange)="changeOrigin($event.detail.value)" [(ngModel)]="selectOrigin">
-                    <ion-select-option value="{{item.codigo}}" *ngFor="let item
-                      of allOrigin">{{item.nombre}}
-                    </ion-select-option>
-                  </ion-select>
-                </div>
-              </ion-col>
-              <ion-col size="6">
-                <div>
-                  <ion-select class="ion-no-padding ion-no-margin" multiple="false" placeholder="Seleccione.."
-                    cancel-text="Cancelar" [disabled]="allDestiny.length<1" [(ngModel)]="selectDestiny">
-                    <ion-select-option value="{{item.codigo}}" *ngFor="let item
-                      of allDestiny">{{item.nombre}}
-                    </ion-select-option>
-                  </ion-select>
-                </div>
-              </ion-col>
-            </ion-row> -->
-
-
 
             <!-- Fecha de Ida -->
             <ion-row style="margin-top: 2vh;" class="ion-no-margin
@@ -190,89 +166,6 @@
             </ion-col>
           </ion-row>
 
-            <!-- <ion-row style="margin-top: 2vh;" class="ion-no-margin
-            ion-no-padding ion-justify-content-center" >
-              <ion-col size="12" class="ion-justify-content-center ion-no-margin
-              ion-no-padding ion-align-items-center" style="display: contents">
-
-                <div style="text-align: center; width: 97%; border: 1px solid #fe5200; border-radius: 5px;">
-
-                  <ion-item style="width: 100%;border-radius: 8px;">
-                    <ion-icon class="iconEditable" name="calendar"></ion-icon>
-                    <ion-label>Fecha de Regreso:</ion-label>
-                    <ion-datetime displayFormat="DD/MM/YYYY" placeholder="Seleccione.." cancelText="Cancelar"
-                      doneText="Listo" mode="ios" [(ngModel)]="dateBack" (ionChange)="dateChangeBack()"
-                      [min]="minDateBack" [max]="maxDateBack"></ion-datetime>
-                  </ion-item>
-
-                  <div style="width: 100%;background-color: #f2f2f2; border-radius: 0 0 5px 5px;padding: 0.4vh;"
-                    *ngIf="dateBack">
-                    <ion-text style="color: black;font-size: 1rem;">{{stringDateBack}}</ion-text>
-                  </div>
-                 
-                </div>
-
-              </ion-col>
-            </ion-row> -->
-
-            <!-- XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXx
-            XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXx -->
-
-            <!-- <ion-row style="background-color: #f2f2f2; margin-top: 3vh;padding: 1vh 0;"
-              class="ion-no-margin ion-no-padding ion-justify-content-center">
-
-              <ion-col size="6" style="display: flex;align-items: center;"
-                class="ion-no-margin ion-no-padding ion-justify-content-center">
-                <ion-text>Fecha ida </ion-text>
-              </ion-col>
-
-              <ion-col size="6" style="display: flex;align-items: center;  "
-                class="ion-no-margin ion-no-padding ion-justify-content-center" *ngIf="goBack">
-                <ion-text>Fecha regreso </ion-text>
-              </ion-col>
-
-            </ion-row>
-
-
-
-
-            <ion-row style="background-color: #f2f2f2; margin-top: 1vh; padding: 10px 0px 10px 0px;"
-              class=" ion-no-margin ion-no-padding ion-justify-content-center">
-
-              <ion-col size="6" class="ion-no-margin ion-no-padding ion-justify-content-center">
-
-                <ion-row style="display: flex; align-items: center; justify-content: center;">
-
-                  <ion-col size="2" class="ion-no-margin ion-no-padding">
-                    <ion-icon name="calendar" class="iconEditable"></ion-icon>
-                  </ion-col>
-
-                  <ion-col size="2" class="dia" class="ion-no-margin ion-no-padding">24</ion-col>
-
-                  <ion-col size="8" class="fecha" class="ion-no-margin ion-no-padding"
-                    style="text-align: left; font-size: 4vw;">
-                    <div>Noviembre 2019</div>
-                    <div>Miércoles</div>
-                  </ion-col>
-
-                </ion-row>
-              </ion-col>
-
-              <ion-col size="6" class="ion-no-margin ion-no-padding ion-justify-content-center" *ngIf="goBack">
-                <ion-row style="display: flex; align-items: center; justify-content: center;">
-                  <ion-col size="2" class="ion-no-margin ion-no-padding">
-                    <ion-icon class="iconEditable" name="calendar"></ion-icon>
-                  </ion-col>
-                  <ion-col size="2" class="dia" class="ion-no-margin ion-no-padding">30</ion-col>
-                  <ion-col size="8" class="fecha" class="ion-no-margin ion-no-padding"
-                    style="text-align: left; font-size: 4vw;">
-                    <div>Noviembre 2019</div>
-                    <div>Lunes</div>
-                  </ion-col>
-                </ion-row>
-              </ion-col>
-
-            </ion-row> -->
           </ion-col>
         </ion-row>
       </ion-grid>

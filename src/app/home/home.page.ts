@@ -16,13 +16,6 @@ export class HomePage {
   ) { }
 
 
-  prueba() {
-    console.log('dasdsa');
-    this.mys.alertShow('!Felicidades¡', 'information-circle', 'Su Contraseña ha sido<br>cambiada con éxito.');
-  }
-
-
-
   async presentAlertConfirm() {
     const alert = await this.alertController.create({
       header: '¡Felicidades!',

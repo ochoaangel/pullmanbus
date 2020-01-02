@@ -21,8 +21,12 @@
     <div style="display: inline; width: 5%;"></div>
   </div>
 
-  <div class="cabeceraTitulo">
+  <div class="cabeceraTitulo" *ngIf="way==='go'">
     Pasaje de ida
+  </div>
+
+  <div class="cabeceraTitulo" *ngIf="way==='back'">
+    Pasaje de regreso
   </div>
 </ion-header>
 
@@ -48,9 +52,13 @@
                 <!-- 1ra fila -->
                 <div style="width: 100%; display: flex;">
                   <div style="display: inline; width: 15%; font-weight: bold;">
-                    <div
+                    <div *ngIf="way=='go'"
                       style="display: flex;justify-content: center;align-items: center; font-weight: bold;font-size: 2.3vw;height: 100%;">
                       Ida
+                    </div>
+                    <div *ngIf="way=='back'"
+                      style="display: flex;justify-content: center;align-items: center; font-weight: bold;font-size: 2.3vw;height: 100%;">
+                      Regreso
                     </div>
                   </div>
                   <div style="display: inline; width: 10%;">
@@ -100,7 +108,8 @@
                     <ion-icon style="font-size: 12px; color: red;    font-size: 6vw;" name="bus"></ion-icon>
                   </div>
                   <div style="display: inline; width: 15%;">
-                    <div style="display: flex;align-items: center; font-size: 2vw;height: 100%;font-size: 2.3vw" *ngIf="ticket.origin.nombre">
+                    <div style="display: flex;align-items: center; font-size: 2vw;height: 100%;font-size: 2.3vw"
+                      *ngIf="ticket.origin.nombre">
                       {{this.ticket.origin.nombre  | titlecase }}
                     </div>
                   </div>
@@ -115,7 +124,8 @@
                     </div>
                   </div>
                   <div style="display: inline; width: 20%;">
-                    <div style="display: flex;align-items: center; font-size: 2vw;height: 100%;font-size: 2.3vw" *ngIf="ticket.destiny.nombre">
+                    <div style="display: flex;align-items: center; font-size: 2vw;height: 100%;font-size: 2.3vw"
+                      *ngIf="ticket.destiny.nombre">
                       {{this.ticket.destiny.nombre  | titlecase }}
                     </div>
                   </div>
@@ -299,27 +309,29 @@
     <ion-button fill="clear" style="color: #fe5200; outline: none; width: 100%;" routerLink='/buy-your-ticket'>
       <ion-icon src="../../../assets/icon/previous.svg" style="color: #fe5200;font-size: 2.5vw;padding: 3px;">
       </ion-icon>
-      <div style="display: inline;  text-align: right; text-transform: none;font-size: 3vw;">
+      <div style="display: inline;  text-align: right; text-transform: none;font-size: 0.7rem;">
         Regresar
       </div>
     </ion-button>
 
     <ion-button fill="clear" style="color: #fe5200; outline: none; width: 100%;">
       <ion-icon name="md-repeat" style="transform: rotate(90deg); color: #fe5200;font-size: 5vw;"></ion-icon>
-      <div style="display: inline;  text-align: right; text-transform: none;font-size: 3vw;">
+      <div style="display: inline;  text-align: right; text-transform: none;font-size: 0.7rem;">
         Ordenar
       </div>
     </ion-button>
 
     <ion-button fill="clear" style="color: #fe5200; outline: none; width: 100%;">
       <ion-icon name="md-code-download" style="color: #fe5200;font-size: 5vw;padding: 1px;"></ion-icon>
-      <div style="display: inline;  text-align: right; text-transform: none;font-size: 3vw;">
+      <div style="display: inline;  text-align: right; text-transform: none;font-size: 0.7rem;">
         Filtros
       </div>
     </ion-button>
 
-    <ion-button fill="clear" style="color: #fe5200; outline: none; width: 100%;" *ngIf="tarifaTotal == 0" (click)="continuar()">
-      <div style="display: inline;  text-align: left; text-transform: none;font-size: 3vw;margin-left: -0.8rem;">
+    <ion-button fill="clear" style="color: #fe5200; outline: none; width: 100%;" *ngIf="tarifaTotal == 0"
+      (click)="continuar()">
+
+      <div style="display: inline;  text-align: left; text-transform: none;font-size: 0.7rem;margin-left: -0.8rem;">
         Continuar
       </div>
       <ion-icon src="../../../assets/icon/previous.svg"
@@ -327,7 +339,10 @@
     </ion-button>
   </div>
 
-  <div style=" width: 100%; display: flex;align-items: center;justify-content: center; background-color: #fe5200;" *ngIf="tarifaTotal !== 0">
+
+
+  <div style=" width: 100%; display: flex;align-items: center;justify-content: center; background-color: #fe5200;"
+    *ngIf="tarifaTotal &&  tarifaTotal !== 0">
     <div
       style="width: 50%;display: inline;  text-align: left;padding-right: 7px;  text-transform: none;padding-left: 20px;font-size: 1.3rem;color: white;font-weight: bold; ">
       Total: ${{tarifaTotal.toLocaleString('de-DE') }}
@@ -340,4 +355,6 @@
       <ion-icon src="../../../assets/icon/previous.svg" style="transform: rotate(180deg);"></ion-icon>
     </ion-button>
   </div>
+
+
 </ion-footer>

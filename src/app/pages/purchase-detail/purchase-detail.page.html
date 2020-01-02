@@ -42,7 +42,7 @@
 
             <!-- IDA -->
             <div style="width: 100%;margin: 1vh 0; padding: 2vh 0; background-color: #f2f2f2;"
-              *ngIf="this.ticket['goTotal']">
+              *ngIf="ticket['goTotal']">
 
               <!-- linea1 -->
               <div style="width: 100%; display: flex;  font-size: 0.8rem;">
@@ -50,18 +50,18 @@
                 <div
                   style=" width: 33%;padding: 1vh 0px;margin: 0rem  1rem;display: flex; justify-content: center; align-items: center;flex-direction: column; background-color: #4c4c4c; color: white; ">
                   <div>Pasajes</div>
-                  <div>{{this.ticket.goCompras.length}}</div>
+                  <div>{{ticket.goCompras.length}}</div>
                 </div>
                 <div
                   style=" width: 33%;padding: 1vh 0px;margin: 0rem  1rem;display: flex; justify-content: center; align-items: center;flex-direction: column; background-color: #4c4c4c; color: white; ">
                   <div>Asientos</div>
-                  <div>{{this.ticket.goCompras}}</div>
+                  <div>{{ticket.goCompras}}</div>
                 </div>
 
                 <div
                   style=" width: 33%;padding: 1vh 0px;margin: 0rem  1rem;display: flex; justify-content: center; align-items: center;flex-direction: column; background-color: #4c4c4c; color: white; ">
                   <div>Valor</div>
-                  <div>${{this.ticket.goTotal.toLocaleString('de-DE')}}</div>
+                  <div>${{ticket.goTotal.toLocaleString('de-DE')}}</div>
                 </div>
 
               </div>
@@ -73,12 +73,12 @@
 
                 <div
                   style=" width: 33%;display: flex; justify-content: center; align-items: center;font-size: 0.8rem;color: black; ">
-                  <div>Salida:{{this.ticket.goService.fechaSalida}}</div>
+                  <div>Salida:{{ticket.goService.fechaSalida}}</div>
                 </div>
 
                 <div
                   style=" width: 33%;display: flex; justify-content: center; align-items: center;font-size: 0.8rem;color: black; ">
-                  <div>Llegada:{{this.ticket.goService.fechaLlegada}}</div>
+                  <div>Llegada:{{ticket.goService.fechaLlegada}}</div>
                 </div>
 
               </div>
@@ -92,9 +92,9 @@
 
                 <div
                   style=" width: 28%;margin: 0vw  0vw  0vw  0vw;  color: black;display: flex;justify-content: center;align-items: center;flex-direction: column; ">
-                  <div style="font-size: 1.2rem;">{{this.ticket.goService.horaSalida | hh2ampm}}</div>
-                  <div style="font-size: 0.7rem;">{{this.ticket.origin.nombre}}</div>
-                  <div style="font-size: 0.7rem;font-weight: bold;">{{this.ticket.goService.terminalSalida}}</div>
+                  <div style="font-size: 1.2rem;">{{ticket.goService.horaSalida | hh2ampm}}</div>
+                  <div style="font-size: 0.7rem;">{{ticket.origin.nombre}}</div>
+                  <div style="font-size: 0.7rem;font-weight: bold;">{{ticket.goService.terminalSalida}}</div>
                 </div>
 
                 <div style=" width: 10%; display: flex;align-items: center;justify-content: center;font-size: 6vw;">
@@ -104,9 +104,9 @@
 
                 <div
                   style=" width: 28%;margin: 0vw  0vw  0vw  0vw;  color: black;display: flex;justify-content: center;align-items: center;flex-direction: column; ">
-                  <div style="font-size: 1.2rem;">{{this.ticket.goService.horaLlegada | hh2ampm}}</div>
-                  <div style="font-size: 0.7rem;">{{this.ticket.destiny.nombre}}</div>
-                  <div style="font-size: 0.7rem;font-weight: bold;">{{this.ticket.goService.terminaLlegada}}</div>
+                  <div style="font-size: 1.2rem;">{{ticket.goService.horaLlegada | hh2ampm}}</div>
+                  <div style="font-size: 0.7rem;">{{ticket.destiny.nombre}}</div>
+                  <div style="font-size: 0.7rem;font-weight: bold;">{{ticket.goService.terminaLlegada}}</div>
                 </div>
 
               </div>
@@ -117,7 +117,7 @@
                 <div style=" width: 33%;text-align: -webkit-center; font-weight: bold;">
                   <div style="font-size: 0.7rem;">Duración</div>
                   <div style="font-size: 0.8rem;font-weight: bold;">
-                    {{'X'| duration: this.ticket.goService.fechaSalida : this.ticket.goService.horaSalida : this.ticket.goService.fechaLlegada : this.ticket.goService.horaLlegada}}
+                    {{'X'| duration: ticket.goService.fechaSalida : ticket.goService.horaSalida : ticket.goService.fechaLlegada : ticket.goService.horaLlegada}}
                   </div>
                 </div>
 
@@ -135,7 +135,7 @@
 
             <!-- REGRESO -->
             <div style="width: 100%;margin: 1vh 0; padding: 2vh 0;background-color: #0247ac;"
-              *ngIf="this.ticket.backTotal && this.ticket.backCompras && this.ticket.backService">
+              *ngIf="ticket.backCompras && ticket.backCompras.length !== 0">
 
               <!-- linea1 -->
               <div style="width: 100%; display: flex;  font-size: 0.8rem;">
@@ -143,18 +143,18 @@
                 <div
                   style=" width: 33%;padding: 1vh 0px;margin: 0rem  1rem;display: flex; justify-content: center; align-items: center;flex-direction: column; background-color: #4c4c4c; color: white; ">
                   <div>Pasajes</div>
-                  <div>{{this.ticket.backCompras.length}}</div>
+                  <div>{{ticket.backCompras.length}}</div>
                 </div>
                 <div
                   style=" width: 33%;padding: 1vh 0px;margin: 0rem  1rem;display: flex; justify-content: center; align-items: center;flex-direction: column; background-color: #4c4c4c; color: white; ">
                   <div>Asientos</div>
-                  <div>{{this.ticket.backCompras}}</div>
+                  <div>{{ticket.backCompras}}</div>
                 </div>
 
                 <div
                   style=" width: 33%;padding: 1vh 0px;margin: 0rem  1rem;display: flex; justify-content: center; align-items: center;flex-direction: column; background-color: #4c4c4c; color: white; ">
                   <div>Valor</div>
-                  <div>${{this.ticket.backTotal.toLocaleString('de-DE')}}</div>
+                  <div>${{(ticket.backTotal-ticket.goTotal).toLocaleString('de-DE')}}</div>
                 </div>
 
               </div>
@@ -162,16 +162,16 @@
               <!-- linea2 -->
               <div style="width: 100%; display: flex;  font-size: 1.5rem;">
 
-                <div style=" width: 33%;text-align: -webkit-center; font-weight: bold; color: white; ">Ida</div>
+                <div style=" width: 33%;text-align: -webkit-center; font-weight: bold; color: white; ">Regreso</div>
 
                 <div
                   style=" width: 33%;display: flex; justify-content: center; align-items: center;font-size: 0.8rem;color: white; ">
-                  <div>Salida:{{this.ticket.backService.fechaSalida}}</div>
+                  <div>Salida:{{ticket.backService.fechaSalida}}</div>
                 </div>
 
                 <div
                   style=" width: 33%;display: flex; justify-content: center; align-items: center;font-size: 0.8rem;color: white; ">
-                  <div>Llegada:{{this.ticket.backService.fechaLlegada}}</div>
+                  <div>Llegada:{{ticket.backService.fechaLlegada}}</div>
                 </div>
 
               </div>
@@ -185,9 +185,9 @@
 
                 <div
                   style=" width: 28%;margin: 0vw  0vw  0vw  0vw;  color: white;display: flex;justify-content: center;align-items: center;flex-direction: column; ">
-                  <div style="font-size: 1.2rem;">{{this.ticket.backService.horaSalida | hh2ampm}}</div>
-                  <div style="font-size: 0.7rem;">{{this.ticket.origin.nombre}}</div>
-                  <div style="font-size: 0.7rem;font-weight: bold;">{{this.ticket.backService.terminalSalida}}</div>
+                  <div style="font-size: 1.2rem;">{{ticket.backService.horaSalida | hh2ampm}}</div>
+                  <div style="font-size: 0.7rem;">{{ticket.origin.nombre}}</div>
+                  <div style="font-size: 0.7rem;font-weight: bold;">{{ticket.backService.terminalSalida}}</div>
                 </div>
 
                 <div style=" width: 10%; display: flex;align-items: center;justify-content: center;font-size: 6vw;">
@@ -197,9 +197,9 @@
 
                 <div
                   style=" width: 28%;margin: 0vw  0vw  0vw  0vw;  color: white;display: flex;justify-content: center;align-items: center;flex-direction: column; ">
-                  <div style="font-size: 1.2rem;">{{this.ticket.backService.horaLlegada | hh2ampm}}</div>
-                  <div style="font-size: 0.7rem;">{{this.ticket.destiny.nombre}}</div>
-                  <div style="font-size: 0.7rem;font-weight: bold;">{{this.ticket.backService.terminaLlegada}}</div>
+                  <div style="font-size: 1.2rem;">{{ticket.backService.horaLlegada | hh2ampm}}</div>
+                  <div style="font-size: 0.7rem;">{{ticket.destiny.nombre}}</div>
+                  <div style="font-size: 0.7rem;font-weight: bold;">{{ticket.backService.terminaLlegada}}</div>
                 </div>
 
               </div>
@@ -210,7 +210,7 @@
                 <div style=" width: 33%;text-align: -webkit-center; font-weight: bold; color: white;">
                   <div style="font-size: 0.7rem;">Duración</div>
                   <div style="font-size: 0.8rem;font-weight: bold;">
-                    {{'X'| duration: this.ticket.backService.fechaSalida : this.ticket.backService.horaSalida : this.ticket.backService.fechaLlegada : this.ticket.backService.horaLlegada}}
+                    {{'X'| duration: ticket.backService.fechaSalida : ticket.backService.horaSalida : ticket.backService.fechaLlegada : ticket.backService.horaLlegada}}
                   </div>
                 </div>
 
@@ -225,11 +225,16 @@
 
             </div>
 
+            <div style="background-color: #0247ac; color: white;"
+            *ngIf="ticket.tripType==='goBack' && way==='go'">
+              Presione continuar para seleccionar detalles de regreso
+            </div>
 
-            <!-- <div style="background-color: #fe5200;"
-              *ngIf="!(this.ticket.backTotal && this.ticket.backCompras && this.ticket.backService)">
-              continuar
-            </div> -->
+            <div style="background-color: #0247ac; color: white;"
+            *ngIf="ticket.tripType==='goBack' && ticket.backCompras && ticket.backCompras.length === 0">
+              Sin regreso
+            </div>
+
 
           </ion-col>
         </ion-row>
@@ -246,10 +251,10 @@
     <div
       style="width: 50%;display: inline;  text-align: left;padding-right: 7px;  text-transform: none;padding-left: 20px;font-size: 1.2rem;color: white;font-weight: bold; ">
       Total:
-      ${{ this.ticket.backTotal ? (this.ticket.goTotal+this.ticket.backTotal).toLocaleString('de-DE') :this.ticket.goTotal.toLocaleString('de-DE')}}
+      ${{ ticket.backTotal ? (ticket.backTotal).toLocaleString('de-DE') :ticket.goTotal.toLocaleString('de-DE')}}
     </div>
 
-    <ion-button fill="clear" style="color: white;  width: 50%; outline: none;" routerLink="/payment-methods">
+    <ion-button fill="clear" style="color: white;  width: 50%; outline: none;" (click)="continuar()">
       <div style="display: inline;  text-align: right;padding-right: 7px;  text-transform: none">Continuar</div>
       <ion-icon src="../../../assets/icon/previous.svg" style="transform: rotate(180deg);"></ion-icon>
     </ion-button>
