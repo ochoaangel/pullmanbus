@@ -123,9 +123,10 @@
 
                 <div
                   style=" width: 66%; display: flex; justify-content: center; align-items: center;padding-top: 0.5rem; ">
-                  <div
-                    style="width: 60%;background-color: #4c4c4c; color: white; font-size: 0.7rem; display: flex; justify-content: center; align-items: center;height: 100%; ">
-                    SIN PARADAS</div>
+                    <ion-button fill="clear"  (click)="EliminarPasajeIda()"
+                    style="color: white; outline: none;  --padding-start: 0;--padding-end: 0; --background: #0247ac;text-transform: none; font-size: 0.6rem;width: 6rem;max-height: 1rem;">
+                    Eliminar pasaje
+                  </ion-button>
                 </div>
 
               </div>
@@ -212,16 +213,19 @@
                   <div style="font-size: 0.8rem;font-weight: bold;">
                     {{'X'| duration: ticket.backService.fechaSalida : ticket.backService.horaSalida : ticket.backService.fechaLlegada : ticket.backService.horaLlegada}}
                   </div>
-                </div>
+                </div> 
 
                 <div
-                  style=" width: 66%; display: flex; justify-content: center; align-items: center;padding-top: 0.5rem; ">
-                  <div
-                    style="width: 60%;background-color: #4c4c4c; color: white; font-size: 0.7rem; display: flex; justify-content: center; align-items: center;height: 100%; ">
-                    SIN PARADAS</div>
-                </div>
+                style=" width: 66%; display: flex; justify-content: center; align-items: center;padding-top: 0.5rem; ">
+                  <ion-button fill="clear"  (click)="EliminarPasajeRegreso()"
+                  style="color: #0247ac; outline: none;  --padding-start: 0;--padding-end: 0; --background: white;text-transform: none; font-size: 0.6rem;width: 6rem;max-height: 1rem;">
+                  Eliminar pasaje
+                </ion-button>
+              </div>
 
               </div>
+
+
 
             </div>
 
@@ -230,10 +234,11 @@
               Presione continuar para seleccionar detalles de regreso
             </div>
 
-            <div style="background-color: #0247ac; color: white;"
+            <!-- <div style="background-color: #0247ac; color: white;"
             *ngIf="ticket.tripType==='goBack' && ticket.backCompras && ticket.backCompras.length === 0">
               Sin regreso
-            </div>
+            </div> -->
+
 
 
           </ion-col>
