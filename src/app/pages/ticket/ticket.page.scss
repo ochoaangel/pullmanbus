@@ -16,7 +16,7 @@ ion-header {
 }
 
 .cabeceraTitulo {
-  height: 50%;
+  height: 25%;
   width: 100%;
   color: white;
   display: flex;
@@ -119,7 +119,6 @@ ion-select {
   background-color: white;
 }
 
-
 .pisoShow {
   background-color: blue;
   color: white;
@@ -132,7 +131,7 @@ ion-select {
 }
 
 .pisoHiden {
-  background-color: white;
+  background-color: white; 
   color: blue;
   width: 15vw;
   border-radius: 4px;
@@ -140,4 +139,18 @@ ion-select {
   font-size: 0.8rem;
   text-align: center;
   margin: 1vw;
+}
+
+.myServiceColumn {
+  display: flex;
+  flex-direction: column;
+}
+
+.myServiceRow {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  font-size: 0.8rem;
+  color: black;
+  // border: 1px solid cadetblue;
 }

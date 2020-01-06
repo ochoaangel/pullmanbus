@@ -34,6 +34,8 @@ export class TicketPage implements OnInit {
 
   ticket;
   way;
+  dateGo;
+  dateBack;
 
   nowService;
   bus;
@@ -94,6 +96,10 @@ export class TicketPage implements OnInit {
       this.way = 'go';
 
     }
+    this.dateGo= moment(this.ticket.dateGo).format('DD/MM/YYYY');
+    this.dateBack= moment(this.ticket.dateBack).format('DD/MM/YYYY');
+    console.log(' this.dateGo', this.dateGo);
+    console.log('this.dateBack',this.dateBack);
 
     this.busOriginal = this.sumar20piso2(this.busOriginal);
     // console.log('this.ticket(iniciando ticket)', this.ticket);
@@ -114,6 +120,7 @@ export class TicketPage implements OnInit {
 
   myServiceSelection(myseleccion: number) {
     console.log('this.allServices', this.allServices);
+    this.allServices[myseleccion].checked = true;
 
     // if (this.allServices[myseleccion]['checked']) {
     //   // caso true
