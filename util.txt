@@ -1,3 +1,26 @@
+[ngClass] = "(variable ==='valor')?  'clase1' : 'clase2'" 
+[ngClass] = "(i % 2 == 0) ? 'odd' : 'even'"
+
+[style.width] = "(variable ==='valor')? '100%':'50%'" 
+[ngStyle] =     "{'color': Variable ? colorA : colorB}"
+[ngStyle] =     "{'color': 'blue', margin: '8px', padding: '8px'}
+
+<img src="assets/images/name.png">      // not relative ../../
+
+
+
+('123456789').toLocaleString('de-DE')   // formato número => 123.456.789
+
+
+--------------------------------------------- scroll  ------------------------------------------
+  @ViewChild(IonContent, { static: false }) content: IonContent;
+  @ViewChildren('divServicio') divServicio: QueryList<ElementRef>;  
+
+  *ngFor="let svc of allServices; let i = index;" #divServicio
+
+    setTimeout(() => {
+      this.content.scrollToPoint(0, this.divServicio['_results'][myseleccion].nativeElement.offsetTop, 100);
+    });
 
 
 ionic g page pages/xxxxx  --spec=false --dray-run
