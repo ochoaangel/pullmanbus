@@ -24,16 +24,16 @@ export class BuyYourTicketPage implements OnInit {
   selectOrigin;
   selectDestiny;
 
-  dateGo;
-  dateBack;
+  goDate;
+  backDate;
 
-  minDateGo;
-  maxDateGo;
-  minDateBack;
-  maxDateBack;
+  mingoDate;
+  maxgoDate;
+  minbackDate;
+  maxbackDate;
 
-  stringDateGo;
-  stringDateBack;
+  stringgoDate;
+  stringbackDate;
 
   // condiciones iniciales
   goOnly = true;
@@ -49,10 +49,10 @@ export class BuyYourTicketPage implements OnInit {
 
   ngOnInit() {
     this.getCityOrigin();
-    this.minDateGo = moment().format();
-    this.maxDateGo = moment().add(1, 'y').format();
-    this.minDateBack = moment().format();
-    this.maxDateBack = moment().add(1, 'y').format();
+    this.mingoDate = moment().format();
+    this.maxgoDate = moment().add(1, 'y').format();
+    this.minbackDate = moment().format();
+    this.maxbackDate = moment().add(1, 'y').format();
 
 
 
@@ -98,7 +98,7 @@ export class BuyYourTicketPage implements OnInit {
 
   dateChangeBack() { }
 
-  noBack() { this.dateBack = null; }
+  noBack() { this.backDate = null; }
 
 
 
@@ -121,13 +121,13 @@ export class BuyYourTicketPage implements OnInit {
     this.ticket['destiny'] = item;
 
     // guardo el tipo de viaje
-    if (this.dateBack) {
+    if (this.backDate) {
       this.ticket['tripType'] = 'goBack'
-      this.ticket['dateGo'] = this.dateGo;
-      this.ticket['dateBack'] = this.dateBack;
+      this.ticket['goDate'] = this.goDate;
+      this.ticket['backDate'] = this.backDate;
     } else {
       this.ticket['tripType'] = 'goOnly';
-      this.ticket['dateGo'] = this.dateGo;
+      this.ticket['goDate'] = this.goDate;
     }
 
     // iniciando la compra
@@ -138,9 +138,9 @@ export class BuyYourTicketPage implements OnInit {
       this.mys.alertShow('Verifique', 'alert', 'Seleccione un origen<br> Intente nuevamente..');
     } else if (!this.selectDestiny) {
       this.mys.alertShow('Verifique', 'alert', 'Seleccione un destino<br> Intente nuevamente..');
-    } else if (!this.dateGo) {
+    } else if (!this.goDate) {
       this.mys.alertShow('Verifique', 'alert', 'Seleccione una Fecha de Ida<br> Intente nuevamente..');
-    } else if (this.dateBack && (moment(this.dateBack).isSameOrBefore(moment(this.dateGo)))) {
+    } else if (this.backDate && (moment(this.backDate).isSameOrBefore(moment(this.goDate)))) {
       this.mys.alertShow('Verifique', 'alert', 'Fecha de ida debe ser <br> antes que <br>fecha de regreso<br> Intente nuevamente..');
     } else {
 

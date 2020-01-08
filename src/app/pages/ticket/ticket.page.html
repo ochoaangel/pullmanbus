@@ -25,16 +25,16 @@
     Pasaje de ida
   </div>
   <div class="cabeceraTitulo" style="font-size: 0.8rem;" *ngIf="way==='go'">
-    {{this.ticket.origin.nombre  | titlecase }} a {{this.ticket.destiny.nombre  | titlecase }} {{dateGo}}
+    {{this.ticket.origin.nombre  | titlecase }} a {{this.ticket.destiny.nombre  | titlecase }} {{goDate}}
   </div>
-  
-  <div class="cabeceraTitulo" style="font-size: 4vh;"  *ngIf="way==='back'">
+
+  <div class="cabeceraTitulo" style="font-size: 4vh;" *ngIf="way==='back'">
     Pasaje de regreso
   </div>
-  <div class="cabeceraTitulo" style="font-size: 0.8rem;"  *ngIf="way==='back'">
-    {{this.ticket.origin.nombre  | titlecase }} a {{this.ticket.destiny.nombre  | titlecase }}  {{dateBack}}
+  <div class="cabeceraTitulo" style="font-size: 0.8rem;" *ngIf="way==='back'">
+    {{this.ticket.origin.nombre  | titlecase }} a {{this.ticket.destiny.nombre  | titlecase }} {{backDate}}
   </div>
-  
+
 </ion-header>
 
 <ion-content>
@@ -101,190 +101,58 @@
                 <div class="myServiceColumn" style="width: 50%;text-align: left;">
                   <div class="myServiceRow" style="font-weight: bold;">{{svc.terminalSalida  | titlecase }}</div>
                   <div class="myServiceRow">{{svc.terminaLlegada  | titlecase}}</div>
-                  <div class="myServiceRow" style="height: 1rem; display: block;">
-                  <img src="data:image/png;base64,{{svc.logo}}"
-                    style="height: 1rem; border-radius: 3px;" />
+                  <div class="myServiceRow" style="height: 1rem; flex-direction: row;">
+                    <div style="width: 70%;">
+                      <img src="data:image/png;base64,{{svc.logo}}" style="height: 1rem; border-radius: 3px" />
+                    </div>
+                    <div *ngIf="svc.my_comprasByService && svc.my_comprasByService.length>0"
+                      style=" width: 25%;display: flex;justify-content: flex-end;align-items: center; flex-direction: row;">
+
+                      <div>{{svc.my_comprasByService.length}}</div>
+                      <div style="margin-left: -2px;">
+                        <img style="height: 1.5rem;margin-top: 4px;" src="assets/icon/png/Asiento-seleccionado.png" />
+                      </div>
+                      <div>
+                        <ion-icon *ngIf="svc.my_comprasByService.length <5"
+                          style="color: blue; margin-top: 2px; margin-left: -1.2rem; font-size: 1.3rem;"
+                          name="checkmark"></ion-icon>
+                        <ion-icon *ngIf="svc.my_comprasByService.length >4"
+                          style="color: red; margin-top: 2px; margin-left: -1.2rem; font-size: 1.3rem;"
+                          name="close-circle-outline"></ion-icon>
+                      </div>
+                    </div>
+
+
+
                   </div>
+
                   <div class="myServiceRow" style="flex-direction: row; margin-top: 0.2rem; ">
                     <div class="myServiceRow" style="flex-direction: column;">
                       <div style="display: flex; align-items: center; justify-content: left;">Valor:
                         ${{svc.tarifaPrimerPiso}}</div>
-                      <div style="display: flex; align-items: center; justify-content: left;" *ngIf="svc.tarifaSegundoPiso">Valor:
+                      <div style="display: flex; align-items: center; justify-content: left;"
+                        *ngIf="svc.tarifaSegundoPiso">Valor:
                         ${{svc.tarifaSegundoPiso}}</div>
                     </div>
-                    <div class="myServiceRow"
-                      style="align-items: center; justify-content: center; ">
-                      <ion-button fill="clear" (click)="myServiceSelection(i)"
+                    <div class="myServiceRow" style="align-items: center; justify-content: center; ">
+                      <ion-button fill="clear" (click)="myServiceSelection(i)" *ngIf="!svc.checked && svc.my_comprasByService && svc.my_comprasByService.length===0"
                         style="color: white; outline: none;  --padding-start: 0;--padding-end: 0; --background: #0247ac;text-transform: none; font-size: 0.6rem;width: 80%;max-height: 1rem;">
                         Comprar
+                      </ion-button>
+                      <ion-button fill="clear" (click)="myServiceSelection(i)" *ngIf="!svc.checked && svc.my_comprasByService && svc.my_comprasByService.length>0"
+                        style="color: white; outline: none;  --padding-start: 0;--padding-end: 0; --background: #0247ac;text-transform: none; font-size: 0.6rem;width: 80%;max-height: 1rem;">
+                        Editar
+                      </ion-button>
+                      <ion-button fill="clear" (click)="myServiceSelection(i)" *ngIf="svc.checked"
+                        style="color: white; outline: none;  --padding-start: 0;--padding-end: 0; --background: #0247ac;text-transform: none; font-size: 0.6rem;width: 80%;max-height: 1rem;">
+                        Ocultar
                       </ion-button>
                     </div>
                   </div>
                 </div>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                <!-- /* 1ra fila */
-                <div style="width: 100%; display: flex;">
-                  <div style="display: inline; width: 15%; font-weight: bold;">
-                    <div *ngIf="way=='go'"
-                      style="display: flex;justify-content: center;align-items: center; font-weight: bold;font-size: 2.3vw;height: 100%;">
-                      Ida
-                    </div>
-                    <div *ngIf="way=='back'"
-                      style="display: flex;justify-content: center;align-items: center; font-weight: bold;font-size: 2.3vw;height: 100%;">
-                      Regreso
-                    </div>
-                  </div>
-                  <div style="display: inline; width: 10%;">
-                    <div
-                      style="background-color: white; border: 2px solid #fe5200;border-radius: 3px;display: flex;justify-content: center;align-items: center; color:#fe5200; font-weight: bold;font-size: 2.3vw;height: 100%;margin: 0px 1px 0px 5px;">
-                      Piso 1
-                    </div>
-                  </div>
-                  <div style="display: inline; width: 15%; text-align: left;">
-                    <div>{{svc.servicioPrimerPiso | titlecase}}</div>
-                    <div style="font-weight: bold;">Valor: ${{svc.tarifaPrimerPiso}}</div>
-                  </div>
-                  <div style="display: inline; width: 10%;">
-                    <div *ngIf="svc.tarifaSegundoPiso"
-                      style="background-color: #fe5200; border-radius: 3px;display: flex;justify-content: center;align-items: center; color:white; font-weight: bold;font-size: 2.3vw; height: 100%; margin: 0px 1px 0px 5px;">
-                      Piso 2
-                    </div>
-                  </div>
-                  <div style="display: inline; width: 15%; text-align: left;">
-                    <div *ngIf="svc.tarifaSegundoPiso">{{svc.servicioSegundoPiso | titlecase}}</div>
-                    <div *ngIf="svc.tarifaSegundoPiso" style="font-weight: bold;">Valor: ${{svc.tarifaSegundoPiso}}
-                    </div>
-                  </div>
-                  <div style="display: inline; width: 10%;"></div>
-                  <div style="display: inline; width: 25%;">
-                    <div style="display: flex;align-items: center; font-size: 2vw;height: 100%;font-size: 1.8vw">
-                      <img src="assets/images/Logo_003.jpg" style="width: 90%;border-radius: 2px;" />
-                    </div>
-                  </div>
-                </div>
-
-                /* 2da fila */
-                <div style="width: 100%; display: flex;">
-                  <div style="display: inline; width: 15%; color: red;">
-                    <div
-                      style="display: flex;justify-content: center;align-items: center; font-weight: bold;font-size: 2.3vw;height: 100%;">
-                      25
-                      <ion-icon style="font-size: 12px;" src="assets/icon/Porcentaje003.svg"></ion-icon>
-                    </div>
-                  </div>
-                  <div style="display: inline; width: 85%;"></div>
-                </div>
-
-                /* 3ra fila */
-                <div style="width: 100%; display: flex;">
-                  <div style="display: inline; width: 15%;">
-                    <ion-icon style="font-size: 12px; color: red;    font-size: 6vw;" name="bus"></ion-icon>
-                  </div>
-                  <div style="display: inline; width: 15%;">
-                    <div style="display: flex;align-items: center; font-size: 2vw;height: 100%;font-size: 2.3vw"
-                      *ngIf="ticket.origin.nombre">
-                      {{this.ticket.origin.nombre  | titlecase }}
-                    </div>
-                  </div>
-                  <div style="display: inline; width: 10%;">
-                    <div style="display: flex;align-items: center; font-size: 2vw;height: 100%;font-size: 1.8vw">
-                      {{svc.horaSalida | hh2ampm}}
-                    </div>
-                  </div>
-                  <div style="display: inline; width: 20%;">
-                    <div style="display: flex;align-items: center; font-size: 2vw;height: 100%;font-size: 1.8vw">
-                      <img src="assets/images/flecha001.png" style="width: 85%;" />
-                    </div>
-                  </div>
-                  <div style="display: inline; width: 20%;">
-                    <div style="display: flex;align-items: center; font-size: 2vw;height: 100%;font-size: 2.3vw"
-                      *ngIf="ticket.destiny.nombre">
-                      {{this.ticket.destiny.nombre  | titlecase }}
-                    </div>
-                  </div>
-                  <div style="display: inline; width: 10%;">
-                    <div style="display: flex;align-items: center; font-size: 2vw;height: 100%;font-size: 1.8vw">
-                      {{svc.horaLlegada | hh2ampm }}
-                    </div>
-                  </div>
-                  <div style="display: inline; width: 10%;">
-                    <div style="display: flex;align-items: center; font-size: 2vw;height: 100%;font-size: 1.8vw">
-                      <ion-checkbox mode="ios" [(ngModel)]="allServices[i].checked" (click)="myServiceSelection(i)">
-                      </ion-checkbox>
-                    </div>
-                  </div>
-                </div>
-
-                /* 4ta fila */
-                <div style="width: 100%; display: flex;">
-                  <div style="display: inline; width: 15%;"></div>
-                  <div style="display: inline; width: 25%;text-align: left;">
-                    Origen: {{svc.terminalSalida  | titlecase }}
-                  </div>
-                  <div style="display: inline; width: 20%;"></div>
-                  <div style="display: inline; width: 30%;text-align: left;">
-                    Destino final: {{svc.terminaLlegada  | titlecase}}
-                  </div>
-                  <div style="display: inline; width: 10%;"></div>
-                </div>
-
-                /* 5ta fila */
-                <div style="width: 100%; display: flex;">
-                  <div style="display: inline; width: 15%;">
-                    <div
-                      style="display: flex;justify-content: center;align-items: center; font-weight: bold;font-size: 2.3vw;height: 100%;flex-direction: column;">
-                      <ion-icon style="font-size: 12px;" name="clock"></ion-icon>
-                      {{'X'| duration: svc.fechaSalida : svc.horaSalida : svc.fechaLlegada : svc.horaLlegada}}
-                    </div>
-                  </div>
-                  <div style="display: inline; width: 85%;"></div>
-                </div>
-
-                /* 6ta fila */
-                <div style="width: 100%; display: flex;">
-                  <div style="display: inline; width: 15%;"></div>
-                  <div style="display: inline; width: 5%;">
-                    <ion-icon style="font-size: 12px;" name="calendar"></ion-icon>
-                  </div>
-                  <div style="display: inline; width: 80%; display: flex;align-items: center;font-size: 2.3vw;">
-                    {{svc.fechaSalida | date2line }}
-                     Miercoles 13 de Noviembre 2019 
-                  </div>
-                </div> -->
-
-
-
               </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
               <!-- asientos del servicio -->
               <div style="width: 100%;height: 100%; background-color: #fe5200" *ngIf="svc.checked">
@@ -323,11 +191,11 @@
                                   *ngFor="let columna of bus['1'] ; let x= index">
                                   <div style="width: 100%; display: flex;"
                                     *ngFor="let asiento of columna ; let y= index">
-                                    <!-- //* [style.width]="( asiento.estado ==='libre' || asiento.estado ==='ocupado'  || asiento.estado ==='seleccionado')? '100%':'50%'" -->
 
 
                                     <ion-button fill="clear" style="margin-left: 4vw; color: #fe5200; outline:
-                                    none;padding:0;font-size: 0vw; display: contents;" (click)="presionado('1',y,x)">
+                                    none;padding:0;font-size: 0vw; display: contents;"
+                                      (click)="presionadoAsiento('1',y,x)">
                                       <img src="assets/icon/png/Asiento-ocupado.png"
                                         *ngIf="asiento.estado==='ocupado'" />
                                       <img src="assets/icon/png/Asiento-disponible.png"
@@ -352,10 +220,10 @@
                                   <!-- //* [style.width]="( asiento.estado ==='libre' || asiento.estado ==='ocupado'  || asiento.estado ==='seleccionado')? '100%':'50%'" > -->
 
                                   <ion-button fill="clear" style="margin-left: 4vw; color: #fe5200; outline:
-                                    none;padding:0;font-size: 0vw;display: contents;" (click)="presionado('2',y,x)"
+                                    none;padding:0;font-size: 0vw;display: contents;"
+                                    (click)="presionadoAsiento('2',y,x)"
                                     *ngIf="asiento.estado ==='libre' || asiento.estado ==='ocupado'  || asiento.estado ==='seleccionado'">
-                                    <img src="assets/icon/png/Asiento-ocupado.png"
-                                      *ngIf="asiento.estado==='ocupado'" />
+                                    <img src="assets/icon/png/Asiento-ocupado.png" *ngIf="asiento.estado==='ocupado'" />
                                     <img src="assets/icon/png/Asiento-disponible.png"
                                       *ngIf="asiento.estado==='libre'" />
                                     <img src="assets/icon/png/Asiento-seleccionado.png"
@@ -389,14 +257,13 @@
                               </div>
                             </div>
                           </div>
+
                         </div>
                       </ion-col>
                     </ion-row>
                   </ion-grid>
                 </div>
               </div>
-
-
 
             </div>
 
@@ -411,10 +278,12 @@
 
 <ion-footer>
 
+  <!-- 1ra fila menu -->
   <div style="width: 100%; display: flex;justify-content: space-around;">
 
-    <ion-button fill="clear" style="color: #fe5200; outline: none; width: 100%;   --padding-start: 0;--padding-end: 0;"
-      routerLink='/buy-your-ticket'>
+    <ion-button fill="clear" (click)="atras()" 
+     style="color: #fe5200; outline: none; width: 100%;   --padding-start: 0;--padding-end: 0;"
+      >
       <ion-icon src="assets/icon/previous.svg" style="color: #fe5200;font-size: 2.5vw;padding: 3px;">
       </ion-icon>
       <div style="display: inline;  text-align: right; text-transform: none;font-size: 0.7rem;">
@@ -429,7 +298,8 @@
       </div>
     </ion-button>
 
-    <ion-button fill="clear" style="color: #fe5200; outline: none; width: 100%;   --padding-start: 0;--padding-end: 0;">
+    <ion-button fill="clear" style="color: #fe5200; outline: none; width: 100%;   --padding-start: 0;--padding-end: 0;"
+      (click)="prueba()">
       <ion-icon name="md-code-download" style="color: #fe5200;font-size: 5vw;padding: 1px;"></ion-icon>
       <div style="display: inline;  text-align: right; text-transform: none;font-size: 0.7rem;">
         Filtros
@@ -449,7 +319,7 @@
   </div>
 
 
-
+  <!-- 2da Fila menu -->
   <div style=" width: 100%; display: flex;align-items: center;justify-content: center; background-color: #fe5200;"
     *ngIf="tarifaTotal &&  tarifaTotal !== 0">
     <div

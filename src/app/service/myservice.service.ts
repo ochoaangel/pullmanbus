@@ -14,6 +14,7 @@ export class MyserviceService {
   ticket;
   goTicket;
   BackTicket;
+  regresandoAticket = false;
 
   constructor(public alertController: AlertController) { }
 

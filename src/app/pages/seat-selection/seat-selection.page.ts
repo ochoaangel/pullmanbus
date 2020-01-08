@@ -20,8 +20,8 @@ export class SeatSelectionPage implements OnInit {
     origin: { nombre: "ALTO HOSPICIO", codigo: "01101002", region: null },
     destiny: { nombre: "CABRERO", codigo: "08303194", region: null },
     tripType: "goBack",
-    dateGo: "2019-12-28T22:34:20.295-04:00",
-    dateBack: "2019-12-29T22:36:28.833-04:00"
+    goDate: "2019-12-28T22:34:20.295-04:00",
+    backDate: "2019-12-29T22:36:28.833-04:00"
   };
 
   nowService = {

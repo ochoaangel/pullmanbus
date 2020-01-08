@@ -125,13 +125,13 @@
                     <ion-icon class="iconEditable" name="calendar"></ion-icon>
                     <ion-label>Fecha de Ida:</ion-label>
                     <ion-datetime displayFormat="DD/MM/YYYY" placeholder="Seleccione.." cancelText="Cancelar"
-                      doneText="Listo" mode="ios" [(ngModel)]="dateGo" (ionChange)="dateChangeGo()" [min]="minDateGo"
-                      [max]="maxDateGo"></ion-datetime>
+                      doneText="Listo" mode="ios" [(ngModel)]="goDate" (ionChange)="dateChangeGo()" [min]="mingoDate"
+                      [max]="maxgoDate"></ion-datetime>
                   </ion-item>
 
                   <div style="width: 100%;background-color: #f2f2f2; border-radius: 0 0 5px 5px;padding: 0.4vh;"
-                    *ngIf="dateGo">
-                    <ion-text style="color: black;font-size: 1rem;">{{ dateGo | date2line}}</ion-text>
+                    *ngIf="goDate">
+                    <ion-text style="color: black;font-size: 1rem;">{{ goDate | date2line}}</ion-text>
                   </div>
 
                 </div>
@@ -152,13 +152,13 @@
                   <ion-icon class="iconEditable" name="calendar"></ion-icon>
                   <ion-label>Fecha de regreso:</ion-label>
                   <ion-datetime displayFormat="DD/MM/YYYY" placeholder="Opcional.." cancelText="Sin regreso" (ionCancel)="noBack()"
-                    doneText="Listo" mode="ios" [(ngModel)]="dateBack" (ionChange)="dateChangeBack()" [min]="minDateBack"
-                    [max]="maxDateBack"></ion-datetime>
+                    doneText="Listo" mode="ios" [(ngModel)]="backDate" (ionChange)="dateChangeBack()" [min]="minbackDate"
+                    [max]="maxbackDate"></ion-datetime>
                 </ion-item>
 
                 <div style="width: 100%;background-color: #f2f2f2; border-radius: 0 0 5px 5px;padding: 0.4vh;"
-                  *ngIf="dateBack">
-                  <ion-text style="color: black;font-size: 1rem;">{{ dateBack | date2line}}</ion-text>
+                  *ngIf="backDate">
+                  <ion-text style="color: black;font-size: 1rem;">{{ backDate | date2line}}</ion-text>
                 </div>
 
               </div>
