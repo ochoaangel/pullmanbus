@@ -15,6 +15,7 @@ export class MyserviceService {
   goTicket;
   BackTicket;
   regresandoAticket = false;
+  total=0;
 
   constructor(public alertController: AlertController) { }
 

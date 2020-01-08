@@ -13,6 +13,7 @@ export class PurchaseDetailPage implements OnInit {
   ticket;
   way;
   tarifaTotal;
+  eliminadoAsiento = false;
 
   ngOnInit() {
 
@@ -121,6 +122,7 @@ export class PurchaseDetailPage implements OnInit {
       this.mys.ticket = null;
       this.router.navigateByUrl('/home');
     } else if ((this.ticket.tripType === 'goBack' && this.way === 'back') || (this.ticket.tripType === 'goOnly')) {
+      this.mys.total = this.tarifaTotal;
       this.router.navigateByUrl('/payment-methods');
       this.mys.ticket = this.ticket;
     } else if (this.ticket.tripType === 'goBack' && this.way === 'go') {
@@ -141,7 +143,7 @@ export class PurchaseDetailPage implements OnInit {
   //   this.mys.ticket=null;
   //   this.router.navigateByUrl('/buy-your-ticket');
   // }
-  EliminarPasaje(way, idServicio, asiento) {
+  EliminarPasaje(way, idServicio, asiento) { 
     // EliminarPasaje(pasaje, nItem) {
     // console.log('pasaje', pasaje);
 
@@ -164,7 +166,7 @@ export class PurchaseDetailPage implements OnInit {
       // if (index4 !== -1) { 
       // this.mys.ticket.goAllServices[pasaje.nService].my_comprasByService.splice(index4, 1);
       // this.mys.ticket.goAllServices[pasaje.nService].my_comprasByServiceData.splice(index4, 1);
-    }
+    // }
     //  console.log("this.mys.ticket.goAllServices[pasaje.nService]",this.mys.ticket.goAllServices[pasaje.nService]);
     //  console.log("this.mys.ticket.goAllServices[pasaje.nService].my_Bus[pasaje.piso+'']",this.mys.ticket.goAllServices[pasaje.nService].my_Bus[pasaje.piso+'']);
     //  console.log("this.mys.ticket.goAllServices[pasaje.nService].my_Bus[pasaje.piso+''][pasaje.fila",this.mys.ticket.goAllServices[pasaje.nService].my_Bus[pasaje.piso+''][pasaje.fila]);
@@ -174,46 +176,56 @@ export class PurchaseDetailPage implements OnInit {
 
     // this.mys.ticket.goAllServices[pasaje.nService]
 
-    // } else {
+    } else {
 
     // console.log('oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo');
     let index3 = this.ticket.backCompras.indexOf(texto);
     if (index3 !== -1) { this.ticket.backCompras.splice(index3, 1); }
-  // }
-  // }
+    }
+    // }
 
 
 
-  // let index2 = this.ticket.goCompras.indexOf(texto);
-  // if (index2 !== -1) { this.ticket.goCompras.splice(index2, 1); }
-console.log('this.ticket.comprasDetallesPosicion',this.ticket.comprasDetallesPosicion);
-let index4 = this.ticket.comprasDetallesPosicion.indexOf(texto);
-console.log('index4',index4);
-if (index4 !== -1) { 
-    this.ticket.comprasDetalles.splice(index4, 1);
-    this.ticket.comprasDetallesPosicion.splice(index4, 1);
-  }
+    // let index2 = this.ticket.goCompras.indexOf(texto);
+    // if (index2 !== -1) { this.ticket.goCompras.splice(index2, 1); }
+    console.log('this.ticket.comprasDetallesPosicion', this.ticket.comprasDetallesPosicion);
+    let index4 = this.ticket.comprasDetallesPosicion.indexOf(texto);
+    console.log('index4', index4);
+    if (index4 !== -1) {
+      this.ticket.comprasDetalles.splice(index4, 1);
+      this.ticket.comprasDetallesPosicion.splice(index4, 1);
+      this.mys.ticket = this.ticket;
+    }
 
-  console.log('this.ticket', this.ticket);
+    console.log('this.ticket', this.ticket);
 
     let total_general = 0;
-this.ticket.comprasDetalles.forEach(element => {
-  total_general = total_general + element.valor;
-});
-this.tarifaTotal = total_general;
-this.mys.ticket = this.ticket;
-console.log('this.mys.ticket', this.mys.ticket);
+    this.ticket.comprasDetalles.forEach(element => {
+      total_general = total_general + element.valor;
+    });
+    this.tarifaTotal = total_general;
+    this.mys.ticket = this.ticket;
+    console.log('this.mys.ticket', this.mys.ticket);
+    this.eliminadoAsiento = true;
   }
 
-// EliminarPasajeRegreso(){
-//   delete this.mys.ticket;
-//   this.router.navigateByUrl('/buy-your-ticket');
-// }
+  // EliminarPasajeRegreso(){
+  //   delete this.mys.ticket;
+  //   this.router.navigateByUrl('/buy-your-ticket');
+  // }
 
 
-volver() {
-  this.mys.regresandoAticket = true;
-  this.router.navigateByUrl('/ticket');
-}
+  volver() {
+    if (this.eliminadoAsiento) {
+      this.router.navigateByUrl('/home');
+    } else {
+      this.mys.regresandoAticket = true;
+      this.router.navigateByUrl('/ticket');
+    }
+    // this.mys.regresandoAticket = true;
+    // this.router.navigateByUrl('/ticket');
+  }
+
+
 
 }

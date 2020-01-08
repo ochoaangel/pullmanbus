@@ -64,7 +64,7 @@ ion-header {
     display: inline-block;
     box-sizing: content-box;
     padding: 7px 10px;
-    border: 1px solid #ff9900;
+    border: 1px solid #fe5200;
     -webkit-border-radius: 27px;
     border-radius: 5px;
     width: -webkit-fill-available;
@@ -103,4 +103,15 @@ ion-header {
   ion-checkbox{
     height: 1.1rem;
     width: 1.1rem;
+  }
+
+  ion-select {
+    border-radius: 5px;
+    // width: 13vw;
+    background-color: white;
+    height: 100%;
+    margin: 0px 0px 0px 2.5vw;
+    border: 1px solid #fe5200;
+    display: flex;
+    align-items: center;
   }
