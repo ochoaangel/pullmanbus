@@ -1,0 +1,8 @@
+{
+  "/integrador-web/*": {
+    "target": "http://clamber.pullman.cl/",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  } 
+}
