@@ -46,18 +46,18 @@
             </div>
 
             <!-- 2da fila -->
-            <div style="width: 100%; display: flex; height: 1.5rem; ">
+            <div class="filaImagenes" >
 
               <div style="display: inline; width: 6%;"></div>
               <div style="display: inline; width: 8%; display: flex; justify-content: center; align-items: center;">
-                <ion-checkbox mode="ios"></ion-checkbox>
+                <ion-checkbox (click)="SeleccionadoConvenioUp('checked0')" [(ngModel)]="convenioUp.checked0" mode="ios"></ion-checkbox>
               </div>
               <div style="display: inline; width: 25%;display: flex;align-items: center;">
                 <img style="height: 70%; display: flex;" src="assets/images/MediosDePago/LaAraucana.png">
               </div>
 
               <div style="display: inline; width: 8%; display: flex; justify-content: center; align-items: center;">
-                <ion-checkbox mode="ios"></ion-checkbox>
+                <ion-checkbox (click)="SeleccionadoConvenioUp('checked1')" [(ngModel)]="convenioUp.checked1" mode="ios"></ion-checkbox>
               </div>
               <div style="display: inline; width: 25%;display: flex;">
                 <img style="height: 100%; display: flex;"
@@ -65,7 +65,7 @@
               </div>
 
               <div style="display: inline; width: 8%; display: flex; justify-content: center; align-items: center;">
-                <ion-checkbox mode="ios"></ion-checkbox>
+                <ion-checkbox (click)="SeleccionadoConvenioUp('checked2')" [(ngModel)]="convenioUp.checked2" mode="ios"></ion-checkbox>
               </div>
 
               <div style="display: inline; width: 15%;display: flex;">
@@ -76,26 +76,26 @@
             </div>
 
             <!-- 3ra fila -->
-            <div style="width: 100%; display: flex; height: 1.5rem; margin-bottom: 2vh;">
+            <div class="filaImagenes" style="margin-bottom: 2vh;">
 
               <div style="display: inline; width: 6%;"></div>
 
               <div style="display: inline; width: 8%; display: flex; justify-content: center; align-items: center;">
-                <ion-checkbox mode="ios"></ion-checkbox>
+                <ion-checkbox (click)="SeleccionadoConvenioUp('checked3')" [(ngModel)]="convenioUp.checked3" mode="ios"></ion-checkbox>
               </div>
               <div style="display: inline; width: 25%;display: flex;align-items: center;">
                 <img style="height: 70%; display: flex;" src="assets/images/MediosDePago/injuv.png">
               </div>
 
               <div style="display: inline; width: 8%; display: flex; justify-content: center; align-items: center;">
-                <ion-checkbox mode="ios"></ion-checkbox>
+                <ion-checkbox (click)="SeleccionadoConvenioUp('checked4')" [(ngModel)]="convenioUp.checked4" mode="ios"></ion-checkbox>
               </div>
               <div style="display: inline; width: 25%;display: flex;align-items: center;">
                 <img style="height: 70%; display: flex; " src="assets/images/MediosDePago/mutualDeSeguridad.png">
               </div>
 
               <div style="display: inline; width: 8%; display: flex; justify-content: center; align-items: center;">
-                <ion-checkbox mode="ios"></ion-checkbox>
+                <ion-checkbox (click)="SeleccionadoConvenioUp('checked5')" [(ngModel)]="convenioUp.checked5" mode="ios"></ion-checkbox>
               </div>
               <div style="display: inline; width: 15%;display: flex;">
                 <img style="height: 100%; display: flex;" src="assets/images/MediosDePago/cajaLosAndes.png">
@@ -114,7 +114,7 @@
             <div style="text-align: center; display: flex;">
 
               <div style="width: 50%; display: flex; justify-content: center; align-items: center;">
-                <input type="number" placeholder="RUT">
+                <input type="number" [(ngModel)]="DatosFormulario.rut" name="rut" #input_rut (keypress)="tecleado($event)" (keyup.enter)="setFocus('codigo')" placeholder="RUT">
               </div>
 
               <ion-button
@@ -124,44 +124,32 @@
 
             </div>
 
+            <!-- [(ngModel)]="DatosFormulario.title1" name="title1" #title2 (keypress)="tecleado($event)" (keyup.enter)="setFocus(title3)" -->
+
 
             <!-- 6ta fila -->
             <div
               style="text-align: center;display: flex; flex-direction: row; align-items: center;align-items: center;">
               <div style=" width: 35%;">
-
-
-                <div style="height: 2.08rem;">
-                  <ion-select class=" ion-no-padding ion-no-margin" style="height: 100%;" multiple="false"
-                    placeholder="Código País" cancel-text="Cancelar">
-                    <!-- <ion-select-option value="{{i+1+1900}}"
-                      *ngFor="let dummy of ' '.repeat(120).split(''), let i = index">{{i+1+1900}}</ion-select-option> -->
-                    <ion-select-option value="+54">+54</ion-select-option>
-                    <ion-select-option value="+56">+56</ion-select-option>
-                    <ion-select-option value="+52">+52</ion-select-option>
-                    <ion-select-option value="+58">+58</ion-select-option>
-                    <!-- <ion-select-option value="+54">ARGENTINA</ion-select-option>
-                    <ion-select-option value="+56">CHILE</ion-select-option>
-                    <ion-select-option value="+52">MEXICO</ion-select-option>
-                    <ion-select-option value="+58">VENEZUELA</ion-select-option> -->
-                  </ion-select>
-                </div>
-
-
+                <input style="text-align: center; margin: 0.8vh 0vw 0.8vh 3vw; " type="number"  placeholder="Código País: +56" 
+                [(ngModel)]="DatosFormulario.codigo" name="codigo" #input_codigo (keypress)="tecleado($event)" (keyup.enter)="setFocus('telefono')">
               </div>
               <div style=" width: 65%;">
-                <input type="number" placeholder="Teléfono">
+                <input type="number" placeholder="Teléfono"
+                [(ngModel)]="DatosFormulario.telefono" name="telefono" #input_telefono (keypress)="tecleado($event)" (keyup.enter)="setFocus('email')">
               </div>
             </div>
 
             <!-- 7ma fila -->
             <div style="text-align: center;">
-              <input type="email" placeholder="E-mail">
+              <input type="email" placeholder="E-mail"
+              [(ngModel)]="DatosFormulario.email" name="email" #input_email (keypress)="tecleado($event)" (keyup.enter)="setFocus('email2')">
             </div>
 
             <!-- 8va fila -->
             <div style="text-align: center;">
-              <input type="email" placeholder="Re-ingresar">
+              <input type="email" placeholder="Re-ingresar"
+              [(ngModel)]="DatosFormulario.email2" name="email2" #input_email2 (keypress)="tecleado($event)" >
             </div>
 
             <!-- 9na fila -->
@@ -169,20 +157,20 @@
               <h2>Total: ${{total.toLocaleString('de-DE') }}</h2>
             </div>
 
-            <!-- 10 fila -->
-            <div style="width: 100%; display: flex; height: 2rem;">
+            <!-- 10ma fila --> 
+            <div class="filaImagenes" style="width: 100%; display: flex; height: 2rem;">
 
               <div style="display: inline; width: 15%; display: flex; justify-content: center; align-items: center;">
               </div>
               <div style="display: inline; width: 10%; display: flex; justify-content: center; align-items: center;">
-                <ion-checkbox mode="ios"></ion-checkbox>
+                <ion-checkbox (click)="SeleccionadoConvenioDown('checked0')" [(ngModel)]="convenioDown.checked0" mode="ios"></ion-checkbox>
               </div>
               <div style="width: 30%;">
                 <img style="display: flex; height: 100%;" src="assets/images/MediosDePago/WebPay.png">
               </div>
 
               <div style="display: inline; width: 10%; display: flex; justify-content: center; align-items: center;">
-                <ion-checkbox mode="ios"></ion-checkbox>
+                <ion-checkbox (click)="SeleccionadoConvenioDown('checked1')" [(ngModel)]="convenioDown.checked1" mode="ios"></ion-checkbox>
               </div>
               <div style="width: 30%;">
                 <img style="display: flex; height: 100%;" src="assets/images/MediosDePago/cencosud.jpg">
@@ -192,10 +180,10 @@
 
             </div>
 
-            <!-- 10ma fila -->
-            <div
+            <!-- 11va fila -->
+            <div (click)="aceptarAcuerdo()"
               style="font-size: 2vw; display: flex; justify-content: center; align-items: center;padding-top: 1vh;margin-bottom: 1.5rem;">
-              <ion-checkbox style="height: 0.8rem;width: 0.8rem;margin: 0 1vw;"></ion-checkbox> He leído y estoy de
+              <ion-checkbox [(ngModel)]="acuerdo.acuerdo" style="height: 0.8rem;width: 0.8rem;margin: 0 1vw;"></ion-checkbox> He leído y estoy de
               acuerdo
               con los términos y condiciones de la compra
             </div>
@@ -221,7 +209,7 @@
     </ion-button>
 
     <!-- <div style="width: 50%;"></div> -->
-    <ion-button fill="clear" style="color: white;  width: 50%; outline: none;" routerLink="/transaction-voucher">
+    <ion-button fill="clear" style="color: white;  width: 50%; outline: none;" (click)="pagar()">
       <div style="display: inline;  text-align: right;padding-right: 7px;  text-transform: none">Pagar</div>
       <ion-icon src="assets/icon/previous.svg" style="transform: rotate(180deg);"></ion-icon>
     </ion-button>

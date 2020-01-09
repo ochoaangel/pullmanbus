@@ -15,6 +15,7 @@ export class PurchaseDetailPage implements OnInit {
   tarifaTotal;
   eliminadoAsiento = false;
 
+
   ngOnInit() {
 
     if (this.mys.ticket) {
@@ -143,7 +144,7 @@ export class PurchaseDetailPage implements OnInit {
   //   this.mys.ticket=null;
   //   this.router.navigateByUrl('/buy-your-ticket');
   // }
-  EliminarPasaje(way, idServicio, asiento) { 
+  EliminarPasaje(way, idServicio, asiento) {
     // EliminarPasaje(pasaje, nItem) {
     // console.log('pasaje', pasaje);
 
@@ -166,21 +167,21 @@ export class PurchaseDetailPage implements OnInit {
       // if (index4 !== -1) { 
       // this.mys.ticket.goAllServices[pasaje.nService].my_comprasByService.splice(index4, 1);
       // this.mys.ticket.goAllServices[pasaje.nService].my_comprasByServiceData.splice(index4, 1);
-    // }
-    //  console.log("this.mys.ticket.goAllServices[pasaje.nService]",this.mys.ticket.goAllServices[pasaje.nService]);
-    //  console.log("this.mys.ticket.goAllServices[pasaje.nService].my_Bus[pasaje.piso+'']",this.mys.ticket.goAllServices[pasaje.nService].my_Bus[pasaje.piso+'']);
-    //  console.log("this.mys.ticket.goAllServices[pasaje.nService].my_Bus[pasaje.piso+''][pasaje.fila",this.mys.ticket.goAllServices[pasaje.nService].my_Bus[pasaje.piso+''][pasaje.fila]);
-    //  console.log("this.mys.ticket.goAllServices[pasaje.nService].my_Bus[pasaje.piso+''][pasaje.fila][pasaje.columna]",this.mys.ticket.goAllServices[pasaje.nService].my_Bus[pasaje.piso+''][pasaje.fila][pasaje.columna]);
-    //  console.log("this.mys.ticket.goAllServices[pasaje.nService].my_Bus[pasaje.piso+''][pasaje.fila][pasaje.columna][asiento]",this.mys.ticket.goAllServices[pasaje.nService].my_Bus[pasaje.piso+''][pasaje.fila][pasaje.columna]['asiento']);
-    //  this.mys.ticket.goAllServices[pasaje.nService].my_Bus[pasaje.piso+''][pasaje.fila][pasaje.columna]['asiento']='libre'
+      // }
+      //  console.log("this.mys.ticket.goAllServices[pasaje.nService]",this.mys.ticket.goAllServices[pasaje.nService]);
+      //  console.log("this.mys.ticket.goAllServices[pasaje.nService].my_Bus[pasaje.piso+'']",this.mys.ticket.goAllServices[pasaje.nService].my_Bus[pasaje.piso+'']);
+      //  console.log("this.mys.ticket.goAllServices[pasaje.nService].my_Bus[pasaje.piso+''][pasaje.fila",this.mys.ticket.goAllServices[pasaje.nService].my_Bus[pasaje.piso+''][pasaje.fila]);
+      //  console.log("this.mys.ticket.goAllServices[pasaje.nService].my_Bus[pasaje.piso+''][pasaje.fila][pasaje.columna]",this.mys.ticket.goAllServices[pasaje.nService].my_Bus[pasaje.piso+''][pasaje.fila][pasaje.columna]);
+      //  console.log("this.mys.ticket.goAllServices[pasaje.nService].my_Bus[pasaje.piso+''][pasaje.fila][pasaje.columna][asiento]",this.mys.ticket.goAllServices[pasaje.nService].my_Bus[pasaje.piso+''][pasaje.fila][pasaje.columna]['asiento']);
+      //  this.mys.ticket.goAllServices[pasaje.nService].my_Bus[pasaje.piso+''][pasaje.fila][pasaje.columna]['asiento']='libre'
 
-    // this.mys.ticket.goAllServices[pasaje.nService]
+      // this.mys.ticket.goAllServices[pasaje.nService]
 
     } else {
 
-    // console.log('oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo');
-    let index3 = this.ticket.backCompras.indexOf(texto);
-    if (index3 !== -1) { this.ticket.backCompras.splice(index3, 1); }
+      // console.log('oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo');
+      let index3 = this.ticket.backCompras.indexOf(texto);
+      if (index3 !== -1) { this.ticket.backCompras.splice(index3, 1); }
     }
     // }
 
@@ -229,3 +230,6 @@ export class PurchaseDetailPage implements OnInit {
 
 
 }
+
+
+//////////////////////////////////////////////////////////////////////////////////////
