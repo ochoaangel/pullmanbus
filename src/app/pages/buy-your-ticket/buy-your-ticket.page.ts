@@ -5,6 +5,7 @@ import * as _ from 'underscore';
 import * as moment from 'moment';
 import { Router } from '@angular/router';
 import { MyserviceService } from 'src/app/service/myservice.service';
+import { IntegradorService } from 'src/app/service/integrador.service';
 
 
 
@@ -43,6 +44,7 @@ export class BuyYourTicketPage implements OnInit {
     private httpClient: HttpClient,
     private router: Router,
     private mys: MyserviceService,
+    private integradorService:IntegradorService
 
 
   ) { }
@@ -53,30 +55,22 @@ export class BuyYourTicketPage implements OnInit {
     this.maxgoDate = moment().add(1, 'y').format();
     this.minbackDate = moment().format();
     this.maxbackDate = moment().add(1, 'y').format();
-
-
-
-
-
     // setInterval(()=> {
     //   this.show = !this.show;
     // } ,1000);
   }
 
-  getCityOrigin() {
-    this.httpClient.get<any>('assets/json/ciudades-codigo2.json').subscribe(data => {
+  getCityOrigin() {    
+    this.integradorService.getCityOrigin().subscribe(data => { 
       this.allOrigin = data;
-    });
+    })
   }
 
-
-  getCityDestination(value: string) {
-    // Falta el uso de value como ciudad de origen
-    this.httpClient.get<any>('assets/json/ciudades-codigo2.json').subscribe(data => {
+  getCityDestination(value: string) { 
+    this.integradorService.getCityDestination(value).subscribe(data => {
       this.allDestiny = data;
-    });
+    })
   }
-
 
   changeOrigin(value: string) {
     this.allDestiny = [];
@@ -150,6 +144,4 @@ export class BuyYourTicketPage implements OnInit {
     }
 
   }
-
-
 }

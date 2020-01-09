@@ -6,12 +6,13 @@ import * as moment from 'moment';
 import { Router } from '@angular/router';
 import { MyserviceService } from 'src/app/service/myservice.service';
 import { IonContent } from '@ionic/angular';
+import { IntegradorService } from 'src/app/service/integrador.service';
 // import { Content } from '@angular/compiler/src/render3/r3_ast';
 
 @Component({
   selector: 'app-ticket',
   templateUrl: './ticket.page.html',
-  styleUrls: ['./ticket.page.scss'],
+  styleUrls: ['./ticket.page.scss']
 })
 
 export class TicketPage implements OnInit {
@@ -48,37 +49,15 @@ export class TicketPage implements OnInit {
 
   nowService;
   bus;
-
-  busOriginal = {
-    "1": [
-      [{ "asiento": "B2", "estado": "sinasiento" }, { "asiento": "B1", "estado": "sinasiento" }, { "asiento": "", "estado": "pasillo" }, { "asiento": "", "estado": "sinasiento" }, { "asiento": "%", "estado": "sinasiento" }],
-      [{ "asiento": "1", "estado": "libre" }, { "asiento": "2", "estado": "ocupado" }, { "asiento": "", "estado": "pasillo" }, { "asiento": "", "estado": "sinasiento" }, { "asiento": "3", "estado": "ocupado" }],
-      [{ "asiento": "4", "estado": "ocupado" }, { "asiento": "5", "estado": "libre" }, { "asiento": "", "estado": "pasillo" }, { "asiento": "", "estado": "sinasiento" }, { "asiento": "6", "estado": "ocupado" }],
-      [{ "asiento": "7", "estado": "libre" }, { "asiento": "8", "estado": "libre" }, { "asiento": "", "estado": "pasillo" }, { "asiento": "", "estado": "sinasiento" }, { "asiento": "9", "estado": "ocupado" }]
-    ],
-    "2": [
-      [{ "asiento": "1", "estado": "libre" }, { "asiento": "2", "estado": "libre" }, { "asiento": "", "estado": "pasillo" }, { "asiento": "3", "estado": "libre" }, { "asiento": "4", "estado": "ocupado" }],
-      [{ "asiento": "5", "estado": "ocupado" }, { "asiento": "6", "estado": "libre" }, { "asiento": "", "estado": "pasillo" }, { "asiento": "7", "estado": "ocupado" }, { "asiento": "8", "estado": "libre" }],
-      [{ "asiento": "9", "estado": "ocupado" }, { "asiento": "10", "estado": "libre" }, { "asiento": "", "estado": "pasillo" }, { "asiento": "11", "estado": "libre" }, { "asiento": "12", "estado": "libre" }],
-      [{ "asiento": "13", "estado": "libre" }, { "asiento": "14", "estado": "libre" }, { "asiento": "", "estado": "pasillo" }, { "asiento": "15", "estado": "libre" }, { "asiento": "16", "estado": "ocupado" }],
-      [{ "asiento": "17", "estado": "libre" }, { "asiento": "18", "estado": "libre" }, { "asiento": "", "estado": "pasillo" }, { "asiento": "19", "estado": "libre" }, { "asiento": "20", "estado": "libre" }],
-      [{ "asiento": "21", "estado": "libre" }, { "asiento": "22", "estado": "libre" }, { "asiento": "", "estado": "pasillo" }, { "asiento": "23", "estado": "ocupado" }, { "asiento": "24", "estado": "libre" }],
-      [{ "asiento": "25", "estado": "libre" }, { "asiento": "26", "estado": "ocupado" }, { "asiento": "", "estado": "pasillo" }, { "asiento": "27", "estado": "libre" }, { "asiento": "28", "estado": "libre" }],
-      [{ "asiento": "29", "estado": "libre" }, { "asiento": "30", "estado": "libre" }, { "asiento": "", "estado": "pasillo" }, { "asiento": "31", "estado": "ocupado" }, { "asiento": "32", "estado": "ocupado" }],
-      [{ "asiento": "33", "estado": "libre" }, { "asiento": "34", "estado": "libre" }, { "asiento": "", "estado": "pasillo" }, { "asiento": "35", "estado": "libre" }, { "asiento": "36", "estado": "libre" }],
-      [{ "asiento": "37", "estado": "ocupado" }, { "asiento": "38", "estado": "ocupado" }, { "asiento": "", "estado": "pasillo" }, { "asiento": "39", "estado": "libre" }, { "asiento": "40", "estado": "ocupado" }],
-      [{ "asiento": "41", "estado": "libre" }, { "asiento": "42", "estado": "libre" }, { "asiento": "", "estado": "pasillo" }, { "asiento": "B2", "estado": "sinasiento" }, { "asiento": "B1", "estado": "sinasiento" }]
-    ]
-  };
-
   constructor(
     private httpClient: HttpClient,
     private router: Router,
     private mys: MyserviceService,
+    private integradorService:IntegradorService
   ) { }
 
   ngOnInit() {
-
+    console.log(this.mys.ticket);
   }
 
   ionViewWillEnter() {
@@ -149,21 +128,17 @@ export class TicketPage implements OnInit {
 
 
   getServicesAndBus() {
-    this.httpClient.get<any>('assets/json/obtenerServici.json').subscribe(serviceFromApi => {
-
-      // obtengo todos servicios
-      this.allServices = serviceFromApi;
-
-      // de cada servicio agrego bus
-      this.allServices.forEach(element => {
-        this.httpClient.get<any>('assets/json/planillaVertical.json').subscribe(myBusFromApi => {
-          // agrego bus y sumo 20 a cada asiento de piso 2
-          element['my_Bus'] = this.sumar20piso2(myBusFromApi);
-          element['my_comprasByService'] = [];
-          element['my_comprasByServiceData'] = [];
-        });
-      });
-    });
+    let findService = {
+      "origen":this.mys.ticket.origin.codigo,
+      "destino":this.mys.ticket.destiny.codigo,
+      "fecha": moment(this.ticket.goDate).format('YYYYMMDD'),
+      "hora":"0000",
+      "idSistema":1
+    }
+    console.log(findService);
+    this.integradorService.getService(findService).subscribe(data => {
+      this.allServices = data;        
+    })    
   }
 
   getBusFromService() {
@@ -184,42 +159,61 @@ export class TicketPage implements OnInit {
 
 
   myServiceSelection(nServiceSeleccion: number) {
-
+    console.log(nServiceSeleccion);
     if (this.serviceSelectedNumber !== nServiceSeleccion) {
-      this.allServices[nServiceSeleccion].checked = true;
-      this.comprasByService = this.allServices[nServiceSeleccion]['my_comprasByService'];
-      this.comprasByServiceData = this.allServices[nServiceSeleccion]['my_comprasByServiceData'];
-      this.serviceSelectedNumber = nServiceSeleccion;
-      this.serviceSelected = this.allServices[nServiceSeleccion];
+      let servicio = {
+        "idServicio":this.allServices[nServiceSeleccion].idServicio,
+        "idOrigen":this.allServices[nServiceSeleccion].idTerminalOrigen,
+        "idDestino":this.allServices[nServiceSeleccion].idTerminalDestino,
+        "tipoBusPiso1":this.allServices[nServiceSeleccion].busPiso1,
+        "tipoBusPiso2":this.allServices[nServiceSeleccion].busPiso2,
+        "fechaServicio":this.allServices[nServiceSeleccion].fechaServicio,
+        "integrador":this.allServices[nServiceSeleccion].integrador
+      }      
+      console.log(servicio);
+      this.integradorService.getPlanillaVertical(servicio).subscribe(myBusFromApi => {
+        // agrego bus y sumo 20 a cada asiento de piso 2
+        console.log(myBusFromApi["1"]);
+        console.log(myBusFromApi["2"]);
+        this.allServices[nServiceSeleccion]['my_Bus'] = this.sumar20piso2(myBusFromApi);
+        this.allServices[nServiceSeleccion]['my_comprasByService'] = [];
+        this.allServices[nServiceSeleccion]['my_comprasByServiceData'] = [];
 
-      this.bus = this.allServices[this.serviceSelectedNumber].my_Bus;
-      // this.compras = [];
-      console.log('bus', this.bus);
-
-      // if (this.ticket.goTotal) {
-      //   this.tarifaTotal = this.ticket.goTotal;
-      // } else {
-      //   this.tarifaTotal = 0;
-      // }
-
-      // preparando tarifas
-      this.allServices[nServiceSeleccion].tarifaPrimerPiso ? this.tarifaPiso1 = parseInt(this.allServices[nServiceSeleccion].tarifaPrimerPiso.replace('.', '')) : this.tarifaPiso1 = null;
-      this.allServices[nServiceSeleccion].tarifaSegundoPiso ? this.tarifaPiso2 = parseInt(this.allServices[nServiceSeleccion].tarifaSegundoPiso.replace('.', '')) : this.tarifaPiso2 = null;
-      !this.tarifaPiso2 ? this.piso1 = true : this.piso1 = false;
-
-      this.nowService = this.allServices[nServiceSeleccion];
-
-      setTimeout(() => {
-        let estadoPrevio = this.allServices[nServiceSeleccion]['checked'];
-        this.allServices.forEach(element => {
-          element['checked'] = false;
+        this.allServices[nServiceSeleccion].checked = true;
+        this.comprasByService = this.allServices[nServiceSeleccion]['my_comprasByService'];
+        this.comprasByServiceData = this.allServices[nServiceSeleccion]['my_comprasByServiceData'];
+        this.serviceSelectedNumber = nServiceSeleccion;
+        this.serviceSelected = this.allServices[nServiceSeleccion];
+  
+        this.bus = this.allServices[this.serviceSelectedNumber].my_Bus;
+        // this.compras = [];
+        console.log('bus', this.bus);
+  
+        // if (this.ticket.goTotal) {
+        //   this.tarifaTotal = this.ticket.goTotal;
+        // } else {
+        //   this.tarifaTotal = 0;
+        // }
+  
+        // preparando tarifas
+        this.allServices[nServiceSeleccion].tarifaPrimerPiso ? this.tarifaPiso1 = parseInt(this.allServices[nServiceSeleccion].tarifaPrimerPiso.replace('.', '')) : this.tarifaPiso1 = null;
+        this.allServices[nServiceSeleccion].tarifaSegundoPiso ? this.tarifaPiso2 = parseInt(this.allServices[nServiceSeleccion].tarifaSegundoPiso.replace('.', '')) : this.tarifaPiso2 = null;
+        !this.tarifaPiso2 ? this.piso1 = true : this.piso1 = false;
+  
+        this.nowService = this.allServices[nServiceSeleccion];
+  
+        setTimeout(() => {
+          let estadoPrevio = this.allServices[nServiceSeleccion]['checked'];
+          this.allServices.forEach(element => {
+            element['checked'] = false;
+          });
+          this.allServices[nServiceSeleccion]['checked'] = estadoPrevio;
         });
-        this.allServices[nServiceSeleccion]['checked'] = estadoPrevio;
-      });
-
-      setTimeout(() => {
-        this.content.scrollToPoint(0, this.divServicio['_results'][nServiceSeleccion].nativeElement.offsetTop, 100);
-      });
+  
+        setTimeout(() => {
+          this.content.scrollToPoint(0, this.divServicio['_results'][nServiceSeleccion].nativeElement.offsetTop, 100);
+        });
+      });     
     } else {
       this.allServices[this.serviceSelectedNumber]['checked'] = !this.allServices[this.serviceSelectedNumber]['checked'];
     }
@@ -350,11 +344,14 @@ export class TicketPage implements OnInit {
 
   sumar20piso2(bus: any): any {
     // sumando 20 a los asientos de 2do piso
-    bus['2'].forEach(fila => {
-      fila.forEach(asiento => {
-        !isNaN(parseInt(asiento.asiento)) ? asiento.asiento = parseInt(asiento.asiento) + 20 + '' : null;
+    if(bus['2'] != undefined){
+      bus['2'].forEach(fila => {
+        fila.forEach(asiento => {
+          if(asiento != null)
+          !isNaN(parseInt(asiento.asiento)) ? asiento.asiento = parseInt(asiento.asiento) + 20 + '' : null;
+        });
       });
-    });
+    }
     return bus
   }
 
