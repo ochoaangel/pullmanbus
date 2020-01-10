@@ -120,7 +120,7 @@
             <div style="text-align: center; display: flex;">
 
               <div style="width: 50%; display: flex; justify-content: center; align-items: center;">
-                <input type="text" [textMask]="maskRut" [(ngModel)]="DatosFormulario.rut" name="rut" #input_rut
+                <input type="text" [textMask]={mask:rutFunction,guide:false} [(ngModel)]="DatosFormulario.rut" name="rut" #input_rut
                   (keypress)="tecleado($event)" (keyup.enter)="setFocus('codigo')" placeholder="RUT">
               </div>
 
@@ -141,7 +141,7 @@
                   (keypress)="tecleado($event)" (keyup.enter)="setFocus('telefono')">
               </div>
               <div style=" width: 65%;">
-                <input type="number" placeholder="Teléfono" [(ngModel)]="DatosFormulario.telefono" name="telefono"
+                <input type="text" [textMask]={mask:telefonoFunction,guide:false} placeholder="Teléfono" [(ngModel)]="DatosFormulario.telefono" name="telefono"
                   #input_telefono (keypress)="tecleado($event)" (keyup.enter)="setFocus('email')">
               </div>
             </div>

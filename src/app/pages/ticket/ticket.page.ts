@@ -53,7 +53,7 @@ export class TicketPage implements OnInit {
     private httpClient: HttpClient,
     private router: Router,
     private mys: MyserviceService,
-    private integradorService:IntegradorService
+    private integradorService: IntegradorService
   ) { }
 
   ngOnInit() {
@@ -69,11 +69,11 @@ export class TicketPage implements OnInit {
 
       if (this.way === 'go') {
         this.compras = this.ticket.goCompras || [];
-        this.allServices = this.ticket.goAllService || this.getServicesAndBus();
+        this.allServices = this.ticket.goAllService || this.getServicesAndBus('go');
 
       } else {
         this.compras = this.ticket.backCompras || [];
-        this.allServices = this.ticket.backAllService || this.getServicesAndBus();;
+        this.allServices = this.ticket.backAllService || this.getServicesAndBus('back');;
       }
 
       this.comprasDetalles = this.ticket.comprasDetalles || [];
@@ -96,7 +96,7 @@ export class TicketPage implements OnInit {
     } else {
       // solo pruebas
       console.log('Ejecutando con datos de PRUEBAS');
-      this.getServicesAndBus();
+      this.getServicesAndBus('go');
       this.ticket = {
         origin: { nombre: "ALTO HOSPICIO", codigo: "01101002", region: null },
         destiny: { nombre: "CABRERO", codigo: "08303194", region: null },
@@ -127,18 +127,32 @@ export class TicketPage implements OnInit {
   }
 
 
-  getServicesAndBus() {
-    let findService = {
-      "origen":this.mys.ticket.origin.codigo,
-      "destino":this.mys.ticket.destiny.codigo,
-      "fecha": moment(this.ticket.goDate).format('YYYYMMDD'),
-      "hora":"0000",
-      "idSistema":1
+  getServicesAndBus(wayNow: string) {
+    let findService;
+
+    if (wayNow === 'back') {
+      findService = {
+        "origen": this.mys.ticket.destiny.codigo,
+        "destino": this.mys.ticket.origin.codigo,
+        "fecha": moment(this.ticket.backDate).format('YYYYMMDD'),
+        "hora": "0000",
+        "idSistema": 1
+      }
+    } else {
+      findService = {
+        "origen": this.mys.ticket.origin.codigo,
+        "destino": this.mys.ticket.destiny.codigo,
+        "fecha": moment(this.ticket.goDate).format('YYYYMMDD'),
+        "hora": "0000",
+        "idSistema": 1
+      }
+
     }
+
     console.log(findService);
     this.integradorService.getService(findService).subscribe(data => {
-      this.allServices = data;        
-    })    
+      this.allServices = data;
+    })
   }
 
   getBusFromService() {
@@ -162,14 +176,14 @@ export class TicketPage implements OnInit {
     console.log(nServiceSeleccion);
     if (this.serviceSelectedNumber !== nServiceSeleccion) {
       let servicio = {
-        "idServicio":this.allServices[nServiceSeleccion].idServicio,
-        "idOrigen":this.allServices[nServiceSeleccion].idTerminalOrigen,
-        "idDestino":this.allServices[nServiceSeleccion].idTerminalDestino,
-        "tipoBusPiso1":this.allServices[nServiceSeleccion].busPiso1,
-        "tipoBusPiso2":this.allServices[nServiceSeleccion].busPiso2,
-        "fechaServicio":this.allServices[nServiceSeleccion].fechaServicio,
-        "integrador":this.allServices[nServiceSeleccion].integrador
-      }      
+        "idServicio": this.allServices[nServiceSeleccion].idServicio,
+        "idOrigen": this.allServices[nServiceSeleccion].idTerminalOrigen,
+        "idDestino": this.allServices[nServiceSeleccion].idTerminalDestino,
+        "tipoBusPiso1": this.allServices[nServiceSeleccion].busPiso1,
+        "tipoBusPiso2": this.allServices[nServiceSeleccion].busPiso2,
+        "fechaServicio": this.allServices[nServiceSeleccion].fechaServicio,
+        "integrador": this.allServices[nServiceSeleccion].integrador
+      }
       console.log(servicio);
       this.integradorService.getPlanillaVertical(servicio).subscribe(myBusFromApi => {
         // agrego bus y sumo 20 a cada asiento de piso 2
@@ -184,24 +198,24 @@ export class TicketPage implements OnInit {
         this.comprasByServiceData = this.allServices[nServiceSeleccion]['my_comprasByServiceData'];
         this.serviceSelectedNumber = nServiceSeleccion;
         this.serviceSelected = this.allServices[nServiceSeleccion];
-  
+
         this.bus = this.allServices[this.serviceSelectedNumber].my_Bus;
         // this.compras = [];
         console.log('bus', this.bus);
-  
+
         // if (this.ticket.goTotal) {
         //   this.tarifaTotal = this.ticket.goTotal;
         // } else {
         //   this.tarifaTotal = 0;
         // }
-  
+
         // preparando tarifas
         this.allServices[nServiceSeleccion].tarifaPrimerPiso ? this.tarifaPiso1 = parseInt(this.allServices[nServiceSeleccion].tarifaPrimerPiso.replace('.', '')) : this.tarifaPiso1 = null;
         this.allServices[nServiceSeleccion].tarifaSegundoPiso ? this.tarifaPiso2 = parseInt(this.allServices[nServiceSeleccion].tarifaSegundoPiso.replace('.', '')) : this.tarifaPiso2 = null;
         !this.tarifaPiso2 ? this.piso1 = true : this.piso1 = false;
-  
+
         this.nowService = this.allServices[nServiceSeleccion];
-  
+
         setTimeout(() => {
           let estadoPrevio = this.allServices[nServiceSeleccion]['checked'];
           this.allServices.forEach(element => {
@@ -209,11 +223,11 @@ export class TicketPage implements OnInit {
           });
           this.allServices[nServiceSeleccion]['checked'] = estadoPrevio;
         });
-  
+
         setTimeout(() => {
           this.content.scrollToPoint(0, this.divServicio['_results'][nServiceSeleccion].nativeElement.offsetTop, 100);
         });
-      });     
+      });
     } else {
       this.allServices[this.serviceSelectedNumber]['checked'] = !this.allServices[this.serviceSelectedNumber]['checked'];
     }
@@ -344,11 +358,11 @@ export class TicketPage implements OnInit {
 
   sumar20piso2(bus: any): any {
     // sumando 20 a los asientos de 2do piso
-    if(bus['2'] != undefined){
+    if (bus['2'] != undefined) {
       bus['2'].forEach(fila => {
         fila.forEach(asiento => {
-          if(asiento != null)
-          !isNaN(parseInt(asiento.asiento)) ? asiento.asiento = parseInt(asiento.asiento) + 20 + '' : null;
+          if (asiento != null)
+            !isNaN(parseInt(asiento.asiento)) ? asiento.asiento = parseInt(asiento.asiento) + 20 + '' : null;
         });
       });
     }
@@ -393,8 +407,8 @@ export class TicketPage implements OnInit {
       console.log('this.way(saliendo de ticket)', this.way);
 
       // if (this.mys.way === 'go' && this.ticket.goCompras) {
-        console.log('this.way',this.way);
-        console.log('this.mys.way',this.mys.way);
+      console.log('this.way', this.way);
+      console.log('this.mys.way', this.mys.way);
       // if (this.mys.way === 'go' && this.ticket.triptype === 'goBack') {
       if (this.mys.way === 'go' && this.ticket.tripType === 'goBack') {
         console.log('redirigiendo a BACK y recarganto ticket');

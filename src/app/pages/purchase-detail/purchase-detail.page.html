@@ -89,10 +89,12 @@
                 <!-- //* linea2 -->
                 <div style="width: 100%; display: flex;  font-size: 1.5rem;">
 
-                  <div style=" width: 33%;text-align: -webkit-center; font-weight: bold;" *ngIf="pasaje.way==='go'">Ida
+                  <div style=" width: 33%;text-align: -webkit-center; font-weight: bold;" *ngIf="pasaje.way==='go'">
+                    Ida
                   </div>
                   <div style=" width: 33%;text-align: -webkit-center; font-weight: bold;" *ngIf="pasaje.way==='back'">
-                    Regreso</div>
+                    Regreso
+                  </div>
 
                   <div
                     style=" width: 33%;display: flex; justify-content: center; align-items: center;font-size: 0.8rem;color: black; ">
@@ -116,7 +118,8 @@
                   <div
                     style=" width: 28%;margin: 0vw  0vw  0vw  0vw;  color: black;display: flex;justify-content: center;align-items: center;flex-direction: column; ">
                     <div style="font-size: 1.2rem;">{{pasaje.service.horaSalida | hh2ampm}}</div>
-                    <div style="font-size: 0.7rem;">{{ticket.origin.nombre}}</div>
+                    <div style="font-size: 0.7rem;" *ngIf="pasaje.way==='go'">{{ticket.origin.nombre}}</div>
+                    <div style="font-size: 0.7rem;" *ngIf="pasaje.way==='back'">{{ticket.destiny.nombre}}</div>
                     <div style="font-size: 0.7rem;font-weight: bold;">{{pasaje.service.terminalSalida}}</div>
                   </div>
 
@@ -128,7 +131,8 @@
                   <div
                     style=" width: 28%;margin: 0vw  0vw  0vw  0vw;  color: black;display: flex;justify-content: center;align-items: center;flex-direction: column; ">
                     <div style="font-size: 1.2rem;">{{pasaje.service.horaLlegada | hh2ampm}}</div>
-                    <div style="font-size: 0.7rem;">{{ticket.destiny.nombre}}</div>
+                    <div style="font-size: 0.7rem;" *ngIf="pasaje.way==='go'">{{ticket.destiny.nombre}}</div>                    
+                    <div style="font-size: 0.7rem;" *ngIf="pasaje.way==='back'">{{ticket.origin.nombre}}</div>
                     <div style="font-size: 0.7rem;font-weight: bold;">{{pasaje.service.terminaLlegada}}</div>
                   </div>
 

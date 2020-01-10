@@ -31,12 +31,12 @@ export class PaymentMethodsPage implements OnInit {
     v_email2: false,
     validandoConRut: false
   }
- 
-  public maskRut = {
-    guide: false,
-    showMask: false,
-    mask: [/\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/,'-', /\d/]
-  };
+
+  // public maskRut = {
+  //   guide: false,
+  //   showMask: false,
+  //   mask: nameMask()
+  // };
   // public maskRut = {
   //   guide: false,
   //   showMask: false,
@@ -47,7 +47,7 @@ export class PaymentMethodsPage implements OnInit {
   //     if (numbers) {
   //       numberLength = numbers.join("").length;
   //     }
-  
+
   //     if (numberLength > 10) {
   //       return ['(', /[1-9]/, /[1-9]/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
   //     } else {
@@ -385,7 +385,7 @@ export class PaymentMethodsPage implements OnInit {
 
   tecleado($event) {
     // console.log('event', $event.target.name);
-    console.log('this.DatosFormulario', this.DatosFormulario);
+    // console.log('this.DatosFormulario', this.DatosFormulario);
 
     switch ($event.target.name) {
       case 'rut':
@@ -413,4 +413,109 @@ export class PaymentMethodsPage implements OnInit {
     } // fin switch
 
   } //fin tecleado
+
+  nameMask(rawValue: string): RegExp[] {
+    const mask = /[A-Za-z]/;
+    const strLength = String(rawValue).length;
+    const nameMask: RegExp[] = [];
+
+    for (let i = 0; i <= strLength; i++) {
+      nameMask.push(mask);
+    }
+
+    return nameMask;
+
+  }
+
+
+  rutFunction(rawValue) {
+    console.log('rawValue',rawValue);
+    let numbers = rawValue.match(/\d/g);
+    let numberLength = 0;
+    if (numbers) {
+      numberLength = numbers.join("").length;
+    }
+
+    if (numberLength > 8) {
+      return [/[1-9]/, /[1-9]/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/];
+    } else {
+      return [/[1-9]/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/];
+    }
+  }
+
+  
+
+  telefonoFunction(rawValue) {
+      let numbers = rawValue.match(/\d/g);
+      let numberLength = 0;
+      if (numbers) {
+        numberLength = numbers.join("").length;
+      }
+
+      if (numberLength > 10) {
+        return ['(', /[1-9]/, /[1-9]/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
+      } else {
+        return ['(', /[1-9]/, /[1-9]/, ')', ' ', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
+      }
+  }
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// const dollarSign = '$'
+// const emptyString = ''
+// const comma = ','
+// const period = '.'
+// const minus = '-'
+// const minusRegExp = /-/
+// const nonDigitsRegExp = /\D+/g
+// const number = 'number'
+// const digitRegExp = /\d/
+// const caretTrap = '[]'
+
+// export default function createNumberMask({
+//   prefix = dollarSign,
+//   suffix = emptyString,
+//   includeThousandsSeparator = true,
+//   thousandsSeparatorSymbol = comma,
+//   allowDecimal = false,
+//   decimalSymbol = period,
+//   decimalLimit = 2,
+//   requireDecimal = false,
+//   allowNegative = false,
+//   allowLeadingZeroes = false,
+//   integerLimit = null
+// } = {}) {
+
+
+//   const prefixLength = prefix && prefix.length || 0
+//   const suffixLength = suffix && suffix.length || 0
+//   const thousandsSeparatorSymbolLength = thousandsSeparatorSymbol && thousandsSeparatorSymbol.length || 0
+
+//   function numberMask(rawValue = emptyString) {
+//     const rawValueLength = rawValue.length
+
+//     if (
+//       rawValue === emptyString ||
+//       (rawValue[0] === prefix[0] && rawValueLength === 1)
+//     ) {
+//       return prefix.split(emptyString).concat([digitRegExp]).concat(suffix.split(emptyString))
+//     } else if(
+//       rawValue === decimalSymbol &&
+//       allowDecimal
+//     ) {
+//       return prefix.split(emptyString).concat(['0', decimalSymbol, digitRegExp]).concat(suffix.split(emptyString))
+//     }
