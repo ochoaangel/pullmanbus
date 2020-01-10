@@ -7,13 +7,16 @@ import { IonicModule } from '@ionic/angular';
 import { PaymentMethodsPageRoutingModule } from './payment-methods-routing.module';
 
 import { PaymentMethodsPage } from './payment-methods.page';
+import { TextMaskModule } from 'angular2-text-mask';
+
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    PaymentMethodsPageRoutingModule
+    PaymentMethodsPageRoutingModule,
+    TextMaskModule
   ],
   declarations: [PaymentMethodsPage]
 })

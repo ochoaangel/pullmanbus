@@ -65,6 +65,36 @@ export class PaymentMethodsPage implements OnInit {
     }]
   }
 
+  // public maskRut = {
+  //   guide: false,
+  //   showMask: false,
+  //   mask: nameMask()
+  // };
+  // public maskRut = {
+  //   guide: false,
+  //   showMask: false,
+  //   mask: 
+  //   function () {
+  //     let numbers = this.whatsapp.value.match(/\d/g);
+  //     let numberLength = 0;
+  //     if (numbers) {
+  //       numberLength = numbers.join("").length;
+  //     }
+
+  //     if (numberLength > 10) {
+  //       return ['(', /[1-9]/, /[1-9]/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
+  //     } else {
+  //       return ['(', /[1-9]/, /[1-9]/, ')', ' ', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
+  //     }
+  //   }
+  // };
+
+  public maskCodigo = {
+    guide: false,
+    showMask: false,
+    mask: ['+', /\d/, /\d/, /\d/, /\d/]
+  };
+
   tlf = [
     { pais: 'Abjaia', codigo: '+7' },
     { pais: 'Afganistán', codigo: '+93' },
@@ -346,7 +376,7 @@ export class PaymentMethodsPage implements OnInit {
  /*    if (!this.DatosFormulario.convenioUp) {
       this.mys.alertShow('¡Verifique!', 'alert', 'Debe Seleccionar algún convenio para continuar con el pago');
     } else if (!this.DatosFormulario.rut) {
-        this.mys.alertShow('¡Verifique!', 'alert', 'Debe ingresar un RUT válido para continuar con el pago');
+      this.mys.alertShow('¡Verifique!', 'alert', 'Debe ingresar un RUT válido para continuar con el pago');
       // } else if (!this.DatosFormulario.validandoConRut) {
       //   this.mys.alertShow('¡Verifique!', 'alert', 'Debe validar el RUT para continuar con el pago');
     } else if (!this.DatosFormulario.codigo) {
@@ -405,9 +435,139 @@ export class PaymentMethodsPage implements OnInit {
     console.log('siguiente', siguiente);
   }
 
-  tecleado($event){
-    console.log('event', $event);
-    console.log('this.DatosFormulario',this.DatosFormulario);
-    
+  tecleado($event) {
+    // console.log('event', $event.target.name);
+    // console.log('this.DatosFormulario', this.DatosFormulario);
+
+    switch ($event.target.name) {
+      case 'rut':
+
+        break;
+      case 'codigo':
+
+        break;
+      case 'codigo':
+
+        break;
+      case 'telefono':
+
+        break;
+      case 'email':
+
+        break;
+      case 'email2':
+
+        break;
+
+      default:
+        console.log('$event.target.name', $event.target.name);
+        break;
+    } // fin switch
+
+  } //fin tecleado
+
+  nameMask(rawValue: string): RegExp[] {
+    const mask = /[A-Za-z]/;
+    const strLength = String(rawValue).length;
+    const nameMask: RegExp[] = [];
+
+    for (let i = 0; i <= strLength; i++) {
+      nameMask.push(mask);
+    }
+
+    return nameMask;
+
   }
+
+
+  rutFunction(rawValue) {
+    console.log('rawValue',rawValue);
+    let numbers = rawValue.match(/\d/g);
+    let numberLength = 0;
+    if (numbers) {
+      numberLength = numbers.join("").length;
+    }
+
+    if (numberLength > 8) {
+      return [/[1-9]/, /[1-9]/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/];
+    } else {
+      return [/[1-9]/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/];
+    }
+  }
+
+  
+
+  telefonoFunction(rawValue) {
+      let numbers = rawValue.match(/\d/g);
+      let numberLength = 0;
+      if (numbers) {
+        numberLength = numbers.join("").length;
+      }
+
+      if (numberLength > 10) {
+        return ['(', /[1-9]/, /[1-9]/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
+      } else {
+        return ['(', /[1-9]/, /[1-9]/, ')', ' ', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
+      }
+  }
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// const dollarSign = '$'
+// const emptyString = ''
+// const comma = ','
+// const period = '.'
+// const minus = '-'
+// const minusRegExp = /-/
+// const nonDigitsRegExp = /\D+/g
+// const number = 'number'
+// const digitRegExp = /\d/
+// const caretTrap = '[]'
+
+// export default function createNumberMask({
+//   prefix = dollarSign,
+//   suffix = emptyString,
+//   includeThousandsSeparator = true,
+//   thousandsSeparatorSymbol = comma,
+//   allowDecimal = false,
+//   decimalSymbol = period,
+//   decimalLimit = 2,
+//   requireDecimal = false,
+//   allowNegative = false,
+//   allowLeadingZeroes = false,
+//   integerLimit = null
+// } = {}) {
+
+
+//   const prefixLength = prefix && prefix.length || 0
+//   const suffixLength = suffix && suffix.length || 0
+//   const thousandsSeparatorSymbolLength = thousandsSeparatorSymbol && thousandsSeparatorSymbol.length || 0
+
+//   function numberMask(rawValue = emptyString) {
+//     const rawValueLength = rawValue.length
+
+//     if (
+//       rawValue === emptyString ||
+//       (rawValue[0] === prefix[0] && rawValueLength === 1)
+//     ) {
+//       return prefix.split(emptyString).concat([digitRegExp]).concat(suffix.split(emptyString))
+//     } else if(
+//       rawValue === decimalSymbol &&
+//       allowDecimal
+//     ) {
+//       return prefix.split(emptyString).concat(['0', decimalSymbol, digitRegExp]).concat(suffix.split(emptyString))
+//     }

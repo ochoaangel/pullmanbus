@@ -32,7 +32,7 @@
     Pasaje de regreso
   </div>
   <div class="cabeceraTitulo" style="font-size: 0.8rem;" *ngIf="way==='back'">
-    {{this.ticket.origin.nombre  | titlecase }} a {{this.ticket.destiny.nombre  | titlecase }} {{backDate}}
+    {{this.ticket.destiny.nombre  | titlecase }} a {{this.ticket.origin.nombre  | titlecase }} {{backDate}}
   </div>
 
 </ion-header>
@@ -135,7 +135,7 @@
                         ${{svc.tarifaSegundoPiso}}</div>
                     </div>
                     <div class="myServiceRow" style="align-items: center; justify-content: center; ">
-                      <ion-button fill="clear" (click)="myServiceSelection(i)" 
+                      <ion-button fill="clear" (click)="myServiceSelection(i)"  *ngIf="(!svc.checked && !svc.my_comprasByService) ||  (  !svc.checked &&  svc.my_comprasByService && svc.my_comprasByService.length===0)"
                         style="color: white; outline: none;  --padding-start: 0;--padding-end: 0; --background: #0247ac;text-transform: none; font-size: 0.6rem;width: 80%;max-height: 1rem;">
                         Comprar
                       </ion-button>
