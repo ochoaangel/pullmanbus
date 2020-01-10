@@ -21,4 +21,9 @@ import { Observable } from 'rxjs';
     getPlanillaVertical(service:any): Observable<any[]> {
         return this.http.post<any[]>('/integrador-web/rest/private/venta/buscarPlantillaVertical',service);
     }  
+
+    guardarTransaccion(guardar:any): Observable<any[]> {
+        return this.http.post<any[]>('/integrador-web/rest/private/venta/guardarTransaccion',guardar);
+    }  
+
 }

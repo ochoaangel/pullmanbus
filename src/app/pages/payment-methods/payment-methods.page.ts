@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MyserviceService } from 'src/app/service/myservice.service';
+import { HttpClient } from '@angular/common/http';
+import { IntegradorService } from 'src/app/service/integrador.service';
 
 @Component({
   selector: 'app-payment-methods',
@@ -9,7 +11,9 @@ import { MyserviceService } from 'src/app/service/myservice.service';
 })
 export class PaymentMethodsPage implements OnInit {
 
-  constructor(private router: Router, private mys: MyserviceService) { }
+  constructor(private router: Router, 
+    private integradorService:IntegradorService,
+    private mys: MyserviceService) { }
   total
   convenioUp = { checked0: false, checked1: false, checked2: false, checked3: false, checked4: false, checked5: false }
   convenioDown = { checked0: false, checked1: false }
@@ -31,7 +35,35 @@ export class PaymentMethodsPage implements OnInit {
     v_email2: false,
     validandoConRut: false
   }
-
+  guardarTransaccion = {
+    email:"",
+    rut:"1-9",
+    medioDePago:"WBPAY",
+    puntoVenta:"WEBM",
+    montoTotal:0,
+    idSistema:5,
+    listaCarrito:[{
+       servicio:"UZVA",
+       fechaServicio:"15/10/2020",
+       fechaPasada:"15/10/2020",
+       fechaLlegada:"15/10/2020",
+       horaSalida:"15:20",
+       horaLlegada:"15:20",
+       asiento:8,
+       origen:"KA",
+       destino:"MB",
+       monto:6120,
+       precio:6120,
+       descuento:0,
+       empresa:"03",
+       clase:"EJE42",
+       convenio:"",
+       datoConvenio:"",
+       bus:"0",
+       piso:1,
+       integrador:1001
+    }]
+  }
 
   tlf = [
     { pais: 'Abjaia', codigo: '+7' },
@@ -311,7 +343,7 @@ export class PaymentMethodsPage implements OnInit {
 
   pagar() {
 
-    if (!this.DatosFormulario.convenioUp) {
+ /*    if (!this.DatosFormulario.convenioUp) {
       this.mys.alertShow('¡Verifique!', 'alert', 'Debe Seleccionar algún convenio para continuar con el pago');
     } else if (!this.DatosFormulario.rut) {
         this.mys.alertShow('¡Verifique!', 'alert', 'Debe ingresar un RUT válido para continuar con el pago');
@@ -321,8 +353,9 @@ export class PaymentMethodsPage implements OnInit {
       this.mys.alertShow('¡Verifique!', 'alert', 'Debe ingresar un código de país válido. <br>Ejemplo: +56');
       } else if (!this.DatosFormulario.telefono) {
         this.mys.alertShow('¡Verifique!', 'alert', 'Debe ingresar un número telefonico válido para continuar con el pago');
-    } else if (!this.DatosFormulario.email) {
-      this.mys.alertShow('¡Verifique!', 'alert', 'Debe ingresar un email válido para continuar con el pago');
+    } else 
+ */ if (!this.DatosFormulario.email) {
+       this.mys.alertShow('¡Verifique!', 'alert', 'Debe ingresar un email válido para continuar con el pago');
     } else if (!this.DatosFormulario.email2) {
       this.mys.alertShow('¡Verifique!', 'alert', 'Debe re-ingresar un email válido para continuar con el pago');
     } else if (this.DatosFormulario.email !== this.DatosFormulario.email) {
@@ -333,17 +366,35 @@ export class PaymentMethodsPage implements OnInit {
       this.mys.alertShow('¡Verifique!', 'alert', 'Debe aceptar el acuerdo y condiciones de compra para continuar con el pago');
     } else {
       // this.mys.alertShow('¡Verifique!', 'alert', 'Todo correcto');
+    this.guardarTransaccion.email = this.DatosFormulario.email;
+    this.guardarTransaccion.montoTotal = this.total;
 
-
-
-
-
-
-
-
-      this.router.navigateByUrl('/transaction-voucher')
+    this.integradorService.guardarTransaccion(this.guardarTransaccion).subscribe(resp=>{
+      let valor:any = resp;
+      if(valor.exito){
+        formularioTBKWS(valor.url,valor.token);  
+      }else{
+        this.mys.alertShow('¡Verifique!', 'alert', valor.mensaje);
+      }
+    })
+  
+      //this.router.navigateByUrl('/transaction-voucher')
     }
 
+    function formularioTBKWS(urltbk,token){
+      var f = document.createElement("form");
+      f.setAttribute('method',"post");
+      f.setAttribute('action',urltbk);
+      var i = document.createElement("input");
+      i.setAttribute('type',"text");
+      i.setAttribute('name',"TBK_TOKEN");
+      i.setAttribute("value", token);
+      f.appendChild(i.cloneNode());
+      f.style.display = "none";
+      document.body.appendChild(f);
+      f.submit();
+      document.body.removeChild(f);
+    }
   }
 
   aceptarAcuerdo() {

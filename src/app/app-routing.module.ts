@@ -54,7 +54,7 @@ const routes: Routes = [
     loadChildren: () => import('./pages/purchase-detail/purchase-detail.module').then( m => m.PurchaseDetailPageModule)
   },
   {
-    path: 'transaction-voucher',
+    path: 'transaction-voucher/:codigo',
     loadChildren: () => import('./pages/transaction-voucher/transaction-voucher.module').then( m => m.TransactionVoucherPageModule)
   },
   {
@@ -73,6 +73,8 @@ const routes: Routes = [
     path: 'recover-password',
     loadChildren: () => import('./pages/recover-password/recover-password.module').then( m => m.RecoverPasswordPageModule)
   },
+
+
 ];
 
 @NgModule({
