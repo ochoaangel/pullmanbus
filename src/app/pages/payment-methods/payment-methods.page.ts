@@ -31,7 +31,36 @@ export class PaymentMethodsPage implements OnInit {
     v_email2: false,
     validandoConRut: false
   }
+ 
+  public maskRut = {
+    guide: false,
+    showMask: false,
+    mask: [/\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/,'-', /\d/]
+  };
+  // public maskRut = {
+  //   guide: false,
+  //   showMask: false,
+  //   mask: 
+  //   function () {
+  //     let numbers = this.whatsapp.value.match(/\d/g);
+  //     let numberLength = 0;
+  //     if (numbers) {
+  //       numberLength = numbers.join("").length;
+  //     }
+  
+  //     if (numberLength > 10) {
+  //       return ['(', /[1-9]/, /[1-9]/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
+  //     } else {
+  //       return ['(', /[1-9]/, /[1-9]/, ')', ' ', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
+  //     }
+  //   }
+  // };
 
+  public maskCodigo = {
+    guide: false,
+    showMask: false,
+    mask: ['+', /\d/, /\d/, /\d/, /\d/]
+  };
 
   tlf = [
     { pais: 'Abjaia', codigo: '+7' },
@@ -314,13 +343,13 @@ export class PaymentMethodsPage implements OnInit {
     if (!this.DatosFormulario.convenioUp) {
       this.mys.alertShow('¡Verifique!', 'alert', 'Debe Seleccionar algún convenio para continuar con el pago');
     } else if (!this.DatosFormulario.rut) {
-        this.mys.alertShow('¡Verifique!', 'alert', 'Debe ingresar un RUT válido para continuar con el pago');
+      this.mys.alertShow('¡Verifique!', 'alert', 'Debe ingresar un RUT válido para continuar con el pago');
       // } else if (!this.DatosFormulario.validandoConRut) {
       //   this.mys.alertShow('¡Verifique!', 'alert', 'Debe validar el RUT para continuar con el pago');
     } else if (!this.DatosFormulario.codigo) {
       this.mys.alertShow('¡Verifique!', 'alert', 'Debe ingresar un código de país válido. <br>Ejemplo: +56');
-      } else if (!this.DatosFormulario.telefono) {
-        this.mys.alertShow('¡Verifique!', 'alert', 'Debe ingresar un número telefonico válido para continuar con el pago');
+    } else if (!this.DatosFormulario.telefono) {
+      this.mys.alertShow('¡Verifique!', 'alert', 'Debe ingresar un número telefonico válido para continuar con el pago');
     } else if (!this.DatosFormulario.email) {
       this.mys.alertShow('¡Verifique!', 'alert', 'Debe ingresar un email válido para continuar con el pago');
     } else if (!this.DatosFormulario.email2) {
@@ -354,9 +383,34 @@ export class PaymentMethodsPage implements OnInit {
     console.log('siguiente', siguiente);
   }
 
-  tecleado($event){
-    console.log('event', $event);
-    console.log('this.DatosFormulario',this.DatosFormulario);
-    
-  }
+  tecleado($event) {
+    // console.log('event', $event.target.name);
+    console.log('this.DatosFormulario', this.DatosFormulario);
+
+    switch ($event.target.name) {
+      case 'rut':
+
+        break;
+      case 'codigo':
+
+        break;
+      case 'codigo':
+
+        break;
+      case 'telefono':
+
+        break;
+      case 'email':
+
+        break;
+      case 'email2':
+
+        break;
+
+      default:
+        console.log('$event.target.name', $event.target.name);
+        break;
+    } // fin switch
+
+  } //fin tecleado
 }
