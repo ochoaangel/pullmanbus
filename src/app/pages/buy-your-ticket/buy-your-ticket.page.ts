@@ -804,28 +804,6 @@ export class BuyYourTicketPage implements OnInit {
 
   }
 
-<<<<<<< HEAD
-=======
-
-  teclaInput($event) {
-    console.log('presionada tecla', $event.target.value);
-
-    if ($event.target.value.length === 0) {
-      this.inputFiltrado = this.inputFuente
-    } else {
-
-      let filtradox = []
-      let minuscula1 = $event.target.value.toLowerCase().trim()
-      this.inputFuente.forEach(element => {
-        let minuscula2 = element.nombre.toLowerCase().trim()
-        minuscula2.includes(minuscula1) ? filtradox.push(element) : null
-      });
-      this.inputFiltrado = filtradox
-    }
-
-  }
-
->>>>>>> master
   btnSelecccionarOrigen() {
     this.inputFuente = this.allOrigin;
     this.inputFiltrado = this.allOrigin
