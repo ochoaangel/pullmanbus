@@ -21,6 +21,8 @@ export class TicketPage implements OnInit {
   @ViewChildren('divServicio') divServicio: QueryList<ElementRef>;
 
 
+  loadingService = false;
+  loadingBus = false;
 
   allServices = [];
   serviceSelectedNumber;
@@ -129,7 +131,7 @@ export class TicketPage implements OnInit {
 
   getServicesAndBus(wayNow: string) {
     let findService;
-
+    this.loadingService = true;
     if (wayNow === 'back') {
       findService = {
         "origen": this.mys.ticket.destiny.codigo,
@@ -152,27 +154,37 @@ export class TicketPage implements OnInit {
     console.log(findService);
     this.integradorService.getService(findService).subscribe(data => {
       this.allServices = data;
+      this.loadingService = false;
     })
   }
 
-  getBusFromService() {
-    console.log('Entrando a getBusFromService');
-    console.log('this.allServiceDsdBus1', this.allServices);
+  // getBusFromService() {
+  //   console.log('Entrando a getBusFromService');
+  //   console.log('this.allServiceDsdBus1', this.allServices);
+  //   // this.loadingBus = true;
+  //   this.allServices.forEach(element => {
+  //     this.httpClient.get<any>('assets/json/planillaVertical').subscribe(myBus => {
+  //       element['bus'] = this.sumar20piso2(myBus);
+  //       element['my_comprasByService'] = [];
+  //       element['my_comprasByServiceData'] = [];
+  //       // this.loadingBus = false;
 
-    this.allServices.forEach(element => {
-      this.httpClient.get<any>('assets/json/planillaVertical').subscribe(myBus => {
-        element['bus'] = this.sumar20piso2(myBus);
-        element['my_comprasByService'] = [];
-        element['my_comprasByServiceData'] = [];
+  //     });
+  //   });
 
-      });
-    });
-
-  }
-
-
-
+  // }
+ 
+  
+ 
   myServiceSelection(nServiceSeleccion: number) {
+    // setTimeout(() => {
+      let estadoPrevio = this.allServices[nServiceSeleccion]['checked'];
+      this.allServices.forEach(element => {
+        element['checked'] = false;
+      });
+      this.loadingBus = true;
+      this.allServices[nServiceSeleccion]['checked'] = estadoPrevio;
+    // });
     console.log(nServiceSeleccion);
     if (this.serviceSelectedNumber !== nServiceSeleccion) {
       let servicio = {
@@ -185,49 +197,60 @@ export class TicketPage implements OnInit {
         "integrador": this.allServices[nServiceSeleccion].integrador
       }
       console.log(servicio);
-      this.integradorService.getPlanillaVertical(servicio).subscribe(myBusFromApi => {
-        // agrego bus y sumo 20 a cada asiento de piso 2
-        console.log(myBusFromApi["1"]);
-        console.log(myBusFromApi["2"]);
-        this.allServices[nServiceSeleccion]['my_Bus'] = this.sumar20piso2(myBusFromApi);
-        this.allServices[nServiceSeleccion]['my_comprasByService'] = [];
-        this.allServices[nServiceSeleccion]['my_comprasByServiceData'] = [];
 
-        this.allServices[nServiceSeleccion].checked = true;
-        this.comprasByService = this.allServices[nServiceSeleccion]['my_comprasByService'];
-        this.comprasByServiceData = this.allServices[nServiceSeleccion]['my_comprasByServiceData'];
-        this.serviceSelectedNumber = nServiceSeleccion;
-        this.serviceSelected = this.allServices[nServiceSeleccion];
+      setTimeout(() => {
+        this.integradorService.getPlanillaVertical(servicio).subscribe(myBusFromApi => {
+          // agrego bus y sumo 20 a cada asiento de piso 2
+          console.log(myBusFromApi["1"]);
+          console.log(myBusFromApi["2"]);
+          this.loadingBus=false;
+          
+          // setTimeout(() => {
+          //   let estadoPrevio = this.allServices[nServiceSeleccion]['checked'];
+          //   this.allServices.forEach(element => {
+          //     element['checked'] = false;
+          //   });
+          //   this.allServices[nServiceSeleccion]['checked'] = estadoPrevio;
+          // });
 
-        this.bus = this.allServices[this.serviceSelectedNumber].my_Bus;
-        // this.compras = [];
-        console.log('bus', this.bus);
+          this.allServices[nServiceSeleccion]['my_Bus'] = this.sumar20piso2(myBusFromApi);
+          this.allServices[nServiceSeleccion]['my_comprasByService'] = [];
+          this.allServices[nServiceSeleccion]['my_comprasByServiceData'] = [];
+  
+          this.allServices[nServiceSeleccion].checked = true;
+          this.comprasByService = this.allServices[nServiceSeleccion]['my_comprasByService'];
+          this.comprasByServiceData = this.allServices[nServiceSeleccion]['my_comprasByServiceData'];
+          this.serviceSelectedNumber = nServiceSeleccion;
+          this.serviceSelected = this.allServices[nServiceSeleccion];
+  
+          this.bus = this.allServices[this.serviceSelectedNumber].my_Bus;
+          // this.compras = [];
+          console.log('bus', this.bus);
+  
+          // if (this.ticket.goTotal) {
+          //   this.tarifaTotal = this.ticket.goTotal;
+          // } else {
+          //   this.tarifaTotal = 0;
+          // }
+  
+          // preparando tarifas
+          this.allServices[nServiceSeleccion].tarifaPrimerPiso ? this.tarifaPiso1 = parseInt(this.allServices[nServiceSeleccion].tarifaPrimerPiso.replace('.', '')) : this.tarifaPiso1 = null;
+          this.allServices[nServiceSeleccion].tarifaSegundoPiso ? this.tarifaPiso2 = parseInt(this.allServices[nServiceSeleccion].tarifaSegundoPiso.replace('.', '')) : this.tarifaPiso2 = null;
+          !this.tarifaPiso2 ? this.piso1 = true : this.piso1 = false;
+  
+          this.nowService = this.allServices[nServiceSeleccion];
+  
 
-        // if (this.ticket.goTotal) {
-        //   this.tarifaTotal = this.ticket.goTotal;
-        // } else {
-        //   this.tarifaTotal = 0;
-        // }
-
-        // preparando tarifas
-        this.allServices[nServiceSeleccion].tarifaPrimerPiso ? this.tarifaPiso1 = parseInt(this.allServices[nServiceSeleccion].tarifaPrimerPiso.replace('.', '')) : this.tarifaPiso1 = null;
-        this.allServices[nServiceSeleccion].tarifaSegundoPiso ? this.tarifaPiso2 = parseInt(this.allServices[nServiceSeleccion].tarifaSegundoPiso.replace('.', '')) : this.tarifaPiso2 = null;
-        !this.tarifaPiso2 ? this.piso1 = true : this.piso1 = false;
-
-        this.nowService = this.allServices[nServiceSeleccion];
-
-        setTimeout(() => {
-          let estadoPrevio = this.allServices[nServiceSeleccion]['checked'];
-          this.allServices.forEach(element => {
-            element['checked'] = false;
+  
+          setTimeout(() => {
+            this.content.scrollToPoint(0, this.divServicio['_results'][nServiceSeleccion].nativeElement.offsetTop, 100);
           });
-          this.allServices[nServiceSeleccion]['checked'] = estadoPrevio;
         });
+        
+      },1000);
 
-        setTimeout(() => {
-          this.content.scrollToPoint(0, this.divServicio['_results'][nServiceSeleccion].nativeElement.offsetTop, 100);
-        });
-      });
+
+
     } else {
       this.allServices[this.serviceSelectedNumber]['checked'] = !this.allServices[this.serviceSelectedNumber]['checked'];
     }
