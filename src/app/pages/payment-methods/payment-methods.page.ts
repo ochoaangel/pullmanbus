@@ -52,7 +52,7 @@ export class PaymentMethodsPage implements OnInit {
        asiento:8,
        origen:"KA",
        destino:"MB",
-       monto:6120,
+       monto:6120, 
        precio:6120,
        descuento:0,
        empresa:"03",
