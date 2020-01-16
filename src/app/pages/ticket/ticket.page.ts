@@ -287,84 +287,47 @@ export class TicketPage implements OnInit {
         element['checked'] = false;
       });
       this.mys.alertShow('¡Verifique!', 'alert', 'Máximo número de asientos permitidos de Regreso son 4');
-    } else {
-
-
-
-
-      let tarifa;
+    } else {      
       console.log('__this.comprasByService', this.comprasByService);
       console.log('__this.compras', this.compras);
       console.log('__this.comprasByService', this.comprasByService);
       console.log('__this.comprasDetalles', this.comprasDetalles);
       console.log('__this.allServices', this.allServices);
 
-      if (this.bus[piso][x][y]['estado'] === 'libre') {
-        // caso asiento No seleccionado
-        this.bus[piso][x][y]['estado'] = 'seleccionado';
-        if (piso === '1') {
-          // sumando para piso1
-          // this.tarifaTotal = this.tarifaTotal + this.tarifaPiso1;
-          tarifa = this.tarifaPiso1;
-        } else {
-          // sumando para piso2
-          // this.tarifaTotal = this.tarifaTotal + this.tarifaPiso2;
-          tarifa = this.tarifaPiso2;
-        }
-        // this.compras.push(`piso_${piso}/fila_${x}/columna_${y}/asiento_${this.bus[piso][x][y]['asiento']}/precio_${tarifa}`);
-        // this.allServices[this.serviceSelectedNumber]['my_Total'] = this.tarifaTotal;
-
-        this.compras.push(this.way + '_' + this.serviceSelected.idServicio + '_' + this.bus[piso][x][y]['asiento']);
-        this.comprasByService.push(this.way + '_' + this.serviceSelected.idServicio + '_' + this.bus[piso][x][y]['asiento']);
-        this.comprasByServiceData.push({ asiento: this.bus[piso][x][y]['asiento'], piso, x, y });
-        // this.total
-
-
-        this.comprasDetallesPosicion.push(this.way + '_' + this.serviceSelected.idServicio + '_' + this.bus[piso][x][y]['asiento']);
-        this.comprasDetalles.push({
-          nService: this.serviceSelectedNumber,
-          idServicio: this.serviceSelected.idServicio,
-          asiento: this.bus[piso][x][y]['asiento'],
-          piso: parseInt(piso),
-          valor: parseInt(tarifa),
-          fila: x,
-          columna: y,
-          way: this.way,
-          service: this.serviceSelected,
-          bus: this.bus,
-        });
-
-
-      } else if (this.bus[piso][x][y]['estado'] === 'seleccionado') {
-        // caso asiento ya seleccionado
-        this.bus[piso][x][y]['estado'] = 'libre';
-        if (piso === '1') {
-          // restando para piso1
-          // this.tarifaTotal = this.tarifaTotal - this.tarifaPiso1;
-          tarifa = this.tarifaPiso1;
-
-        } else {
-          // restando para piso2
-          // this.tarifaTotal = this.tarifaTotal - this.tarifaPiso2;
-          tarifa = this.tarifaPiso2;
-        }
-        // creo el texto a eliminar de la compra
-        // let texto = `piso_${piso}/fila_${x}/columna_${y}/asiento_${this.bus[piso][x][y]['asiento']}/precio_${tarifa}`;
-        let texto = this.way + '_' + this.serviceSelected.idServicio + '_' + this.bus[piso][x][y]['asiento'];
-
-        // variables totales
-        let index = this.compras.indexOf(texto);
-        if (index !== -1) { this.compras.splice(index, 1); this.comprasDetalles.splice(index, 1); this.comprasDetallesPosicion.splice(index, 1); }
-
-        // variables por servicio
-        let index2 = this.comprasByService.indexOf(texto)
-        if (index2 !== -1) { this.comprasByService.splice(index2, 1); this.comprasByServiceData.splice(index2, 1); }
-
-
-
+      let asiento = {
+        "servicio":this.serviceSelected.idServicio,
+        "fecha":this.serviceSelected.fechaSalida,
+        "origen":this.serviceSelected.idTerminalOrigen,
+        "destino":this.serviceSelected.idTerminalDestino,
+        "asiento":this.bus[piso][x][y].asiento,
+        "integrador":this.serviceSelected.integrador
       }
+      console.log(asiento);
 
-
+      if (this.bus[piso][x][y]['estado'] === 'libre') {
+        this.integradorService.validarAsiento(asiento).subscribe(disponible => {
+          if(disponible == 0){
+            this.integradorService.tomarAsiento(asiento).subscribe(resp => {
+              if(resp == 0){
+                this.mys.alertShow('¡Verifique!', 'alert', 'Error al tomar asiento.');
+              }else{
+                this.tomarAsiento(piso,x,y);
+              }
+            })
+          }else{
+            this.mys.alertShow('¡Verifique!', 'alert', 'Asiento no disponible, está siendo reservado por otro cliente.');
+            this.bus[piso][x][y]['estado'] = 'ocupado';
+          }
+        })
+      } else if (this.bus[piso][x][y]['estado'] === 'seleccionado') {
+        this.integradorService.liberarAsiento(asiento).subscribe(resp => {
+          if(resp == 0){
+            this.mys.alertShow('¡Verifique!', 'alert', 'Error al liberar asiento.');
+          }else{
+            this.liberarAsiento(piso,x,y);
+          }
+        })        
+      }
       // guardo en this.allServices
       this.allServices[this.serviceSelectedNumber].my_Bus = this.bus;
       this.allServices[this.serviceSelectedNumber].my_comprasByService = this.comprasByService;
@@ -381,15 +344,70 @@ export class TicketPage implements OnInit {
       console.log('this.comprasByService', this.comprasByService);
       console.log('this.comprasDetalles', this.comprasDetalles);
       console.log('this.allServices', this.allServices);
-
-
-
-
     } // fin de numeros asientos permitidos
-
-
   } // fin presionado
+  liberarAsiento(piso,x,y){
+    let tarifa;
+     // caso asiento ya seleccionado
+     this.bus[piso][x][y]['estado'] = 'libre';
+     if (piso === '1') {
+       // restando para piso1
+       // this.tarifaTotal = this.tarifaTotal - this.tarifaPiso1;
+       tarifa = this.tarifaPiso1;
 
+     } else {
+       // restando para piso2
+       // this.tarifaTotal = this.tarifaTotal - this.tarifaPiso2;
+       tarifa = this.tarifaPiso2;
+     }
+     // creo el texto a eliminar de la compra
+     // let texto = `piso_${piso}/fila_${x}/columna_${y}/asiento_${this.bus[piso][x][y]['asiento']}/precio_${tarifa}`;
+     let texto = this.way + '_' + this.serviceSelected.idServicio + '_' + this.bus[piso][x][y]['asiento'];
+
+     // variables totales
+     let index = this.compras.indexOf(texto);
+     if (index !== -1) { this.compras.splice(index, 1); this.comprasDetalles.splice(index, 1); this.comprasDetallesPosicion.splice(index, 1); }
+
+     // variables por servicio
+     let index2 = this.comprasByService.indexOf(texto)
+     if (index2 !== -1) { this.comprasByService.splice(index2, 1); this.comprasByServiceData.splice(index2, 1); }
+  }
+  tomarAsiento(piso,x,y){
+    let tarifa;
+     // caso asiento No seleccionado
+     this.bus[piso][x][y]['estado'] = 'seleccionado';
+     if (piso === '1') {
+       // sumando para piso1
+       // this.tarifaTotal = this.tarifaTotal + this.tarifaPiso1;
+       tarifa = this.tarifaPiso1;
+     } else {
+       // sumando para piso2
+       // this.tarifaTotal = this.tarifaTotal + this.tarifaPiso2;
+       tarifa = this.tarifaPiso2;
+     }
+     // this.compras.push(`piso_${piso}/fila_${x}/columna_${y}/asiento_${this.bus[piso][x][y]['asiento']}/precio_${tarifa}`);
+     // this.allServices[this.serviceSelectedNumber]['my_Total'] = this.tarifaTotal;
+
+     this.compras.push(this.way + '_' + this.serviceSelected.idServicio + '_' + this.bus[piso][x][y]['asiento']);
+     this.comprasByService.push(this.way + '_' + this.serviceSelected.idServicio + '_' + this.bus[piso][x][y]['asiento']);
+     this.comprasByServiceData.push({ asiento: this.bus[piso][x][y]['asiento'], piso, x, y });
+     // this.total
+
+
+     this.comprasDetallesPosicion.push(this.way + '_' + this.serviceSelected.idServicio + '_' + this.bus[piso][x][y]['asiento']);
+     this.comprasDetalles.push({
+       nService: this.serviceSelectedNumber,
+       idServicio: this.serviceSelected.idServicio,
+       asiento: this.bus[piso][x][y]['asiento'],
+       piso: parseInt(piso),
+       valor: parseInt(tarifa),
+       fila: x,
+       columna: y,
+       way: this.way,
+       service: this.serviceSelected,
+       bus: this.bus,
+     });
+  }
 
   cambiarPiso(piso: number) {
     this.piso1 ? (piso === 2 ? this.piso1 = !this.piso1 : null) : (piso === 1 ? this.piso1 = !this.piso1 : null);
