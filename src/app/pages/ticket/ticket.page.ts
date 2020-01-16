@@ -475,7 +475,7 @@ export class TicketPage implements OnInit {
       this.ionViewWillEnter()
     } else {
       this.mys.ticket = null;
-      this.router.navigateByUrl('/home');
+      this.router.navigateByUrl('/buy-your-ticket');
     }
   }
 
