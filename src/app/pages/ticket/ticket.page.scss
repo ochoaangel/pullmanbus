@@ -103,14 +103,14 @@ ion-checkbox {
   width: 6vw;
 }
 
-ion-select {
-  border-radius: 6px;
-  width: -webkit-fill-available;
-  background-color: white;
-  height: 7vw;
-  padding: 4px 0px 0px 5px;
-  border: 1px solid #fe5200;
-}
+// ion-select {
+//   border-radius: 6px;
+//   width: -webkit-fill-available;
+//   background-color: white;
+//   height: 7vw;
+//   padding: 4px 0px 0px 5px;
+//   border: 1px solid #fe5200;
+// }
 
 .odd {
   background-color: #f2f2f2;
@@ -131,7 +131,7 @@ ion-select {
 }
 
 .pisoHiden {
-  background-color: white; 
+  background-color: white;
   color: blue;
   width: 15vw;
   border-radius: 4px;
@@ -153,4 +153,20 @@ ion-select {
   font-size: 0.8rem;
   color: black;
   // border: 1px solid cadetblue;
+}
+
+.divSelectMenu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.selectMenu {
+  --padding-bottom: 0;
+  --padding-end: 0;
+  --padding-start: 0;
+  --padding-top: 6px;
+  font-size: 0.7rem;
+  color: #fe5200;
+  // width: -webkit-fill-available;
 }

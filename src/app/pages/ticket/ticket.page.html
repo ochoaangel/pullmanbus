@@ -6,8 +6,8 @@
       Es
     </div>
 
-    <div style="display: inline; width: 60%;" (click)="prueba()">
-      <ion-img src="assets/images/titulo.png" style="height: 100%;height: 5vh;"></ion-img>
+    <div style="width: 60%; height: 100%; display: flex; align-items: center; justify-content: center;" (click)="prueba()">
+      <img src="assets/images/titulo.png" style="height: 90%;object-fit: scale-down;position: relative; z-index: 10; ">
     </div>
 
     <div style="display: inline; width: 10%;">
@@ -97,8 +97,8 @@
                   <div class="myServiceRow">Lle. {{svc.horaLlegada | hh2ampm}}</div>
                   <div class="myServiceRow">Dur.
                     {{'X'| duration: svc.fechaSalida : svc.horaSalida : svc.fechaLlegada : svc.horaLlegada}}</div>
-                  <div class="myServiceRow" style="margin-top: 0.2rem;">Semicama</div>
-                  <div class="myServiceRow" *ngIf="svc.tarifaSegundoPiso">Cama</div>
+                  <div class="myServiceRow" style="margin-top: 0.2rem;">{{svc.servicioPrimerPiso | titlecase }}</div>
+                  <div class="myServiceRow" *ngIf="svc.tarifaSegundoPiso">{{svc.servicioSegundoPiso | titlecase }}</div>
                 </div>
 
                 <!-- columna 4   -->
@@ -108,12 +108,11 @@
 
 
                   <div style="display: flex; flex-direction: row;">
-                    <div class="myServiceRow" style="width:85%; font-weight: bold;">{{svc.terminalSalida  | titlecase }}</div>
+                    <div class="myServiceRow" style="width:85%; font-weight: bold;">{{svc.terminalSalida  | titlecase }}
+                    </div>
                     <div style="width: 15%;">
-                      <ion-spinner
-                        style="position: absolute; z-index: 3; color: orangered; "
-                        *ngIf="svc.checked && loadingBus"
-                        name="circles"></ion-spinner>
+                      <ion-spinner style="position: absolute; z-index: 3; color: orangered; "
+                        *ngIf="svc.checked && loadingBus" name="circles"></ion-spinner>
 
                     </div>
                   </div>
@@ -315,7 +314,37 @@
       </div>
     </ion-button>
 
-    <ion-button fill="clear" style="color: #fe5200; outline: none; width: 100%;   --padding-start: 0;--padding-end: 0;">
+    <div class="divSelectMenu">
+      <ion-select multiple="false" placeholder="&#8597; Ordenar" class="selectMenu" [interfaceOptions]="orderWindowsDetail"
+      (ionChange)="orderCambio()" [(ngModel)]="orderSelected"
+      (ionFocus)="orderShowActive = true" (ionCancel)="orderShowActive = false"
+      >
+        <ion-select-option value="" *ngIf="!orderShowActive">&#8597; Ordenar</ion-select-option>
+        <ion-select-option value="precioAsc">&#8593; Precio</ion-select-option>
+        <ion-select-option value="precioDsc">&#8595; Precio</ion-select-option>
+        <ion-select-option value="origenAsc">&#8593; Origen</ion-select-option>
+        <ion-select-option value="origenDsc">&#8595; Origen</ion-select-option>
+        <ion-select-option value="destinoAsc">&#8593; Destino</ion-select-option>
+        <ion-select-option value="destinoDsc">&#8595; Destino</ion-select-option>
+        <ion-select-option value="horaAsc">&#8593; Hora</ion-select-option>
+        <ion-select-option value="horaDsc">&#8595; Hora</ion-select-option>
+        <ion-select-option value="empresaAsc">&#8593; Empresa</ion-select-option>
+        <ion-select-option value="empresaDsc">&#8595; Empresa</ion-select-option>
+      </ion-select>
+    </div>
+    
+    <div class="divSelectMenu">
+      <ion-select multiple="false" placeholder="&#8597; Filtrar" class="selectMenu" [interfaceOptions]="filterWindowsDetail"
+      (ionChange)="orderCambio()" [(ngModel)]="filterSelected"
+      (ionFocus)="filterShowActive = true" (ionCancel)="filterShowActive = false"
+      >
+      <ion-select-option value="" *ngIf="!filterShowActive">&#8597; Filtrar</ion-select-option>
+      <ion-select-option value="precio">Precio</ion-select-option>
+      <ion-select-option value="horario">Horario</ion-select-option>
+      <ion-select-option value="promociones">Promociones</ion-select-option>
+      </ion-select>
+    </div>
+    <!-- <ion-button fill="clear" style="color: #fe5200; outline: none; width: 100%;   --padding-start: 0;--padding-end: 0;">
       <ion-icon name="md-repeat" style="transform: rotate(90deg); color: #fe5200;font-size: 5vw;"></ion-icon>
       <div style="display: inline;  text-align: right; text-transform: none;font-size: 0.7rem;">
         Ordenar
@@ -328,7 +357,7 @@
       <div style="display: inline;  text-align: right; text-transform: none;font-size: 0.7rem;">
         Filtros
       </div>
-    </ion-button>
+    </ion-button> -->
 
     <ion-button fill="clear" style="color: #fe5200; outline: none; width: 100%;   --padding-start: 0;--padding-end: 0;"
       *ngIf="tarifaTotal == 0" (click)="continuar()">

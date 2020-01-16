@@ -7,9 +7,8 @@
       Es
     </div>
 
-    <div style="display: inline; width: 60%;">
-      <ion-img src="assets/images/titulo.png" style="height:
-        100%;height: 5vh;"></ion-img>
+    <div style="width: 60%; height: 100%; display: flex; align-items: center; justify-content: center;">
+      <img src="assets/images/titulo.png" style="height: 90%;object-fit: scale-down;position: relative; z-index: 10; ">
     </div>
 
     <div style="display: inline; width: 10%;">
@@ -165,7 +164,7 @@
                       <ion-icon class="iconEditable" name="calendar"></ion-icon>
                       <ion-label>Fecha de Ida:</ion-label>
                       <ion-datetime displayFormat="DD/MM/YYYY" placeholder="Seleccione.." cancelText="Cancelar"
-                        doneText="Listo" mode="ios" [(ngModel)]="goDate" (ionChange)="dateChangeGo()" [min]="mingoDate"
+                        doneText="Listo" mode="ios" [(ngModel)]="goDate" [min]="mingoDate"
                         [max]="maxgoDate"></ion-datetime>
                     </ion-item>
 
@@ -188,7 +187,7 @@
                       <ion-label>Fecha de regreso:</ion-label>
                       <ion-datetime displayFormat="DD/MM/YYYY" placeholder="Opcional.." cancelText="Sin regreso"
                         (ionCancel)="noBack()" doneText="Listo" mode="ios" [(ngModel)]="backDate"
-                        (ionChange)="dateChangeBack()" [min]="minbackDate" [max]="maxbackDate"></ion-datetime>
+                        [min]="minbackDate" [max]="maxbackDate"></ion-datetime>
                     </ion-item>
 
                     <div style="width: 100%;background-color: #f2f2f2; border-radius: 0 0 5px 5px;padding: 0.4vh;"

@@ -51,6 +51,21 @@ export class TicketPage implements OnInit {
 
   nowService;
   bus;
+
+
+
+  orderSelected = ''
+  orderShowActive = false
+  orderWindowsDetail: any = { header: 'Ordenar servicios por:' };
+
+  filterSelected = ''
+  filterShowActive = false
+  filterWindowsDetail: any = { header: 'Filtrar servicios por:' };
+
+
+
+
+
   constructor(
     private httpClient: HttpClient,
     private router: Router,
@@ -155,6 +170,7 @@ export class TicketPage implements OnInit {
     this.integradorService.getService(findService).subscribe(data => {
       this.allServices = data;
       this.loadingService = false;
+      console.log('data', data);
     })
   }
 
@@ -173,17 +189,17 @@ export class TicketPage implements OnInit {
   //   });
 
   // }
- 
-  
- 
+
+
+
   myServiceSelection(nServiceSeleccion: number) {
     // setTimeout(() => {
-      let estadoPrevio = this.allServices[nServiceSeleccion]['checked'];
-      this.allServices.forEach(element => {
-        element['checked'] = false;
-      });
-      this.loadingBus = true;
-      this.allServices[nServiceSeleccion]['checked'] = estadoPrevio;
+    let estadoPrevio = this.allServices[nServiceSeleccion]['checked'];
+    this.allServices.forEach(element => {
+      element['checked'] = false;
+    });
+    this.loadingBus = true;
+    this.allServices[nServiceSeleccion]['checked'] = estadoPrevio;
     // });
     console.log(nServiceSeleccion);
     if (this.serviceSelectedNumber !== nServiceSeleccion) {
@@ -203,8 +219,8 @@ export class TicketPage implements OnInit {
           // agrego bus y sumo 20 a cada asiento de piso 2
           console.log(myBusFromApi["1"]);
           console.log(myBusFromApi["2"]);
-          this.loadingBus=false;
-          
+          this.loadingBus = false;
+
           // setTimeout(() => {
           //   let estadoPrevio = this.allServices[nServiceSeleccion]['checked'];
           //   this.allServices.forEach(element => {
@@ -216,38 +232,38 @@ export class TicketPage implements OnInit {
           this.allServices[nServiceSeleccion]['my_Bus'] = this.sumar20piso2(myBusFromApi);
           this.allServices[nServiceSeleccion]['my_comprasByService'] = [];
           this.allServices[nServiceSeleccion]['my_comprasByServiceData'] = [];
-  
+
           this.allServices[nServiceSeleccion].checked = true;
           this.comprasByService = this.allServices[nServiceSeleccion]['my_comprasByService'];
           this.comprasByServiceData = this.allServices[nServiceSeleccion]['my_comprasByServiceData'];
           this.serviceSelectedNumber = nServiceSeleccion;
           this.serviceSelected = this.allServices[nServiceSeleccion];
-  
+
           this.bus = this.allServices[this.serviceSelectedNumber].my_Bus;
           // this.compras = [];
           console.log('bus', this.bus);
-  
+
           // if (this.ticket.goTotal) {
           //   this.tarifaTotal = this.ticket.goTotal;
           // } else {
           //   this.tarifaTotal = 0;
           // }
-  
+
           // preparando tarifas
           this.allServices[nServiceSeleccion].tarifaPrimerPiso ? this.tarifaPiso1 = parseInt(this.allServices[nServiceSeleccion].tarifaPrimerPiso.replace('.', '')) : this.tarifaPiso1 = null;
           this.allServices[nServiceSeleccion].tarifaSegundoPiso ? this.tarifaPiso2 = parseInt(this.allServices[nServiceSeleccion].tarifaSegundoPiso.replace('.', '')) : this.tarifaPiso2 = null;
           !this.tarifaPiso2 ? this.piso1 = true : this.piso1 = false;
-  
-          this.nowService = this.allServices[nServiceSeleccion];
-  
 
-  
+          this.nowService = this.allServices[nServiceSeleccion];
+
+
+
           setTimeout(() => {
             this.content.scrollToPoint(0, this.divServicio['_results'][nServiceSeleccion].nativeElement.offsetTop, 100);
           });
         });
-        
-      },1000);
+
+      }, 1000);
 
 
 
@@ -463,16 +479,63 @@ export class TicketPage implements OnInit {
     }
   }
 
-  // adelante() {
-  //   if (this.mys.way === 'go' && this.ticket && this.ticket.tripType === 'goBack' && this.compras.length > 0) {
-  //     this.mys.way = 'back'
-  //     this.ionViewWillEnter()
-  //   } else {
-  //     // if (this.mys.way === 'go' && this.ticket && this.ticket.tripType === 'goOnly' && this.compras.length >0) {
-  //     // this.router.navigateByUrl('/purchase-detail');
-  //     // } else if (this.mys.way === 'back' ) {
-  //     this.router.navigateByUrl('/purchase-detail');
-  //   }
-  // }
+  // orderCancel() { this.orderShowActive = false }
+  // filterCancel() { this.filterShowActive = false }
+
+
+
+
+  orderCambio() {
+    console.log('$event', this.orderSelected);
+    switch (this.orderSelected) {
+      case 'precioAsc':
+        console.log('this.allServices_Asc1', this.allServices);
+        this.allServices = _.sortBy(this.allServices, (element) => {
+          console.log(parseInt(element.tarifaPrimerPiso));
+          return element.tarifaPrimerPiso
+        })
+        console.log('this.allServices_Asc2', this.allServices);
+        break;
+      case 'precioDsc':
+        console.log('this.allServices_Dsc1', this.allServices);
+        this.allServices = _.sortBy(this.allServices, 'tarifaPrimerPiso').reverse()
+        console.log('this.allServices_Dsc2', this.allServices);
+        break;
+
+      case 'origenAsc':
+        this.allServices = _.sortBy(this.allServices, 'terminalSalida')
+        break;
+      case 'origenDsc':
+        this.allServices = _.sortBy(this.allServices, 'terminalSalida').reverse()
+        break;
+      case 'destinoAsc':
+        this.allServices = _.sortBy(this.allServices, 'terminaLlegada')
+        break;
+      case 'destinoDsc':
+        this.allServices = _.sortBy(this.allServices, 'terminaLlegada').reverse()
+        break;
+      case 'horaAsc':
+        this.allServices = _.sortBy(this.allServices, (item) => {
+          return moment(`${item.horaSalida} ${item.fechaSalida}`, 'HH:mm DD/MM/YYYY').format()
+        })
+        break;
+      case 'horaDsc':
+        this.allServices = _.sortBy(this.allServices, (item) => {
+          return moment(`${item.horaSalida} ${item.fechaSalida}`, 'HH:mm DD/MM/YYYY').format()
+        })
+        this.allServices = this.allServices.reverse()
+        break;
+
+      case 'empresaAsc':
+        this.allServices = _.sortBy(this.allServices, 'empresa')
+        break;
+      case 'empresaDsc':
+        this.allServices = _.sortBy(this.allServices, 'empresa').reverse()
+        break;
+
+      default:
+        break;
+    }
+  }
 
 }// fin Ticket
