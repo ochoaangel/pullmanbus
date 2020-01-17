@@ -488,19 +488,23 @@ export class TicketPage implements OnInit {
   orderCambio() {
     console.log('$event', this.orderSelected);
     switch (this.orderSelected) {
+
       case 'precioAsc':
         console.log('this.allServices_Asc1', this.allServices);
         this.allServices = _.sortBy(this.allServices, (element) => {
-          console.log(parseInt(element.tarifaPrimerPiso));
+          // console.log(parseInt(element.tarifaPrimerPiso));
+          console.log(parseInt(element.tarifaPrimerPiso.replace(/./g, '')));
           return element.tarifaPrimerPiso
         })
         console.log('this.allServices_Asc2', this.allServices);
         break;
+        
       case 'precioDsc':
         console.log('this.allServices_Dsc1', this.allServices);
         this.allServices = _.sortBy(this.allServices, 'tarifaPrimerPiso').reverse()
         console.log('this.allServices_Dsc2', this.allServices);
         break;
+        
 
       case 'origenAsc':
         this.allServices = _.sortBy(this.allServices, 'terminalSalida')

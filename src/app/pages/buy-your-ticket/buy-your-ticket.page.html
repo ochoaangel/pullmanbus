@@ -45,23 +45,25 @@
 
             <div style="height: 100%; width: 100%;">
 
-              <div style="display: flex; flex-direction: row; align-items: center; justify-content: center; background-color: #f2f2f2; border-radius: 15px; padding: 5px; margin: 10px;">
-                <div style="width: 10% ;justify-content: center;"><ion-icon style="font-size: 2rem; color: #fe5200;" name="md-search"></ion-icon></div>
+              <div
+                style="display: flex; flex-direction: row; align-items: center; justify-content: center; background-color: #f2f2f2; border-radius: 15px; padding: 5px; margin: 10px;">
+                <div style="width: 10% ;justify-content: center;">
+                  <ion-icon style="font-size: 2rem; color: #fe5200;" name="md-search"></ion-icon>
+                </div>
                 <!-- input buscador -->
                 <ion-input style="width: 90%  " type="text" placeholder="Buscar aquí.." (keyup)="teclaInput($event)">
                 </ion-input>
               </div>
 
               <!-- bucle filtro -->
-              <div style="border: 1px solid orangered; border-radius: 10px; text-align: center;"
+              <ion-item (click)="seleccion(item)"
+                style="color: black;outline: none; text-transform: none; height: 2rem; border: 1px solid #fe5200; border-radius: 10px; text-align: center;"
                 *ngFor="let item of inputFiltrado;let i= index">
-                <ion-button fill="clear" (click)="seleccion(item)"
-                  style="color: black;width: 95%; outline: none; text-transform: none; height: 1.5rem;">
-                  <ion-icon style="color: orangered;" name="locate" *ngIf="mySelection==='origin'"></ion-icon>
-                  <ion-icon style="color: orangered;" name="pin" *ngIf="mySelection==='destiny'"></ion-icon>
-                  <ion-text style="padding-left: 0.5rem;">{{item.nombre | titlecase}}</ion-text>
-                </ion-button>
-              </div>
+                <ion-icon style="color: #fe5200;padding-left: 8vw;" name="locate" *ngIf="mySelection==='origin'"></ion-icon>
+                <ion-icon style="color: #fe5200;padding-left: 8vw;" name="pin" *ngIf="mySelection==='destiny'"></ion-icon>
+                <ion-text style="padding-left: 0.5rem;">{{item.nombre | titlecase}}</ion-text>
+              </ion-item>
+
 
             </div>
           </ion-col>
@@ -164,8 +166,8 @@
                       <ion-icon class="iconEditable" name="calendar"></ion-icon>
                       <ion-label>Fecha de Ida:</ion-label>
                       <ion-datetime displayFormat="DD/MM/YYYY" placeholder="Seleccione.." cancelText="Cancelar"
-                        doneText="Listo" mode="ios" [(ngModel)]="goDate" [min]="mingoDate"
-                        [max]="maxgoDate"></ion-datetime>
+                        doneText="Listo" mode="ios" [(ngModel)]="goDate" [min]="mingoDate" [max]="maxgoDate">
+                      </ion-datetime>
                     </ion-item>
 
                     <div style="width: 100%;background-color: #f2f2f2; border-radius: 0 0 5px 5px;padding: 0.4vh;"
@@ -186,8 +188,8 @@
                       <ion-icon class="iconEditable" name="calendar"></ion-icon>
                       <ion-label>Fecha de regreso:</ion-label>
                       <ion-datetime displayFormat="DD/MM/YYYY" placeholder="Opcional.." cancelText="Sin regreso"
-                        (ionCancel)="noBack()" doneText="Listo" mode="ios" [(ngModel)]="backDate"
-                        [min]="minbackDate" [max]="maxbackDate"></ion-datetime>
+                        (ionCancel)="noBack()" doneText="Listo" mode="ios" [(ngModel)]="backDate" [min]="minbackDate"
+                        [max]="maxbackDate"></ion-datetime>
                     </ion-item>
 
                     <div style="width: 100%;background-color: #f2f2f2; border-radius: 0 0 5px 5px;padding: 0.4vh;"
