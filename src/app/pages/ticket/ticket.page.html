@@ -72,11 +72,11 @@
 
                 <!-- columna 1   -->
                 <div class="myServiceColumn" style="width: 15%;">
-                  <div class="myServiceRow" style="color: #fe5200;display: block;">25
+                  <div class="myServiceRow" style="color: #fe5200;display: block;opacity: 0;">25
                     <ion-icon src="assets/icon/Porcentaje003.svg"></ion-icon>
                   </div>
                   <div class="myServiceRow"
-                    style="color: #fe5200; height: 2rem; display: flex;justify-content: center;align-items: center;">
+                    style="color: #fe5200; height: 2rem; display: flex;justify-content: center;align-items: center;opacity: 0;">
                     <ion-icon style="font-size: 2rem;" name="bus"></ion-icon>
                   </div>
                   <div class="myServiceRow"
@@ -162,16 +162,16 @@
                     <div class="myServiceRow" style="align-items: center; justify-content: center; ">
                       <ion-button fill="clear" (click)="myServiceSelection(i)"
                         *ngIf="(!svc.checked && !svc.my_comprasByService) ||  (  !svc.checked &&  svc.my_comprasByService && svc.my_comprasByService.length===0)"
-                        style="color: white; outline: none;  --padding-start: 0;--padding-end: 0; --background: #0247ac;text-transform: none; font-size: 0.6rem;width: 80%;max-height: 1rem;">
+                        style="color: white; outline: none;  --padding-start: 0;--padding-end: 0; --background: #0247ac;text-transform: none; font-size: 0.6rem;width: 80%;max-height: 1.6rem;">
                         Comprar
                       </ion-button>
                       <ion-button fill="clear" (click)="myServiceSelection(i)"
                         *ngIf="!svc.checked && svc.my_comprasByService && svc.my_comprasByService.length>0"
-                        style="color: white; outline: none;  --padding-start: 0;--padding-end: 0; --background: #0247ac;text-transform: none; font-size: 0.6rem;width: 80%;max-height: 1rem;">
+                        style="color: white; outline: none;  --padding-start: 0;--padding-end: 0; --background: #0247ac;text-transform: none; font-size: 0.6rem;width: 80%;max-height: 1.6rem;">
                         Editar
                       </ion-button>
                       <ion-button fill="clear" (click)="myServiceSelection(i)" *ngIf="svc.checked"
-                        style="color: white; outline: none;  --padding-start: 0;--padding-end: 0; --background: #0247ac;text-transform: none; font-size: 0.6rem;width: 80%;max-height: 1rem;">
+                        style="color: white; outline: none;  --padding-start: 0;--padding-end: 0; --background: #0247ac;text-transform: none; font-size: 0.6rem;width: 80%;max-height: 1.6rem;">
                         Ocultar
                       </ion-button>
                     </div>
@@ -198,7 +198,7 @@
                           <div style="width: 60vw;">
 
                             <!-- //* Botones seleccion para piso1 piso2 -->
-                            <div style="width: 100%; display: flex;">
+                            <div style="width: 100%; display: flex;margin-bottom: 0.6rem;">
                               <div style="width: 50%; text-align: -webkit-center;">
                                 <div [ngClass]="piso1 ? 'pisoShow' : 'pisoHiden'" (click)="cambiarPiso(1)">
                                   Piso 1
