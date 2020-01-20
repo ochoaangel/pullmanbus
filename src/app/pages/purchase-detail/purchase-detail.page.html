@@ -12,6 +12,9 @@
 
     <div style="display: inline; width: 10%;">
       <ion-icon name="md-cart" style="font-size: 25px;padding-top: 5px;"></ion-icon>
+      <ion-badge color="dark" mode="ios"  *ngIf="ticket.comprasDetalles && ticket.comprasDetalles.length>0"
+        style="position: absolute; left: 81%; top: 2px; font-size: 0.7rem;opacity: 0.7; background-color: #0247ac;"
+        >{{ticket.comprasDetalles.length}}</ion-badge>
     </div>
 
     <div style="display: inline; width: 10%">

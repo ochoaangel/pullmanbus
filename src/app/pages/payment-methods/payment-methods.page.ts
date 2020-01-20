@@ -18,6 +18,7 @@ export class PaymentMethodsPage implements OnInit {
   convenioUp = { checked0: false, checked1: false, checked2: false, checked3: false, checked4: false, checked5: false }
   convenioDown = { checked0: false, checked1: false }
   acuerdo = { acuerdo: false }
+  ticket
 
   DatosFormulario = {
     convenioUp: null,
@@ -348,6 +349,7 @@ export class PaymentMethodsPage implements OnInit {
 
   ngOnInit() {
     this.total = this.mys.total
+    this.ticket = this.mys.ticket
   }
 
   SeleccionadoConvenioUp(name) {
