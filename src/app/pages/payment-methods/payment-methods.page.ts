@@ -37,6 +37,7 @@ export class PaymentMethodsPage implements OnInit {
   totalFinal;  
   
   acuerdo = { acuerdo: false }
+  ticket
 
   DatosFormulario = {
     convenioUp: null,
@@ -336,7 +337,8 @@ export class PaymentMethodsPage implements OnInit {
   ]
 
   ngOnInit() {
-    this.totalFinal = this.mys.total
+    this.totalFinal = this.mys.total;
+    this.ticket = this.mys.ticket;
   }
 
   seleccionadoConvenioUp(convenio) {

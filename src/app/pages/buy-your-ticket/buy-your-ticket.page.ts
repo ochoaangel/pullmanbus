@@ -30,8 +30,7 @@ export class BuyYourTicketPage implements OnInit {
 
   selectOrigin;
   selectDestiny;
-
-
+  
 
   loading = false;
 
@@ -780,7 +779,7 @@ export class BuyYourTicketPage implements OnInit {
 
       this.mys.ticket = this.ticket;
       console.log('this.mys.ticket(saliendo de buy-yout-ticket)', this.mys.ticket);
-      this.router.navigateByUrl('/ticket'); 
+      this.router.navigateByUrl('/ticket');
     }
 
   }
