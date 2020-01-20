@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MyserviceService } from 'src/app/service/myservice.service';
-import { HttpClient } from '@angular/common/http';
 import { IntegradorService } from 'src/app/service/integrador.service';
 
 @Component({
@@ -10,13 +9,33 @@ import { IntegradorService } from 'src/app/service/integrador.service';
   styleUrls: ['./payment-methods.page.scss'],
 })
 export class PaymentMethodsPage implements OnInit {
-
+  listaConvenio = [];
+  listaMedioPago = [];
+  listaDetalleConvenio = [];
+  datosConvenio : any;
   constructor(private router: Router, 
     private integradorService:IntegradorService,
-    private mys: MyserviceService) { }
-  total
-  convenioUp = { checked0: false, checked1: false, checked2: false, checked3: false, checked4: false, checked5: false }
-  convenioDown = { checked0: false, checked1: false }
+    private mys: MyserviceService) {   
+      this.integradorService.getListConvenio().subscribe(convenio => {       
+        this.listaConvenio = convenio;
+        console.log(this.listaConvenio);
+      })
+    this.datosConvenio = null;
+    this.integradorService.getListMedioPago().subscribe(medioPago => {
+      console.log(medioPago);
+      medioPago.Convenio.forEach(pago => {
+        if(pago.BotonPago == 'SI'){
+          pago.Imagen = pago.Imagen!= "" ? "data:image/jpeg;base64,"+pago.Imagen : "";
+          this.listaMedioPago.push(pago);
+        }
+      })
+    })
+  }
+  
+  mostrarTarifaAtachada = false;
+  totalSinDscto;
+  totalFinal;  
+  
   acuerdo = { acuerdo: false }
 
   DatosFormulario = {
@@ -35,36 +54,6 @@ export class PaymentMethodsPage implements OnInit {
     v_email2: false,
     validandoConRut: false
   }
-  guardarTransaccion = {
-    email:"",
-    rut:"1-9",
-    medioDePago:"WBPAY",
-    puntoVenta:"WEBM",
-    montoTotal:0,
-    idSistema:5,
-    listaCarrito:[{
-       servicio:"UZVA",
-       fechaServicio:"15/10/2020",
-       fechaPasada:"15/10/2020",
-       fechaLlegada:"15/10/2020",
-       horaSalida:"15:20",
-       horaLlegada:"15:20",
-       asiento:8,
-       origen:"KA",
-       destino:"MB",
-       monto:6120, 
-       precio:6120,
-       descuento:0,
-       empresa:"03",
-       clase:"EJE42",
-       convenio:"",
-       datoConvenio:"",
-       bus:"0",
-       piso:1,
-       integrador:1001
-    }]
-  }
-
   // public maskRut = {
   //   guide: false,
   //   showMask: false,
@@ -347,30 +336,22 @@ export class PaymentMethodsPage implements OnInit {
   ]
 
   ngOnInit() {
-    this.total = this.mys.total
+    this.totalFinal = this.mys.total
   }
 
-  SeleccionadoConvenioUp(name) {
-    let valor = this.convenioUp[name]
-    this.convenioUp.checked0 = false
-    this.convenioUp.checked1 = false
-    this.convenioUp.checked2 = false
-    this.convenioUp.checked3 = false
-    this.convenioUp.checked4 = false
-    this.convenioUp.checked5 = false
-    this.convenioUp[name] = valor;
-    this.DatosFormulario.convenioUp = name
+  seleccionadoConvenioUp(convenio) {
+    console.log(convenio);
+    this.integradorService.getDetalleConvenio({"convenio":convenio}).subscribe(detalleConvenio => {
+      this.listaDetalleConvenio = detalleConvenio;
+      this.listaDetalleConvenio.forEach(item => {
+        item.Placeholder = item.Valor;
+      });
+      console.log(this.listaDetalleConvenio);
+    })    
   }
-
-  SeleccionadoConvenioDown(name) {
-    let valor = this.convenioDown[name]
-    this.convenioDown.checked0 = false
-    this.convenioDown.checked1 = false
-    this.convenioDown[name] = valor
-    this.DatosFormulario.convenioDown = name
+  seleccionadoMedioPago(medioPago) {    
+    this.DatosFormulario.convenioDown = medioPago;
   }
-
-
   pagar() {
 
  /*    if (!this.DatosFormulario.convenioUp) {
@@ -396,18 +377,48 @@ export class PaymentMethodsPage implements OnInit {
       this.mys.alertShow('¡Verifique!', 'alert', 'Debe aceptar el acuerdo y condiciones de compra para continuar con el pago');
     } else {
       // this.mys.alertShow('¡Verifique!', 'alert', 'Todo correcto');
-    this.guardarTransaccion.email = this.DatosFormulario.email;
-    this.guardarTransaccion.montoTotal = this.total;
-
-    this.integradorService.guardarTransaccion(this.guardarTransaccion).subscribe(resp=>{
+    let guardarTransaccion = {
+      email:this.DatosFormulario.email,
+      rut:this.DatosFormulario.rut,
+      medioDePago:this.DatosFormulario.convenioDown,
+      puntoVenta:"WEBM",
+      montoTotal:this.totalFinal,
+      idSistema:5,
+      listaCarrito:[]
+    }
+    console.log(this.mys.ticket.comprasDetalles);
+    this.mys.ticket.comprasDetalles.forEach(boleto => {
+      guardarTransaccion.listaCarrito.push({
+        servicio:boleto.service.idServicio,
+        fechaServicio:boleto.service.fechaServicio,
+        fechaPasada:boleto.service.fechaSalida,
+        fechaLlegada:boleto.service.fechaLlegada,
+        horaSalida:boleto.service.horaSalida,
+        horaLlegada:boleto.service.horaLlegada,
+        asiento:boleto.asiento,
+        origen:"KA",//Origen del boleto
+        destino:"MB",//Destino del boleto
+        monto:boleto.valor, 
+        precio:boleto.valor,
+        descuento:this.datosConvenio != null ? this.datosConvenio.descuento : 0,
+        empresa:boleto.service.empresa,
+        clase:boleto.piso == "1" ? boleto.service.idClaseBusPisoUno : boleto.service.idClaseBusPisoDos,
+        convenio:this.datosConvenio != null ? this.datosConvenio.idConvenio : "",
+        datoConvenio:"",
+        bus:boleto.piso == "1" ? boleto.service.busPiso1 : boleto.service.busPiso2,
+        piso:boleto.piso,
+        integrador:boleto.service.integrador
+     });
+    })
+    
+    this.integradorService.guardarTransaccion(guardarTransaccion).subscribe(resp=>{
       let valor:any = resp;
       if(valor.exito){
         formularioTBKWS(valor.url,valor.token);  
       }else{
         this.mys.alertShow('¡Verifique!', 'alert', valor.mensaje);
       }
-    })
-  
+    })  
       //this.router.navigateByUrl('/transaction-voucher')
     }
 
@@ -470,15 +481,11 @@ export class PaymentMethodsPage implements OnInit {
     const mask = /[A-Za-z]/;
     const strLength = String(rawValue).length;
     const nameMask: RegExp[] = [];
-
     for (let i = 0; i <= strLength; i++) {
       nameMask.push(mask);
     }
-
     return nameMask;
-
   }
-
 
   rutFunction(rawValue) {
     console.log('rawValue',rawValue);
@@ -487,15 +494,12 @@ export class PaymentMethodsPage implements OnInit {
     if (numbers) {
       numberLength = numbers.join("").length;
     }
-
     if (numberLength > 8) {
       return [/[1-9]/, /[1-9]/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/];
     } else {
       return [/[1-9]/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/];
     }
-  }
-
-  
+  }  
 
   telefonoFunction(rawValue) {
       let numbers = rawValue.match(/\d/g);
@@ -511,63 +515,50 @@ export class PaymentMethodsPage implements OnInit {
       }
   }
 
+  validarDatosConvenio(){
+    console.log(this.listaDetalleConvenio);
 
+    let validarConvenio = {
+     "descuento":"0"
+    ,"idConvenio":this.listaDetalleConvenio[0].Convenio
+    ,"listaAtributo":[]
+    ,"listaBoleto":[]
+    ,"mensaje":""
+    ,"montoTotal":"0"
+    ,"totalApagar":"0"
+    };
+    let re = /\./gi;
+    this.listaDetalleConvenio.forEach(item => {
+      validarConvenio.listaAtributo.push({"idCampo":item.Placeholder,"valor":item.Valor.replace(re,'')});
+    })    
+    
+    this.mys.ticket.comprasDetalles.forEach(boleto => {
+      let fecha = boleto.service.fechaSalida.split("/");
+      validarConvenio.listaBoleto.push({
+      "clase": boleto.piso == 1 ? boleto.service.idClaseBusPisoUno : boleto.service.idClaseBusPisoDos
+      ,"descuento":""
+      ,"destino":boleto.service.idTerminalDestino
+      ,"fechaSalida":fecha[2]+fecha[1]+fecha[0]
+      ,"idServicio":boleto.idServicio
+      ,"origen":boleto.service.idTerminalOrigen
+      ,"pago":boleto.valor
+      ,"piso":boleto.piso
+      ,"valor":boleto.valor
+      ,"asiento":boleto.asiento
+      ,"promocion":"0"});
+      validarConvenio.totalApagar = Number(validarConvenio.totalApagar) + Number(boleto.valor) + "";
+    });
+    validarConvenio.montoTotal = validarConvenio.totalApagar;
+    console.log(validarConvenio);
+    this.integradorService.getDescuentoConvenio(validarConvenio).subscribe(data => {
+      this.datosConvenio = data;
+      if(this.datosConvenio.mensaje == 'OK'){
+        this.totalSinDscto = this.totalFinal;
+        this.totalFinal = this.datosConvenio.totalApagar;
+        this.mostrarTarifaAtachada = true;
+      }else{
+        this.datosConvenio = null;
+      }
+    })
+  };  
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// const dollarSign = '$'
-// const emptyString = ''
-// const comma = ','
-// const period = '.'
-// const minus = '-'
-// const minusRegExp = /-/
-// const nonDigitsRegExp = /\D+/g
-// const number = 'number'
-// const digitRegExp = /\d/
-// const caretTrap = '[]'
-
-// export default function createNumberMask({
-//   prefix = dollarSign,
-//   suffix = emptyString,
-//   includeThousandsSeparator = true,
-//   thousandsSeparatorSymbol = comma,
-//   allowDecimal = false,
-//   decimalSymbol = period,
-//   decimalLimit = 2,
-//   requireDecimal = false,
-//   allowNegative = false,
-//   allowLeadingZeroes = false,
-//   integerLimit = null
-// } = {}) {
-
-
-//   const prefixLength = prefix && prefix.length || 0
-//   const suffixLength = suffix && suffix.length || 0
-//   const thousandsSeparatorSymbolLength = thousandsSeparatorSymbol && thousandsSeparatorSymbol.length || 0
-
-//   function numberMask(rawValue = emptyString) {
-//     const rawValueLength = rawValue.length
-
-//     if (
-//       rawValue === emptyString ||
-//       (rawValue[0] === prefix[0] && rawValueLength === 1)
-//     ) {
-//       return prefix.split(emptyString).concat([digitRegExp]).concat(suffix.split(emptyString))
-//     } else if(
-//       rawValue === decimalSymbol &&
-//       allowDecimal
-//     ) {
-//       return prefix.split(emptyString).concat(['0', decimalSymbol, digitRegExp]).concat(suffix.split(emptyString))
-//     }

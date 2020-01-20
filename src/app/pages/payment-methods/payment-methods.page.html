@@ -46,69 +46,48 @@
             </div>
 
             <!-- 2da fila -->
-            <div class="filaImagenes">
+            <ion-list>
+              <ion-radio-group>            
+                <ion-item *ngFor="let convenio of listaConvenio">
+                  <ion-label>
+                    <img style="height: 80px; display: flex;padding-bottom: 5px;" src="{{ convenio.imagenInferior || 'assets/images/MediosDePago/default.jpg'}}" title="{{convenio.convenio.descripcion}}">
+                  </ion-label>
+                  <ion-radio 
+                    mode="md"
+                    slot="start"
+                    (click)="seleccionadoConvenioUp(convenio.idConvenio)"
+                    value="{{ convenio.idConvenio }}"></ion-radio>
+                </ion-item>
+              </ion-radio-group>
+            </ion-list>
 
-              <div style="display: inline; width: 6%;"></div>
-              <div style="display: inline; width: 8%; display: flex; justify-content: center; align-items: center;">
-                <ion-checkbox (click)="SeleccionadoConvenioUp('checked0')" [(ngModel)]="convenioUp.checked0" mode="ios">
-                </ion-checkbox>
-              </div>
-              <div style="display: inline; width: 25%;display: flex;align-items: center;">
-                <img style="height: 70%; display: flex;" src="assets/images/MediosDePago/LaAraucana.png">
-              </div>
-
-              <div style="display: inline; width: 8%; display: flex; justify-content: center; align-items: center;">
-                <ion-checkbox (click)="SeleccionadoConvenioUp('checked1')" [(ngModel)]="convenioUp.checked1" mode="ios">
-                </ion-checkbox>
-              </div>
-              <div style="display: inline; width: 25%;display: flex;">
-                <img style="height: 100%; display: flex;"
-                  src="assets/images/MediosDePago/centinelaAntofagastaMinerals.png">
-              </div>
-
-              <div style="display: inline; width: 8%; display: flex; justify-content: center; align-items: center;">
-                <ion-checkbox (click)="SeleccionadoConvenioUp('checked2')" [(ngModel)]="convenioUp.checked2" mode="ios">
-                </ion-checkbox>
-              </div>
-
-              <div style="display: inline; width: 15%;display: flex;">
-                <img style="height: 100%; display: flex;"
-                  src="assets/images/MediosDePago/ColegiodePeritosProfesionalesdeChile.jpg">
-              </div>
-
+            <div style="text-align: center;" *ngIf="listaDetalleConvenio.length > 0">
+              <div
+                style="background-color: var(--ion-color-primary);color: white; border-radius: 40px 40px 5px 5px; margin-bottom: 2vh;">
+                Datos Convenio</div>
             </div>
 
-            <!-- 3ra fila -->
-            <div class="filaImagenes" style="margin-bottom: 2vh;">
-
-              <div style="display: inline; width: 6%;"></div>
-
-              <div style="display: inline; width: 8%; display: flex; justify-content: center; align-items: center;">
-                <ion-checkbox (click)="SeleccionadoConvenioUp('checked3')" [(ngModel)]="convenioUp.checked3" mode="ios">
-                </ion-checkbox>
+            <div  *ngIf="listaDetalleConvenio.length > 0">
+              <div style="text-align: center; display: flex;" *ngFor="let input of listaDetalleConvenio"> 
+                <div *ngIf="input.Estado == 'ACT' && input.VisibleUsr == 'SI' && input.TipoDato == 'ETIQUETA'" 
+                  style="width: 100%; display: flex; justify-content: center; align-items: center;">
+                  <input type="text" 
+                    [textMask]={mask:rutFunction,guide:false} 
+                    [(ngModel)]="input.Valor" 
+                    name="rutConvenio" 
+                    #input_rut
+                    (keypress)="tecleado($event)"                     
+                    placeholder="{{input.Valor}}">
+                </div>
               </div>
-              <div style="display: inline; width: 25%;display: flex;align-items: center;">
-                <img style="height: 70%; display: flex;" src="assets/images/MediosDePago/injuv.png">
+              <div style="width: 100%; display: flex; justify-content: center; align-items: center;">
+                <ion-button (click)="validarDatosConvenio()"
+                  style="color: white;  width:100% ;padding: 0 3vw; outline: none; text-transform: none;--background: #fe5200;">
+                  Validar
+                </ion-button>
               </div>
-
-              <div style="display: inline; width: 8%; display: flex; justify-content: center; align-items: center;">
-                <ion-checkbox (click)="SeleccionadoConvenioUp('checked4')" [(ngModel)]="convenioUp.checked4" mode="ios">
-                </ion-checkbox>
-              </div>
-              <div style="display: inline; width: 25%;display: flex;align-items: center;">
-                <img style="height: 70%; display: flex; " src="assets/images/MediosDePago/mutualDeSeguridad.png">
-              </div>
-
-              <div style="display: inline; width: 8%; display: flex; justify-content: center; align-items: center;">
-                <ion-checkbox (click)="SeleccionadoConvenioUp('checked5')" [(ngModel)]="convenioUp.checked5" mode="ios">
-                </ion-checkbox>
-              </div>
-              <div style="display: inline; width: 15%;display: flex;">
-                <img style="height: 100%; display: flex;" src="assets/images/MediosDePago/cajaLosAndes.png">
-              </div>
-
             </div>
-
+           
             <!-- 4ta fila -->
             <div style="text-align: center;">
               <div
@@ -160,33 +139,26 @@
 
             <!-- 9na fila -->
             <div style="text-align: center;">
-              <h2>Total: ${{total.toLocaleString('de-DE') }}</h2>
+              <h2 *ngIf="mostrarTarifaAtachada" 
+              style="text-decoration:line-through;color: red;">
+              Total: ${{totalSinDscto.toLocaleString('de-DE') }}</h2>
+              <h2>Total: ${{totalFinal.toLocaleString('de-DE') }}</h2>
             </div>
-
-            <!-- 10ma fila -->
-            <div class="filaImagenes" style="width: 100%; display: flex; height: 2rem;">
-
-              <div style="display: inline; width: 15%; display: flex; justify-content: center; align-items: center;">
-              </div>
-              <div style="display: inline; width: 10%; display: flex; justify-content: center; align-items: center;">
-                <ion-checkbox (click)="SeleccionadoConvenioDown('checked0')" [(ngModel)]="convenioDown.checked0"
-                  mode="ios"></ion-checkbox>
-              </div>
-              <div style="width: 30%;">
-                <img style="display: flex; height: 100%;" src="assets/images/MediosDePago/WebPay.png">
-              </div>
-
-              <div style="display: inline; width: 10%; display: flex; justify-content: center; align-items: center;">
-                <ion-checkbox (click)="SeleccionadoConvenioDown('checked1')" [(ngModel)]="convenioDown.checked1"
-                  mode="ios"></ion-checkbox>
-              </div>
-              <div style="width: 30%;">
-                <img style="display: flex; height: 100%;" src="assets/images/MediosDePago/cencosud.jpg">
-              </div>
-              <div style="display: inline; width: 5%; display: flex; justify-content: center; align-items: center;">
-              </div>
-
-            </div>
+    
+            <ion-list>
+              <ion-radio-group>            
+                <ion-item *ngFor="let medioPago of listaMedioPago">
+                  <ion-label>
+                    <img style="height: 80px; display: flex;padding-bottom: 5px;" src="{{ medioPago.Imagen || 'assets/images/MediosDePago/default.jpg'}}" title="{{medioPago.Descripcion}}">
+                  </ion-label>
+                  <ion-radio 
+                    mode="md"
+                    slot="start"
+                    (click)="seleccionadoMedioPago(medioPago.Convenio)"
+                    value="{{ medioPago.Convenio }}"></ion-radio>
+                </ion-item>
+              </ion-radio-group>
+            </ion-list>
 
             <!-- 11va fila -->
             <div (click)="aceptarAcuerdo()"
@@ -196,12 +168,6 @@
               acuerdo
               con los términos y condiciones de la compra
             </div>
-
-
-
-
-
-
           </ion-col>
         </ion-row>
       </ion-grid>
