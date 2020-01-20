@@ -7,12 +7,14 @@
       Es
     </div>
 
-    <div style="width: 60%; height: 100%; display: flex; align-items: center; justify-content: center;">
+    <div style="width: 60%; height: 100%; display: flex; align-items: center; justify-content: center;"
+      routerLink="/home">
       <img src="assets/images/titulo.png" style="height: 90%;object-fit: scale-down;position: relative; z-index: 10; ">
     </div>
 
     <div style="display: inline; width: 10%;">
       <ion-icon name="md-cart" style="font-size: 25px;padding-top: 5px;"></ion-icon>
+      
     </div>
 
     <div style="display: inline; width: 10%">
@@ -59,8 +61,10 @@
               <ion-item (click)="seleccion(item)"
                 style="color: black;outline: none; text-transform: none; height: 2rem; border: 1px solid #fe5200; border-radius: 10px; text-align: center;"
                 *ngFor="let item of inputFiltrado;let i= index">
-                <ion-icon style="color: #fe5200;padding-left: 8vw;" name="locate" *ngIf="mySelection==='origin'"></ion-icon>
-                <ion-icon style="color: #fe5200;padding-left: 8vw;" name="pin" *ngIf="mySelection==='destiny'"></ion-icon>
+                <ion-icon style="color: #fe5200;padding-left: 8vw;" name="locate" *ngIf="mySelection==='origin'">
+                </ion-icon>
+                <ion-icon style="color: #fe5200;padding-left: 8vw;" name="pin" *ngIf="mySelection==='destiny'">
+                </ion-icon>
                 <ion-text style="padding-left: 0.5rem;">{{item.nombre | titlecase}}</ion-text>
               </ion-item>
 

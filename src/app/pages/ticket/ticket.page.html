@@ -13,6 +13,9 @@
 
     <div style="display: inline; width: 10%;">
       <ion-icon name="md-cart" style="font-size: 25px;padding-top: 5px;"></ion-icon>
+      <ion-badge color="dark" mode="ios"  *ngIf="comprasDetalles && comprasDetalles.length>0"
+      style="position: absolute; left: 81%; top: 2px; font-size: 0.7rem;opacity: 0.7; background-color: #0247ac;"
+      >{{comprasDetalles.length}}</ion-badge>
     </div>
 
     <div style="display: inline; width: 10%">
@@ -112,9 +115,6 @@
                 <!-- columna 4   -->
                 <div class="myServiceColumn" style="width: 50%;text-align: left;">
 
-
-
-
                   <div style="display: flex; flex-direction: row;">
                     <div class="myServiceRow" style="width:85%; font-weight: bold;">{{svc.terminalSalida  | titlecase }}
                     </div>
@@ -124,11 +124,6 @@
 
                     </div>
                   </div>
-
-
-
-
-
 
                   <div class="myServiceRow">{{svc.terminaLlegada  | titlecase}}</div>
                   <div class="myServiceRow" style="height: 1rem; flex-direction: row;">
@@ -275,17 +270,17 @@
                           <div style="width: 40vw; display: flex;justify-content:
                             center;align-items: center;border-left: 2px solid #f2f2f2;">
                             <div>
-                              <div style="display: flex;align-items: center;">
+                              <div style="display: flex;align-items: center;"> 
                                 <img style="height: 2rem;" src="assets/icon/png/Asiento-disponible.png" />
-                                <ion-text>Disponible</ion-text>
+                                <ion-text style="font-size: 0.8rem;">Disponible</ion-text>
                               </div>
                               <div style="display: flex;align-items: center;">
                                 <img style="height: 2rem;" src="assets/icon/png/Asiento-ocupado.png" />
-                                <ion-text>Ocupado</ion-text>
+                                <ion-text style="font-size: 0.8rem;">Ocupado</ion-text>
                               </div>
                               <div style="display: flex;align-items: center;">
                                 <img style="height: 2rem;" src="assets/icon/png/Asiento-seleccionado.png" />
-                                <ion-text>Seleccionado</ion-text>
+                                <ion-text style="font-size: 0.8rem;">Seleccionado</ion-text>
                               </div>
                             </div>
                           </div>
@@ -325,7 +320,7 @@
     <div class="divSelectMenu">
       <ion-select multiple="false" placeholder="&#8597; Ordenar" class="selectMenu"
         [interfaceOptions]="orderWindowsDetail" (ionChange)="orderCambio()" [(ngModel)]="orderSelected"
-        (ionFocus)="orderShowActive = true" (ionCancel)="orderShowActive = false" >
+        (ionFocus)="orderShowActive = true" (ionCancel)="orderShowActive = false">
         <ion-select-option value="" *ngIf="!orderShowActive">&#8597; Ordenar</ion-select-option>
         <ion-select-option value="precioAsc">&#8593; Precio</ion-select-option>
         <ion-select-option value="precioDsc">&#8595; Precio</ion-select-option>
@@ -343,7 +338,7 @@
     <div class="divSelectMenu">
       <ion-select multiple="false" placeholder="&#8597; Filtrar" class="selectMenu"
         [interfaceOptions]="filterWindowsDetail" (ionChange)="orderCambio()" [(ngModel)]="filterSelected"
-        (ionFocus)="filterShowActive = true" (ionCancel)="filterShowActive = false" >
+        (ionFocus)="filterShowActive = true" (ionCancel)="filterShowActive = false">
         <ion-select-option value="" *ngIf="!filterShowActive">&#8597; Filtrar</ion-select-option>
         <ion-select-option value="precio">Precio</ion-select-option>
         <ion-select-option value="horario">Horario</ion-select-option>
