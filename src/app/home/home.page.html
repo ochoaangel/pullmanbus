@@ -8,7 +8,7 @@
 
     <div style="display: inline; width: 20rem;">
       <img src="assets/images/titulo.png" style="height: 90%;object-fit: scale-down;position: relative; z-index: 10; ">
-      
+
       <!-- <img src="assets/images/titulo.png" style="height: 100%;"> -->
     </div>
 
@@ -32,24 +32,25 @@
 
 <ion-content>
 
-<ion-slides scrollbar="false" style="width: 100%; height: 100%;" [options]="options">
+  <ion-slides scrollbar="false" style="width: 100%; height: 100%;" [options]="options">
 
-  <ion-slide style="width: 100%; height: 100%;">
-    <img src="assets/images/pasajeros.jpg" style="height: 100%; width: 100%; object-fit: cover;" >
-  </ion-slide>
+    <ion-slide style="width: 100%; height: 100%;">
+      <img src="assets/images/pasajeros.jpg" style="height: 100%; width: 100%; object-fit: cover;">
+    </ion-slide>
 
-  <ion-slide style="width: 100%; height: 100%;">
-    <img src="assets/images/pasajeros.jpg" style="height: 100%; width: 100%; object-fit: cover;" >
-  </ion-slide>
+    <ion-slide style="width: 100%; height: 100%;">
+      <img src="assets/images/pasajeros.jpg" style="height: 100%; width: 100%; object-fit: cover;">
+    </ion-slide>
 
-</ion-slides>
+  </ion-slides>
 
 
 </ion-content>
 
 <ion-footer>
 
-  <div style="width: 100%;  display: flex;  text-align: center;height: 23vh; background-color: white; ">
+  <!-- <div style="width: 100%;  display: flex;  text-align: center;height: 23vh; background-color: white; ">
+
     <div class="botonMenu" routerLink="/buy-your-ticket">
       <ion-grid fixed style="height: 100%;">
         <ion-row class="btnMenuIcono">
@@ -59,8 +60,8 @@
           Comprar Pasaje
         </ion-row>
       </ion-grid>
-
     </div>
+
     <div class="botonMenu" routerLink="/login">
       <ion-grid fixed style="height: 100%;">
         <ion-row class="btnMenuIcono">
@@ -70,10 +71,9 @@
           Mis datos
         </ion-row>
       </ion-grid>
-
     </div>
-    <div class="botonMenu" routerLink="/my-tickets">
 
+    <div class="botonMenu" routerLink="/my-tickets">
       <ion-grid fixed style="height: 100%;">
         <ion-row class="btnMenuIcono">
           <ion-icon name="md-list-box"></ion-icon>
@@ -82,11 +82,12 @@
           Mis tickets
         </ion-row>
       </ion-grid>
-
     </div>
+
   </div>
 
   <div style="width: 100%;  display: flex;  text-align: center;height: 23vh; background-color: white; ">
+
     <div class="botonMenu" routerLink="/my-data" >
       <ion-grid fixed style="height: 100%;">
         <ion-row class="btnMenuIcono">
@@ -119,13 +120,50 @@
         </ion-row>
       </ion-grid>
     </div>
-  </div> 
+  </div>  -->
 
+  <div style="height: 46vh; display: flex; flex-direction: column; color: #fe5200;">
+
+    <div style="border: 1px solid #fe5200; height: 33%;margin: 0.5rem 2rem;display: flex;" routerLink="/buy-your-ticket">
+      <div style="width: 20%;display: flex; justify-content: center; align-items: center;">
+        <ion-icon style="font-size: 2.5rem;" name="md-bus"></ion-icon>
+      </div>
+      <div style="width: 70%;display: flex; align-items: center;color: black; font-size: 1rem; font-weight: bold;">
+        Comprar pasaje</div>
+      <div style="width: 10%;display: flex; justify-content: center; align-items: center;">
+        <ion-icon src="assets/icon/previous.svg" style="transform: rotate(180deg);font-size: 1.3rem;"></ion-icon>
+      </div>
+    </div>
+
+    <div style="border: 1px solid #fe5200; height: 33%;margin: 0.5rem 2rem;display: flex;" routerLink="/contact">
+      <div style="width: 20%;display: flex; justify-content: center; align-items: center;">
+        <ion-icon style="font-size: 2.5rem;" name="md-call"></ion-icon>
+      </div>
+      <div style="width: 70%;display: flex; align-items: center;color: black; font-size: 1rem; font-weight: bold;">
+        Contacto</div>
+      <div style="width: 10%;display: flex; justify-content: center; align-items: center;">
+        <ion-icon src="assets/icon/previous.svg" style="transform: rotate(180deg);font-size: 1.3rem;"></ion-icon>
+      </div>
+    </div>
+
+    <div style="border: 1px solid #fe5200; height: 33%;margin: 0.5rem 2rem;display: flex;" routerLink="/terms-conditions">
+      <div style="width: 20%;display: flex; justify-content: center; align-items: center;">
+        <ion-icon style="font-size: 2.5rem;" name="md-information-circle"></ion-icon>
+      </div>
+      <div style="width: 70%;display: flex; align-items: center;color: black; font-size: 1rem; font-weight: bold;">
+        Términos y condiciones</div>
+      <div style="width: 10%;display: flex; justify-content: center; align-items: center;">
+        <ion-icon src="assets/icon/previous.svg" style="transform: rotate(180deg);font-size: 1.3rem;"></ion-icon>
+      </div>
+    </div>
+
+  </div>
+  
   <!-- footer botones  regresar continuar -->
   <div>
     <div style="height:7vh; width: 100%; display: flex;align-items: center;justify-content: center;">
- 
-      <ion-button fill="clear" style="color: #fe5200; height: 100%; width: 50%; outline: none;" >
+
+      <ion-button fill="clear" style="color: #fe5200; height: 100%; width: 50%; outline: none;">
         <ion-icon src="assets/icon/previous.svg"></ion-icon>
         <div style="display: inline; text-align: left ;padding-left: 10px; text-transform: none;">Regresar</div>
       </ion-button>
@@ -137,7 +175,7 @@
 
     </div>
   </div>
-  
+
 </ion-footer>
 
 <ion-icon name="add-md"></ion-icon>
