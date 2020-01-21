@@ -58,7 +58,35 @@ export class IntegradorService {
         let dirProxy = '/integrador-web/rest/private/venta/liberarAsiento'
         this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy
         return this.http.post<any>(urlFinal, service);
-    }   
+    }  
+    
+    getListMedioPago(): Observable<any> {        
+        let urlFinal
+        let dirProxy = '/serviciosVenta/rest/Servicios/GetConvenio'
+        this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy
+        return this.http.post<any>(urlFinal, {});
+    }
+
+    getListConvenio(): Observable<any> {        
+        let urlFinal
+        let dirProxy = '/administracion-web/rest/private/convenio/obtenerInformacion'
+        this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy
+        return this.http.post<any>(urlFinal, {});
+    }
+
+    getDetalleConvenio(convenio): Observable<any> {        
+        let urlFinal
+        let dirProxy = '/serviciosVenta/rest/Servicios/GetDetalleConvenioAtributo'
+        this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy
+        return this.http.post<any>(urlFinal, convenio);
+    }
+
+    getDescuentoConvenio(convenio): Observable<any> {        
+        let urlFinal
+        let dirProxy = '/serviciosVenta/rest/Servicios/GetDescuentoConvenio'
+        this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy
+        return this.http.post<any>(urlFinal, convenio);
+    }
 
     guardarTransaccion(guardar: any): Observable<any[]> {
         let urlFinal
