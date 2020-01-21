@@ -51,7 +51,7 @@
             <!-- 2da fila -->
             <ion-list>
               <ion-radio-group>            
-                <ion-item *ngFor="let convenio of listaConvenio">
+                <ion-item *ngFor="let convenio of listaConvenio" style="border: 1px solid blue;">
                   <ion-label>
                     <img style="height: 80px; display: flex;padding-bottom: 5px;" src="{{ convenio.imagenInferior || 'assets/images/MediosDePago/default.jpg'}}" title="{{convenio.convenio.descripcion}}">
                   </ion-label>
@@ -63,6 +63,8 @@
                 </ion-item>
               </ion-radio-group>
             </ion-list>
+
+
 
             <div style="text-align: center;" *ngIf="listaDetalleConvenio.length > 0">
               <div
