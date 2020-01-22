@@ -12,9 +12,9 @@
 
     <div style="display: inline; width: 10%;">
       <ion-icon name="md-cart" style="font-size: 25px;padding-top: 5px;"></ion-icon>
-      <ion-badge color="dark" mode="ios"  *ngIf="ticket.comprasDetalles && ticket.comprasDetalles.length>0"
-        style="position: absolute; left: 81%; top: 2px; font-size: 0.7rem;opacity: 0.7; background-color: #0247ac;"
-        >{{ticket.comprasDetalles.length}}</ion-badge>
+      <ion-badge color="dark" mode="ios" *ngIf="ticket.comprasDetalles && ticket.comprasDetalles.length>0"
+        style="position: absolute; left: 81%; top: 2px; font-size: 0.7rem;opacity: 0.7; background-color: #0247ac;">
+        {{ticket.comprasDetalles.length}}</ion-badge>
     </div>
 
     <div style="display: inline; width: 10%">
@@ -43,46 +43,49 @@
 
             <!-- 1ra fila -->
             <div style="text-align: center;">
-              <div
-                style="background-color: var(--ion-color-primary);color: white; border-radius: 40px 40px 5px 5px; margin-bottom: 2vh;">
+              <div style="background-color: var(--ion-color-primary);color: white; border-radius: 40px 40px 5px 5px; ">
                 Convenios</div>
             </div>
 
             <!-- 2da fila -->
-            <ion-list>
-              <ion-radio-group>            
-                <ion-item *ngFor="let convenio of listaConvenio" style="border: 1px solid blue;">
-                  <ion-label>
-                    <img style="height: 80px; display: flex;padding-bottom: 5px;" src="{{ convenio.imagenInferior || 'assets/images/MediosDePago/default.jpg'}}" title="{{convenio.convenio.descripcion}}">
-                  </ion-label>
-                  <ion-radio 
-                    mode="md"
-                    slot="start"
-                    (click)="seleccionadoConvenioUp(convenio.idConvenio)"
-                    value="{{ convenio.idConvenio }}"></ion-radio>
-                </ion-item>
+            <ion-list class=" ion-no-padding ion-no-margin">
+              <ion-radio-group>
+
+                <ion-grid fixed class=" ion-no-padding ion-no-margin">
+                  <ion-row>
+
+                    <ion-col size-lg="2" size-md="2" size-sm="4" size="4" *ngFor="let convenio of listaConvenio"
+                      class=" ion-no-padding ion-no-margin">
+
+                      <ion-item  lines="none">
+                        <ion-label style="margin: 0;">
+                          <img src="{{ convenio.imagenInferior || 'assets/images/MediosDePago/default.jpg'}}"
+                            title="{{convenio.convenio.descripcion}}">
+                        </ion-label>
+                        <ion-radio mode="md" slot="start" (click)="seleccionadoConvenioUp(convenio.idConvenio)"
+                          style="margin: 0;" value="{{ convenio.idConvenio }}"></ion-radio>
+                      </ion-item>
+
+                    </ion-col>
+
+                  </ion-row>
+                </ion-grid>
+
+
               </ion-radio-group>
             </ion-list>
 
-
-
-            <div style="text-align: center;" *ngIf="listaDetalleConvenio.length > 0">
-              <div
-                style="background-color: var(--ion-color-primary);color: white; border-radius: 40px 40px 5px 5px; margin-bottom: 2vh;">
+            <div style="text-align: center; margin-top: 1vh;" *ngIf="listaDetalleConvenio.length > 0">
+              <div style="background-color: var(--ion-color-primary);color: white; border-radius: 40px 40px 5px 5px; ">
                 Datos Convenio</div>
             </div>
 
-            <div  *ngIf="listaDetalleConvenio.length > 0">
-              <div style="text-align: center; display: flex;" *ngFor="let input of listaDetalleConvenio"> 
-                <div *ngIf="input.Estado == 'ACT' && input.VisibleUsr == 'SI' && input.TipoDato == 'ETIQUETA'" 
+            <div *ngIf="listaDetalleConvenio.length > 0">
+              <div style="text-align: center; display: flex;" *ngFor="let input of listaDetalleConvenio">
+                <div *ngIf="input.Estado == 'ACT' && input.VisibleUsr == 'SI' && input.TipoDato == 'ETIQUETA'"
                   style="width: 100%; display: flex; justify-content: center; align-items: center;">
-                  <input type="text" 
-                    [textMask]={mask:rutFunction,guide:false} 
-                    [(ngModel)]="input.Valor" 
-                    name="rutConvenio" 
-                    #input_rut
-                    (keypress)="tecleado($event)"                     
-                    placeholder="{{input.Valor}}">
+                  <input type="text" [textMask]={mask:rutFunction,guide:false} [(ngModel)]="input.Valor"
+                    name="rutConvenio" #input_rut (keypress)="tecleado($event)" placeholder="{{input.Valor}}">
                 </div>
               </div>
               <div style="width: 100%; display: flex; justify-content: center; align-items: center;">
@@ -92,29 +95,13 @@
                 </ion-button>
               </div>
             </div>
-           
+
             <!-- 4ta fila -->
-            <div style="text-align: center;">
+            <div style="text-align: center; margin-top: 2vh;">
               <div
-                style="background-color: var(--ion-color-primary);color: white;  border-radius: 40px 40px 5px 5px; margin-bottom: 2vh;">
+                style="background-color: var(--ion-color-primary);color: white;  border-radius: 40px 40px 5px 5px; margin-bottom: 1vh;">
                 Informacion de Contacto</div>
             </div>
-
-            <!-- 5ta fila -->
-            <div style="text-align: center; display: flex;">
-
-              <div style="width: 50%; display: flex; justify-content: center; align-items: center;">
-                <input type="text" [textMask]={mask:rutFunction,guide:false} [(ngModel)]="DatosFormulario.rut" name="rut" #input_rut
-                  (keypress)="tecleado($event)" (keyup.enter)="setFocus('codigo')" placeholder="RUT">
-              </div>
-
-              <ion-button
-                style="color: white;  width:100% ;padding: 0 3vw; outline: none; text-transform: none;--background: #fe5200;">
-                Validar
-              </ion-button>
-
-            </div>
-
 
             <!-- 6ta fila -->
             <div
@@ -125,8 +112,9 @@
                   (keypress)="tecleado($event)" (keyup.enter)="setFocus('telefono')">
               </div>
               <div style=" width: 65%;">
-                <input type="text" [textMask]={mask:telefonoFunction,guide:false} placeholder="Teléfono" [(ngModel)]="DatosFormulario.telefono" name="telefono"
-                  #input_telefono (keypress)="tecleado($event)" (keyup.enter)="setFocus('email')">
+                <input type="text" [textMask]={mask:telefonoFunction,guide:false} placeholder="Teléfono"
+                  [(ngModel)]="DatosFormulario.telefono" name="telefono" #input_telefono (keypress)="tecleado($event)"
+                  (keyup.enter)="setFocus('email')">
               </div>
             </div>
 
@@ -144,24 +132,33 @@
 
             <!-- 9na fila -->
             <div style="text-align: center;">
-              <h2 *ngIf="mostrarTarifaAtachada" 
-              style="text-decoration:line-through;color: red;">
-              Total: ${{totalSinDscto.toLocaleString('de-DE') }}</h2>
+              <h2 *ngIf="mostrarTarifaAtachada" style="text-decoration:line-through;color: red;">
+                Total: ${{totalSinDscto.toLocaleString('de-DE') }}</h2>
               <h2>Total: ${{totalFinal.toLocaleString('de-DE') }}</h2>
             </div>
-    
-            <ion-list>
-              <ion-radio-group>            
-                <ion-item *ngFor="let medioPago of listaMedioPago">
-                  <ion-label>
-                    <img style="height: 80px; display: flex;padding-bottom: 5px;" src="{{ medioPago.Imagen || 'assets/images/MediosDePago/default.jpg'}}" title="{{medioPago.Descripcion}}">
-                  </ion-label>
-                  <ion-radio 
-                    mode="md"
-                    slot="start"
-                    (click)="seleccionadoMedioPago(medioPago.Convenio)"
-                    value="{{ medioPago.Convenio }}"></ion-radio>
-                </ion-item>
+
+            <ion-list class=" ion-no-padding ion-no-margin">
+              <ion-radio-group>
+                <ion-grid fixed class=" ion-no-padding ion-no-margin">
+                  <ion-row style="padding-left: 10vw;">
+
+                    <ion-col size-lg="6" size-md="6" size-sm="6" size="6" *ngFor="let medioPago of listaMedioPago"
+                      class=" ion-no-padding ion-no-margin">
+
+                      <ion-item lines="none">
+                        <ion-label style="margin: 0;">
+
+                          <img src="{{ medioPago.Imagen || 'assets/images/MediosDePago/default.jpg'}}"
+                            title="{{medioPago.Descripcion}}">
+                        </ion-label>
+                        <ion-radio mode="md" slot="start" (click)="seleccionadoMedioPago(medioPago.Convenio)"
+                          style="margin: 0;" value="{{ medioPago.Convenio }}"></ion-radio>
+                      </ion-item>
+
+                    </ion-col>
+
+                  </ion-row>
+                </ion-grid>
               </ion-radio-group>
             </ion-list>
 
@@ -173,6 +170,8 @@
               acuerdo
               con los términos y condiciones de la compra
             </div>
+
+            
           </ion-col>
         </ion-row>
       </ion-grid>
