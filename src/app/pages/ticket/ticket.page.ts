@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { MyserviceService } from 'src/app/service/myservice.service';
 import { IonContent } from '@ionic/angular';
 import { IntegradorService } from 'src/app/service/integrador.service';
+import { CompileMetadataResolver } from '@angular/compiler';
 // import { Content } from '@angular/compiler/src/render3/r3_ast';
 
 @Component({
@@ -88,11 +89,23 @@ export class TicketPage implements OnInit {
       if (this.way === 'go') {
         this.compras = this.ticket.goCompras || [];
         this.allServices = this.ticket.goAllService || this.getServicesAndBus('go');
+        console.log('GOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO');
+        console.log('this.ticket', this.ticket);
+        console.log('this.compras', this.compras);
+        console.log('this.allServices', this.allServices);
+        console.log('finGOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO');
 
       } else {
         this.compras = this.ticket.backCompras || [];
-        this.allServices = this.ticket.backAllService || this.getServicesAndBus('back');;
+        this.allServices = this.ticket.backAllService || this.getServicesAndBus('back');
+        console.log('BACKKKKKKKKKKKKKKKKKKKKKKKKKKK');
+        console.log('this.ticket', this.ticket);
+        console.log('this.compras', this.compras);
+        console.log('this.allServices', this.allServices);
+        console.log('finBACKKKKKKKKKKKKKKKKKKKKKKKKKKK');
       }
+
+      console.log('');
 
       this.comprasDetalles = this.ticket.comprasDetalles || [];
       this.comprasDetallesPosicion = this.ticket.comprasDetallesPosicion || [];
@@ -171,8 +184,23 @@ export class TicketPage implements OnInit {
     this.integradorService.getService(findService).subscribe(data => {
       this.allServices = data;
       this.loadingService = false;
-      console.log('data', data);
+      console.log(wayNow, 'this.allServices', data);
+
+
+
+      this.allServices.forEach(servicio => {
+        this.comprasDetalles.forEach(compra => {
+          if (servicio.idServicio === compra.idServicio) {
+            console.log('iguales servicio.idServicio === compra.idServicio',compra.idServicio);
+            servicio['my_comprasByService'] = compra['my_comprasByService']
+            servicio['my_comprasByServiceData'] = compra['my_comprasByServiceData']
+          }
+        });
+      });
+
+
     })
+
   }
 
   // getBusFromService() {
@@ -218,8 +246,9 @@ export class TicketPage implements OnInit {
       setTimeout(() => {
         this.integradorService.getPlanillaVertical(servicio).subscribe(myBusFromApi => {
           // agrego bus y sumo 20 a cada asiento de piso 2
-          console.log(myBusFromApi["1"]);
-          console.log(myBusFromApi["2"]);
+          // console.log(myBusFromApi["1"]);
+          // console.log(myBusFromApi["2"]);
+          console.log('this.bus_RECIBIDO', myBusFromApi);
           this.loadingBus = false;
 
           // setTimeout(() => {
@@ -241,8 +270,26 @@ export class TicketPage implements OnInit {
           this.serviceSelected = this.allServices[nServiceSeleccion];
 
           this.bus = this.allServices[this.serviceSelectedNumber].my_Bus;
+
+
+
           // this.compras = [];
-          console.log('bus', this.bus);
+          console.log('this.bus_PROCESADO', this.bus);
+          // verificar si se ha comprado en este servicio
+          let nowIdService = this.allServices[nServiceSeleccion]['idServicio']
+
+          this.comprasDetalles.forEach(element => {
+            if (element.idServicio === nowIdService) {
+              this.bus = element.bus
+            }
+          });
+
+          console.log(' this.allServices[nServiceSeleccion][idServicio]', this.allServices[nServiceSeleccion]['idServicio']);
+          console.log('this.comprasDetalles', this.comprasDetalles);
+          console.log('this.comprasDetallesPosicion', this.comprasDetallesPosicion);
+
+
+
 
           // if (this.ticket.goTotal) {
           //   this.tarifaTotal = this.ticket.goTotal;
@@ -270,6 +317,7 @@ export class TicketPage implements OnInit {
 
     } else {
       this.allServices[this.serviceSelectedNumber]['checked'] = !this.allServices[this.serviceSelectedNumber]['checked'];
+      // console.log('CASO AISLADO');
     }
 
   }
@@ -306,6 +354,8 @@ export class TicketPage implements OnInit {
       console.log(asiento);
 
       if (this.bus[piso][x][y]['estado'] === 'libre') {
+
+
         this.integradorService.validarAsiento(asiento).subscribe(disponible => {
           if (disponible == 0) {
             this.integradorService.tomarAsiento(asiento).subscribe(resp => {
@@ -320,7 +370,12 @@ export class TicketPage implements OnInit {
             this.bus[piso][x][y]['estado'] = 'ocupado';
           }
         })
+
+
+
       } else if (this.bus[piso][x][y]['estado'] === 'seleccionado') {
+
+
         this.integradorService.liberarAsiento(asiento).subscribe(resp => {
           if (resp == 0) {
             this.mys.alertShow('¡Verifique!', 'alert', 'Error al liberar asiento.');
@@ -328,18 +383,20 @@ export class TicketPage implements OnInit {
             this.liberarAsiento(piso, x, y);
           }
         })
+
+
       }
       // guardo en this.allServices
       this.allServices[this.serviceSelectedNumber].my_Bus = this.bus;
       this.allServices[this.serviceSelectedNumber].my_comprasByService = this.comprasByService;
       this.allServices[this.serviceSelectedNumber].my_comprasByServiceData = this.comprasByServiceData;
 
-      // calculo la tarifa total
-      let total_general = 0;
-      this.comprasDetalles.forEach(element => {
-        total_general = total_general + element.valor;
-      });
-      this.tarifaTotal = total_general;
+      // // calculo la tarifa total
+      // let total_general = 0;
+      // this.comprasDetalles.forEach(element => {
+      //   total_general = total_general + element.valor;
+      // });
+      // this.tarifaTotal = total_general;
 
       console.log('this.compras', this.compras);
       console.log('this.comprasByService', this.comprasByService);
@@ -347,6 +404,8 @@ export class TicketPage implements OnInit {
       console.log('this.allServices', this.allServices);
     } // fin de numeros asientos permitidos
   } // fin presionado
+
+
   liberarAsiento(piso, x, y) {
     let tarifa;
     // caso asiento ya seleccionado
@@ -372,7 +431,19 @@ export class TicketPage implements OnInit {
     // variables por servicio
     let index2 = this.comprasByService.indexOf(texto)
     if (index2 !== -1) { this.comprasByService.splice(index2, 1); this.comprasByServiceData.splice(index2, 1); }
+
+
+
+    // // calculo la tarifa total
+    let total_general = 0;
+    this.comprasDetalles.forEach(element => {
+      total_general = total_general + element.valor;
+    });
+    this.tarifaTotal = total_general;
+
   }
+
+
   tomarAsiento(piso, x, y) {
     let tarifa;
     // caso asiento No seleccionado
@@ -408,6 +479,15 @@ export class TicketPage implements OnInit {
       service: this.serviceSelected,
       bus: this.bus,
     });
+
+    // // calculo la tarifa total
+    let total_general = 0;
+    this.comprasDetalles.forEach(element => {
+      total_general = total_general + element.valor;
+    });
+    this.tarifaTotal = total_general;
+
+
   }
 
   cambiarPiso(piso: number) {
@@ -457,6 +537,8 @@ export class TicketPage implements OnInit {
       }
       this.ticket['comprasDetalles'] = this.comprasDetalles;
       this.ticket['comprasDetallesPosicion'] = this.comprasDetallesPosicion;
+      // this.bus=null;
+      this.serviceSelectedNumber = null
 
       // Guardo todos los cambios locales al service
       this.mys.ticket = this.ticket;
@@ -471,6 +553,7 @@ export class TicketPage implements OnInit {
       if (this.mys.way === 'go' && this.ticket.tripType === 'goBack') {
         console.log('redirigiendo a BACK y recarganto ticket');
         this.mys.way = 'back'
+        this.ticket = null
         this.ionViewWillEnter()
         // } else if (this.mys.way === 'go' && this.ticket.triptype ==='goBack') {
 
@@ -480,9 +563,6 @@ export class TicketPage implements OnInit {
 
     }
   }
-
-
-
 
   prueba() {
     console.log('this.allServices', this.allServices);

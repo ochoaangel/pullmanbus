@@ -97,11 +97,7 @@
                       <div class="myServiceRow" style="width:85%; font-weight: bold;">
                         {{svc.terminalSalida  | titlecase }}
                       </div>
-                      <div style="width: 15%;">
-                        <ion-spinner style="position: absolute; z-index: 3; color: orangered; "
-                          *ngIf="svc.checked && loadingBus" name="circles"></ion-spinner>
 
-                      </div>
                     </div>
 
                     <div class="myServiceRow">{{svc.terminaLlegada  | titlecase}}</div>
@@ -115,7 +111,8 @@
                   </div>
 
                   <!-- columna 5   -->
-                  <div class="myServiceColumn" style="width: 30%;text-align: left; position: absolute; right: 0; margin-top: 2rem; ">
+                  <div class="myServiceColumn"
+                    style="width: 30%;text-align: left; position: absolute; right: 0; margin-top: 2rem; ">
 
                     <div *ngIf="svc.my_comprasByService && svc.my_comprasByService.length>0"
                       style=" width: 25%;display: flex;justify-content: flex-end;align-items: center; flex-direction: row; position: absolute; margin-top: -2rem; right: 1rem; font-size: 0.9rem;">
@@ -125,7 +122,7 @@
                         <img style="height: 1.5rem;margin-top: 4px;" src="assets/icon/png/Asiento-seleccionado.png" />
                       </div>
                       <div>
-                        <ion-icon *ngIf="svc.my_comprasByService.length <5" 
+                        <ion-icon *ngIf="svc.my_comprasByService.length <5"
                           style="color: blue; margin-top: 2px; margin-left: -1.2rem; font-size: 1.3rem;"
                           name="checkmark"></ion-icon>
                         <ion-icon *ngIf="svc.my_comprasByService.length >4"
@@ -160,20 +157,34 @@
 
 
 
-              
+
               <div style="display: flex; flex-direction: row; padding-top: 0.5rem;">
                 <!-- columna 1   -->
                 <div class="myServiceColumn" style="width: 35%;text-align: left;     padding-left: 1%;">
-                  <div class="myServiceRow"> <div style="border: 1px solid #fe5200;color: #fe5200;    width: fit-content; padding: 0 0.5rem; border-radius: 10px; font-size: 0.6rem; font-weight: bold; ">Piso 1</div> </div>
+                  <div class="myServiceRow">
+                    <div
+                      style="border: 1px solid #fe5200;color: #fe5200;    width: fit-content; padding: 0 0.5rem; border-radius: 10px; font-size: 0.6rem; font-weight: bold; ">
+                      Piso 1</div>
+                  </div>
                   <div class="myServiceRow">{{svc.servicioPrimerPiso | titlecase}}</div>
-                  <div class="myServiceRow"><div style="display: flex; align-items: center; justify-content: left;">Valor: ${{svc.tarifaPrimerPiso}}</div></div>
+                  <div class="myServiceRow">
+                    <div style="display: flex; align-items: center; justify-content: left;">Valor:
+                      ${{svc.tarifaPrimerPiso}}</div>
+                  </div>
                 </div>
 
                 <!-- columna 2   -->
                 <div class="myServiceColumn" style="width: 60%;text-align: left;" *ngIf="svc.tarifaSegundoPiso">
-                  <div class="myServiceRow"><div style="background-color: #fe5200; color: white;width: fit-content; padding: 0 0.5rem; border-radius: 10px; font-size: 0.6rem;">Piso 2</div></div>
+                  <div class="myServiceRow">
+                    <div
+                      style="background-color: #fe5200; color: white;width: fit-content; padding: 0 0.5rem; border-radius: 10px; font-size: 0.6rem;">
+                      Piso 2</div>
+                  </div>
                   <div class="myServiceRow">{{svc.servicioSegundoPiso | titlecase}}</div>
-                  <div class="myServiceRow"><div style="display: flex; align-items: center; justify-content: left;" >Valor: ${{svc.tarifaSegundoPiso}}</div></div>
+                  <div class="myServiceRow">
+                    <div style="display: flex; align-items: center; justify-content: left;">Valor:
+                      ${{svc.tarifaSegundoPiso}}</div>
+                  </div>
                 </div>
 
 
