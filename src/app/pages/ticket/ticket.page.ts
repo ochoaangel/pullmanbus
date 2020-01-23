@@ -191,7 +191,7 @@ export class TicketPage implements OnInit {
       this.allServices.forEach(servicio => {
         this.comprasDetalles.forEach(compra => {
           if (servicio.idServicio === compra.idServicio) {
-            console.log('iguales servicio.idServicio === compra.idServicio',compra.idServicio);
+            console.log('iguales servicio.idServicio === compra.idServicio', compra.idServicio);
             servicio['my_comprasByService'] = compra['my_comprasByService']
             servicio['my_comprasByServiceData'] = compra['my_comprasByServiceData']
           }
@@ -410,28 +410,39 @@ export class TicketPage implements OnInit {
     let tarifa;
     // caso asiento ya seleccionado
     this.bus[piso][x][y]['estado'] = 'libre';
-    if (piso === '1') {
-      // restando para piso1
-      // this.tarifaTotal = this.tarifaTotal - this.tarifaPiso1;
-      tarifa = this.tarifaPiso1;
 
-    } else {
-      // restando para piso2
-      // this.tarifaTotal = this.tarifaTotal - this.tarifaPiso2;
-      tarifa = this.tarifaPiso2;
-    }
     // creo el texto a eliminar de la compra
     // let texto = `piso_${piso}/fila_${x}/columna_${y}/asiento_${this.bus[piso][x][y]['asiento']}/precio_${tarifa}`;
     let texto = this.way + '_' + this.serviceSelected.idServicio + '_' + this.bus[piso][x][y]['asiento'];
 
     // variables totales
+    console.log('Verificandoooooooooooooooooooooooooooooooooo');
+    console.log('texto a buscar:', texto);
+    console.log('this.compras', this.compras);
+    console.log('this.comprasDetalles', this.comprasDetalles);
+    console.log('this.comprasDetallesPosicion', this.comprasDetallesPosicion);
+    console.log('this.comprasByService', this.comprasByService);
+    console.log('this.comprasByServiceData', this.comprasByServiceData);
+    console.log('-------------------------------------------------');
     let index = this.compras.indexOf(texto);
     if (index !== -1) { this.compras.splice(index, 1); this.comprasDetalles.splice(index, 1); this.comprasDetallesPosicion.splice(index, 1); }
+    else {
+      let index = this.comprasDetallesPosicion.indexOf(texto);
+      if (index !== -1) { this.comprasDetallesPosicion.splice(index, 1); this.comprasDetalles.splice(index, 1); }
+
+
+     }
 
     // variables por servicio
     let index2 = this.comprasByService.indexOf(texto)
     if (index2 !== -1) { this.comprasByService.splice(index2, 1); this.comprasByServiceData.splice(index2, 1); }
 
+    console.log('texto a buscar:', texto);
+    console.log('this.compras', this.compras);
+    console.log('this.comprasDetalles', this.comprasDetalles);
+    console.log('this.comprasDetallesPosicion', this.comprasDetallesPosicion);
+    console.log('this.comprasByService', this.comprasByService);
+    console.log('this.comprasByServiceData', this.comprasByServiceData);
 
 
     // // calculo la tarifa total
@@ -441,6 +452,7 @@ export class TicketPage implements OnInit {
     });
     this.tarifaTotal = total_general;
 
+    console.log('finVerificandoooooooooooooooooooooooooooooooooo');
   }
 
 
@@ -571,8 +583,10 @@ export class TicketPage implements OnInit {
   atras() {
     if (this.mys.way === 'back') {
       this.mys.way = 'go'
+      this.serviceSelectedNumber = null
       this.ionViewWillEnter()
     } else {
+      this.serviceSelectedNumber = null
       this.mys.ticket = null;
       this.router.navigateByUrl('/buy-your-ticket');
     }
