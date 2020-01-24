@@ -76,7 +76,6 @@
   --ion-color-light-tint: #f5f6f9;
 }
 
-
 ion-alert {
   .alert-head {
     background-color: #0247ac;
@@ -98,9 +97,14 @@ ion-alert {
   }
 }
 
-
-ion-select{
+ion-select {
   .alert-head {
     background-color: red;
   }
+}
+
+.popMenu, .popLenguage, .popCart{
+  --background: #0247ac;
+  --width: 15rem;
+  --border-color: #0247ac;
 }

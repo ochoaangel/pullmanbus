@@ -670,7 +670,8 @@ export class TicketPage implements OnInit {
       component: PopMenuComponent,
       event,
       mode: 'ios',
-      backdropDismiss: true
+      backdropDismiss: true,
+      cssClass: "popMenu"
     });
     await popoverMenu.present();
 

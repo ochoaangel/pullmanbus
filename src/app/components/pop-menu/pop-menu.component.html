@@ -1,6 +1,9 @@
-<ion-list no-padding no-margin>
+<ion-list class="ion-no-padding ion-no-margin">
+
   <ion-item (click)="onClick(opcion.url)" *ngFor="let opcion of opciones">
-    <ion-label>{{opcion.titulo}}</ion-label>
+    <ion-icon style="color: white;padding-right: 10px;" name="{{opcion.icon}}"></ion-icon>
+    <ion-label style="color: white;">{{opcion.titulo}}</ion-label>
     <ion-radio hidden></ion-radio>
   </ion-item>
+
 </ion-list>
