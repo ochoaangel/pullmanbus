@@ -5,9 +5,10 @@ import * as _ from 'underscore';
 import * as moment from 'moment';
 import { Router } from '@angular/router';
 import { MyserviceService } from 'src/app/service/myservice.service';
-import { IonContent } from '@ionic/angular';
+import { IonContent, PopoverController } from '@ionic/angular';
 import { IntegradorService } from 'src/app/service/integrador.service';
 import { CompileMetadataResolver } from '@angular/compiler';
+import { PopMenuComponent } from 'src/app/components/pop-menu/pop-menu.component';
 // import { Content } from '@angular/compiler/src/render3/r3_ast';
 
 @Component({
@@ -72,7 +73,9 @@ export class TicketPage implements OnInit {
     private httpClient: HttpClient,
     private router: Router,
     private mys: MyserviceService,
-    private integradorService: IntegradorService
+    private integradorService: IntegradorService,
+    private popoverCtrl: PopoverController,
+    
   ) { }
 
   ngOnInit() {
@@ -653,6 +656,27 @@ export class TicketPage implements OnInit {
       default:
         break;
     }
+  }
+
+
+
+
+
+
+
+
+  async popMenu(event) {
+    const popoverMenu = await this.popoverCtrl.create({
+      component: PopMenuComponent,
+      event,
+      mode: 'ios',
+      backdropDismiss: true
+    });
+    await popoverMenu.present();
+
+    // recibo la variable desde el popover y la guardo en data
+    const { data } = await popoverMenu.onWillDismiss();
+    this.router.navigateByUrl(data.destino);
   }
 
 }// fin Ticket

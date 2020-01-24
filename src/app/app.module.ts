@@ -15,6 +15,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PipesModule } from './pipes/pipes.module';
 import { TextMaskModule } from 'angular2-text-mask';
+import { ComponentsModule } from './components/components.module';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { TextMaskModule } from 'angular2-text-mask';
      HttpClientModule,
      BrowserAnimationsModule,
      PipesModule,
-     TextMaskModule
+     TextMaskModule,
+     ComponentsModule
      
      
     

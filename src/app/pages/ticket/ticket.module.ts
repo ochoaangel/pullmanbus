@@ -9,14 +9,22 @@ import { TicketPage } from './ticket.page';
 import { PipesModule } from 'src/app/pipes/pipes.module';
 
 
- 
+import { PopMenuComponent } from 'src/app/components/pop-menu/pop-menu.component';
+import { PopCartComponent } from 'src/app/components/pop-cart/pop-cart.component';
+import { PopLanguageComponent } from 'src/app/components/pop-language/pop-language.component';
+import { ComponentsModule } from 'src/app/components/components.module';
+
+
+
 @NgModule({
+  entryComponents: [PopMenuComponent, PopCartComponent, PopLanguageComponent],
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
     TicketPageRoutingModule,
-    PipesModule
+    PipesModule,
+    ComponentsModule
   ],
   declarations: [
     TicketPage,

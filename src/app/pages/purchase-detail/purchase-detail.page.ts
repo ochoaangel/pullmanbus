@@ -1,6 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { MyserviceService } from "src/app/service/myservice.service";
 import { Router } from "@angular/router";
+import { PopMenuComponent } from 'src/app/components/pop-menu/pop-menu.component';
+import { PopoverController } from '@ionic/angular';
 
 @Component({
   selector: "app-purchase-detail",
@@ -8,7 +10,7 @@ import { Router } from "@angular/router";
   styleUrls: ["./purchase-detail.page.scss"]
 })
 export class PurchaseDetailPage implements OnInit {
-  constructor(private router: Router, private mys: MyserviceService) { }
+  constructor(private router: Router, private mys: MyserviceService, private popoverCtrl: PopoverController) { }
 
   ticket;
   way;
@@ -227,7 +229,19 @@ export class PurchaseDetailPage implements OnInit {
     // this.router.navigateByUrl('/ticket');
   }
 
+  async popMenu(event) {
+    const popoverMenu = await this.popoverCtrl.create({
+      component: PopMenuComponent,
+      event,
+      mode: 'ios',
+      backdropDismiss: true
+    });
+    await popoverMenu.present();
 
+    // recibo la variable desde el popover y la guardo en data
+    const { data } = await popoverMenu.onWillDismiss();
+    this.router.navigateByUrl(data.destino);
+  }
 
 }
 
