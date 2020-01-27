@@ -9,6 +9,7 @@ import { IonContent, PopoverController } from '@ionic/angular';
 import { IntegradorService } from 'src/app/service/integrador.service';
 import { CompileMetadataResolver } from '@angular/compiler';
 import { PopMenuComponent } from 'src/app/components/pop-menu/pop-menu.component';
+import { PopCartComponent } from 'src/app/components/pop-cart/pop-cart.component';
 // import { Content } from '@angular/compiler/src/render3/r3_ast';
 
 @Component({
@@ -678,6 +679,23 @@ export class TicketPage implements OnInit {
     // recibo la variable desde el popover y la guardo en data
     const { data } = await popoverMenu.onWillDismiss();
     this.router.navigateByUrl(data.destino);
+  }
+
+
+  async popCart(event) {
+    this.mys.temporalComprasCarrito = this.comprasDetalles
+    const popoverCart = await this.popoverCtrl.create({
+      component: PopCartComponent,
+      event,
+      mode: 'ios',
+      backdropDismiss: true,
+      cssClass: "popCart" 
+    });
+    await popoverCart.present();
+
+    // recibo la variable desde el popover y la guardo en data
+    // const { data } = await popoverCart.onWillDismiss();
+    // this.router.navigateByUrl(data.destino);
   }
 
 }// fin Ticket

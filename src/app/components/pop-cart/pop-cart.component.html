@@ -1,41 +1,4 @@
-<!-- <div
-  style="display: flex; flex-direction: row; justify-content: space-between; align-items: center;
-  color: white; font-size: 0.8rems; font-weight: bold;padding: 1vw;"
->
-  <div>Boleto</div>
-  <div>Salida</div>
-  <div>Origen</div>
-  <div>Destino</div>
-  <div>Asiento</div>
-  <div>Valor</div>
-</div>
-
-<div
-  style="display: flex; flex-direction: row; justify-content: space-between;"
->
-  <div>YYYYYYYY</div>
-  <div>XX/XX/XXXX XX:XX</div>
-  <div>Terminal SSSSSSSSSS</div>
-  <div>Terminal YYYYYYYYYY</div>
-  <div>XX</div>
-  <div>$SS.SSS</div>
-</div> -->
-
-
-<!-- <section style="display: table;">
-  <header class="table_row_line" style="display: table-row;">
-    <div style="display: table-cell;">1</div>
-    <div style="display: table-cell;">2</div>
-    <div style="display: table-cell;">3</div>
-  </header>
-  <div style="display: table-row;">
-    <div style="display: table-cell;">4</div>
-    <div style="display: table-cell;">5</div>
-    <div style="display: table-cell;">6</div>
-  </div>
-</section> -->
-
-<section class="tableComplete">
+<section class="tableComplete" *ngIf="compras.length >0">
 
   <header class="headerRow">
     <div class="headerCell">Boleto</div>
@@ -47,14 +10,20 @@
     <div class="headerCell">Valor</div>
   </header>
 
-  <div class="normalRow" *ngFor="let item of [1,1,1,1,1,1,1,1]">
-    <div class="normalCell">YYYYYYYY</div>
-    <div class="normalCell">XX/XX/XXXX</div>
-    <div class="normalCell">TT:TT</div>
-    <div class="normalCell">Terminal SSSSSSSSSS</div>
-    <div class="normalCell">Terminal YYYYYYYYYY</div>
-    <div class="normalCell">XX</div>
-    <div class="normalCell">$SS.SSS</div>
+  <div class="normalRow" *ngFor="let compra of compras;">
+    <div class="normalCell">{{compra.idServicio}}</div>
+    <div class="normalCell">{{compra.service.fechaSalida}}</div>
+    <div class="normalCell">{{compra.service.horaSalida}}</div>
+    <div class="normalCell">{{compra.service.terminalSalida}}</div>
+    <div class="normalCell">{{compra.service.terminaLlegada}}</div>
+    <div class="normalCell">{{compra.asiento}}</div>
+    <div class="normalCell">${{compra.valor.toLocaleString('de-DE')}}</div>
   </div>
 
 </section>
+<div *ngIf="compras.length >0" style="text-align: right; color: white; padding: 1rem;"> Total:
+  ${{total.toLocaleString('de-DE') }} </div>
+
+<div *ngIf="compras.length === 0" style="text-align: center; color: white; padding: 1rem;">
+  No hay compras para mostrar
+</div>

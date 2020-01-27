@@ -18,6 +18,7 @@ export class MyserviceService {
   BackTicket;
   regresandoAticket = false;
   total=0;
+  temporalComprasCarrito;
 
   constructor(public alertController: AlertController, public popoverCtrl: PopoverController, public router: Router) { }
 

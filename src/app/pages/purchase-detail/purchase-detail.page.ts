@@ -3,6 +3,7 @@ import { MyserviceService } from "src/app/service/myservice.service";
 import { Router } from "@angular/router";
 import { PopMenuComponent } from 'src/app/components/pop-menu/pop-menu.component';
 import { PopoverController } from '@ionic/angular';
+import { PopCartComponent } from 'src/app/components/pop-cart/pop-cart.component';
 
 @Component({
   selector: "app-purchase-detail",
@@ -243,6 +244,23 @@ export class PurchaseDetailPage implements OnInit {
     const { data } = await popoverMenu.onWillDismiss();
     this.router.navigateByUrl(data.destino);
   }
+
+  async popCart(event) {
+    this.mys.temporalComprasCarrito = this.ticket.comprasDetalles
+    const popoverCart = await this.popoverCtrl.create({
+      component: PopCartComponent,
+      event,
+      mode: 'ios',
+      backdropDismiss: true,
+      cssClass: "popCart" 
+    });
+    await popoverCart.present();
+
+    // recibo la variable desde el popover y la guardo en data
+    // const { data } = await popoverCart.onWillDismiss();
+    // this.router.navigateByUrl(data.destino);
+  }
+  
 
 }
 

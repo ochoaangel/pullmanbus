@@ -865,8 +865,8 @@ export class BuyYourTicketPage implements OnInit {
     await popoverCart.present();
 
     // recibo la variable desde el popover y la guardo en data
-    const { data } = await popoverCart.onWillDismiss();
-    this.router.navigateByUrl(data.destino);
+    // const { data } = await popoverCart.onWillDismiss();
+    // this.router.navigateByUrl(data.destino);
   }
 
 }

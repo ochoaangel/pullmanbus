@@ -11,7 +11,7 @@
       <img src="assets/images/titulo.png" style="height: 90%;object-fit: scale-down;position: relative; z-index: 10; ">
     </div>
 
-    <div style="display: inline; width: 10%;">
+    <div style="display: inline; width: 10%;" (click)="popCart($event)">
       <ion-icon name="md-cart" style="font-size: 25px;padding-top: 5px;"></ion-icon>
       <ion-badge color="dark" mode="ios" *ngIf="comprasDetalles && comprasDetalles.length>0"
         style="position: absolute; left: 81%; top: 2px; font-size: 0.7rem;opacity: 0.7; background-color: #0247ac;">

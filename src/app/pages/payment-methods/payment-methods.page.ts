@@ -4,6 +4,7 @@ import { MyserviceService } from 'src/app/service/myservice.service';
 import { IntegradorService } from 'src/app/service/integrador.service';
 import { PopMenuComponent } from 'src/app/components/pop-menu/pop-menu.component';
 import { PopoverController } from '@ionic/angular';
+import { PopCartComponent } from 'src/app/components/pop-cart/pop-cart.component';
 
 @Component({
   selector: 'app-payment-methods',
@@ -584,5 +585,21 @@ export class PaymentMethodsPage implements OnInit {
     // recibo la variable desde el popover y la guardo en data
     const { data } = await popoverMenu.onWillDismiss();
     this.router.navigateByUrl(data.destino);
+  }
+
+  async popCart(event) {
+    this.mys.temporalComprasCarrito = this.mys.ticket.comprasDetalles
+    const popoverCart = await this.popoverCtrl.create({
+      component: PopCartComponent,
+      event,
+      mode: 'ios',
+      backdropDismiss: true,
+      cssClass: "popCart" 
+    });
+    await popoverCart.present();
+
+    // recibo la variable desde el popover y la guardo en data
+    // const { data } = await popoverCart.onWillDismiss();
+    // this.router.navigateByUrl(data.destino);
   }
 }

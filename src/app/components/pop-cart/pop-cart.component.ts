@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MyserviceService } from 'src/app/service/myservice.service';
 
 @Component({
   selector: 'app-pop-cart',
@@ -7,8 +8,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PopCartComponent implements OnInit {
 
-  constructor() { }
+  compras
+  total
+  constructor(private mys: MyserviceService) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.compras = this.mys.temporalComprasCarrito
+    this.total=0;
+    this.compras.forEach(element => {
+      this.total = this.total+element.valor
+    });
+    console.log('compras desde popCart', this.compras);
+  }
 
 }
