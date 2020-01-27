@@ -38,6 +38,7 @@
   <div class="cabeceraTitulo" style="font-size: 0.8rem;" *ngIf="way==='back'">
     {{this.ticket.destiny.nombre  | titlecase }} a {{this.ticket.origin.nombre  | titlecase }} {{backDate}}
   </div>
+  <ion-progress-bar type="indeterminate" *ngIf="loadingBus"></ion-progress-bar>
 
 </ion-header>
 
@@ -133,17 +134,17 @@
 
 
                     <div class="myServiceRow" style="align-items: center; justify-content: center; ">
-                      <ion-button fill="clear" (click)="myServiceSelection(i)"
+                      <ion-button fill="clear" (click)="myServiceSelection(i)" [disabled]="loadingBus"
                         *ngIf="(!svc.checked && !svc.my_comprasByService) ||  (  !svc.checked &&  svc.my_comprasByService && svc.my_comprasByService.length===0)"
                         style="color: white; outline: none;  --padding-start: 0;--padding-end: 0; --background: #0247ac;text-transform: none; font-size: 0.8rem;width: 90%;">
                         Comprar
                       </ion-button>
-                      <ion-button fill="clear" (click)="myServiceSelection(i)"
+                      <ion-button fill="clear" (click)="myServiceSelection(i)" [disabled]="loadingBus"
                         *ngIf="!svc.checked && svc.my_comprasByService && svc.my_comprasByService.length>0"
                         style="color: white; outline: none;  --padding-start: 0;--padding-end: 0; --background: #0247ac;text-transform: none; font-size: 0.8rem;width: 90%;">
                         Editar
                       </ion-button>
-                      <ion-button fill="clear" (click)="myServiceSelection(i)" *ngIf="svc.checked"
+                      <ion-button fill="clear" (click)="myServiceSelection(i)" *ngIf="svc.checked" [disabled]="loadingBus"
                         style="color: white; outline: none;  --padding-start: 0;--padding-end: 0; --background: #0247ac;text-transform: none; font-size: 0.8rem;width: 90%;">
                         Ocultar
                       </ion-button>
@@ -154,10 +155,6 @@
                 </div>
 
               </div>
-
-
-
-
               <div style="display: flex; flex-direction: row; padding-top: 0.5rem;">
                 <!-- columna 1   -->
                 <div class="myServiceColumn" style="width: 35%;text-align: left;     padding-left: 1%;">

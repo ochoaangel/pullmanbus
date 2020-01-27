@@ -58,6 +58,7 @@ export class TicketPage implements OnInit {
 
 
 
+
   orderSelected = ''
   orderShowActive = false
   orderWindowsDetail: any = { header: 'Ordenar servicios por:' };
@@ -76,7 +77,7 @@ export class TicketPage implements OnInit {
     private mys: MyserviceService,
     private integradorService: IntegradorService,
     private popoverCtrl: PopoverController,
-    
+
   ) { }
 
   ngOnInit() {
@@ -228,11 +229,11 @@ export class TicketPage implements OnInit {
   myServiceSelection(nServiceSeleccion: number) {
     // setTimeout(() => {
     let estadoPrevio = this.allServices[nServiceSeleccion]['checked'];
-    this.allServices.forEach(element => {
-      element['checked'] = false;
-    });
+    // this.allServices.forEach(element => {
+    //   element['checked'] = false;
+    // });
+    // this.allServices[nServiceSeleccion]['checked'] = estadoPrevio;
     this.loadingBus = true;
-    this.allServices[nServiceSeleccion]['checked'] = estadoPrevio;
     // });
     console.log(nServiceSeleccion);
     if (this.serviceSelectedNumber !== nServiceSeleccion) {
@@ -253,14 +254,13 @@ export class TicketPage implements OnInit {
           // console.log(myBusFromApi["1"]);
           // console.log(myBusFromApi["2"]);
           console.log('this.bus_RECIBIDO', myBusFromApi);
-          this.loadingBus = false;
 
           // setTimeout(() => {
-          //   let estadoPrevio = this.allServices[nServiceSeleccion]['checked'];
-          //   this.allServices.forEach(element => {
-          //     element['checked'] = false;
-          //   });
-          //   this.allServices[nServiceSeleccion]['checked'] = estadoPrevio;
+            let estadoPrevio = this.allServices[nServiceSeleccion]['checked'];
+            this.allServices.forEach(element => {
+              element['checked'] = false;
+            });
+            this.allServices[nServiceSeleccion]['checked'] = estadoPrevio;
           // });
 
           this.allServices[nServiceSeleccion]['my_Bus'] = this.sumar20piso2(myBusFromApi);
@@ -288,6 +288,7 @@ export class TicketPage implements OnInit {
             }
           });
 
+
           console.log(' this.allServices[nServiceSeleccion][idServicio]', this.allServices[nServiceSeleccion]['idServicio']);
           console.log('this.comprasDetalles', this.comprasDetalles);
           console.log('this.comprasDetallesPosicion', this.comprasDetallesPosicion);
@@ -306,13 +307,20 @@ export class TicketPage implements OnInit {
           this.allServices[nServiceSeleccion].tarifaSegundoPiso ? this.tarifaPiso2 = parseInt(this.allServices[nServiceSeleccion].tarifaSegundoPiso.replace('.', '')) : this.tarifaPiso2 = null;
           !this.tarifaPiso2 ? this.piso1 = true : this.piso1 = false;
 
-          this.nowService = this.allServices[nServiceSeleccion];
+          this.nowService = this.allServices[nServiceSeleccion]; 
 
 
 
           setTimeout(() => {
             this.content.scrollToPoint(0, this.divServicio['_results'][nServiceSeleccion].nativeElement.offsetTop, 100);
           });
+
+          this.loadingBus = false;
+          // this.allServices.forEach(element => {
+          //   element['checked'] = false;
+          // });
+          // this.allServices[nServiceSeleccion]['checked'] = estadoPrevio;
+
         });
 
       }, 1000);
@@ -322,6 +330,12 @@ export class TicketPage implements OnInit {
     } else {
       this.allServices[this.serviceSelectedNumber]['checked'] = !this.allServices[this.serviceSelectedNumber]['checked'];
       // console.log('CASO AISLADO');
+      this.loadingBus = false;
+      // this.allServices.forEach(element => {
+      //   element['checked'] = false;
+      // });
+      // this.allServices[nServiceSeleccion]['checked'] = estadoPrevio;
+
     }
 
   }
@@ -435,7 +449,7 @@ export class TicketPage implements OnInit {
       if (index !== -1) { this.comprasDetallesPosicion.splice(index, 1); this.comprasDetalles.splice(index, 1); }
 
 
-     }
+    }
 
     // variables por servicio
     let index2 = this.comprasByService.indexOf(texto)
@@ -689,7 +703,7 @@ export class TicketPage implements OnInit {
       event,
       mode: 'ios',
       backdropDismiss: true,
-      cssClass: "popCart" 
+      cssClass: "popCart"
     });
     await popoverCart.present();
 

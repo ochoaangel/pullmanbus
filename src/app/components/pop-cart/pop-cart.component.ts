@@ -13,7 +13,7 @@ export class PopCartComponent implements OnInit {
   constructor(private mys: MyserviceService) { }
 
   ngOnInit() {
-    this.compras = this.mys.temporalComprasCarrito
+    this.compras = this.mys.temporalComprasCarrito || []
     this.total=0;
     this.compras.forEach(element => {
       this.total = this.total+element.valor
