@@ -394,32 +394,32 @@ export class PaymentMethodsPage implements OnInit {
         montoTotal: this.totalFinal,
         idSistema: 5,
         listaCarrito: []
-      }
+      }    
       console.log(this.mys.ticket.comprasDetalles);
       this.mys.ticket.comprasDetalles.forEach(boleto => {
         guardarTransaccion.listaCarrito.push({
-          servicio: boleto.service.idServicio,
-          fechaServicio: boleto.service.fechaServicio,
-          fechaPasada: boleto.service.fechaSalida,
-          fechaLlegada: boleto.service.fechaLlegada,
-          horaSalida: boleto.service.horaSalida,
-          horaLlegada: boleto.service.horaLlegada,
-          asiento: boleto.asiento,
-          origen: "KA",//Origen del boleto
-          destino: "MB",//Destino del boleto
-          monto: boleto.valor,
-          precio: boleto.valor,
-          descuento: this.datosConvenio != null ? this.datosConvenio.descuento : 0,
-          empresa: boleto.service.empresa,
-          clase: boleto.piso == "1" ? boleto.service.idClaseBusPisoUno : boleto.service.idClaseBusPisoDos,
-          convenio: this.datosConvenio != null ? this.datosConvenio.idConvenio : "",
-          datoConvenio: "",
-          bus: boleto.piso == "1" ? boleto.service.busPiso1 : boleto.service.busPiso2,
-          piso: boleto.piso,
-          integrador: boleto.service.integrador
-        });
+          servicio:boleto.service.idServicio,
+          fechaServicio:boleto.service.fechaServicio,
+          fechaPasada:boleto.service.fechaSalida,
+          fechaLlegada:boleto.service.fechaLlegada,
+          horaSalida:boleto.service.horaSalida,
+          horaLlegada:boleto.service.horaLlegada,
+          asiento:boleto.asiento,
+          origen:boleto.service.idTerminalOrigen,
+          destino:boleto.service.idTerminalDestino,
+          monto:boleto.valor, 
+          precio:boleto.valor,
+          descuento:this.datosConvenio != null ? this.datosConvenio.descuento : 0,
+          empresa:boleto.service.empresa,
+          clase:boleto.piso == "1" ? boleto.service.idClaseBusPisoUno : boleto.service.idClaseBusPisoDos,
+          convenio:this.datosConvenio != null ? this.datosConvenio.idConvenio : "",
+          datoConvenio:"",
+          bus:boleto.piso == "1" ? boleto.service.busPiso1 : boleto.service.busPiso2,
+          piso:boleto.piso,
+          integrador:boleto.service.integrador
+       });
       })
-
+  
       this.integradorService.guardarTransaccion(guardarTransaccion).subscribe(resp => {
         let valor: any = resp;
         if (valor.exito) {
