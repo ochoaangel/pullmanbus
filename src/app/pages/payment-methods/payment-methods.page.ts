@@ -398,8 +398,8 @@ export class PaymentMethodsPage implements OnInit {
         horaSalida:boleto.service.horaSalida,
         horaLlegada:boleto.service.horaLlegada,
         asiento:boleto.asiento,
-        origen:"KA",//Origen del boleto
-        destino:"MB",//Destino del boleto
+        origen:boleto.service.idTerminalOrigen,
+        destino:boleto.service.idTerminalDestino,
         monto:boleto.valor, 
         precio:boleto.valor,
         descuento:this.datosConvenio != null ? this.datosConvenio.descuento : 0,

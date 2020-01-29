@@ -90,8 +90,16 @@ export class IntegradorService {
 
     guardarTransaccion(guardar: any): Observable<any[]> {
         let urlFinal
-        let dirProxy = '/integrador-web/rest/private/venta/guardarTransaccion'
+        let dirProxy = '/integrador-web/rest/pago/guardarTransaccion'
         this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy
         return this.http.post<any[]>(urlFinal, guardar);
     }
+    buscarEncabezado(buscar: any): Observable<any[]> {
+        let urlFinal
+        let dirProxy = '/integrador-web/rest/private/venta/buscarEncabezado'
+        this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy
+        return this.http.post<any[]>(urlFinal, buscar);
+    }
+    
+    
 }
