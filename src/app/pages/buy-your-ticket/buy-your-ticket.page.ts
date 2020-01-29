@@ -703,7 +703,7 @@ export class BuyYourTicketPage implements OnInit {
     this.maxbackDate = moment().add(1, 'y').format();
     // this.inputFiltrado = this.inputFuente
     this.getCityOrigin()
-    // this.goDate = moment().format();
+    this.goDate = moment().format();
   }
 
   getCityOrigin() {
@@ -836,6 +836,7 @@ export class BuyYourTicketPage implements OnInit {
   atras() {
     this.showSelection = false
     this.mySelection = '';
+    this.router.navigateByUrl('/home')
 
   }
 

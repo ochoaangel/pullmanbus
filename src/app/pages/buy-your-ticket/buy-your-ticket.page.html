@@ -36,7 +36,7 @@
   <!-- <ion-progress-bar type="indeterminate"></ion-progress-bar> -->
 </ion-header>
 
-<ion-content style="border-left: 3vw solid #fe5200; border-right: 3vw solid #fe5200;">
+<ion-content style="border-left: 3vw solid #fe5200; border-right: 3vw solid #fe5200; background-color: #fe5200;">
   <div style="width: 100%; height: -webkit-fill-available;">
     <div style="height: 100%; background-color: #fe5200 ;margin: 0px 0px 0px 0px;">
       <ion-grid style="height: 100%;" class="ion-no-margin ion-no-padding">
@@ -60,12 +60,9 @@
                 3rem; border: 1px solid #fe5200; border-radius: 10px;
                 text-align: center;" *ngFor="let item of inputFiltrado">
                 <!-- ;let i= index -->
-                <ion-icon style="color: #fe5200;padding-left: 8vw; font-size:
-                  1rem;" name="locate" *ngIf="mySelection==='origin'">
-                </ion-icon>
-                <ion-icon style="color: #fe5200;padding-left: 8vw; font-size:
-                  1rem;" name="pin" *ngIf="mySelection==='destiny'">
-                </ion-icon>
+                <!-- <ion-icon style="color: #fe5200;padding-left: 8vw; font-size: 1rem;" name="locate" *ngIf="mySelection==='origin'"> </ion-icon>
+                <ion-icon style="color: #fe5200;padding-left: 8vw; font-size: 1rem;" name="pin" *ngIf="mySelection==='destiny'"> </ion-icon> -->
+                <ion-icon style="color: #fe5200;padding-left: 8vw; font-size: 1rem;" name="pin" > </ion-icon>
                 <ion-text style="padding-left: 0.5rem;">{{item.nombre | titlecase}}</ion-text>
               </ion-item>
             </div>
@@ -171,7 +168,7 @@
               </ion-row>
 
               <!-- Fecha de Ida -->
-              <ion-row style="margin-top: 2vh;" class="ion-no-margin
+              <ion-row style="padding-top: 2vh; background-color: #fe5200;" class="ion-no-margin
                 ion-no-padding ion-justify-content-center">
                 <ion-col size="12" class="ion-justify-content-center
                   ion-no-margin
@@ -194,7 +191,7 @@
                       <ion-icon style="margin:0; color: #fe5200;;" slot="end" name="arrow-dropdown"></ion-icon>
                     </ion-item>
 
-                    <div style="width: 100%;background-color: coral; border-radius: 5px 5px;padding: 0.1rem;margin-top: 0.1rem;" *ngIf="goDate">
+                    <div style="width: 100%;background-color: coral; border-radius: 5px 5px;padding: 0.1rem;padding-top: 0.1rem;" *ngIf="goDate">
                       <ion-text style="color: white;font-size: 1rem;">{{ goDate | date2line}}</ion-text>
                     </div>
                   </div>
@@ -202,7 +199,7 @@
               </ion-row>
 
               <!-- Fecha Retorno -->
-              <ion-row style="margin-top: 2vh;" class="ion-no-margin ion-no-padding ion-justify-content-center">
+              <ion-row style="padding-top: 2vh;background-color: #fe5200;" class="ion-no-margin ion-no-padding ion-justify-content-center">
                 <ion-col size="12" class="ion-justify-content-center ion-no-margin ion-no-padding ion-align-items-center" 
                 style="display: contents">
 
@@ -224,7 +221,7 @@
 
                     </ion-item>
 
-                    <div style="width: 100%;background-color: coral; border-radius: 5px 5px;padding: 0.1rem;margin-top: 0.1rem;" *ngIf="backDate">
+                    <div style="width: 100%;background-color: coral; border-radius: 5px 5px;padding: 0.1rem;padding-top: 0.1rem;" *ngIf="backDate">
                       <ion-text style="color: white;font-size: 1rem;">{{ backDate | date2line}}</ion-text>
                     </div>
 
@@ -233,7 +230,7 @@
               </ion-row>
 
               <!-- boton buscar pasajes -->
-              <ion-row style="margin-top: 2vh;" class="ion-no-margin ion-no-padding ion-justify-content-center">
+              <ion-row style="padding-top: 4vh;background-color: #fe5200;" class="ion-no-margin ion-no-padding ion-justify-content-center">
                 <ion-button (click)="btnSearch()" *ngIf="!showSelection" >
                   <ion-icon name="md-search"></ion-icon>
                   <div style="display: inline; text-align: left ;padding-left: 10px;
