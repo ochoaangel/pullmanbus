@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MyserviceService } from 'src/app/service/myservice.service';
 import { IntegradorService } from 'src/app/service/integrador.service';
+import { PopMenuComponent } from 'src/app/components/pop-menu/pop-menu.component';
+import { PopoverController } from '@ionic/angular';
+import { PopCartComponent } from 'src/app/components/pop-cart/pop-cart.component';
 
 @Component({
   selector: 'app-payment-methods',
@@ -12,30 +15,34 @@ export class PaymentMethodsPage implements OnInit {
   listaConvenio = [];
   listaMedioPago = [];
   listaDetalleConvenio = [];
-  datosConvenio : any;
-  constructor(private router: Router, 
-    private integradorService:IntegradorService,
-    private mys: MyserviceService) {   
-      this.integradorService.getListConvenio().subscribe(convenio => {       
-        this.listaConvenio = convenio;
-        console.log(this.listaConvenio);
-      })
+  datosConvenio: any;
+
+  constructor(private router: Router,
+    private integradorService: IntegradorService,
+    private popoverCtrl: PopoverController,
+    private mys: MyserviceService) {
+
+    this.integradorService.getListConvenio().subscribe(convenio => {
+      this.listaConvenio = convenio;
+      console.log(this.listaConvenio);
+    })
+
     this.datosConvenio = null;
     this.integradorService.getListMedioPago().subscribe(medioPago => {
       console.log(medioPago);
       medioPago.Convenio.forEach(pago => {
-        if(pago.BotonPago == 'SI'){
-          pago.Imagen = pago.Imagen!= "" ? "data:image/jpeg;base64,"+pago.Imagen : "";
+        if (pago.BotonPago == 'SI') {
+          pago.Imagen = pago.Imagen != "" ? "data:image/jpeg;base64," + pago.Imagen : "";
           this.listaMedioPago.push(pago);
         }
       })
     })
   }
-  
+
   mostrarTarifaAtachada = false;
   totalSinDscto;
-  totalFinal;  
-  
+  totalFinal;
+
   acuerdo = { acuerdo: false }
   ticket
 
@@ -343,15 +350,15 @@ export class PaymentMethodsPage implements OnInit {
 
   seleccionadoConvenioUp(convenio) {
     console.log(convenio);
-    this.integradorService.getDetalleConvenio({"convenio":convenio}).subscribe(detalleConvenio => {
+    this.integradorService.getDetalleConvenio({ "convenio": convenio }).subscribe(detalleConvenio => {
       this.listaDetalleConvenio = detalleConvenio;
       this.listaDetalleConvenio.forEach(item => {
         item.Placeholder = item.Valor;
       });
       console.log(this.listaDetalleConvenio);
-    })    
+    })
   }
-  seleccionadoMedioPago(medioPago) {    
+  seleccionadoMedioPago(medioPago) {
     this.DatosFormulario.convenioDown = medioPago;
   }
   pagar() {
@@ -368,7 +375,7 @@ export class PaymentMethodsPage implements OnInit {
         this.mys.alertShow('¡Verifique!', 'alert', 'Debe ingresar un número telefonico válido para continuar con el pago');
     } else 
  */ if (!this.DatosFormulario.email) {
-       this.mys.alertShow('¡Verifique!', 'alert', 'Debe ingresar un email válido para continuar con el pago');
+      this.mys.alertShow('¡Verifique!', 'alert', 'Debe ingresar un email válido para continuar con el pago');
     } else if (!this.DatosFormulario.email2) {
       this.mys.alertShow('¡Verifique!', 'alert', 'Debe re-ingresar un email válido para continuar con el pago');
     } else if (this.DatosFormulario.email !== this.DatosFormulario.email) {
@@ -379,58 +386,58 @@ export class PaymentMethodsPage implements OnInit {
       this.mys.alertShow('¡Verifique!', 'alert', 'Debe aceptar el acuerdo y condiciones de compra para continuar con el pago');
     } else {
       // this.mys.alertShow('¡Verifique!', 'alert', 'Todo correcto');
-    let guardarTransaccion = {
-      email:this.DatosFormulario.email,
-      rut:this.DatosFormulario.rut,
-      medioDePago:this.DatosFormulario.convenioDown,
-      puntoVenta:"WEBM",
-      montoTotal:this.totalFinal,
-      idSistema:5,
-      listaCarrito:[]
-    }
-    console.log(this.mys.ticket.comprasDetalles);
-    this.mys.ticket.comprasDetalles.forEach(boleto => {
-      guardarTransaccion.listaCarrito.push({
-        servicio:boleto.service.idServicio,
-        fechaServicio:boleto.service.fechaServicio,
-        fechaPasada:boleto.service.fechaSalida,
-        fechaLlegada:boleto.service.fechaLlegada,
-        horaSalida:boleto.service.horaSalida,
-        horaLlegada:boleto.service.horaLlegada,
-        asiento:boleto.asiento,
-        origen:boleto.service.idTerminalOrigen,
-        destino:boleto.service.idTerminalDestino,
-        monto:boleto.valor, 
-        precio:boleto.valor,
-        descuento:this.datosConvenio != null ? this.datosConvenio.descuento : 0,
-        empresa:boleto.service.empresa,
-        clase:boleto.piso == "1" ? boleto.service.idClaseBusPisoUno : boleto.service.idClaseBusPisoDos,
-        convenio:this.datosConvenio != null ? this.datosConvenio.idConvenio : "",
-        datoConvenio:"",
-        bus:boleto.piso == "1" ? boleto.service.busPiso1 : boleto.service.busPiso2,
-        piso:boleto.piso,
-        integrador:boleto.service.integrador
-     });
-    })
-    
-    this.integradorService.guardarTransaccion(guardarTransaccion).subscribe(resp=>{
-      let valor:any = resp;
-      if(valor.exito){
-        formularioTBKWS(valor.url,valor.token);  
-      }else{
-        this.mys.alertShow('¡Verifique!', 'alert', valor.mensaje);
-      }
-    })  
+      let guardarTransaccion = {
+        email: this.DatosFormulario.email,
+        rut: this.DatosFormulario.rut,
+        medioDePago: this.DatosFormulario.convenioDown,
+        puntoVenta: "WEBM",
+        montoTotal: this.totalFinal,
+        idSistema: 5,
+        listaCarrito: []
+      }    
+      console.log(this.mys.ticket.comprasDetalles);
+      this.mys.ticket.comprasDetalles.forEach(boleto => {
+        guardarTransaccion.listaCarrito.push({
+          servicio:boleto.service.idServicio,
+          fechaServicio:boleto.service.fechaServicio,
+          fechaPasada:boleto.service.fechaSalida,
+          fechaLlegada:boleto.service.fechaLlegada,
+          horaSalida:boleto.service.horaSalida,
+          horaLlegada:boleto.service.horaLlegada,
+          asiento:boleto.asiento,
+          origen:boleto.service.idTerminalOrigen,
+          destino:boleto.service.idTerminalDestino,
+          monto:boleto.valor, 
+          precio:boleto.valor,
+          descuento:this.datosConvenio != null ? this.datosConvenio.descuento : 0,
+          empresa:boleto.service.empresa,
+          clase:boleto.piso == "1" ? boleto.service.idClaseBusPisoUno : boleto.service.idClaseBusPisoDos,
+          convenio:this.datosConvenio != null ? this.datosConvenio.idConvenio : "",
+          datoConvenio:"",
+          bus:boleto.piso == "1" ? boleto.service.busPiso1 : boleto.service.busPiso2,
+          piso:boleto.piso,
+          integrador:boleto.service.integrador
+       });
+      })
+  
+      this.integradorService.guardarTransaccion(guardarTransaccion).subscribe(resp => {
+        let valor: any = resp;
+        if (valor.exito) {
+          formularioTBKWS(valor.url, valor.token);
+        } else {
+          this.mys.alertShow('¡Verifique!', 'alert', valor.mensaje);
+        }
+      })
       //this.router.navigateByUrl('/transaction-voucher')
     }
 
-    function formularioTBKWS(urltbk,token){
+    function formularioTBKWS(urltbk, token) {
       var f = document.createElement("form");
-      f.setAttribute('method',"post");
-      f.setAttribute('action',urltbk);
+      f.setAttribute('method', "post");
+      f.setAttribute('action', urltbk);
       var i = document.createElement("input");
-      i.setAttribute('type',"text");
-      i.setAttribute('name',"TBK_TOKEN");
+      i.setAttribute('type', "text");
+      i.setAttribute('name', "TBK_TOKEN");
       i.setAttribute("value", token);
       f.appendChild(i.cloneNode());
       f.style.display = "none";
@@ -490,7 +497,7 @@ export class PaymentMethodsPage implements OnInit {
   }
 
   rutFunction(rawValue) {
-    console.log('rawValue',rawValue);
+    console.log('rawValue', rawValue);
     let numbers = rawValue.match(/\d/g);
     let numberLength = 0;
     if (numbers) {
@@ -501,66 +508,98 @@ export class PaymentMethodsPage implements OnInit {
     } else {
       return [/[1-9]/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/];
     }
-  }  
-
-  telefonoFunction(rawValue) {
-      let numbers = rawValue.match(/\d/g);
-      let numberLength = 0;
-      if (numbers) {
-        numberLength = numbers.join("").length;
-      }
-
-      if (numberLength > 10) {
-        return ['(', /[1-9]/, /[1-9]/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
-      } else {
-        return ['(', /[1-9]/, /[1-9]/, ')', ' ', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
-      }
   }
 
-  validarDatosConvenio(){
+  telefonoFunction(rawValue) {
+    let numbers = rawValue.match(/\d/g);
+    let numberLength = 0;
+    if (numbers) {
+      numberLength = numbers.join("").length;
+    }
+
+    if (numberLength > 10) {
+      return ['(', /[1-9]/, /[1-9]/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
+    } else {
+      return ['(', /[1-9]/, /[1-9]/, ')', ' ', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
+    }
+  }
+
+  validarDatosConvenio() {
     console.log(this.listaDetalleConvenio);
 
     let validarConvenio = {
-     "descuento":"0"
-    ,"idConvenio":this.listaDetalleConvenio[0].Convenio
-    ,"listaAtributo":[]
-    ,"listaBoleto":[]
-    ,"mensaje":""
-    ,"montoTotal":"0"
-    ,"totalApagar":"0"
+      "descuento": "0"
+      , "idConvenio": this.listaDetalleConvenio[0].Convenio
+      , "listaAtributo": []
+      , "listaBoleto": []
+      , "mensaje": ""
+      , "montoTotal": "0"
+      , "totalApagar": "0"
     };
     let re = /\./gi;
     this.listaDetalleConvenio.forEach(item => {
-      validarConvenio.listaAtributo.push({"idCampo":item.Placeholder,"valor":item.Valor.replace(re,'')});
-    })    
-    
+      validarConvenio.listaAtributo.push({ "idCampo": item.Placeholder, "valor": item.Valor.replace(re, '') });
+    })
+
     this.mys.ticket.comprasDetalles.forEach(boleto => {
       let fecha = boleto.service.fechaSalida.split("/");
       validarConvenio.listaBoleto.push({
-      "clase": boleto.piso == 1 ? boleto.service.idClaseBusPisoUno : boleto.service.idClaseBusPisoDos
-      ,"descuento":""
-      ,"destino":boleto.service.idTerminalDestino
-      ,"fechaSalida":fecha[2]+fecha[1]+fecha[0]
-      ,"idServicio":boleto.idServicio
-      ,"origen":boleto.service.idTerminalOrigen
-      ,"pago":boleto.valor
-      ,"piso":boleto.piso
-      ,"valor":boleto.valor
-      ,"asiento":boleto.asiento
-      ,"promocion":"0"});
+        "clase": boleto.piso == 1 ? boleto.service.idClaseBusPisoUno : boleto.service.idClaseBusPisoDos
+        , "descuento": ""
+        , "destino": boleto.service.idTerminalDestino
+        , "fechaSalida": fecha[2] + fecha[1] + fecha[0]
+        , "idServicio": boleto.idServicio
+        , "origen": boleto.service.idTerminalOrigen
+        , "pago": boleto.valor
+        , "piso": boleto.piso
+        , "valor": boleto.valor
+        , "asiento": boleto.asiento
+        , "promocion": "0"
+      });
       validarConvenio.totalApagar = Number(validarConvenio.totalApagar) + Number(boleto.valor) + "";
     });
     validarConvenio.montoTotal = validarConvenio.totalApagar;
     console.log(validarConvenio);
     this.integradorService.getDescuentoConvenio(validarConvenio).subscribe(data => {
       this.datosConvenio = data;
-      if(this.datosConvenio.mensaje == 'OK'){
+      if (this.datosConvenio.mensaje == 'OK') {
         this.totalSinDscto = this.totalFinal;
         this.totalFinal = this.datosConvenio.totalApagar;
         this.mostrarTarifaAtachada = true;
-      }else{
+      } else {
         this.datosConvenio = null;
       }
     })
-  };  
+  };
+
+  async popMenu(event) {
+    const popoverMenu = await this.popoverCtrl.create({
+      component: PopMenuComponent,
+      event,
+      mode: 'ios',
+      backdropDismiss: true,
+      cssClass: "popMenu"
+    });
+    await popoverMenu.present();
+
+    // recibo la variable desde el popover y la guardo en data
+    const { data } = await popoverMenu.onWillDismiss();
+    this.router.navigateByUrl(data.destino);
+  }
+
+  async popCart(event) {
+    this.mys.temporalComprasCarrito = this.mys.ticket.comprasDetalles
+    const popoverCart = await this.popoverCtrl.create({
+      component: PopCartComponent,
+      event,
+      mode: 'ios',
+      backdropDismiss: true,
+      cssClass: "popCart" 
+    });
+    await popoverCart.present();
+
+    // recibo la variable desde el popover y la guardo en data
+    // const { data } = await popoverCart.onWillDismiss();
+    // this.router.navigateByUrl(data.destino);
+  }
 }

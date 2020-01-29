@@ -63,7 +63,8 @@ ion-header {
 input {
   display: inline-block;
   box-sizing: content-box;
-  padding: 1.5vh 3vw;
+  // padding: 1.5vh 3vw;
+  padding: 0.2rem 1rem;
   border: 1px solid #fe5200;
   -webkit-border-radius: 27px;
   border-radius: 5px;
@@ -118,6 +119,7 @@ ion-select {
 
 img {
   object-fit: scale-down;
+  height: 3rem;
 }
 
 .filaImagenes {

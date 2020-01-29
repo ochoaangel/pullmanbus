@@ -1,0 +1,45 @@
+.headerCell {
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+}
+.normalCell {
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+  padding: 0 0.6rem;
+  background-color: lightsteelblue;
+  font-size: 0.6rem;
+  border-bottom: 1px solid white;
+}
+
+.headerRow {
+  display: table-row;
+  color: white;
+  font-weight: bold;
+}
+
+.tableComplete {
+    display: table;
+    padding-top: 1vh;
+    font-size: 0.7rem;
+    padding-bottom: 0.8rem;
+}
+
+.normalRow {
+  display: table-row;
+}
+
+.odd{
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+    padding: 0 0.6rem;
+}
+
+.oven{
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+    padding: 0 0.6rem;
+}

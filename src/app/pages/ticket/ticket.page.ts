@@ -5,8 +5,11 @@ import * as _ from 'underscore';
 import * as moment from 'moment';
 import { Router } from '@angular/router';
 import { MyserviceService } from 'src/app/service/myservice.service';
-import { IonContent } from '@ionic/angular';
+import { IonContent, PopoverController } from '@ionic/angular';
 import { IntegradorService } from 'src/app/service/integrador.service';
+import { CompileMetadataResolver } from '@angular/compiler';
+import { PopMenuComponent } from 'src/app/components/pop-menu/pop-menu.component';
+import { PopCartComponent } from 'src/app/components/pop-cart/pop-cart.component';
 // import { Content } from '@angular/compiler/src/render3/r3_ast';
 
 @Component({
@@ -55,6 +58,7 @@ export class TicketPage implements OnInit {
 
 
 
+
   orderSelected = ''
   orderShowActive = false
   orderWindowsDetail: any = { header: 'Ordenar servicios por:' };
@@ -71,7 +75,9 @@ export class TicketPage implements OnInit {
     private httpClient: HttpClient,
     private router: Router,
     private mys: MyserviceService,
-    private integradorService: IntegradorService
+    private integradorService: IntegradorService,
+    private popoverCtrl: PopoverController,
+
   ) { }
 
   ngOnInit() {
@@ -88,11 +94,23 @@ export class TicketPage implements OnInit {
       if (this.way === 'go') {
         this.compras = this.ticket.goCompras || [];
         this.allServices = this.ticket.goAllService || this.getServicesAndBus('go');
+        console.log('GOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO');
+        console.log('this.ticket', this.ticket);
+        console.log('this.compras', this.compras);
+        console.log('this.allServices', this.allServices);
+        console.log('finGOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO');
 
       } else {
         this.compras = this.ticket.backCompras || [];
-        this.allServices = this.ticket.backAllService || this.getServicesAndBus('back');;
+        this.allServices = this.ticket.backAllService || this.getServicesAndBus('back');
+        console.log('BACKKKKKKKKKKKKKKKKKKKKKKKKKKK');
+        console.log('this.ticket', this.ticket);
+        console.log('this.compras', this.compras);
+        console.log('this.allServices', this.allServices);
+        console.log('finBACKKKKKKKKKKKKKKKKKKKKKKKKKKK');
       }
+
+      console.log('');
 
       this.comprasDetalles = this.ticket.comprasDetalles || [];
       this.comprasDetallesPosicion = this.ticket.comprasDetallesPosicion || [];
@@ -171,8 +189,23 @@ export class TicketPage implements OnInit {
     this.integradorService.getService(findService).subscribe(data => {
       this.allServices = data;
       this.loadingService = false;
-      console.log('data', data);
+      console.log(wayNow, 'this.allServices', data);
+
+
+
+      this.allServices.forEach(servicio => {
+        this.comprasDetalles.forEach(compra => {
+          if (servicio.idServicio === compra.idServicio) {
+            console.log('iguales servicio.idServicio === compra.idServicio', compra.idServicio);
+            servicio['my_comprasByService'] = compra['my_comprasByService']
+            servicio['my_comprasByServiceData'] = compra['my_comprasByServiceData']
+          }
+        });
+      });
+
+
     })
+
   }
 
   // getBusFromService() {
@@ -196,11 +229,11 @@ export class TicketPage implements OnInit {
   myServiceSelection(nServiceSeleccion: number) {
     // setTimeout(() => {
     let estadoPrevio = this.allServices[nServiceSeleccion]['checked'];
-    this.allServices.forEach(element => {
-      element['checked'] = false;
-    });
+    // this.allServices.forEach(element => {
+    //   element['checked'] = false;
+    // });
+    // this.allServices[nServiceSeleccion]['checked'] = estadoPrevio;
     this.loadingBus = true;
-    this.allServices[nServiceSeleccion]['checked'] = estadoPrevio;
     // });
     console.log(nServiceSeleccion);
     if (this.serviceSelectedNumber !== nServiceSeleccion) {
@@ -218,16 +251,16 @@ export class TicketPage implements OnInit {
       setTimeout(() => {
         this.integradorService.getPlanillaVertical(servicio).subscribe(myBusFromApi => {
           // agrego bus y sumo 20 a cada asiento de piso 2
-          console.log(myBusFromApi["1"]);
-          console.log(myBusFromApi["2"]);
-          this.loadingBus = false;
+          // console.log(myBusFromApi["1"]);
+          // console.log(myBusFromApi["2"]);
+          console.log('this.bus_RECIBIDO', myBusFromApi);
 
           // setTimeout(() => {
-          //   let estadoPrevio = this.allServices[nServiceSeleccion]['checked'];
-          //   this.allServices.forEach(element => {
-          //     element['checked'] = false;
-          //   });
-          //   this.allServices[nServiceSeleccion]['checked'] = estadoPrevio;
+            let estadoPrevio = this.allServices[nServiceSeleccion]['checked'];
+            this.allServices.forEach(element => {
+              element['checked'] = false;
+            });
+            this.allServices[nServiceSeleccion]['checked'] = estadoPrevio;
           // });
 
           this.allServices[nServiceSeleccion]['my_Bus'] = this.sumar20piso2(myBusFromApi);
@@ -241,8 +274,27 @@ export class TicketPage implements OnInit {
           this.serviceSelected = this.allServices[nServiceSeleccion];
 
           this.bus = this.allServices[this.serviceSelectedNumber].my_Bus;
+
+
+
           // this.compras = [];
-          console.log('bus', this.bus);
+          console.log('this.bus_PROCESADO', this.bus);
+          // verificar si se ha comprado en este servicio
+          let nowIdService = this.allServices[nServiceSeleccion]['idServicio']
+
+          this.comprasDetalles.forEach(element => {
+            if (element.idServicio === nowIdService) {
+              this.bus = element.bus
+            }
+          });
+
+
+          console.log(' this.allServices[nServiceSeleccion][idServicio]', this.allServices[nServiceSeleccion]['idServicio']);
+          console.log('this.comprasDetalles', this.comprasDetalles);
+          console.log('this.comprasDetallesPosicion', this.comprasDetallesPosicion);
+
+
+
 
           // if (this.ticket.goTotal) {
           //   this.tarifaTotal = this.ticket.goTotal;
@@ -255,13 +307,20 @@ export class TicketPage implements OnInit {
           this.allServices[nServiceSeleccion].tarifaSegundoPiso ? this.tarifaPiso2 = parseInt(this.allServices[nServiceSeleccion].tarifaSegundoPiso.replace('.', '')) : this.tarifaPiso2 = null;
           !this.tarifaPiso2 ? this.piso1 = true : this.piso1 = false;
 
-          this.nowService = this.allServices[nServiceSeleccion];
+          this.nowService = this.allServices[nServiceSeleccion]; 
 
 
 
           setTimeout(() => {
             this.content.scrollToPoint(0, this.divServicio['_results'][nServiceSeleccion].nativeElement.offsetTop, 100);
           });
+
+          this.loadingBus = false;
+          // this.allServices.forEach(element => {
+          //   element['checked'] = false;
+          // });
+          // this.allServices[nServiceSeleccion]['checked'] = estadoPrevio;
+
         });
 
       }, 1000);
@@ -270,6 +329,13 @@ export class TicketPage implements OnInit {
 
     } else {
       this.allServices[this.serviceSelectedNumber]['checked'] = !this.allServices[this.serviceSelectedNumber]['checked'];
+      // console.log('CASO AISLADO');
+      this.loadingBus = false;
+      // this.allServices.forEach(element => {
+      //   element['checked'] = false;
+      // });
+      // this.allServices[nServiceSeleccion]['checked'] = estadoPrevio;
+
     }
 
   }
@@ -306,6 +372,8 @@ export class TicketPage implements OnInit {
       console.log(asiento);
 
       if (this.bus[piso][x][y]['estado'] === 'libre') {
+
+
         this.integradorService.validarAsiento(asiento).subscribe(disponible => {
           if (disponible == 0) {
             this.integradorService.tomarAsiento(asiento).subscribe(resp => {
@@ -320,7 +388,12 @@ export class TicketPage implements OnInit {
             this.bus[piso][x][y]['estado'] = 'ocupado';
           }
         })
+
+
+
       } else if (this.bus[piso][x][y]['estado'] === 'seleccionado') {
+
+
         this.integradorService.liberarAsiento(asiento).subscribe(resp => {
           if (resp == 0) {
             this.mys.alertShow('¡Verifique!', 'alert', 'Error al liberar asiento.');
@@ -328,18 +401,20 @@ export class TicketPage implements OnInit {
             this.liberarAsiento(piso, x, y);
           }
         })
+
+
       }
       // guardo en this.allServices
       this.allServices[this.serviceSelectedNumber].my_Bus = this.bus;
       this.allServices[this.serviceSelectedNumber].my_comprasByService = this.comprasByService;
       this.allServices[this.serviceSelectedNumber].my_comprasByServiceData = this.comprasByServiceData;
 
-      // calculo la tarifa total
-      let total_general = 0;
-      this.comprasDetalles.forEach(element => {
-        total_general = total_general + element.valor;
-      });
-      this.tarifaTotal = total_general;
+      // // calculo la tarifa total
+      // let total_general = 0;
+      // this.comprasDetalles.forEach(element => {
+      //   total_general = total_general + element.valor;
+      // });
+      // this.tarifaTotal = total_general;
 
       console.log('this.compras', this.compras);
       console.log('this.comprasByService', this.comprasByService);
@@ -347,32 +422,58 @@ export class TicketPage implements OnInit {
       console.log('this.allServices', this.allServices);
     } // fin de numeros asientos permitidos
   } // fin presionado
+
+
   liberarAsiento(piso, x, y) {
     let tarifa;
     // caso asiento ya seleccionado
     this.bus[piso][x][y]['estado'] = 'libre';
-    if (piso === '1') {
-      // restando para piso1
-      // this.tarifaTotal = this.tarifaTotal - this.tarifaPiso1;
-      tarifa = this.tarifaPiso1;
 
-    } else {
-      // restando para piso2
-      // this.tarifaTotal = this.tarifaTotal - this.tarifaPiso2;
-      tarifa = this.tarifaPiso2;
-    }
     // creo el texto a eliminar de la compra
     // let texto = `piso_${piso}/fila_${x}/columna_${y}/asiento_${this.bus[piso][x][y]['asiento']}/precio_${tarifa}`;
     let texto = this.way + '_' + this.serviceSelected.idServicio + '_' + this.bus[piso][x][y]['asiento'];
 
     // variables totales
+    console.log('Verificandoooooooooooooooooooooooooooooooooo');
+    console.log('texto a buscar:', texto);
+    console.log('this.compras', this.compras);
+    console.log('this.comprasDetalles', this.comprasDetalles);
+    console.log('this.comprasDetallesPosicion', this.comprasDetallesPosicion);
+    console.log('this.comprasByService', this.comprasByService);
+    console.log('this.comprasByServiceData', this.comprasByServiceData);
+    console.log('-------------------------------------------------');
     let index = this.compras.indexOf(texto);
     if (index !== -1) { this.compras.splice(index, 1); this.comprasDetalles.splice(index, 1); this.comprasDetallesPosicion.splice(index, 1); }
+    else {
+      let index = this.comprasDetallesPosicion.indexOf(texto);
+      if (index !== -1) { this.comprasDetallesPosicion.splice(index, 1); this.comprasDetalles.splice(index, 1); }
+
+
+    }
 
     // variables por servicio
     let index2 = this.comprasByService.indexOf(texto)
     if (index2 !== -1) { this.comprasByService.splice(index2, 1); this.comprasByServiceData.splice(index2, 1); }
+
+    console.log('texto a buscar:', texto);
+    console.log('this.compras', this.compras);
+    console.log('this.comprasDetalles', this.comprasDetalles);
+    console.log('this.comprasDetallesPosicion', this.comprasDetallesPosicion);
+    console.log('this.comprasByService', this.comprasByService);
+    console.log('this.comprasByServiceData', this.comprasByServiceData);
+
+
+    // // calculo la tarifa total
+    let total_general = 0;
+    this.comprasDetalles.forEach(element => {
+      total_general = total_general + element.valor;
+    });
+    this.tarifaTotal = total_general;
+
+    console.log('finVerificandoooooooooooooooooooooooooooooooooo');
   }
+
+
   tomarAsiento(piso, x, y) {
     let tarifa;
     // caso asiento No seleccionado
@@ -408,6 +509,15 @@ export class TicketPage implements OnInit {
       service: this.serviceSelected,
       bus: this.bus,
     });
+
+    // // calculo la tarifa total
+    let total_general = 0;
+    this.comprasDetalles.forEach(element => {
+      total_general = total_general + element.valor;
+    });
+    this.tarifaTotal = total_general;
+
+
   }
 
   cambiarPiso(piso: number) {
@@ -457,6 +567,8 @@ export class TicketPage implements OnInit {
       }
       this.ticket['comprasDetalles'] = this.comprasDetalles;
       this.ticket['comprasDetallesPosicion'] = this.comprasDetallesPosicion;
+      // this.bus=null;
+      this.serviceSelectedNumber = null
 
       // Guardo todos los cambios locales al service
       this.mys.ticket = this.ticket;
@@ -471,6 +583,7 @@ export class TicketPage implements OnInit {
       if (this.mys.way === 'go' && this.ticket.tripType === 'goBack') {
         console.log('redirigiendo a BACK y recarganto ticket');
         this.mys.way = 'back'
+        this.ticket = null
         this.ionViewWillEnter()
         // } else if (this.mys.way === 'go' && this.ticket.triptype ==='goBack') {
 
@@ -481,9 +594,6 @@ export class TicketPage implements OnInit {
     }
   }
 
-
-
-
   prueba() {
     console.log('this.allServices', this.allServices);
   }
@@ -491,8 +601,10 @@ export class TicketPage implements OnInit {
   atras() {
     if (this.mys.way === 'back') {
       this.mys.way = 'go'
+      this.serviceSelectedNumber = null
       this.ionViewWillEnter()
     } else {
+      this.serviceSelectedNumber = null
       this.mys.ticket = null;
       this.router.navigateByUrl('/buy-your-ticket');
     }
@@ -559,6 +671,45 @@ export class TicketPage implements OnInit {
       default:
         break;
     }
+  }
+
+
+
+
+
+
+
+
+  async popMenu(event) {
+    const popoverMenu = await this.popoverCtrl.create({
+      component: PopMenuComponent,
+      event,
+      mode: 'ios',
+      backdropDismiss: true,
+      cssClass: "popMenu"
+    });
+    await popoverMenu.present();
+
+    // recibo la variable desde el popover y la guardo en data
+    const { data } = await popoverMenu.onWillDismiss();
+    this.router.navigateByUrl(data.destino);
+  }
+
+
+  async popCart(event) {
+    this.mys.temporalComprasCarrito = this.comprasDetalles
+    const popoverCart = await this.popoverCtrl.create({
+      component: PopCartComponent,
+      event,
+      mode: 'ios',
+      backdropDismiss: true,
+      cssClass: "popCart"
+    });
+    await popoverCart.present();
+
+    // recibo la variable desde el popover y la guardo en data
+    // const { data } = await popoverCart.onWillDismiss();
+    // this.router.navigateByUrl(data.destino);
   }
 
 }// fin Ticket

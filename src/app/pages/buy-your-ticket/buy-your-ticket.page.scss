@@ -105,18 +105,18 @@ ion-checkbox {
 }
 
 ion-select {
-//   border-radius: 6px;
-//   width: -webkit-fill-available;
-//   background-color: white;
-//   height: 2.4rem;
-//   padding: 4px 0px 0px 5px;
-//   // border: 1px solid #fe5200;
-//   font-size: 0.8rem;
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-    min-width: 65%;
-    text-align: right;
+  //   border-radius: 6px;
+  //   width: -webkit-fill-available;
+  //   background-color: white;
+  //   height: 2.4rem;
+  //   padding: 4px 0px 0px 5px;
+  //   // border: 1px solid #fe5200;
+  //   font-size: 0.8rem;
+  //   display: flex;
+  //   align-items: center;
+  //   justify-content: center;
+  min-width: 65%;
+  text-align: right;
 }
 
 ion-item {
@@ -127,7 +127,7 @@ ion-item {
 
 ion-datetime {
   font-size: 1.3rem;
-  padding: 0;
+  padding: 0; 
 }
 
 // ion-item.selw75 {
@@ -141,4 +141,11 @@ ion-datetime {
 //     min-width: 70%;
 //     text-align: right;
 //   }
+// }
+
+// .popMenu {
+
+//   --background: #0247ac !important;
+//   background: #0247ac !important;
+//   color: white;
 // }

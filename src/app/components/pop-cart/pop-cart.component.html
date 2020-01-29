@@ -1,0 +1,29 @@
+<section class="tableComplete" *ngIf="compras.length >0">
+
+  <header class="headerRow">
+    <div class="headerCell">Boleto</div>
+    <div class="headerCell">Fecha salida</div>
+    <div class="headerCell">Hora salida</div>
+    <div class="headerCell">Origen</div>
+    <div class="headerCell">Destino</div>
+    <div class="headerCell">Asiento</div>
+    <div class="headerCell">Valor</div>
+  </header>
+
+  <div class="normalRow" *ngFor="let compra of compras;">
+    <div class="normalCell">{{compra.idServicio}}</div>
+    <div class="normalCell">{{compra.service.fechaSalida}}</div>
+    <div class="normalCell">{{compra.service.horaSalida}}</div>
+    <div class="normalCell">{{compra.service.terminalSalida}}</div>
+    <div class="normalCell">{{compra.service.terminaLlegada}}</div>
+    <div class="normalCell">{{compra.asiento}}</div>
+    <div class="normalCell">${{compra.valor.toLocaleString('de-DE')}}</div>
+  </div>
+
+</section>
+<div *ngIf="compras.length >0" style="text-align: right; color: white; padding: 1rem;"> Total:
+  ${{total.toLocaleString('de-DE') }} </div>
+
+<div *ngIf="compras.length === 0" style="text-align: center; color: white; padding: 1rem;">
+  No hay compras para mostrar
+</div>

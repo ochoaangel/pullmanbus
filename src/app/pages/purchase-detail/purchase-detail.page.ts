@@ -1,6 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { MyserviceService } from "src/app/service/myservice.service";
 import { Router } from "@angular/router";
+import { PopMenuComponent } from 'src/app/components/pop-menu/pop-menu.component';
+import { PopoverController } from '@ionic/angular';
+import { PopCartComponent } from 'src/app/components/pop-cart/pop-cart.component';
 
 @Component({
   selector: "app-purchase-detail",
@@ -8,7 +11,7 @@ import { Router } from "@angular/router";
   styleUrls: ["./purchase-detail.page.scss"]
 })
 export class PurchaseDetailPage implements OnInit {
-  constructor(private router: Router, private mys: MyserviceService) { }
+  constructor(private router: Router, private mys: MyserviceService, private popoverCtrl: PopoverController) { }
 
   ticket;
   way;
@@ -227,7 +230,37 @@ export class PurchaseDetailPage implements OnInit {
     // this.router.navigateByUrl('/ticket');
   }
 
+  async popMenu(event) {
+    const popoverMenu = await this.popoverCtrl.create({
+      component: PopMenuComponent,
+      event,
+      mode: 'ios',
+      backdropDismiss: true,
+      cssClass: "popMenu"
+    });
+    await popoverMenu.present();
 
+    // recibo la variable desde el popover y la guardo en data
+    const { data } = await popoverMenu.onWillDismiss();
+    this.router.navigateByUrl(data.destino);
+  }
+
+  async popCart(event) {
+    this.mys.temporalComprasCarrito = this.ticket.comprasDetalles
+    const popoverCart = await this.popoverCtrl.create({
+      component: PopCartComponent,
+      event,
+      mode: 'ios',
+      backdropDismiss: true,
+      cssClass: "popCart" 
+    });
+    await popoverCart.present();
+
+    // recibo la variable desde el popover y la guardo en data
+    // const { data } = await popoverCart.onWillDismiss();
+    // this.router.navigateByUrl(data.destino);
+  }
+  
 
 }
 

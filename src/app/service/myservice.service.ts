@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
-import { AlertController } from '@ionic/angular';
+import { AlertController, PopoverController } from '@ionic/angular';
 
 import * as _ from 'underscore';
 import * as moment from 'moment';
+import { PopMenuComponent } from '../components/pop-menu/pop-menu.component';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +18,9 @@ export class MyserviceService {
   BackTicket;
   regresandoAticket = false;
   total=0;
+  temporalComprasCarrito;
 
-  constructor(public alertController: AlertController) { }
+  constructor(public alertController: AlertController, public popoverCtrl: PopoverController, public router: Router) { }
 
 
 
@@ -36,6 +39,8 @@ export class MyserviceService {
     });
     await alert.present();
   }
+
+
 
   /////////////////////////////////////////////////////////////
   // fechas
