@@ -229,7 +229,7 @@
 
                                     <ion-button fill="clear" style="margin-left: 4vw; color: #fe5200; outline:
                                     none;padding:0;font-size: 0vw; display: contents;"
-                                      (click)="presionadoAsiento('1',y,x)">
+                                      (click)="presionadoAsiento('1',y,x)"  [disabled]="loadingSeat>0">
                                       <img src="assets/icon/png/Asiento-ocupado.png"
                                         *ngIf="asiento.estado==='ocupado'" />
                                       <img src="assets/icon/png/Asiento-disponible.png"
@@ -238,7 +238,7 @@
                                         *ngIf="asiento.estado==='seleccionado'" />
                                       <ion-text
                                         style="color: red; color: white;position: absolute;font-size: 0.8rem;top: 1rem;font-weight: bold;text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;">
-                                        {{asiento.asiento}}
+                                        {{asiento.asiento === "%"? '':asiento.asiento}}
                                       </ion-text>
                                     </ion-button>
 
@@ -255,7 +255,7 @@
                                   <ion-button fill="clear" style="margin-left: 4vw; color: #fe5200; outline:
                                     none;padding:0;font-size: 0vw;display: contents;"
                                     (click)="presionadoAsiento('2',y,x)"
-                                    *ngIf="asiento.estado ==='libre' || asiento.estado ==='ocupado'  || asiento.estado ==='seleccionado'">
+                                    *ngIf="asiento.estado ==='libre' || asiento.estado ==='ocupado'  || asiento.estado ==='seleccionado'" [disabled]="loadingSeat>0">
                                     <img src="assets/icon/png/Asiento-ocupado.png" *ngIf="asiento.estado==='ocupado'" />
                                     <img src="assets/icon/png/Asiento-disponible.png"
                                       *ngIf="asiento.estado==='libre'" />
@@ -263,7 +263,7 @@
                                       *ngIf="asiento.estado==='seleccionado'" />
                                     <ion-text
                                       style="color: red; color: white;position: absolute;font-size: 0.8rem;top: 1rem;font-weight: bold;text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;">
-                                      {{asiento.asiento}}
+                                      {{asiento.asiento === "%"? '':asiento.asiento}}
                                     </ion-text>
                                   </ion-button>
 

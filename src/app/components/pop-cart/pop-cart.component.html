@@ -1,7 +1,7 @@
 <section class="tableComplete" *ngIf="compras.length >0">
 
   <header class="headerRow">
-    <div class="headerCell">Boleto</div>
+    <!-- <div class="headerCell">Boleto</div> -->
     <div class="headerCell">Fecha salida</div>
     <div class="headerCell">Hora salida</div>
     <div class="headerCell">Origen</div>
@@ -11,7 +11,7 @@
   </header>
 
   <div class="normalRow" *ngFor="let compra of compras;">
-    <div class="normalCell">{{compra.idServicio}}</div>
+    <!-- <div class="normalCell">{{compra.idServicio}}</div> -->
     <div class="normalCell">{{compra.service.fechaSalida}}</div>
     <div class="normalCell">{{compra.service.horaSalida}}</div>
     <div class="normalCell">{{compra.service.terminalSalida}}</div>
