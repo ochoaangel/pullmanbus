@@ -1,0 +1,24 @@
+{
+    "home": {
+        "title": "Ionic 4 Multi Language Translation",
+        "text": "This is random text to show translation in application"
+    },
+    "buy-your-ticket":{},
+    "contact":{},
+    "login":{},
+    "my-cancellations":{},
+    "my-change-password":{},
+    "my-data":{},
+    "my-tickets":{},
+    "notice":{},
+    "payment-confirmation":{},
+    "payment-methods":{},
+    "purchase-detail":{},
+    "recover-password":{},
+    "seat-selection":{},
+    "terms-conditions":{},
+    "ticket":{},
+    "transaction-voucher":{},
+    "user-panel":{}
+
+}

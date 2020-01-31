@@ -38,7 +38,7 @@
   <div class="cabeceraTitulo" style="font-size: 0.8rem;" *ngIf="way==='back'">
     {{this.ticket.destiny.nombre  | titlecase }} a {{this.ticket.origin.nombre  | titlecase }} {{backDate}}
   </div>
-  <ion-progress-bar type="indeterminate" *ngIf="loadingBus"></ion-progress-bar>
+  <ion-progress-bar type="indeterminate" *ngIf="loadingBus || loadingSeat>0"></ion-progress-bar>
 
 </ion-header>
 
@@ -199,10 +199,10 @@
                         class="ion-no-margin ion-no-padding ion-justify-content-center">
 
                         <div
-                          style="display: flex; flex-direction: row; margin-top: 1vh; height: 100%; max-width: 25rem; margin: 0 auto;">
+                          style="display: flex; flex-direction: row; margin-top: 1vh; height: 100%; max-width: 18rem; margin: 0 auto;">
 
                           <!-- //* pisos y asientos -->
-                          <div style="width: 60vw;">
+                          <div style="width: 100vw;">
 
                             <!-- //* Botones seleccion para piso1 piso2 -->
                             <div style="width: 100%; display: flex;margin-bottom: 0.6rem;">
@@ -248,10 +248,9 @@
                             </div>
 
                             <!-- //* piso2 -->
-                            <div style="width: 100%;height: 100%;" *ngIf="!piso1 && tarifaPiso2">
+                                <div style="width: 100%;height: 100%;" *ngIf="!piso1 && tarifaPiso2">
                               <div style="width: 100%; display: flex;" *ngFor="let columna of bus['2'] ; let x= index">
                                 <div style="width: 100%; display: flex;" *ngFor="let asiento of columna ; let y= index">
-                                  <!-- //* [style.width]="( asiento.estado ==='libre' || asiento.estado ==='ocupado'  || asiento.estado ==='seleccionado')? '100%':'50%'" > -->
 
                                   <ion-button fill="clear" style="margin-left: 4vw; color: #fe5200; outline:
                                     none;padding:0;font-size: 0vw;display: contents;"
@@ -270,11 +269,14 @@
 
                                 </div>
                               </div>
-                            </div>
+                            </div> 
+
+
+
                           </div>
 
                           <!-- //* leyenda -->
-                          <div style="width: 40vw; display: flex;justify-content:
+                          <!--   <div style="width: 40vw; display: flex;justify-content:
                             center;align-items: center;border-left: 2px solid #f2f2f2;">
                             <div>
                               <div style="display: flex;align-items: center;">
@@ -290,7 +292,7 @@
                                 <ion-text style="font-size: 0.8rem;">Seleccionado</ion-text>
                               </div>
                             </div>
-                          </div>
+                          </div> -->
 
                         </div>
                       </ion-col>

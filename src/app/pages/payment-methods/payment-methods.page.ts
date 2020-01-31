@@ -52,7 +52,7 @@ export class PaymentMethodsPage implements OnInit {
     acuerdo: null,
     rut: null,
     v_rut: false,
-    codigo: null,
+    codigo: '+56',
     v_codigo: false,
     telefono: null,
     v_telefono: false,

@@ -107,8 +107,8 @@
             <div
               style="text-align: center;display: flex; flex-direction: row; align-items: center;align-items: center;">
               <div style=" width: 35%;">
-                <input style="text-align: center; margin: 0.8vh 0vw 0.8vh 3vw; " [textMask]="maskCodigo" type="text"
-                  placeholder="Código País: +56" [(ngModel)]="DatosFormulario.codigo" name="codigo" #input_codigo
+                <input style="text-align: center; margin: 0.8vh 0vw 0.8vh 3vw; font-size: 0.8rem;" [textMask]="maskCodigo" type="text"
+                  placeholder="Código País" [(ngModel)]="DatosFormulario.codigo" name="codigo" #input_codigo
                   (keypress)="tecleado($event)" (keyup.enter)="setFocus('telefono')">
               </div>
               <div style=" width: 65%;">

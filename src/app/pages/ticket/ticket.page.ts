@@ -26,6 +26,7 @@ export class TicketPage implements OnInit {
 
   loadingService = false;
   loadingBus = false;
+  loadingSeat= 0
 
   allServices = [];
   serviceSelectedNumber;
@@ -37,7 +38,7 @@ export class TicketPage implements OnInit {
   tarifaTotal: number = 0;
 
   nItemsCart = 7
-  // todas ida o  todas vuelta
+  // todas ida o  todas vueltaf
   compras = [];
   total;
 
@@ -305,7 +306,8 @@ export class TicketPage implements OnInit {
           // preparando tarifas
           this.allServices[nServiceSeleccion].tarifaPrimerPiso ? this.tarifaPiso1 = parseInt(this.allServices[nServiceSeleccion].tarifaPrimerPiso.replace('.', '')) : this.tarifaPiso1 = null;
           this.allServices[nServiceSeleccion].tarifaSegundoPiso ? this.tarifaPiso2 = parseInt(this.allServices[nServiceSeleccion].tarifaSegundoPiso.replace('.', '')) : this.tarifaPiso2 = null;
-          !this.tarifaPiso2 ? this.piso1 = true : this.piso1 = false;
+          // !this.tarifaPiso2 ? this.piso1 = true : this.piso1 = false;
+          this.tarifaPiso1 ? this.piso1 = true : this.piso1 = false;
 
           this.nowService = this.allServices[nServiceSeleccion]; 
 
@@ -372,11 +374,13 @@ export class TicketPage implements OnInit {
       console.log(asiento);
 
       if (this.bus[piso][x][y]['estado'] === 'libre') {
-
+  this.loadingSeat +=1
 
         this.integradorService.validarAsiento(asiento).subscribe(disponible => {
+          this.loadingSeat +=1
           if (disponible == 0) {
             this.integradorService.tomarAsiento(asiento).subscribe(resp => {
+              this.loadingSeat -=2 
               if (resp == 0) {
                 this.mys.alertShow('¡Verifique!', 'alert', 'Error al tomar asiento.');
               } else {
@@ -392,9 +396,10 @@ export class TicketPage implements OnInit {
 
 
       } else if (this.bus[piso][x][y]['estado'] === 'seleccionado') {
-
+        this.loadingSeat +=1
 
         this.integradorService.liberarAsiento(asiento).subscribe(resp => {
+          this.loadingSeat -=1
           if (resp == 0) {
             this.mys.alertShow('¡Verifique!', 'alert', 'Error al liberar asiento.');
           } else {
@@ -426,6 +431,9 @@ export class TicketPage implements OnInit {
 
   liberarAsiento(piso, x, y) {
     let tarifa;
+
+    // this.loadingSeat += 1
+
     // caso asiento ya seleccionado
     this.bus[piso][x][y]['estado'] = 'libre';
 
@@ -476,6 +484,9 @@ export class TicketPage implements OnInit {
 
   tomarAsiento(piso, x, y) {
     let tarifa;
+
+    // this.loadingSeat += 1
+
     // caso asiento No seleccionado
     this.bus[piso][x][y]['estado'] = 'seleccionado';
     if (piso === '1') {
