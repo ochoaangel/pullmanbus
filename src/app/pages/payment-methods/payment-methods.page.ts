@@ -602,4 +602,10 @@ export class PaymentMethodsPage implements OnInit {
     // const { data } = await popoverCart.onWillDismiss();
     // this.router.navigateByUrl(data.destino);
   }
+
+  irAterminos(){
+    this.router.navigateByUrl('/terms-conditions')
+  }
+
+
 }

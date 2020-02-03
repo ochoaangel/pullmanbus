@@ -34,15 +34,6 @@
         <ion-row class=" ion-no-padding  ion-no-margin ion-justify-content-center" style="height: 100%">
           <ion-col class=" ion-no-padding ion-no-margin" size="12" style="text-align: center;">
 
-
-
-
-
-            <!-- <ion-row>
-              <ion-text color="primary">
-                <h2>Términos y condiciones</h2>
-              </ion-text>
-            </ion-row> -->
             <ion-row>
               <ion-text color="primary">
                 <h6>I.- CONDICIONES COMERCIALES Y RESTRICCIONES</h6>
@@ -85,8 +76,6 @@
               </ion-text>
             </ion-row>
 
-
-
             <ion-row>
               <ion-text color="primary">
                 <h6>II.- BENEFICIOS</h6>
@@ -104,8 +93,6 @@
                 </p>
               </ion-text>
             </ion-row>
-
-
 
             <ion-row>
               <ion-text color="primary">
@@ -183,7 +170,6 @@
               </ion-text>
             </ion-row>
 
-
             <ion-row>
               <ion-text color="primary">
                 <h6>V.- CONDICIONES DEL EQUIPAJE: Artículo 68 decreto supremo 212</h6>
@@ -231,7 +217,7 @@
 <ion-footer no-border style=" width: 100vw;background-color: #fe5200;color: white;">
   <div style="width: 100%; display: flex;justify-content: center;">
 
-    <ion-button slot="start" fill="clear" style="color: white; width: 50%; outline: none;" routerLink="/home">
+    <ion-button slot="start" fill="clear" style="color: white; width: 50%; outline: none;" (click)="backbutton()">
       <ion-icon src="assets/icon/previous.svg"></ion-icon>
       <div style="display: inline; text-align: left ;padding-left: 10px; text-transform: none;">Regresar</div>
     </ion-button>
