@@ -38,7 +38,7 @@
   <div class="cabeceraTitulo" style="font-size: 0.8rem;" *ngIf="way==='back'">
     {{this.ticket.destiny.nombre  | titlecase }} a {{this.ticket.origin.nombre  | titlecase }} {{backDate}}
   </div>
-  <ion-progress-bar type="indeterminate" *ngIf="loadingBus || loadingSeat>0"></ion-progress-bar>
+  <ion-progress-bar type="indeterminate" *ngIf="loadingBus || loadingSeat>0 || loadingService"></ion-progress-bar>
 
 </ion-header>
 
@@ -47,14 +47,14 @@
     <div style=" height: 100%; background-color: white ;margin: 0px 0px 0px 0px;">
       <ion-grid style="height: 100%;" class="ion-no-margin ion-no-padding">
         <ion-row style="height: 100%"
-          class="ion-no-margin ion-no-padding ion-justify-content-center ion-align-items-center">
+          class="ion-no-margin ion-no-padding ion-justify-content-center ">
           <ion-col size="12" style="text-align: center;" class="ion-no-margin ion-no-padding">
 
-            <ion-row style="position: absolute; z-index: 3; right: 47%; top: -2rem;" *ngIf="loadingService">
+            <!-- <ion-row style="position: absolute; z-index: 3; right: 47%; top: -2rem;" *ngIf="loadingService">
               <ion-col size="12">
                 <ion-spinner style="color: orangered; " name="circles"></ion-spinner>
               </ion-col>
-            </ion-row>
+            </ion-row> -->
 
             <ion-row *ngIf="!loadingService && allServices.length === 0">
               <ion-col size="12">
@@ -193,8 +193,7 @@
                 <div style="height: 100%; background-color: white ;margin: 0px 0px 0px
                   0px;">
                   <ion-grid style="height: 100%;" class="ion-no-margin ion-no-padding">
-                    <ion-row style="height: 100%" class="ion-no-margin ion-no-padding ion-justify-content-center
-                      ion-align-items-center">
+                    <ion-row style="height: 100%" class="ion-no-margin ion-no-padding ion-justify-content-center ">
                       <ion-col size="12" style="height: 100%;text-align: center;"
                         class="ion-no-margin ion-no-padding ion-justify-content-center">
 

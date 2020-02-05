@@ -201,7 +201,8 @@ export class PurchaseDetailPage implements OnInit {
       this.router.navigateByUrl('/home');
     } else {
       this.mys.regresandoAticket = true;
-      this.router.navigateByUrl('/ticket');
+    // this.mys.ticket = this.ticket
+    this.router.navigateByUrl('/ticket');
     }
 
   }

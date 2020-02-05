@@ -7,10 +7,11 @@ import { Observable } from 'rxjs';
 })
 export class IntegradorService {
 
-    sinProxy = true
+    sinProxy= true 
     urlBase = 'https://pullmanapi.pasajeschile.cl'
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient) { 
+    }
 
     getCityOrigin(): Observable<any[]> {
         let urlFinal
