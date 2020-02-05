@@ -4,6 +4,7 @@ import { Router } from "@angular/router";
 import { PopMenuComponent } from 'src/app/components/pop-menu/pop-menu.component';
 import { PopoverController } from '@ionic/angular';
 import { PopCartComponent } from 'src/app/components/pop-cart/pop-cart.component';
+import { IntegradorService } from 'src/app/service/integrador.service';
 
 @Component({
   selector: "app-purchase-detail",
@@ -11,12 +12,15 @@ import { PopCartComponent } from 'src/app/components/pop-cart/pop-cart.component
   styleUrls: ["./purchase-detail.page.scss"]
 })
 export class PurchaseDetailPage implements OnInit {
-  constructor(private router: Router, private mys: MyserviceService, private popoverCtrl: PopoverController) { }
+  constructor(private router: Router, private mys: MyserviceService, private popoverCtrl: PopoverController,
+    private integradorService: IntegradorService,
+  ) { }
 
   ticket;
   way;
   tarifaTotal;
   eliminadoAsiento = false;
+  loading = false
 
 
   ngOnInit() {
@@ -113,13 +117,6 @@ export class PurchaseDetailPage implements OnInit {
 
   }  // fin ngOnInit
 
-
-
-
-
-
-
-
   continuar() {
 
     if (this.tarifaTotal === 0) {
@@ -142,56 +139,43 @@ export class PurchaseDetailPage implements OnInit {
 
   }// fin continuar
 
-
-  // EliminarPasajeIda(){
-  //   this.mys.ticket=null;
-  //   this.router.navigateByUrl('/buy-your-ticket');
-  // }
   EliminarPasaje(way, idServicio, asiento) {
-    // EliminarPasaje(pasaje, nItem) {
-    // console.log('pasaje', pasaje);
-
-    // variables totales
-    // let texto = pasaje.way + '_' + pasaje.idServicio + '_' + pasaje.asiento
     let texto = way + '_' + idServicio + '_' + asiento
     console.log('asiento a eliminar', texto);
 
     let index = this.ticket.comprasDetallesPosicion.indexOf(texto);
     console.log('index', index)
-    if (index !== -1) { this.ticket.comprasDetallesPosicion.splice(index, 1); this.ticket.comprasDetalles.splice(index, 1); }
+    if (index !== -1) {
+      console.log('************************************************************');
+      console.log('asiento a eliminarrrrrrr', this.ticket.comprasDetalles[index]);
+
+      let asiento = {
+        "servicio": this.ticket.comprasDetalles[index].idServicio,
+        "fecha": this.ticket.comprasDetalles[index].service.fechaSalida,
+        "origen": this.ticket.comprasDetalles[index].service.idTerminalOrigen,
+        "destino": this.ticket.comprasDetalles[index].service.idTerminalDestino,
+        "asiento": this.ticket.comprasDetalles[index].asiento,
+        "integrador": this.ticket.comprasDetalles[index].service.integrador
+      }
+      this.loading = true
+      this.integradorService.liberarAsiento(asiento).subscribe(resp => {
+        this.loading = false
+      })
+
+
+
+      this.ticket.comprasDetallesPosicion.splice(index, 1);
+      this.ticket.comprasDetalles.splice(index, 1);
+    }
 
     if (way === 'go') {
-      // if (pasaje.way === 'go') {
-
       let index2 = this.ticket.goCompras.indexOf(texto);
       if (index2 !== -1) { this.ticket.goCompras.splice(index2, 1); }
-
-      // let index4 = this.mys.ticket.goAllServices[pasaje.nService].my_comprasByService.indexOf(texto);
-      // if (index4 !== -1) { 
-      // this.mys.ticket.goAllServices[pasaje.nService].my_comprasByService.splice(index4, 1);
-      // this.mys.ticket.goAllServices[pasaje.nService].my_comprasByServiceData.splice(index4, 1);
-      // }
-      //  console.log("this.mys.ticket.goAllServices[pasaje.nService]",this.mys.ticket.goAllServices[pasaje.nService]);
-      //  console.log("this.mys.ticket.goAllServices[pasaje.nService].my_Bus[pasaje.piso+'']",this.mys.ticket.goAllServices[pasaje.nService].my_Bus[pasaje.piso+'']);
-      //  console.log("this.mys.ticket.goAllServices[pasaje.nService].my_Bus[pasaje.piso+''][pasaje.fila",this.mys.ticket.goAllServices[pasaje.nService].my_Bus[pasaje.piso+''][pasaje.fila]);
-      //  console.log("this.mys.ticket.goAllServices[pasaje.nService].my_Bus[pasaje.piso+''][pasaje.fila][pasaje.columna]",this.mys.ticket.goAllServices[pasaje.nService].my_Bus[pasaje.piso+''][pasaje.fila][pasaje.columna]);
-      //  console.log("this.mys.ticket.goAllServices[pasaje.nService].my_Bus[pasaje.piso+''][pasaje.fila][pasaje.columna][asiento]",this.mys.ticket.goAllServices[pasaje.nService].my_Bus[pasaje.piso+''][pasaje.fila][pasaje.columna]['asiento']);
-      //  this.mys.ticket.goAllServices[pasaje.nService].my_Bus[pasaje.piso+''][pasaje.fila][pasaje.columna]['asiento']='libre'
-
-      // this.mys.ticket.goAllServices[pasaje.nService]
-
     } else {
-
-      // console.log('oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo');
       let index3 = this.ticket.backCompras.indexOf(texto);
       if (index3 !== -1) { this.ticket.backCompras.splice(index3, 1); }
     }
-    // }
 
-
-
-    // let index2 = this.ticket.goCompras.indexOf(texto);
-    // if (index2 !== -1) { this.ticket.goCompras.splice(index2, 1); }
     console.log('this.ticket.comprasDetallesPosicion', this.ticket.comprasDetallesPosicion);
     let index4 = this.ticket.comprasDetallesPosicion.indexOf(texto);
     console.log('index4', index4);
@@ -209,15 +193,8 @@ export class PurchaseDetailPage implements OnInit {
     });
     this.tarifaTotal = total_general;
     this.mys.ticket = this.ticket;
-    console.log('this.mys.ticket', this.mys.ticket);
     this.eliminadoAsiento = true;
   }
-
-  // EliminarPasajeRegreso(){
-  //   delete this.mys.ticket;
-  //   this.router.navigateByUrl('/buy-your-ticket');
-  // }
-
 
   volver() {
     if (this.eliminadoAsiento) {
@@ -226,8 +203,7 @@ export class PurchaseDetailPage implements OnInit {
       this.mys.regresandoAticket = true;
       this.router.navigateByUrl('/ticket');
     }
-    // this.mys.regresandoAticket = true;
-    // this.router.navigateByUrl('/ticket');
+
   }
 
   async popMenu(event) {
@@ -252,7 +228,7 @@ export class PurchaseDetailPage implements OnInit {
       event,
       mode: 'ios',
       backdropDismiss: true,
-      cssClass: "popCart" 
+      cssClass: "popCart"
     });
     await popoverCart.present();
 
@@ -260,7 +236,7 @@ export class PurchaseDetailPage implements OnInit {
     // const { data } = await popoverCart.onWillDismiss();
     // this.router.navigateByUrl(data.destino);
   }
-  
+
 
 }
 

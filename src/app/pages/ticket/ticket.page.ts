@@ -371,6 +371,7 @@ export class TicketPage implements OnInit {
         "asiento": this.bus[piso][x][y].asiento,
         "integrador": this.serviceSelected.integrador
       }
+
       console.log(asiento);
 
       if (this.bus[piso][x][y]['estado'] === 'libre') {

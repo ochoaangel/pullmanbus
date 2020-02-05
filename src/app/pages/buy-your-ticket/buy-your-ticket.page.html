@@ -33,7 +33,7 @@
   <div class="cabeceraTitulo" *ngIf="mySelection==='destiny'">
     Busque y Seleccione el Destino 
   </div>
-  <!-- <ion-progress-bar type="indeterminate"></ion-progress-bar> -->
+  <ion-progress-bar type="indeterminate" *ngIf="loading"></ion-progress-bar>
 </ion-header>
 
 <ion-content style="border-left: 3vw solid #fe5200; border-right: 3vw solid #fe5200; background-color: #fe5200; --background: #fe5200;">
@@ -75,12 +75,12 @@
           <ion-col size="12" style="text-align: center;" class="ion-no-margin ion-no-padding">
             <!-- Spinner -->
             <div *ngIf="!showSelection">
-              <ion-row style="position: absolute; z-index: 3; right: 47%; top:
+              <!-- <ion-row style="position: absolute; z-index: 3; right: 47%; top:
                 -2rem;" *ngIf="loading">
                 <ion-col size="12">
                   <ion-spinner style="color: black;" name="circles"></ion-spinner>
                 </ion-col>
-              </ion-row>
+              </ion-row> -->
 
               <!-- boton para Seleccionar Origen -->
               <ion-row style="margin-top: 2vh;" class="ion-no-margin
@@ -265,9 +265,6 @@
       <!-- <ion-icon name="md-search"></ion-icon> -->
       <div style="display: inline; text-align: left ;padding-left: 10px; text-transform: none;">
         <ion-icon style="margin-bottom: -2px;" src="assets/icon/previous.svg"></ion-icon>
-        <ion-buttons slot="start">
-          <ion-back-button></ion-back-button>
-        </ion-buttons>
         Atrás
       </div>
     </ion-button>

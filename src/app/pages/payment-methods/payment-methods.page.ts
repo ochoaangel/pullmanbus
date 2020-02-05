@@ -16,19 +16,23 @@ export class PaymentMethodsPage implements OnInit {
   listaMedioPago = [];
   listaDetalleConvenio = [];
   datosConvenio: any;
+  loading
 
   constructor(private router: Router,
     private integradorService: IntegradorService,
     private popoverCtrl: PopoverController,
     private mys: MyserviceService) {
+    this.loading = 2
+
 
     this.integradorService.getListConvenio().subscribe(convenio => {
       this.listaConvenio = convenio;
-      console.log(this.listaConvenio);
+      this.loading -= 1
     })
 
     this.datosConvenio = null;
     this.integradorService.getListMedioPago().subscribe(medioPago => {
+      this.loading -= 1
       console.log(medioPago);
       medioPago.Convenio.forEach(pago => {
         if (pago.BotonPago == 'SI') {
@@ -350,16 +354,19 @@ export class PaymentMethodsPage implements OnInit {
 
   seleccionadoConvenioUp(convenio) {
     console.log(convenio);
+    this.loading +=1
     this.integradorService.getDetalleConvenio({ "convenio": convenio }).subscribe(detalleConvenio => {
+      this.loading -=1
       this.listaDetalleConvenio = detalleConvenio;
       this.listaDetalleConvenio.forEach(item => {
         item.Placeholder = item.Valor;
       });
-      console.log(this.listaDetalleConvenio);
+      console.log('this.listaDetalleConvenio',this.listaDetalleConvenio);
     })
   }
   seleccionadoMedioPago(medioPago) {
     this.DatosFormulario.convenioDown = medioPago;
+    console.log('this.DatosFormulario',this.DatosFormulario);
   }
   pagar() {
 
@@ -394,33 +401,34 @@ export class PaymentMethodsPage implements OnInit {
         montoTotal: this.totalFinal,
         idSistema: 5,
         listaCarrito: []
-      }    
+      }
       console.log(this.mys.ticket.comprasDetalles);
       this.mys.ticket.comprasDetalles.forEach(boleto => {
         guardarTransaccion.listaCarrito.push({
-          servicio:boleto.service.idServicio,
-          fechaServicio:boleto.service.fechaServicio,
-          fechaPasada:boleto.service.fechaSalida,
-          fechaLlegada:boleto.service.fechaLlegada,
-          horaSalida:boleto.service.horaSalida,
-          horaLlegada:boleto.service.horaLlegada,
-          asiento:boleto.asiento,
-          origen:boleto.service.idTerminalOrigen,
-          destino:boleto.service.idTerminalDestino,
-          monto:boleto.valor, 
-          precio:boleto.valor,
-          descuento:this.datosConvenio != null ? this.datosConvenio.descuento : 0,
-          empresa:boleto.service.empresa,
-          clase:boleto.piso == "1" ? boleto.service.idClaseBusPisoUno : boleto.service.idClaseBusPisoDos,
-          convenio:this.datosConvenio != null ? this.datosConvenio.idConvenio : "",
-          datoConvenio:"",
-          bus:boleto.piso == "1" ? boleto.service.busPiso1 : boleto.service.busPiso2,
-          piso:boleto.piso,
-          integrador:boleto.service.integrador
-       });
+          servicio: boleto.service.idServicio,
+          fechaServicio: boleto.service.fechaServicio,
+          fechaPasada: boleto.service.fechaSalida,
+          fechaLlegada: boleto.service.fechaLlegada,
+          horaSalida: boleto.service.horaSalida,
+          horaLlegada: boleto.service.horaLlegada,
+          asiento: boleto.asiento,
+          origen: boleto.service.idTerminalOrigen,
+          destino: boleto.service.idTerminalDestino,
+          monto: boleto.valor,
+          precio: boleto.valor,
+          descuento: this.datosConvenio != null ? this.datosConvenio.descuento : 0,
+          empresa: boleto.service.empresa,
+          clase: boleto.piso == "1" ? boleto.service.idClaseBusPisoUno : boleto.service.idClaseBusPisoDos,
+          convenio: this.datosConvenio != null ? this.datosConvenio.idConvenio : "",
+          datoConvenio: "",
+          bus: boleto.piso == "1" ? boleto.service.busPiso1 : boleto.service.busPiso2,
+          piso: boleto.piso,
+          integrador: boleto.service.integrador
+        });
       })
-  
-      this.integradorService.guardarTransaccion(guardarTransaccion).subscribe(resp => {
+this.loading +=1
+this.integradorService.guardarTransaccion(guardarTransaccion).subscribe(resp => {
+  this.loading -=1
         let valor: any = resp;
         if (valor.exito) {
           formularioTBKWS(valor.url, valor.token);
@@ -594,7 +602,7 @@ export class PaymentMethodsPage implements OnInit {
       event,
       mode: 'ios',
       backdropDismiss: true,
-      cssClass: "popCart" 
+      cssClass: "popCart"
     });
     await popoverCart.present();
 
@@ -603,7 +611,7 @@ export class PaymentMethodsPage implements OnInit {
     // this.router.navigateByUrl(data.destino);
   }
 
-  irAterminos(){
+  irAterminos() {
     this.router.navigateByUrl('/terms-conditions')
   }
 

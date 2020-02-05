@@ -30,6 +30,7 @@
   <div class="cabeceraTitulo">
     Medios de pago
   </div>
+  <ion-progress-bar type="indeterminate" *ngIf="loading>0"></ion-progress-bar>
 
 </ion-header>
 
@@ -80,14 +81,16 @@
                 Datos Convenio</div>
             </div>
 
-            <div *ngIf="listaDetalleConvenio.length > 0">
+            <div *ngIf="listaDetalleConvenio.length > 0 || DatosFormulario.convenioDown ==='BCNSD'">
               <div style="text-align: center; display: flex;" *ngFor="let input of listaDetalleConvenio">
-                <div *ngIf="input.Estado == 'ACT' && input.VisibleUsr == 'SI' && input.TipoDato == 'ETIQUETA'"
+                <div *ngIf="(input.Estado == 'ACT' && input.VisibleUsr == 'SI' && input.TipoDato == 'ETIQUETA')"
                   style="width: 100%; display: flex; justify-content: center; align-items: center;">
                   <input type="text" [textMask]={mask:rutFunction,guide:false} [(ngModel)]="input.Valor"
                     name="rutConvenio" #input_rut (keypress)="tecleado($event)" placeholder="{{input.Valor}}">
                 </div>
               </div>
+
+
               <div style="width: 100%; display: flex; justify-content: center; align-items: center;">
                 <ion-button (click)="validarDatosConvenio()"
                   style="color: white;  width:100% ;padding: 0 3vw; outline: none; text-transform: none;--background: #fe5200;">
@@ -165,10 +168,10 @@
             <!-- 11va fila -->
             <div (click)="aceptarAcuerdo()"
               style="display: flex;margin: 1.5rem;">
-              <ion-checkbox [(ngModel)]="acuerdo.acuerdo" style="height: 1rem;width: 1rem;margin: 0 2vw;">
+              <ion-checkbox [(ngModel)]="acuerdo.acuerdo" style="min-height: 1rem;min-width: 1rem;margin: 0 2vw;">
               </ion-checkbox> 
               
-              <ion-text  style="font-size: 0.8; text-align: justify;">
+              <ion-text  style="font-size: 0.8rem; text-align: justify;">
                 He leído y estoy de acuerdo con  
                 <strong style="color: #0247ac;" (click)="irAterminos()">los términos y condiciones de la compra</strong> 
               </ion-text>
