@@ -17,6 +17,7 @@ export class PaymentMethodsPage implements OnInit {
   listaDetalleConvenio = [];
   datosConvenio: any;
   loading
+  // rutShow = false
 
   constructor(private router: Router,
     private integradorService: IntegradorService,
@@ -354,20 +355,28 @@ export class PaymentMethodsPage implements OnInit {
 
   seleccionadoConvenioUp(convenio) {
     console.log(convenio);
-    this.loading +=1
+    this.loading += 1
     this.integradorService.getDetalleConvenio({ "convenio": convenio }).subscribe(detalleConvenio => {
-      this.loading -=1
+      this.loading -= 1
       this.listaDetalleConvenio = detalleConvenio;
+      console.log('this.listaDetalleConvenio', this.listaDetalleConvenio);
       this.listaDetalleConvenio.forEach(item => {
         item.Placeholder = item.Valor;
       });
-      console.log('this.listaDetalleConvenio',this.listaDetalleConvenio);
+
     })
   }
+
   seleccionadoMedioPago(medioPago) {
     this.DatosFormulario.convenioDown = medioPago;
-    console.log('this.DatosFormulario',this.DatosFormulario);
+    // if (this.DatosFormulario.convenioDown === 'BCNSD') {
+    //   this.rutShow = true
+    // } else {
+    //   this.rutShow = false
+    // }
+    // console.log('this.DatosFormulario', this.DatosFormulario);
   }
+
   pagar() {
 
  /*    if (!this.DatosFormulario.convenioUp) {
@@ -426,9 +435,9 @@ export class PaymentMethodsPage implements OnInit {
           integrador: boleto.service.integrador
         });
       })
-this.loading +=1
-this.integradorService.guardarTransaccion(guardarTransaccion).subscribe(resp => {
-  this.loading -=1
+      this.loading += 1
+      this.integradorService.guardarTransaccion(guardarTransaccion).subscribe(resp => {
+        this.loading -= 1
         let valor: any = resp;
         if (valor.exito) {
           formularioTBKWS(valor.url, valor.token);
@@ -533,7 +542,7 @@ this.integradorService.guardarTransaccion(guardarTransaccion).subscribe(resp => 
   }
 
   validarDatosConvenio() {
-    console.log(this.listaDetalleConvenio);
+    console.log('this.listaDetalleConvenio', this.listaDetalleConvenio);
 
     let validarConvenio = {
       "descuento": "0"

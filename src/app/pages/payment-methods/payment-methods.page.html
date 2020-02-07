@@ -58,7 +58,7 @@
                     <ion-col size-lg="2" size-md="2" size-sm="4" size="4" *ngFor="let convenio of listaConvenio"
                       class=" ion-no-padding ion-no-margin">
 
-                      <ion-item  lines="none">
+                      <ion-item lines="none">
                         <ion-label style="margin: 0;">
                           <img src="{{ convenio.imagenInferior || 'assets/images/MediosDePago/default.jpg'}}"
                             title="{{convenio.convenio.descripcion}}">
@@ -76,12 +76,34 @@
               </ion-radio-group>
             </ion-list>
 
-            <div style="text-align: center; margin-top: 1vh;" *ngIf="listaDetalleConvenio.length > 0">
+            <div style="text-align: center; margin-top: 1vh;"
+              *ngIf="listaDetalleConvenio.length > 0 || DatosFormulario.convenioDown ==='BCNSD'">
               <div style="background-color: var(--ion-color-primary);color: white; border-radius: 40px 40px 5px 5px; ">
                 Datos Convenio</div>
             </div>
 
+
+            <!-- /////////////////////////////////////////////////////////////////////////////////////////////////////
+            /////////////////////////////////////// INICIO CHEKEAR INPUT RUT  ///////////////////////////////////////////
+            ///////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+            <!-- input con Sencosud -->
+            <div style="text-align: center; display: flex;"
+              *ngIf="(!listaDetalleConvenio || listaDetalleConvenio.length ===0) &&  DatosFormulario.convenioDown ==='BCNSD'">
+
+              <div style="width: 100%; display: flex; justify-content: center; align-items: center;">
+                <input type="text" [textMask]={mask:rutFunction,guide:false} [(ngModel)]="DatosFormulario.rut"
+                  name="rutConvenio" #input_rut (keypress)="tecleado($event)" placeholder="RUT">
+              </div>
+
+            </div>
+
+
+
+
             <div *ngIf="listaDetalleConvenio.length > 0 || DatosFormulario.convenioDown ==='BCNSD'">
+
+              <!-- input con convenio -->
               <div style="text-align: center; display: flex;" *ngFor="let input of listaDetalleConvenio">
                 <div *ngIf="(input.Estado == 'ACT' && input.VisibleUsr == 'SI' && input.TipoDato == 'ETIQUETA')"
                   style="width: 100%; display: flex; justify-content: center; align-items: center;">
@@ -90,14 +112,23 @@
                 </div>
               </div>
 
-
+              <!-- boton Validar -->
               <div style="width: 100%; display: flex; justify-content: center; align-items: center;">
-                <ion-button (click)="validarDatosConvenio()"
-                  style="color: white;  width:100% ;padding: 0 3vw; outline: none; text-transform: none;--background: #fe5200;">
+                <ion-button (click)="validarDatosConvenio()" style="color: white;  width:100% ;padding: 0 3vw; outline: none; text-transform: none;--background: #fe5200;">
                   Validar
                 </ion-button>
               </div>
+
             </div>
+
+            <!-- cual será el ngmodel común para cualquier caso? -->
+            <!-- el input debe aparecer al seleccionar un convenio de arriba en pantalla como abajo en sencosud  y no entiendo bien las condiciones de cada caso-->
+
+
+
+            <!-- /////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////// FIN CHEKEAR INPUT RUT  ///////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////////////////////////////////// -->
 
             <!-- 4ta fila -->
             <div style="text-align: center; margin-top: 2vh;">
@@ -110,9 +141,9 @@
             <div
               style="text-align: center;display: flex; flex-direction: row; align-items: center;align-items: center;">
               <div style=" width: 35%;">
-                <input style="text-align: center; margin: 0.8vh 0vw 0.8vh 3vw; font-size: 0.8rem;" [textMask]="maskCodigo" type="text"
-                  placeholder="Código País" [(ngModel)]="DatosFormulario.codigo" name="codigo" #input_codigo
-                  (keypress)="tecleado($event)" (keyup.enter)="setFocus('telefono')">
+                <input style="text-align: center; margin: 0.8vh 0vw 0.8vh 3vw; font-size: 0.8rem;"
+                  [textMask]="maskCodigo" type="text" placeholder="Código País" [(ngModel)]="DatosFormulario.codigo"
+                  name="codigo" #input_codigo (keypress)="tecleado($event)" (keyup.enter)="setFocus('telefono')">
               </div>
               <div style=" width: 65%;">
                 <input type="text" [textMask]={mask:telefonoFunction,guide:false} placeholder="Teléfono"
@@ -166,14 +197,13 @@
             </ion-list>
 
             <!-- 11va fila -->
-            <div (click)="aceptarAcuerdo()"
-              style="display: flex;margin: 1.5rem;">
+            <div (click)="aceptarAcuerdo()" style="display: flex;margin: 1.5rem;">
               <ion-checkbox [(ngModel)]="acuerdo.acuerdo" style="min-height: 1rem;min-width: 1rem;margin: 0 2vw;">
-              </ion-checkbox> 
-              
-              <ion-text  style="font-size: 0.8rem; text-align: justify;">
-                He leído y estoy de acuerdo con  
-                <strong style="color: #0247ac;" (click)="irAterminos()">los términos y condiciones de la compra</strong> 
+              </ion-checkbox>
+
+              <ion-text style="font-size: 0.8rem; text-align: justify;">
+                He leído y estoy de acuerdo con
+                <strong style="color: #0247ac;" (click)="irAterminos()">los términos y condiciones de la compra</strong>
               </ion-text>
             </div>
 
