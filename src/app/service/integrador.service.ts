@@ -101,6 +101,13 @@ export class IntegradorService {
         this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy
         return this.http.post<any[]>(urlFinal, buscar);
     }
+
+    generarComprobante(params:any): Observable<any[]> {
+        let urlFinal
+        let dirProxy = '/integrador-web/rest/private/venta/generarComprobante'
+        this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy
+        return this.http.post<any[]>(urlFinal, params);
+    }
     
     
 }
