@@ -83,8 +83,8 @@
 
                   <!-- columna 3   -->
                   <div class="myServiceColumn" style="width: 30%;text-align: left; ">
-                    <div class="myServiceRow" style="font-weight: bold;">Sal. {{svc.horaSalida | hh2ampm}}</div>
-                    <div class="myServiceRow">Lle. {{svc.horaLlegada | hh2ampm}}</div>
+                    <div class="myServiceRow" style="font-weight: bold;">Sal. {{svc.horaSalida}}</div>
+                    <div class="myServiceRow">Lle. {{svc.horaLlegada}}</div>
                     <div class="myServiceRow">Dur.
                       {{'X'| duration: svc.fechaSalida : svc.horaSalida : svc.fechaLlegada : svc.horaLlegada}}</div>
                     <!-- <div class="myServiceRow" style="margin-top: 0.2rem;">{{svc.servicioPrimerPiso | titlecase }}</div>

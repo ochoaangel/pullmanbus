@@ -26,33 +26,42 @@ export function createTranslateLoader(http: HttpClient) {
 }
 
 
+import { File, IWriteOptions } from "@ionic-native/file/ngx";
+import { FileTransfer, FileTransferObject } from "@ionic-native/file-transfer/ngx";
+import { FileOpener } from "@ionic-native/file-opener/ngx";
+import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
   imports: [
     BrowserModule,
-     IonicModule.forRoot(), 
-     AppRoutingModule,
-     ClickOutsideModule,
-     HttpClientModule,
-     BrowserAnimationsModule,
-     PipesModule,
-     TextMaskModule,
-     ComponentsModule,
-     TranslateModule.forRoot({
+    IonicModule.forRoot(),
+    AppRoutingModule,
+    ClickOutsideModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    PipesModule,
+    TextMaskModule,
+    ComponentsModule,
+    TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
         useFactory: (createTranslateLoader),
         deps: [HttpClient]
       }
     })
-     
-    ],
+
+  ],
   providers: [
     StatusBar,
     SplashScreen,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    FileTransfer,
+    FileOpener,
+    File,
+    AndroidPermissions
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }
