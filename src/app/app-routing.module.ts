@@ -80,7 +80,7 @@ const routes: Routes = [
 @NgModule({
   imports: [ 
     PipesModule,
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
+    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules, useHash : true })
   ],
   exports: [RouterModule]
 })
