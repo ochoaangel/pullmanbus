@@ -96,9 +96,9 @@ export class SeatSelectionPage implements OnInit {
   presionado(piso: string, y: number, x: number) {
     let tarifa;
 
-    if (this.bus[piso][x][y]['estado'] === 'libre') {
+    if (this.bus[piso][y][x]['estado'] === 'libre') {
       // caso asiento No seleccionado
-      this.bus[piso][x][y]['estado'] = 'seleccionado';
+      this.bus[piso][y][x]['estado'] = 'seleccionado';
       if (piso === '1') {
         // sumando para piso1
         this.tarifaTotal = this.tarifaTotal + this.tarifaPiso1;
@@ -108,10 +108,10 @@ export class SeatSelectionPage implements OnInit {
         this.tarifaTotal = this.tarifaTotal + this.tarifaPiso2;
         tarifa = this.tarifaPiso2;
       }
-      this.compras.push(`piso_${piso}/fila_${x}/columna_${y}/asiento_${this.bus[piso][x][y]['asiento']}/precio_${tarifa}`);
-    } else if (this.bus[piso][x][y]['estado'] === 'seleccionado') {
+      this.compras.push(`piso_${piso}/fila_${x}/columna_${y}/asiento_${this.bus[piso][y][x]['asiento']}/precio_${tarifa}`);
+    } else if (this.bus[piso][y][x]['estado'] === 'seleccionado') {
       // caso asiento ya seleccionado
-      this.bus[piso][x][y]['estado'] = 'libre';
+      this.bus[piso][y][x]['estado'] = 'libre';
       if (piso === '1') {
         // restando para piso1
         this.tarifaTotal = this.tarifaTotal - this.tarifaPiso1;
@@ -123,7 +123,7 @@ export class SeatSelectionPage implements OnInit {
         tarifa = this.tarifaPiso2;
       }
       // creo el texto a eliminar de la compra
-      let texto = `piso_${piso}/fila_${x}/columna_${y}/asiento_${this.bus[piso][x][y]['asiento']}/precio_${tarifa}`;
+      let texto = `piso_${piso}/fila_${x}/columna_${y}/asiento_${this.bus[piso][y][x]['asiento']}/precio_${tarifa}`;
       let index = this.compras.indexOf(texto);
       if (index !== -1) this.compras.splice(index, 1);
     }
