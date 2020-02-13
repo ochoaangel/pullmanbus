@@ -8,7 +8,8 @@ import { Observable } from 'rxjs';
 export class IntegradorService {
 
     sinProxy= true 
-    urlBase = 'https://pullmanapi.pasajeschile.cl'
+    urlBase = 'http://pullmanapi.pasajeschile.cl'
+    //urlBase = 'http://clamber.pullman.cl'    
 
     constructor(private http: HttpClient) { 
     }
