@@ -27,6 +27,7 @@ export class TransactionVoucherPage implements OnInit {
   postComprobante = null
   loading = 0
   encabezado: any;
+  isApp
 
   constructor(
     private integradorService: IntegradorService,
@@ -59,43 +60,90 @@ export class TransactionVoucherPage implements OnInit {
     })
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+
+    console.log('this.platform.platforms()',this.platform.platforms());
+    console.log('this.platform.is("android")',this.platform.is('android'));
+
+    if (window.location.port === '8100' && !this.platform.is('cordova') ) {
+      this.isApp= false
+		} else {
+      this.isApp= true
+    }
+    console.log('this.isApp',this.isApp);
+    
+// android	a device running Android
+// capacitor	a device running Capacitor
+// cordova	a device running Cordova
+// desktop	a desktop device
+// electron	a desktop device running Electron
+// hybrid	a device running Capacitor or Cordova
+// ios	a device running iOS
+// ipad	an iPad device
+// iphone	an iPhone device
+// mobile	a mobile device
+// phablet	a phablet device
+// pwa	a PWA app
+// tablet	a tablet device
+
+
+
+
+  }
+  // http://localhost:8100/#/transaction-voucher/LQN64693497
 
   btnDescargaPasaje() {
-    this.platform.ready().then(() => {
 
+
+    if (!this.isApp) {
+
+      const linkSource = 'data:application/pdf;base64,' + this.respPDF.archivo
+      const downloadLink = document.createElement("a");
+      const fileName = this.respPDF.nombre
+
+      downloadLink.href = linkSource;
+      downloadLink.download = fileName;
+      downloadLink.click();
+      // this.mys.alertShow('Listo!', 'md-archive', 'Boleto descargado..')
       
+    } else {
+      
+      this.platform.ready().then(() => {
+  
+        
+  
+        if (this.postComprobante && this.respPDF) {
+  
+          this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.READ_EXTERNAL_STORAGE)
+            .then(status => {
+              if (status.hasPermission) {
+                console.log('tiene permiso READ_EXTERNAL_STORAGE');
+                // this.guardarAbrirPdf(this.crearPdf())        //caso Crear PDF desde cero
+                this.saveAndOpenPdf(this.respPDF.archivo, this.respPDF.nombre)
+              } else {
+                console.log('NO tiene permiso READ_EXTERNAL_STORAGE');
+                alert('SOLICITUD DE PERMISO:  \n\nEs necesario dar permisos de Almacenamiento...  \n\n Acepte y presione "permitir" para continuar');
+                this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.READ_EXTERNAL_STORAGE)
+                  .then(status2 => {
+                    console.log('Solicita permiso READ_EXTERNAL_STORAGE');
+                    if (status2.hasPermission) {
+                      console.log('Se otorgó permiso READ_EXTERNAL_STORAGE');
+                      // this.guardarAbrirPdf(this.crearPdf())         //caso Crear PDF desde cero
+                      this.saveAndOpenPdf(this.respPDF.archivo, this.respPDF.nombre)
+                    } else {
+                      console.log('No se otorgó permiso READ_EXTERNAL_STORAGE');
+                      this.mys.alertShow('Error!', 'alert', 'Debe aceptar los permisos solicitados para continuar, intente nueamente..');
+                    }
+                  });
+              }
+            });
+            
+        } else {
+          this.mys.alertShow('Error!', 'alert', 'error al adquirir datos..')
+        }
+      })
+    }
 
-      if (this.postComprobante && this.respPDF) {
-
-        this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.READ_EXTERNAL_STORAGE)
-          .then(status => {
-            if (status.hasPermission) {
-              console.log('tiene permiso READ_EXTERNAL_STORAGE');
-              // this.guardarAbrirPdf(this.crearPdf())        //caso Crear PDF desde cero
-              this.saveAndOpenPdf(this.respPDF.archivo, this.respPDF.nombre)
-            } else {
-              console.log('NO tiene permiso READ_EXTERNAL_STORAGE');
-              alert('SOLICITUD DE PERMISO:  \n\nEs necesario dar permisos de Almacenamiento...  \n\n Acepte y presione "permitir" para continuar');
-              this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.READ_EXTERNAL_STORAGE)
-                .then(status2 => {
-                  console.log('Solicita permiso READ_EXTERNAL_STORAGE');
-                  if (status2.hasPermission) {
-                    console.log('Se otorgó permiso READ_EXTERNAL_STORAGE');
-                    // this.guardarAbrirPdf(this.crearPdf())         //caso Crear PDF desde cero
-                    this.saveAndOpenPdf(this.respPDF.archivo, this.respPDF.nombre)
-                  } else {
-                    console.log('No se otorgó permiso READ_EXTERNAL_STORAGE');
-                    this.mys.alertShow('Error!', 'alert', 'Debe aceptar los permisos solicitados para continuar, intente nueamente..');
-                  }
-                });
-            }
-          });
-          
-      } else {
-        this.mys.alertShow('Error!', 'alert', 'error al adquirir datos..')
-      }
-    })
   }
 
   saveAndOpenPdf(pdf: string, fileName: string) {
