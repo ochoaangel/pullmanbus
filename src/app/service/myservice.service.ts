@@ -16,7 +16,7 @@ export class MyserviceService {
   ticket;
   goTicket;
   BackTicket;
-  regresandoAticket = false;
+  // regresandoAticket = false;
   total=0;
   temporalComprasCarrito;
 

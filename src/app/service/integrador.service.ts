@@ -7,10 +7,12 @@ import { Observable } from 'rxjs';
 })
 export class IntegradorService {
 
-    sinProxy = true
-    urlBase = 'https://pullmanapi.pasajeschile.cl'
+    sinProxy= true 
+    urlBase = 'http://pullmanapi.pasajeschile.cl'
+    //urlBase = 'http://clamber.pullman.cl'    
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient) { 
+    }
 
     getCityOrigin(): Observable<any[]> {
         let urlFinal
@@ -99,6 +101,13 @@ export class IntegradorService {
         let dirProxy = '/integrador-web/rest/private/venta/buscarEncabezado'
         this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy
         return this.http.post<any[]>(urlFinal, buscar);
+    }
+
+    generarComprobante(params:any): Observable<any[]> {
+        let urlFinal
+        let dirProxy = '/integrador-web/rest/private/venta/generarComprobante'
+        this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy
+        return this.http.post<any[]>(urlFinal, params);
     }
     
     

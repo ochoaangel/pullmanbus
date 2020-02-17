@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Renderer } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 
 import * as _ from 'underscore';
@@ -691,10 +691,15 @@ export class BuyYourTicketPage implements OnInit {
     private router: Router,
     private mys: MyserviceService,
     private integradorService: IntegradorService,
-    private popoverCtrl: PopoverController
+    private popoverCtrl: PopoverController,
+    private renderer: Renderer,
+
 
 
   ) { this.loading = false; }
+  // @ViewChild('focusInput', { read: '', static: true }) myInput;
+  // @ViewChild('focusInput', { static: true }) myInput: ElementRef
+  // myInput = this.renderer.selectRootElement('focusInput');
 
   ngOnInit() {
     this.mingoDate = moment().format();
@@ -812,12 +817,21 @@ export class BuyYourTicketPage implements OnInit {
     this.inputFiltrado = this.allOrigin
     this.mySelection = 'origin';
     this.showSelection = true;
+    // setTimeout(() => {
+    //   this.myInput.nativeElement.focus()
+    // },150); //a least 150ms.   
+    // setTimeout(() => this.myInput.nativeElement.focus(), 15000); 
   }
 
   btnSelecccionarDestino() {
     this.showSelection = true;
     this.mySelection = 'destiny';
     // this.myDestiny = item;
+
+    // setTimeout(() => {
+    //   this.myInput.nativeElement.focus()
+    // },150); //a least 150ms.
+    // setTimeout(() => this.myInput.nativeElement.focus(), 15000); 
   }
 
   seleccion(item) {
@@ -846,7 +860,7 @@ export class BuyYourTicketPage implements OnInit {
       event,
       mode: 'ios',
       backdropDismiss: true,
-      cssClass: "popMenu" 
+      cssClass: "popMenu"
     });
     await popoverMenu.present();
 
@@ -861,7 +875,7 @@ export class BuyYourTicketPage implements OnInit {
       event,
       mode: 'ios',
       backdropDismiss: true,
-      cssClass: "popCart" 
+      cssClass: "popCart"
     });
     await popoverCart.present();
 

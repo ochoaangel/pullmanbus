@@ -31,19 +31,20 @@
     Busque y Seleccione el Origen
   </div>
   <div class="cabeceraTitulo" *ngIf="mySelection==='destiny'">
-    Busque y Seleccione el Destino
+    Busque y Seleccione el Destino 
   </div>
-  <!-- <ion-progress-bar type="indeterminate"></ion-progress-bar> -->
+  <ion-progress-bar type="indeterminate" *ngIf="loading"></ion-progress-bar>
 </ion-header>
 
-<ion-content style="border-left: 3vw solid #fe5200; border-right: 3vw solid #fe5200; background-color: #fe5200;">
-  <div style="width: 100%; height: -webkit-fill-available;">
+<ion-content style="border-left: 3vw solid #fe5200; border-right: 3vw solid #fe5200; background-color: #fe5200; --background: #fe5200;">
+  <div style="width: 100%; height: -webkit-fill-available;background-color: #fe5200;">
     <div style="height: 100%; background-color: #fe5200 ;margin: 0px 0px 0px 0px;">
-      <ion-grid style="height: 100%;" class="ion-no-margin ion-no-padding">
+      <ion-grid style="height: 100%;background-color: #fe5200;" class="ion-no-margin ion-no-padding">
         <!-- solo cuando hay que elegir origen o destino -->
-        <ion-row *ngIf="showSelection">
+        <ion-row *ngIf="showSelection" style="background-color: #fe5200;">
           <ion-col size="12" style="background-color: #fe5200 " >
-            <div style="height: 100%; width: 100%;">
+            <div style="height: 100%; width: 100%;background-color: #fe5200;">
+
               <div style="display: flex; flex-direction: row; align-items: center;
                 justify-content: center; background-color: #f2f2f2;
                 border-radius: 15px; padding: 5px; margin: 10px;">
@@ -51,7 +52,7 @@
                   <ion-icon style="font-size: 2rem; color: #fe5200;" name="md-search"></ion-icon>
                 </div>
                 <!-- input buscador -->
-                <ion-input style="width: 90%" type="text" placeholder="Buscar aquí.." (keyup)="teclaInput($event)">
+                <ion-input style="width: 90%" type="text" placeholder="Buscar aquí.." (keyup)="teclaInput($event)" autofocus="true" #focusInput>
                 </ion-input>
               </div>
 
@@ -74,12 +75,12 @@
           <ion-col size="12" style="text-align: center;" class="ion-no-margin ion-no-padding">
             <!-- Spinner -->
             <div *ngIf="!showSelection">
-              <ion-row style="position: absolute; z-index: 3; right: 47%; top:
+              <!-- <ion-row style="position: absolute; z-index: 3; right: 47%; top:
                 -2rem;" *ngIf="loading">
                 <ion-col size="12">
                   <ion-spinner style="color: black;" name="circles"></ion-spinner>
                 </ion-col>
-              </ion-row>
+              </ion-row> -->
 
               <!-- boton para Seleccionar Origen -->
               <ion-row style="margin-top: 2vh;" class="ion-no-margin
