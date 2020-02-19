@@ -15,29 +15,4 @@ export class HomePage {
     public alertController: AlertController
   ) { }
 
-
-  async presentAlertConfirm() {
-    const alert = await this.alertController.create({
-      header: '¡Felicidades!',
-      message: 'Message <strong>text</strong>!!!',
-      cssClass: "alert1",
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          cssClass: 'sc1',
-          handler: (blah) => {
-            console.log('Confirm Cancel: blah');
-          }
-        }, {
-          text: 'Okay',
-          handler: () => {
-            console.log('Confirm Okay');
-          }
-        }
-      ]
-    });
-    await alert.present();
-  }
- 
 }

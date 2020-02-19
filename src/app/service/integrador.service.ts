@@ -7,10 +7,9 @@ import { Observable } from 'rxjs';
 })
 export class IntegradorService {
 
-    sinProxy= true 
-    urlBase = 'http://pullmanapi.pasajeschile.cl'
-    //urlBase = 'http://clamber.pullman.cl'    
-
+    sinProxy= false
+    //urlBase = 'http://pullmanapi.pasajeschile.cl'
+    urlBase = 'http://clamber.pullman.cl'    
     constructor(private http: HttpClient) { 
     }
 
@@ -30,8 +29,6 @@ export class IntegradorService {
         let urlFinal
         let dirProxy = '/integrador-web/rest/private/venta/obtenerServicio'
         this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy
-        // console.log('urlFinal', urlFinal);
-        // console.log('dataPost', ticket);
         return this.http.post<any[]>(urlFinal, ticket);
     }
     getPlanillaVertical(service: any): Observable<any[]> {

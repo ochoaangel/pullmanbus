@@ -34,7 +34,6 @@ export class PaymentMethodsPage implements OnInit {
     this.datosConvenio = null;
     this.integradorService.getListMedioPago().subscribe(medioPago => {
       this.loading -= 1
-      console.log(medioPago);
       medioPago.Convenio.forEach(pago => {
         if (pago.BotonPago == 'SI') {
           pago.Imagen = pago.Imagen != "" ? "data:image/jpeg;base64," + pago.Imagen : "";
@@ -354,12 +353,10 @@ export class PaymentMethodsPage implements OnInit {
   }
 
   seleccionadoConvenioUp(convenio) {
-    console.log(convenio);
     this.loading += 1
     this.integradorService.getDetalleConvenio({ "convenio": convenio }).subscribe(detalleConvenio => {
       this.loading -= 1
       this.listaDetalleConvenio = detalleConvenio;
-      console.log('this.listaDetalleConvenio', this.listaDetalleConvenio);
       this.listaDetalleConvenio.forEach(item => {
         item.Placeholder = item.Valor;
       });
@@ -374,7 +371,6 @@ export class PaymentMethodsPage implements OnInit {
     // } else {
     //   this.rutShow = false
     // }
-    // console.log('this.DatosFormulario', this.DatosFormulario);
   }
 
   pagar() {
@@ -411,7 +407,6 @@ export class PaymentMethodsPage implements OnInit {
         idSistema: 5,
         listaCarrito: []
       }
-      console.log(this.mys.ticket.comprasDetalles);
       this.mys.ticket.comprasDetalles.forEach(boleto => {
         guardarTransaccion.listaCarrito.push({
           servicio: boleto.service.idServicio,
@@ -469,13 +464,9 @@ export class PaymentMethodsPage implements OnInit {
   }
 
   setFocus(siguiente) {
-    console.log('siguiente', siguiente);
   }
 
   tecleado($event) {
-    // console.log('event', $event.target.name);
-    // console.log('this.DatosFormulario', this.DatosFormulario);
-
     switch ($event.target.name) {
       case 'rut':
 
@@ -497,7 +488,6 @@ export class PaymentMethodsPage implements OnInit {
         break;
 
       default:
-        console.log('$event.target.name', $event.target.name);
         break;
     } // fin switch
 
@@ -514,7 +504,6 @@ export class PaymentMethodsPage implements OnInit {
   }
 
   rutFunction(rawValue) {
-    console.log('rawValue', rawValue);
     let numbers = rawValue.match(/\d/g);
     let numberLength = 0;
     if (numbers) {
@@ -542,8 +531,6 @@ export class PaymentMethodsPage implements OnInit {
   }
 
   validarDatosConvenio() {
-    console.log('this.listaDetalleConvenio', this.listaDetalleConvenio);
-
     let validarConvenio = {
       "descuento": "0"
       , "idConvenio": this.listaDetalleConvenio[0].Convenio
@@ -576,7 +563,6 @@ export class PaymentMethodsPage implements OnInit {
       validarConvenio.totalApagar = Number(validarConvenio.totalApagar) + Number(boleto.valor) + "";
     });
     validarConvenio.montoTotal = validarConvenio.totalApagar;
-    console.log(validarConvenio);
     this.integradorService.getDescuentoConvenio(validarConvenio).subscribe(data => {
       this.datosConvenio = data;
       if (this.datosConvenio.mensaje == 'OK') {

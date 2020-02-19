@@ -18,7 +18,6 @@ export class PopCartComponent implements OnInit {
     this.compras.forEach(element => {
       this.total = this.total+element.valor
     });
-    console.log('compras desde popCart', this.compras);
   }
 
 }
