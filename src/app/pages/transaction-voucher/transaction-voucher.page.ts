@@ -45,46 +45,52 @@ export class TransactionVoucherPage implements OnInit {
     this.integradorService.buscarEncabezado({ "orden": this.codigo }).subscribe((resp: any) => {
       this.loading -= 1
       this.encabezado = resp;
-      this.postComprobante = { boleto: resp.boletos[0].boleto, codigo: resp.boletos[0].codigo }
-      console.log('this.postComprobante', this.postComprobante);
-      console.log(resp);
-      
-      
-      this.loading += 1
-      this.integradorService.generarComprobante(this.postComprobante).subscribe(resp => {
-        this.respPDF = resp
-        this.loading -= 1
-        console.log( this.respPDF);
-      })
+      console.log('resp', resp);
+
+      if (resp) {
+        this.postComprobante = { boleto: resp.boletos[0].boleto, codigo: resp.boletos[0].codigo }
+        console.log('this.postComprobante', this.postComprobante);
+        console.log(resp);
+
+        this.loading += 1
+        this.integradorService.generarComprobante(this.postComprobante).subscribe(resp => {
+          this.respPDF = resp
+          this.loading -= 1
+          console.log(this.respPDF);
+        })
+
+      } else {
+        console.log('No se obtuvo info desde la api');
+      }
 
     })
   }
 
   ngOnInit() {
 
-    console.log('this.platform.platforms()',this.platform.platforms());
-    console.log('this.platform.is("android")',this.platform.is('android'));
+    console.log('this.platform.platforms()', this.platform.platforms());
+    console.log('this.platform.is("android")', this.platform.is('android'));
 
-    if (window.location.port === '8100' && !this.platform.is('cordova') ) {
-      this.isApp= false
-		} else {
-      this.isApp= true
+    if (window.location.port === '8100' && !this.platform.is('cordova')) {
+      this.isApp = false
+    } else {
+      this.isApp = true
     }
-    console.log('this.isApp',this.isApp);
-    
-// android	a device running Android
-// capacitor	a device running Capacitor
-// cordova	a device running Cordova
-// desktop	a desktop device
-// electron	a desktop device running Electron
-// hybrid	a device running Capacitor or Cordova
-// ios	a device running iOS
-// ipad	an iPad device
-// iphone	an iPhone device
-// mobile	a mobile device
-// phablet	a phablet device
-// pwa	a PWA app
-// tablet	a tablet device
+    console.log('this.isApp', this.isApp);
+
+    // android	a device running Android
+    // capacitor	a device running Capacitor
+    // cordova	a device running Cordova
+    // desktop	a desktop device
+    // electron	a desktop device running Electron
+    // hybrid	a device running Capacitor or Cordova
+    // ios	a device running iOS
+    // ipad	an iPad device
+    // iphone	an iPhone device
+    // mobile	a mobile device
+    // phablet	a phablet device
+    // pwa	a PWA app
+    // tablet	a tablet device
 
 
 
@@ -105,15 +111,15 @@ export class TransactionVoucherPage implements OnInit {
       downloadLink.download = fileName;
       downloadLink.click();
       // this.mys.alertShow('Listo!', 'md-archive', 'Boleto descargado..')
-      
+
     } else {
-      
+
       this.platform.ready().then(() => {
-  
-        
-  
+
+
+
         if (this.postComprobante && this.respPDF) {
-  
+
           this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.READ_EXTERNAL_STORAGE)
             .then(status => {
               if (status.hasPermission) {
@@ -137,7 +143,7 @@ export class TransactionVoucherPage implements OnInit {
                   });
               }
             });
-            
+
         } else {
           this.mys.alertShow('Error!', 'alert', 'error al adquirir datos..')
         }
@@ -356,3 +362,13 @@ export class TransactionVoucherPage implements OnInit {
 
 
 }
+
+
+
+// SI desde Localhost sale http://pullmanapi.pasajeschile.cl   
+// NO desde Localhost sale http://pullmanapi.pasajeschile.cl/serviciosVenta/rest/Servicios/GetConvenio   
+
+
+
+// NO desde Localhost sale http://www.pullman.cl/    y obtiene todo slos puestos llenos
+// http://www.pullman.cl/serviciosVenta/rest/Servicios/GetConvenio

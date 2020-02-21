@@ -1,7 +1,7 @@
 ion-header {
   height: 15vh;
   width: 100vw;
-  background-color: #fe5200;
+  background-color: var(--ion-color-primary);
   text-align: center;
   color: white;
 }
@@ -39,7 +39,7 @@ ion-header {
   display: inline;
   width: 33%;
   border: solid 1px;
-  border-color: #fe5200;
+  border-color: var(--ion-color-primary);
   background-color: white;
   margin: 3px;
 }
@@ -48,7 +48,7 @@ ion-header {
   justify-content: center;
   height: 50%;
   padding-top: 3vh;
-  color: #fe5200;
+  color: var(--ion-color-primary);
   font-size: 9vh;
 }
 
@@ -56,7 +56,7 @@ ion-header {
   justify-content: center;
   height: 50%;
   padding-top: 4vh;
-  color: #fe5200;
+  color: var(--ion-color-primary);
   font-size: 2vh;
 }
 
@@ -65,7 +65,7 @@ input {
   box-sizing: content-box;
   // padding: 1.5vh 3vw;
   padding: 0.2rem 1rem;
-  border: 1px solid #fe5200;
+  border: 1px solid var(--ion-color-primary);
   -webkit-border-radius: 27px;
   border-radius: 5px;
   width: -webkit-fill-available;
@@ -83,7 +83,7 @@ input {
   -webkit-border-radius: 11px;
   border-radius: 11px;
   color: rgba(255, 255, 255, 1);
-  background: #fe5200;
+  background: var(--ion-color-primary);
   width: 38vw;
   margin-top: 2vh;
   height: 3vh;
@@ -97,7 +97,7 @@ p {
 }
 
 ion-input {
-  border: 1px solid #fe5200;
+  border: 1px solid var(--ion-color-primary);
   border-radius: 10px;
 }
 
@@ -112,7 +112,7 @@ ion-select {
   background-color: white;
   height: 100%;
   margin: 0px 0px 0px 2.5vw;
-  border: 1px solid #fe5200;
+  border: 1px solid var(--ion-color-primary);
   display: flex;
   align-items: center;
 }

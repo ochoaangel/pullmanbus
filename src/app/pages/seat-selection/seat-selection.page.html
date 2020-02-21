@@ -45,8 +45,8 @@
       </div>
       <div style="display: inline; width: 10%;">
         <div style="background-color: white; border: 2px solid
-        #fe5200;border-radius: 3px;display: flex;justify-content:
-        center;align-items: center; color:#fe5200; font-weight:
+        var(--ion-color-primary);border-radius: 3px;display: flex;justify-content:
+        center;align-items: center; color:var(--ion-color-primary); font-weight:
         bold;font-size: 2.3vw;height: 100%;margin: 0px 1px 0px 5px;">
           Piso 1
         </div>
@@ -58,7 +58,7 @@
         </div>
       </div>
       <div style="display: inline; width: 10%;">
-        <div *ngIf="nowService.tarifaSegundoPiso" style="background-color: #fe5200; border-radius: 3px;display:
+        <div *ngIf="nowService.tarifaSegundoPiso" style="background-color: var(--ion-color-primary); border-radius: 3px;display:
         flex;justify-content: center;align-items: center; color:white;
         font-weight: bold;font-size: 2.3vw; height: 100%; margin: 0px 1px 0px
         5px;">
@@ -181,7 +181,7 @@
   </div>
 
   <!-- seleccion de asientos -->
-  <div style="width: 100%;height: 100%; background-color: #fe5200">
+  <div style="width: 100%;height: 100%; background-color: var(--ion-color-primary)">
     <div style="height: 100%; background-color: white ;margin: 0px 0px 0px
       0px;">
       <ion-grid style="height: 100%;" class="ion-no-margin ion-no-padding">
@@ -218,7 +218,7 @@
                         <!-- [style.width]="( asiento.estado ==='libre' || asiento.estado ==='ocupado'  || asiento.estado ==='seleccionado')? '100%':'50%'" -->
 
 
-                        <ion-button fill="clear" style="margin-left: 4vw; color: #fe5200; outline:
+                        <ion-button fill="clear" style="margin-left: 4vw; color: var(--ion-color-primary); outline:
                         none;padding:0;font-size: 0vw; display: contents;" (click)="presionado('1',y,x)">
                           <img src="assets/icon/png/Asiento-ocupado.png" *ngIf="asiento.estado==='ocupado'" />
                           <img src="assets/icon/png/Asiento-disponible.png" *ngIf="asiento.estado==='libre'" />
@@ -241,7 +241,7 @@
                     <div style="width: 100%; display: flex;" *ngFor="let asiento of columna ; let y= index">
                       <!-- [style.width]="( asiento.estado ==='libre' || asiento.estado ==='ocupado'  || asiento.estado ==='seleccionado')? '100%':'50%'" > -->
 
-                      <ion-button fill="clear" style="margin-left: 4vw; color: #fe5200; outline:
+                      <ion-button fill="clear" style="margin-left: 4vw; color: var(--ion-color-primary); outline:
                         none;padding:0;font-size: 0vw;display: contents;" (click)="presionado('2',y,x)"
                         *ngIf="asiento.estado ==='libre' || asiento.estado ==='ocupado'  || asiento.estado ==='seleccionado'">
                         <img src="assets/icon/png/Asiento-ocupado.png" *ngIf="asiento.estado==='ocupado'" />
@@ -290,10 +290,10 @@
 
 <ion-footer>
   <!-- <div style="width: 100%; display: flex;">
-    <ion-button fill="clear" style="color: #fe5200; width: 25%; outline:
+    <ion-button fill="clear" style="color: var(--ion-color-primary); width: 25%; outline:
       none;">
       <ion-icon src="assets/icon/previous.svg" style="color:
-        #fe5200;font-size: 2.5vw;padding: 3px;">
+        var(--ion-color-primary);font-size: 2.5vw;padding: 3px;">
       </ion-icon>
       <div style="display: inline; text-align: right; text-transform:
         none;font-size: 3vw;">
@@ -301,19 +301,19 @@
       </div>
     </ion-button>
 
-    <ion-button fill="clear" style="color: #fe5200; width: 25%; outline:
+    <ion-button fill="clear" style="color: var(--ion-color-primary); width: 25%; outline:
       none;">
       <ion-icon name="md-repeat" style="transform: rotate(90deg); color:
-        #fe5200;font-size: 5vw;"></ion-icon>
+        var(--ion-color-primary);font-size: 5vw;"></ion-icon>
       <div style="display: inline; text-align: right; text-transform:
         none;font-size: 3vw;">
         Ordenar
       </div>
     </ion-button>
 
-    <ion-button fill="clear" style="color: #fe5200; width: 25%; outline:
+    <ion-button fill="clear" style="color: var(--ion-color-primary); width: 25%; outline:
       none;">
-      <ion-icon name="md-code-download" style="color: #fe5200;font-size:
+      <ion-icon name="md-code-download" style="color: var(--ion-color-primary);font-size:
         5vw;padding: 1px;"></ion-icon>
       <div style="display: inline; text-align: right; text-transform:
         none;font-size: 3vw;">
@@ -321,19 +321,19 @@
       </div>
     </ion-button>
 
-    <ion-button fill="clear" style="color: #fe5200; width: 25%; outline:
+    <ion-button fill="clear" style="color: var(--ion-color-primary); width: 25%; outline:
       none;">
       <div style="display: inline; text-align: right; text-transform:
         none;font-size: 3vw;">
         Siguiente
       </div>
       <ion-icon src="assets/icon/previous.svg"
-        style="transform: rotate(180deg); color: #fe5200;font-size: 3vw;"></ion-icon>
+        style="transform: rotate(180deg); color: var(--ion-color-primary);font-size: 3vw;"></ion-icon>
     </ion-button>
   </div> -->
 
   <div style="width: 100%; display: flex;align-items: center;justify-content:
-    center; background-color: #fe5200;">
+    center; background-color: var(--ion-color-primary);">
     <div style="width: 50%;display: inline; text-align: left;padding-right: 7px;
       text-transform: none;padding-left: 20px;font-size: 1.5rem;color:
       white;font-weight: bold;">

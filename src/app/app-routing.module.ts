@@ -3,8 +3,19 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { PipesModule } from './pipes/pipes.module';
 
 const routes: Routes = [
+  // // ORIGINAL
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', loadChildren: () => import('./home/home.module').then(m => m.HomePageModule) },
+
+  ////////////////////////////////////////////////////////////////////////////////////
+  //  PARA PDF
+  // { path: '', redirectTo: 'transaction-voucher/LQN64693497', pathMatch: 'full' },
+  // {
+  //   path: 'transaction-voucher/LQN64693497',
+  //   loadChildren: () => import('./pages/transaction-voucher/transaction-voucher.module').then(m => m.TransactionVoucherPageModule)
+  // },
+  ////////////////////////////////////////////////////////////////////////////////////
+
   {
     path: 'login',
     loadChildren: () => import('./pages/login/login.module').then(m => m.LoginPageModule)
@@ -53,10 +64,13 @@ const routes: Routes = [
     path: 'purchase-detail',
     loadChildren: () => import('./pages/purchase-detail/purchase-detail.module').then(m => m.PurchaseDetailPageModule)
   },
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  // ORIGINAL
   {
     path: 'transaction-voucher/:codigo',
     loadChildren: () => import('./pages/transaction-voucher/transaction-voucher.module').then(m => m.TransactionVoucherPageModule)
   },
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   {
     path: 'buy-your-ticket',
     loadChildren: () => import('./pages/buy-your-ticket/buy-your-ticket.module').then(m => m.BuyYourTicketPageModule)
@@ -80,7 +94,7 @@ const routes: Routes = [
 @NgModule({
   imports: [
     PipesModule,
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules, useHash : true })
+    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules, useHash: true })
   ],
   exports: [RouterModule]
 })
