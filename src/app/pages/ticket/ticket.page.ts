@@ -244,8 +244,8 @@ export class TicketPage implements OnInit {
           // }
 
           // preparando tarifas
-          this.allServices[nServiceSeleccion].tarifaPrimerPiso ? this.tarifaPiso1 = parseInt(this.allServices[nServiceSeleccion].tarifaPrimerPiso.replace('.', '')) : this.tarifaPiso1 = null;
-          this.allServices[nServiceSeleccion].tarifaSegundoPiso ? this.tarifaPiso2 = parseInt(this.allServices[nServiceSeleccion].tarifaSegundoPiso.replace('.', '')) : this.tarifaPiso2 = null;
+          this.allServices[nServiceSeleccion].tarifaPrimerPisoInternet ? this.tarifaPiso1 = parseInt(this.allServices[nServiceSeleccion].tarifaPrimerPisoInternet.replace('.', '')) : this.tarifaPiso1 = null;
+          this.allServices[nServiceSeleccion].tarifaSegundoPisoInternet ? this.tarifaPiso2 = parseInt(this.allServices[nServiceSeleccion].tarifaSegundoPisoInternet.replace('.', '')) : this.tarifaPiso2 = null;
           // !this.tarifaPiso2 ? this.piso1 = true : this.piso1 = false;
           this.tarifaPiso1 ? this.piso1 = true : this.piso1 = false;
 
@@ -545,12 +545,12 @@ export class TicketPage implements OnInit {
 
       case 'precioAsc':
         this.allServices = _.sortBy(this.allServices, (element) => {
-          return element.tarifaPrimerPiso
+          return element.tarifaPrimerPisoInternet
         })
         break;
 
       case 'precioDsc':
-        this.allServices = _.sortBy(this.allServices, 'tarifaPrimerPiso').reverse()
+        this.allServices = _.sortBy(this.allServices, 'tarifaPrimerPisoInternet').reverse()
         break;
 
 
