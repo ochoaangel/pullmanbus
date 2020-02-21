@@ -28,32 +28,16 @@ export class PurchaseDetailPage implements OnInit {
 
 
   ngOnInit() {
-
-    console.log(this.mys.ticket);
-    // console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX');
-    // console.log(JSON.stringify(this.mys.ticket));
-    // console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX');
-
     if (this.mys.ticket) {
       this.ticket = this.mys.ticket;
       this.way = this.mys.way;
-      console.log('this.ticket', this.ticket);
       let total_general = 0;
       this.ticket.comprasDetalles.forEach(element => {
         total_general = total_general + element.valor;
       });
       this.tarifaTotal = total_general;
-
-
-    } else {
-      // solo pruebas
-      console.log('Ejecutando con info de prueba');
     }
-
-    console.log('this.ticket', this.ticket);
-
-
-  }  // fin ngOnInit
+  }  
 
   continuar() {
 
@@ -75,10 +59,8 @@ export class PurchaseDetailPage implements OnInit {
 
   EliminarPasaje(way, idServicio, asiento, y, x, piso) {
     let texto = way + '_' + idServicio + '_' + asiento
-    console.log('asiento a eliminar', texto);
 
     let index = this.ticket.comprasDetallesPosicion.indexOf(texto);
-    console.log('index', index)
 
     // eliminar del backend y (GENERALcomprasDetallesPosicion y GENERALcomprasDetalles ) de ticket
     if (index !== -1) {
@@ -109,9 +91,7 @@ export class PurchaseDetailPage implements OnInit {
       if (index3 !== -1) { this.ticket.backCompras.splice(index3, 1); }
     }
 
-    console.log('this.ticket.comprasDetallesPosicion', this.ticket.comprasDetallesPosicion);
     let index4 = this.ticket.comprasDetallesPosicion.indexOf(texto);
-    console.log('index4', index4);
     if (index4 !== -1) {
       this.ticket.comprasDetalles.splice(index4, 1);
       this.ticket.comprasDetallesPosicion.splice(index4, 1);
@@ -145,12 +125,8 @@ export class PurchaseDetailPage implements OnInit {
     let texto = way + '_' + idServicio + '_' + asiento
 
     // let texto = this.way + '_' + this.serviceSelected.idServicio + '_' + this.bus[piso][y][x]['asiento'];
-    // console.log('--texto',texto);
-    // console.log('this.comprasByService',this.comprasByService);
     // let index3 = this.comprasByService.indexOf(texto)
     // if (index3 !== -1) { this.comprasByService.splice(index3, 1); }
-    // console.log('this.comprasByService',this.comprasByService);
-
 
     if (way === 'go') {
       ticket.goAllService.forEach(item => {
@@ -175,17 +151,11 @@ export class PurchaseDetailPage implements OnInit {
           if (index3 !== -1) { item.my_comprasByService.splice(index3, 1); }
         }
       });
-
-
-
-
-
         // item.idServicio === idServicio ? item.my_Bus[piso][y][x]['estado'] = 'libre' : null
       // });
       let index3 = ticket.backCompras.indexOf(texto)
       if (index3 !== -1) { ticket.backCompras.splice(index3, 1); }
     }
-    console.log('ticketDsdEliminarxx', ticket);
     return ticket
   }
 

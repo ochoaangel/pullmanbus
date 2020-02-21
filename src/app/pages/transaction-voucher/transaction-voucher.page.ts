@@ -45,22 +45,9 @@ export class TransactionVoucherPage implements OnInit {
     this.integradorService.buscarEncabezado({ "orden": this.codigo }).subscribe((resp: any) => {
       this.loading -= 1
       this.encabezado = resp;
-      console.log('resp', resp);
-
-      if (resp) {
-        this.postComprobante = { boleto: resp.boletos[0].boleto, codigo: resp.boletos[0].codigo }
-        console.log('this.postComprobante', this.postComprobante);
-        console.log(resp);
-
-        this.loading += 1
-        this.integradorService.generarComprobante(this.postComprobante).subscribe(resp => {
-          this.respPDF = resp
-          this.loading -= 1
-          console.log(this.respPDF);
-        })
-
-      } else {
-        console.log('No se obtuvo info desde la api');
+      console.log(this.encabezado);
+      if(this.encabezado.estado=='ACTI'){
+        this.encabezado.fechaCompra = new Date(this.encabezado.fechaCompra).toLocaleString(); 
       }
 
     })
@@ -68,40 +55,34 @@ export class TransactionVoucherPage implements OnInit {
 
   ngOnInit() {
 
-    console.log('this.platform.platforms()', this.platform.platforms());
-    console.log('this.platform.is("android")', this.platform.is('android'));
 
     if (window.location.port === '8100' && !this.platform.is('cordova')) {
       this.isApp = false
     } else {
       this.isApp = true
     }
-    console.log('this.isApp', this.isApp);
-
-    // android	a device running Android
-    // capacitor	a device running Capacitor
-    // cordova	a device running Cordova
-    // desktop	a desktop device
-    // electron	a desktop device running Electron
-    // hybrid	a device running Capacitor or Cordova
-    // ios	a device running iOS
-    // ipad	an iPad device
-    // iphone	an iPhone device
-    // mobile	a mobile device
-    // phablet	a phablet device
-    // pwa	a PWA app
-    // tablet	a tablet device
+    
+// android	a device running Android
+// capacitor	a device running Capacitor
+// cordova	a device running Cordova
+// desktop	a desktop device
+// electron	a desktop device running Electron
+// hybrid	a device running Capacitor or Cordova
+// ios	a device running iOS
+// ipad	an iPad device
+// iphone	an iPhone device
+// mobile	a mobile device
+// phablet	a phablet device
+// pwa	a PWA app
+// tablet	a tablet device
 
 
 
 
   }
   // http://localhost:8100/#/transaction-voucher/LQN64693497
-
-  btnDescargaPasaje() {
-
-
-    if (!this.isApp) {
+  downloadPDF(){
+    //if (!this.isApp) {
 
       const linkSource = 'data:application/pdf;base64,' + this.respPDF.archivo
       const downloadLink = document.createElement("a");
@@ -111,9 +92,9 @@ export class TransactionVoucherPage implements OnInit {
       downloadLink.download = fileName;
       downloadLink.click();
       // this.mys.alertShow('Listo!', 'md-archive', 'Boleto descargado..')
-
-    } else {
-
+      
+/*     } else {
+      
       this.platform.ready().then(() => {
 
 
@@ -123,21 +104,16 @@ export class TransactionVoucherPage implements OnInit {
           this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.READ_EXTERNAL_STORAGE)
             .then(status => {
               if (status.hasPermission) {
-                console.log('tiene permiso READ_EXTERNAL_STORAGE');
                 // this.guardarAbrirPdf(this.crearPdf())        //caso Crear PDF desde cero
                 this.saveAndOpenPdf(this.respPDF.archivo, this.respPDF.nombre)
               } else {
-                console.log('NO tiene permiso READ_EXTERNAL_STORAGE');
                 alert('SOLICITUD DE PERMISO:  \n\nEs necesario dar permisos de Almacenamiento...  \n\n Acepte y presione "permitir" para continuar');
                 this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.READ_EXTERNAL_STORAGE)
                   .then(status2 => {
-                    console.log('Solicita permiso READ_EXTERNAL_STORAGE');
                     if (status2.hasPermission) {
-                      console.log('Se otorgó permiso READ_EXTERNAL_STORAGE');
                       // this.guardarAbrirPdf(this.crearPdf())         //caso Crear PDF desde cero
                       this.saveAndOpenPdf(this.respPDF.archivo, this.respPDF.nombre)
                     } else {
-                      console.log('No se otorgó permiso READ_EXTERNAL_STORAGE');
                       this.mys.alertShow('Error!', 'alert', 'Debe aceptar los permisos solicitados para continuar, intente nueamente..');
                     }
                   });
@@ -148,8 +124,16 @@ export class TransactionVoucherPage implements OnInit {
           this.mys.alertShow('Error!', 'alert', 'error al adquirir datos..')
         }
       })
-    }
-
+     }*/
+  }
+  btnDescargaPasaje(boleto:string,codigo:string) {
+      this.postComprobante = { boleto: boleto, codigo: codigo }                
+      this.loading += 1
+      this.integradorService.generarComprobante(this.postComprobante).subscribe(resp => {
+        this.respPDF = resp
+        this.loading -= 1
+        this.downloadPDF();
+      }) 
   }
 
   saveAndOpenPdf(pdf: string, fileName: string) {
@@ -159,7 +143,6 @@ export class TransactionVoucherPage implements OnInit {
     let my_path = this.platform.is('ios') ? `${writeDirectory}${fileName}` : `${writeDirectory}/${fileName}`
     this.file.writeFile(writeDirectory, fileName, this.convertBase64ToBlob(pdf, 'data:application/pdf;base64'), { replace: true })
       .then((success) => {
-        // console.log("Archivo creado detalles >> " + JSON.stringify(success))
         this.fileOpener.open(my_path, 'application/pdf')
           .then(() => this.mys.alertShow('GUARDADO EN EL DISPOSITIVO', 'md-archive', `Archivo: ${fileName} <br><br>Carpeta: ${folder} <br><br> Ubicación exacta:<br>${my_path}`))
           .catch(e => this.mys.alertShow('Error!', 'alert', 'No se pudo Abrir el archivo en su dispositivo..'))
@@ -201,7 +184,6 @@ export class TransactionVoucherPage implements OnInit {
     let colorNegro = '#000000'
     let colorBlanco = '#FFFFFF'
 
-    // console.log(doc.getImageProperties(this.myImage))
     // let info = doc.getImageProperties(this.myImage)
     // let factor=0.002
     // doc.addImage(this.myImage, info.fileType, 1.5, 1, info.width*factor, info.height*factor, '', 'FAST', 0)
@@ -351,7 +333,6 @@ export class TransactionVoucherPage implements OnInit {
 
     this.file.writeFile(writeDirectory, fileName, buffer, { replace: true })
       .then((success) => {
-        // console.log("Archivo creado detalles >> " + JSON.stringify(success))
         this.fileOpener.open(my_path, 'application/pdf')
           .then(() => this.mys.alertShow('GUARDADO EN EL DISPOSITIVO', 'md-archive', `Archivo: ${fileName} <br><br>Carpeta: ${folder} <br><br> Ubicación exacta:<br>${my_path}`))
           .catch(e => this.mys.alertShow('Error!', 'alert', 'No se pudo Abrir el archivo en su dispositivo..'))

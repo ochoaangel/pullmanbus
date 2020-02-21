@@ -787,7 +787,6 @@ export class BuyYourTicketPage implements OnInit {
     } else {
 
       this.mys.ticket = this.ticket;
-      console.log('this.mys.ticket(saliendo de buy-yout-ticket)', this.mys.ticket);
       this.router.navigateByUrl('/ticket');
     }
 
@@ -795,8 +794,6 @@ export class BuyYourTicketPage implements OnInit {
 
 
   teclaInput($event) {
-    console.log('presionada tecla', $event.target.value);
-
     if ($event.target.value.length === 0) {
       this.inputFiltrado = this.inputFuente
     } else {

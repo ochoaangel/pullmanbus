@@ -26,7 +26,6 @@ export class PaymentConfirmationPage implements OnInit {
   }
 
   generarPdf() {
-    console.log('ddddddddddddddddddddddddddddddddddddddddddd');
   }
 
 }

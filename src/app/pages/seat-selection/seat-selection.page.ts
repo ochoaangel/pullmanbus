@@ -141,7 +141,6 @@ export class SeatSelectionPage implements OnInit {
     } else {
       this.mys.ticket['compras'] = this.compras;
       this.mys.ticket['total'] = this.tarifaTotal;
-      console.log('this.mys.ticket', this.mys.ticket);
       this.router.navigateByUrl('/purchase-detail');
     }
   }

@@ -11,6 +11,9 @@ export class IntegradorService {
     urlBase = 'https://pullmanapi.pasajeschile.cl'
     // urlBase = 'http://clamber.pullman.cl'    
 
+    // sinProxy= false
+    //urlBase = 'http://pullmanapi.pasajeschile.cl'
+    // urlBase = 'http://clamber.pullman.cl'    
     constructor(private http: HttpClient) { 
     }
 
@@ -30,8 +33,6 @@ export class IntegradorService {
         let urlFinal
         let dirProxy = '/integrador-web/rest/private/venta/obtenerServicio'
         this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy
-        // console.log('urlFinal', urlFinal);
-        // console.log('dataPost', ticket);
         return this.http.post<any[]>(urlFinal, ticket);
     }
     getPlanillaVertical(service: any): Observable<any[]> {
@@ -64,7 +65,7 @@ export class IntegradorService {
     
     getListMedioPago(): Observable<any> {        
         let urlFinal
-        let dirProxy = '/serviciosVenta/rest/Servicios/GetConvenio'
+        let dirProxy = '/administracion-web/rest/private/convenio/getConvenio'
         this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy
         return this.http.post<any>(urlFinal, {});
     }
@@ -78,14 +79,14 @@ export class IntegradorService {
 
     getDetalleConvenio(convenio): Observable<any> {        
         let urlFinal
-        let dirProxy = '/serviciosVenta/rest/Servicios/GetDetalleConvenioAtributo'
+        let dirProxy = '/administracion-web/rest/private/convenio/getDetalleConvenioAtributo'
         this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy
         return this.http.post<any>(urlFinal, convenio);
     }
 
     getDescuentoConvenio(convenio): Observable<any> {        
         let urlFinal
-        let dirProxy = '/serviciosVenta/rest/Servicios/GetDescuentoConvenio'
+        let dirProxy = '/administracion-web/rest/private/convenio/getDescuentoConvenio'
         this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy
         return this.http.post<any>(urlFinal, convenio);
     }

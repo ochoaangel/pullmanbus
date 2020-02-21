@@ -25,7 +25,7 @@
   
   
   <div class="cabeceraTitulo">
-    Usuario
+    Finalizar Compra
   </div>
   
   <ion-progress-bar type="indeterminate" *ngIf="loading>0"  color="secondary"></ion-progress-bar>
@@ -33,7 +33,7 @@
 <ion-content *ngIf="encabezado">
   <div style="width: 100%;height: 100%; background-color: var(--ion-color-primary);padding: 3vw;">
     <div style=" height: 75vh; background-color: white ;margin: 0px 0px 0px 0px;">
-      <ion-grid style="height: 100%;">
+      <ion-grid *ngIf="encabezado.estado=='ACTI' || encabezado.estado=='EPRO'" style="height: 100%;">
         <ion-row class=" ion-justify-content-center  ion-align-items-center" style="height: 100%">
           <ion-col size="12" style="text-align: center;">
 
@@ -50,54 +50,122 @@
               </ion-col>
             </ion-row>
 
-            <div style="background-color:#0247ac; font-size: 9px; color: white; margin-top: 10px;">
-              <ion-row>
+            <div >
+              <ion-row style="background-color:#FF621D; font-size: 12px; color: white; margin-top: 10px;"> 
                 <ion-col size="6">Código transacción </ion-col>
                 <ion-col size="6">Código de autorización </ion-col>
               </ion-row>
-              <ion-row>
-                <ion-col size="6"> codigo  </ion-col>
-                <ion-col size="6">codigo TRansbank </ion-col>
+              <ion-row style="font-size: 12px; margin-top: 10px;">
                 <ion-col size="6"> {{encabezado.codigo}}</ion-col>
                 <ion-col size="6"> {{encabezado.codigoTransbank}}</ion-col>
               </ion-row>
             </div>
 
-            <div style="background-color:#f2f2f2; font-size: 9px; color: black; margin-top: 10px;">
-              <ion-row class=" ion-no-padding ion-no-margin" style=" padding: 4px 0px 04px 0px;">
-                <ion-col class=" ion-no-padding ion-no-margin" size="4">Fecha transacción</ion-col>
-                <ion-col class=" ion-no-padding ion-no-margin" size="2">País </ion-col>
-                <ion-col class=" ion-no-padding ion-no-margin" size="2">Comercio </ion-col>
-                <ion-col class=" ion-no-padding ion-no-margin" size="4">Url comercio </ion-col>
+            <div >
+              <ion-row style="background-color:#FF621D; font-size: 12px; color: white; margin-top: 10px;">
+                <ion-col  size="6">Fecha transacción</ion-col>
+                <ion-col  size="6">País </ion-col>
               </ion-row>
-              <ion-row class=" ion-no-padding ion-no-margin" style="color: gray; padding: 0px 0px 4px 0px;">
-                  <ion-col class=" ion-no-padding ion-no-margin" size="4">22/11/2019</ion-col>
-                  <ion-col class=" ion-no-padding ion-no-margin" size="2">Venezuela </ion-col>
-                  <ion-col class=" ion-no-padding ion-no-margin" size="2">Pullman Bus </ion-col>
-                  <ion-col class=" ion-no-padding ion-no-margin" size="4">www.pullmanbus.com </ion-col>
+              <ion-row style="font-size: 12px; margin-top: 10px;">
+                  <ion-col  size="6">{{encabezado.fechaCompra}}</ion-col>
+                  <ion-col  size="6">Chile </ion-col>
+              </ion-row>
+            </div>
+            <div >
+              <ion-row style="background-color:#FF621D; font-size: 12px; color: white; margin-top: 10px;">
+                <ion-col  size="6">Comercio </ion-col>
+                <ion-col  size="6">Url comercio </ion-col>
+              </ion-row>
+              <ion-row style="font-size: 12px; margin-top: 10px;">
+                  <ion-col  size="6">Pullman Bus </ion-col>
+                  <ion-col  size="6">www.pullmanbus.com </ion-col>
               </ion-row>
             </div>
 
-            <div style="background-color:#f2f2f2; font-size: 9px; color: black; margin-top: 10px;">
-              <ion-row class=" ion-no-padding ion-no-margin" style=" padding: 4px 0px 04px 0px;">
-                <ion-col class=" ion-no-padding ion-no-margin" size="4" style="text-align:left ; padding-left: 10px;">Tipo pago</ion-col>
-                <ion-col class=" ion-no-padding ion-no-margin" size="8" style="text-align:left ; padding-left: 10px;">Descripción</ion-col>
+            <div >
+              <ion-row style="background-color:#FF621D; font-size: 12px; color: white; margin-top: 10px;">
+                <ion-col size="6">Tipo pago</ion-col>
+                <ion-col size="6">Nro Tarjeta</ion-col>
               </ion-row>
-              <ion-row class=" ion-no-padding ion-no-margin" style="color: gray; padding: 0px 0px 4px 0px;">
-                  <ion-col class=" ion-no-padding ion-no-margin" size="4" style="text-align:left ; padding-left: 10px;">Sin cuotas</ion-col>
-                  <ion-col class=" ion-no-padding ion-no-margin" size="8" style="text-align:left ; padding-left: 10px;">Pasaje </ion-col>
+              <ion-row style="font-size: 12px; margin-top: 10px;">
+                  <ion-col size="6" >{{encabezado.tipoPagoFormateado}}</ion-col>
+                  <ion-col size="6" >XXXX-XXXX-XXXX-{{encabezado.numeroTarjeta}}</ion-col>
               </ion-row>
             </div>
 
-
-            <ion-row>
-              <ion-col size="12" style="margin-top: 6vh; margin-bottom: 6vh; text-align: right;"><input type="button" class="ingresar"
-                  value="Descargar pasaje" (click)="btnDescargaPasaje()" /></ion-col>
-            </ion-row>
-
- 
+            <div >
+              <ion-row style="background-color:#FF621D; font-size: 12px; color: white; margin-top: 10px;">
+                <ion-col size="6">Nro Cuotas</ion-col>
+                <ion-col size="6">Monto(Pesos chilenos)</ion-col>
+              </ion-row>
+              <ion-row style="font-size: 12px; margin-top: 10px;">
+                  <ion-col size="6" >{{encabezado.numeroCuota}}</ion-col>
+                  <ion-col size="6" >{{encabezado.montoFormateado}}</ion-col>
+              </ion-row>
+            </div>
           </ion-col>
         </ion-row>
+      </ion-grid>
+      <ion-grid *ngIf="encabezado.estado=='PEND' || encabezado.estado=='RECH'" style="height: 100%;">
+        <ion-row class=" ion-justify-content-center  ion-align-items-center" style="height: 100%">
+          <ion-col size="12" style="text-align: center;">
+            <ion-row style="justify-content: center;">
+              <ion-text color="primary">
+                <h6>¡A ocurrido un problema en el pago!</h6>
+              </ion-text>
+            </ion-row>
+            <ion-row>
+              <ion-col size="12" style=" font-size: 10px;">
+                <div>Desea volver a realizar pago</div>
+                <!--<ion-button fill="clear" style="width: 50%; outline: none;"  routerLink="/purchase-detail">
+                  <ion-icon src="assets/icon/previous.svg"></ion-icon>
+                  <div style="display: inline;  text-align: right;padding-right: 7px;  text-transform: none">Volver</div>
+                </ion-button> -->
+              </ion-col>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <ion-grid *ngIf="encabezado.estado=='NUL'" style="height: 100%;">
+        <ion-row class=" ion-justify-content-center  ion-align-items-center" style="height: 100%">
+          <ion-col size="12" style="text-align: center;">
+            <ion-row style="justify-content: center;">
+              <ion-text color="primary">
+                <h6>¡Transacción fue anulada!</h6>
+              </ion-text>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </div>
+  <div style="width: 100%;background-color: #fe5200;padding: 3vw;">
+    <div style="background-color: white ;margin: 0px 0px 0px 0px;">
+      <ion-grid *ngIf="encabezado">
+        <ion-col size="12">
+          <ion-row style="justify-content: center;">
+            <ion-text color="primary">
+              <h6>Descarga tus boletos!</h6>
+            </ion-text>
+          </ion-row>
+          <div *ngIf="encabezado.boletos">
+            <ion-row style="background-color:#FF621D; font-size: 12px; color: white; margin-top: 10px;">
+              <ion-col size="8">Boleto</ion-col>
+              <ion-col size="4">Descarga</ion-col>
+            </ion-row>
+            <ion-row *ngFor="let bol of encabezado.boletos">
+              <ion-col size="8"  style="font-size: 12px; margin-top: 10px;" >{{bol.boleto}}</ion-col>
+              <ion-col size="4">
+                <!--input type="button" class="ingresar"
+                  value="Descargar" (click)="btnDescargaPasaje(bol.boleto,bol.codigo)" /-->
+                  <button  (click)="btnDescargaPasaje(bol.boleto,bol.codigo)" block>
+                    <img src="assets/images/download.png" width="24">
+              </button>
+              </ion-col>
+            </ion-row>
+            </div>
+        </ion-col>
+
       </ion-grid>
     </div>
   </div>

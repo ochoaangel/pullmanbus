@@ -82,36 +82,20 @@ export class TicketPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log(this.mys.ticket);
   }
 
   ionViewWillEnter() {
-    console.log('ticket Iiciando', this.mys.ticket);
     if (this.mys.ticket) {
-      console.log('con valores iniciales......................................');
       this.ticket = this.mys.ticket;
       this.way = this.mys.way;
 
       if (this.way === 'go') {
         this.compras = this.ticket.goCompras || [];
         this.allServices = this.ticket.goAllService || this.getServicesAndBus('go');
-        console.log('GOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO');
-        console.log('this.ticket', this.ticket);
-        console.log('this.compras', this.compras);
-        console.log('this.allServices', this.allServices);
-        console.log('finGOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO');
-
       } else {
         this.compras = this.ticket.backCompras || [];
         this.allServices = this.ticket.backAllService || this.getServicesAndBus('back');
-        console.log('BACKKKKKKKKKKKKKKKKKKKKKKKKKKK');
-        console.log('this.ticket', this.ticket);
-        console.log('this.compras', this.compras);
-        console.log('this.allServices', this.allServices);
-        console.log('finBACKKKKKKKKKKKKKKKKKKKKKKKKKKK');
       }
-
-      console.log('');
 
       this.comprasDetalles = this.ticket.comprasDetalles || [];
       this.comprasDetallesPosicion = this.ticket.comprasDetallesPosicion || [];
@@ -122,17 +106,7 @@ export class TicketPage implements OnInit {
       });
       this.tarifaTotal = total_general;
 
-      console.log('this.compras', this.compras);
-      console.log('this.allServices', this.allServices);
-      console.log('this.compras', this.compras);
-      console.log('this.ticket', this.ticket);
-      console.log('this.way', this.way);
-      console.log('total_general', total_general);
-
-
     } else {
-      // solo pruebas
-      console.log('Ejecutando con datos de PRUEBAS');
       this.getServicesAndBus('go');
       this.ticket = {
         origin: { nombre: "ALTO HOSPICIO", codigo: "01101002", region: null },
@@ -149,18 +123,7 @@ export class TicketPage implements OnInit {
 
     this.goDate = moment(this.ticket.goDate).format('DD/MM/YYYY');
     this.backDate = moment(this.ticket.backDate).format('DD/MM/YYYY');
-
-    console.log('this.ticket', this.ticket);
-    console.log('this.goDate', this.goDate);
-    console.log('this.backDate', this.backDate);
-    console.log('this.way', this.way);
-    console.log('this.allServices', this.allServices);
-
     // this.busOriginal = this.sumar20piso2(this.busOriginal);
-
-    // console.log('this.ticket(iniciando ticket)', this.ticket);
-    // console.log('this.way(iniciando ticket)', this.way);
-    // console.log('this.allServices', this.allServices);
   }
 
 
@@ -186,18 +149,12 @@ export class TicketPage implements OnInit {
 
     }
 
-    console.log(findService);
     this.integradorService.getService(findService).subscribe(data => {
       this.allServices = data;
       this.loadingService = false;
-      console.log(wayNow, 'this.allServices', data);
-
-
-
       this.allServices.forEach(servicio => {
         this.comprasDetalles.forEach(compra => {
           if (servicio.idServicio === compra.idServicio) {
-            console.log('iguales servicio.idServicio === compra.idServicio', compra.idServicio);
             servicio['my_comprasByService'] = compra['my_comprasByService']
             // servicio['my_comprasByServiceData'] = compra['my_comprasByServiceData']
           }
@@ -210,8 +167,6 @@ export class TicketPage implements OnInit {
   }
 
   // getBusFromService() {
-  //   console.log('Entrando a getBusFromService');
-  //   console.log('this.allServiceDsdBus1', this.allServices);
   //   // this.loadingBus = true;
   //   this.allServices.forEach(element => {
   //     this.httpClient.get<any>('assets/json/planillaVertical').subscribe(myBus => {
@@ -236,7 +191,6 @@ export class TicketPage implements OnInit {
     this.allServices[nServiceSeleccion]['checked'] = estadoPrevio;
     this.loadingBus = true;
     // });
-    console.log(nServiceSeleccion);
     if (this.serviceSelectedNumber !== nServiceSeleccion) {
       let servicio = {
         "idServicio": this.allServices[nServiceSeleccion].idServicio,
@@ -247,14 +201,10 @@ export class TicketPage implements OnInit {
         "fechaServicio": this.allServices[nServiceSeleccion].fechaServicio,
         "integrador": this.allServices[nServiceSeleccion].integrador
       }
-      console.log(servicio);
 
       setTimeout(() => {
         this.integradorService.getPlanillaVertical(servicio).subscribe(myBusFromApi => {
           // agrego bus y sumo 20 a cada asiento de piso 2
-          // console.log(myBusFromApi["1"]);
-          // console.log(myBusFromApi["2"]);
-          console.log('this.bus_RECIBIDO', myBusFromApi);
 
           // setTimeout(() => {
           let estadoPrevio = this.allServices[nServiceSeleccion]['checked'];
@@ -279,7 +229,6 @@ export class TicketPage implements OnInit {
 
 
           // this.compras = [];
-          console.log('this.bus_PROCESADO', this.bus);
           // verificar si se ha comprado en este servicio
           let nowIdService = this.allServices[nServiceSeleccion]['idServicio']
 
@@ -288,15 +237,6 @@ export class TicketPage implements OnInit {
               this.bus = element.bus
             }
           });
-
-
-          console.log(' this.allServices[nServiceSeleccion][idServicio]', this.allServices[nServiceSeleccion]['idServicio']);
-          console.log('this.comprasDetalles', this.comprasDetalles);
-          console.log('this.comprasDetallesPosicion', this.comprasDetallesPosicion);
-
-
-
-
           // if (this.ticket.goTotal) {
           //   this.tarifaTotal = this.ticket.goTotal;
           // } else {
@@ -304,8 +244,8 @@ export class TicketPage implements OnInit {
           // }
 
           // preparando tarifas
-          this.allServices[nServiceSeleccion].tarifaPrimerPiso ? this.tarifaPiso1 = parseInt(this.allServices[nServiceSeleccion].tarifaPrimerPiso.replace('.', '')) : this.tarifaPiso1 = null;
-          this.allServices[nServiceSeleccion].tarifaSegundoPiso ? this.tarifaPiso2 = parseInt(this.allServices[nServiceSeleccion].tarifaSegundoPiso.replace('.', '')) : this.tarifaPiso2 = null;
+          this.allServices[nServiceSeleccion].tarifaPrimerPisoInternet ? this.tarifaPiso1 = parseInt(this.allServices[nServiceSeleccion].tarifaPrimerPisoInternet.replace('.', '')) : this.tarifaPiso1 = null;
+          this.allServices[nServiceSeleccion].tarifaSegundoPisoInternet ? this.tarifaPiso2 = parseInt(this.allServices[nServiceSeleccion].tarifaSegundoPisoInternet.replace('.', '')) : this.tarifaPiso2 = null;
           // !this.tarifaPiso2 ? this.piso1 = true : this.piso1 = false;
           this.tarifaPiso1 ? this.piso1 = true : this.piso1 = false;
 
@@ -331,7 +271,6 @@ export class TicketPage implements OnInit {
 
     } else {
       this.allServices[this.serviceSelectedNumber]['checked'] = !this.allServices[this.serviceSelectedNumber]['checked'];
-      // console.log('CASO AISLADO');
       this.loadingBus = false;
       // this.allServices.forEach(element => {
       //   element['checked'] = false;
@@ -344,7 +283,6 @@ export class TicketPage implements OnInit {
 
 
   presionadoAsiento(piso: string, y: number, x: number) {
-    console.log('this.way', this.way);
 
     this.comprasByService? null:this.comprasByService = []
 
@@ -359,11 +297,6 @@ export class TicketPage implements OnInit {
       });
       this.mys.alertShow('¡Verifique!', 'alert', 'Máximo número de asientos permitidos de Regreso son 4');
     } else {
-      console.log('__this.comprasByService', this.comprasByService);
-      console.log('__this.compras', this.compras);
-      console.log('__this.comprasByService', this.comprasByService);
-      console.log('__this.comprasDetalles', this.comprasDetalles);
-      console.log('__this.allServices', this.allServices);
 
       let asiento = {
         "servicio": this.serviceSelected.idServicio,
@@ -374,7 +307,6 @@ export class TicketPage implements OnInit {
         "integrador": this.serviceSelected.integrador
       }
 
-      console.log(asiento);
 
       if (this.bus[piso][y][x]['estado'] === 'libre') {
         this.loadingSeat += 1
@@ -391,6 +323,7 @@ export class TicketPage implements OnInit {
               }
             })
           } else {
+            this.loadingSeat -= 2
             this.mys.alertShow('¡Verifique!', 'alert', 'Asiento no disponible, está siendo reservado por otro cliente.');
             this.bus[piso][y][x]['estado'] = 'ocupado';
           }
@@ -424,10 +357,6 @@ export class TicketPage implements OnInit {
       // });
       // this.tarifaTotal = total_general;
 
-      console.log('this.compras', this.compras);
-      console.log('this.comprasByService', this.comprasByService);
-      console.log('this.comprasDetalles', this.comprasDetalles);
-      console.log('this.allServices', this.allServices);
     } // fin de numeros asientos permitidos
   } // fin presionado
 
@@ -435,11 +364,8 @@ export class TicketPage implements OnInit {
   liberarAsiento(piso, y, x) {
     let tarifa;
     let texto = this.way + '_' + this.serviceSelected.idServicio + '_' + this.bus[piso][y][x]['asiento'];
-    // console.log('--texto',texto);
-    // console.log('this.comprasByService',this.comprasByService);
     let index3 = this.comprasByService.indexOf(texto)
     if (index3 !== -1) { this.comprasByService.splice(index3, 1); }
-    console.log('this.comprasByService',this.comprasByService);
 
     // this.loadingSeat += 1
 
@@ -451,14 +377,6 @@ export class TicketPage implements OnInit {
     // let texto = this.way + '_' + this.serviceSelected.idServicio + '_' + this.bus[piso][y][x]['asiento'];
 
     // variables totales
-    console.log('Verificandoooooooooooooooooooooooooooooooooo');
-    console.log('texto a buscar:', texto);
-    console.log('this.compras', this.compras);
-    console.log('this.comprasDetalles', this.comprasDetalles);
-    console.log('this.comprasDetallesPosicion', this.comprasDetallesPosicion);
-    console.log('this.comprasByService', this.comprasByService);
-    console.log('this.comprasByServiceData', this.comprasByServiceData);
-    console.log('-------------------------------------------------');
     let index = this.compras.indexOf(texto);
     if (index !== -1) { this.compras.splice(index, 1); this.comprasDetalles.splice(index, 1); this.comprasDetallesPosicion.splice(index, 1); }
     else {
@@ -472,12 +390,6 @@ export class TicketPage implements OnInit {
     let index2 = this.comprasByService.indexOf(texto)
     if (index2 !== -1) { this.comprasByService.splice(index2, 1); this.comprasByServiceData.splice(index2, 1); }
 
-    console.log('texto a buscar:', texto);
-    console.log('this.compras', this.compras);
-    console.log('this.comprasDetalles', this.comprasDetalles);
-    console.log('this.comprasDetallesPosicion', this.comprasDetallesPosicion);
-    console.log('this.comprasByService', this.comprasByService);
-    console.log('this.comprasByServiceData', this.comprasByServiceData);
 
 
     // // calculo la tarifa total
@@ -487,7 +399,6 @@ export class TicketPage implements OnInit {
     });
     this.tarifaTotal = total_general;
 
-    console.log('finVerificandoooooooooooooooooooooooooooooooooo');
   }
 
 
@@ -510,13 +421,9 @@ export class TicketPage implements OnInit {
     // this.compras.push(`piso_${piso}/fila_${x}/columna_${y}/asiento_${this.bus[piso][y][x]['asiento']}/precio_${tarifa}`);
     // this.allServices[this.serviceSelectedNumber]['my_Total'] = this.tarifaTotal;
     let texto = this.way + '_' + this.serviceSelected.idServicio + '_' + this.bus[piso][y][x]['asiento']
-    console.log('texto__1',texto);
     this.compras.push(texto);
-    console.log('texto__2',texto);
     this.comprasByService.push(texto);
-    console.log('texto__3',texto);
     this.comprasByServiceData.push({ asiento: this.bus[piso][y][x]['asiento'], piso, x, y });
-    console.log('texto__4',texto);
     // this.total
 
 
@@ -563,7 +470,6 @@ export class TicketPage implements OnInit {
 
 
   continuar() {
-    // console.log('this.compras',this.compras);
     if (this.compras.length === 0 && this.way === 'go') {
       this.mys.alertShow('¡Verifique!', 'alert', 'Debe seleccionar al menos un asiento de un servicio para continuar..');
     } else if (this.compras.length > 4 && this.way === 'go') {
@@ -597,15 +503,10 @@ export class TicketPage implements OnInit {
       // Guardo todos los cambios locales al service
       this.mys.ticket = this.ticket;
       this.mys.way = this.way;
-      console.log('this.mys.ticket(saliendo de ticket)', this.mys.ticket);
-      console.log('this.way(saliendo de ticket)', this.way);
 
       // if (this.mys.way === 'go' && this.ticket.goCompras) {
-      console.log('this.way', this.way);
-      console.log('this.mys.way', this.mys.way);
       // if (this.mys.way === 'go' && this.ticket.triptype === 'goBack') {
       if (this.mys.way === 'go' && this.ticket.tripType === 'goBack') {
-        console.log('redirigiendo a BACK y recarganto ticket');
         this.mys.way = 'back'
         this.ticket = null
         this.ionViewWillEnter()
@@ -619,7 +520,6 @@ export class TicketPage implements OnInit {
   }
 
   prueba() {
-    console.log('this.allServices', this.allServices);
   }
 
   atras() {
@@ -641,23 +541,16 @@ export class TicketPage implements OnInit {
 
 
   orderCambio() {
-    console.log('$event', this.orderSelected);
     switch (this.orderSelected) {
 
       case 'precioAsc':
-        console.log('this.allServices_Asc1', this.allServices);
         this.allServices = _.sortBy(this.allServices, (element) => {
-          // console.log(parseInt(element.tarifaPrimerPiso));
-          console.log(parseInt(element.tarifaPrimerPiso.replace(/./g, '')));
-          return element.tarifaPrimerPiso
+          return element.tarifaPrimerPisoInternet
         })
-        console.log('this.allServices_Asc2', this.allServices);
         break;
 
       case 'precioDsc':
-        console.log('this.allServices_Dsc1', this.allServices);
-        this.allServices = _.sortBy(this.allServices, 'tarifaPrimerPiso').reverse()
-        console.log('this.allServices_Dsc2', this.allServices);
+        this.allServices = _.sortBy(this.allServices, 'tarifaPrimerPisoInternet').reverse()
         break;
 
 

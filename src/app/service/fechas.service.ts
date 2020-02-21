@@ -19,8 +19,6 @@ export class FechasService {
 
   dateToString(fecha: any): any {
     let date;
-    // console.log('fecha',fecha);
-    // console.log('typeof(fecha)', typeof (fecha));
 
     switch (typeof (fecha)) {
       case 'string':
