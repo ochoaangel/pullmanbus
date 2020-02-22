@@ -187,7 +187,7 @@
                       <ion-label>Fecha de Ida:</ion-label> -->
                       <ion-datetime displayFormat="DD/MM/YYYY" placeholder="Seleccione.." cancelText="Cancelar"
                         doneText="Listo" mode="ios" [(ngModel)]="goDate" [min]="mingoDate" [max]="maxgoDate" 
-                        style="color: var(--ion-color-primary);font-size: 1.1rem;">
+                        style="color: var(--ion-color-primary);font-size: 1.1rem;" (ionChange)="cambioFechaIda()">
                       </ion-datetime>
                       <ion-icon style="margin:0; color: var(--ion-color-primary);;" slot="end" name="arrow-dropdown"></ion-icon>
                     </ion-item>
