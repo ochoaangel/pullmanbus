@@ -883,6 +883,7 @@ export class BuyYourTicketPage implements OnInit {
 
 
   cambioFechaIda() {
+    // (ionChange)="cambioFechaIda()"
     if (!this.backDate) {
       // caso que NO exista fecha de regreso definida
       // se define fecha minima y maxima de fecha de regreso
