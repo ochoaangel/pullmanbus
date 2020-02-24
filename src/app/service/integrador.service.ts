@@ -7,9 +7,13 @@ import { Observable } from 'rxjs';
 })
 export class IntegradorService {
 
-    sinProxy= false
+    sinProxy= true 
+    urlBase = 'https://pullmanapi.pasajeschile.cl'
+    // urlBase = 'http://clamber.pullman.cl'    
+
+    // sinProxy= false
     //urlBase = 'http://pullmanapi.pasajeschile.cl'
-    urlBase = 'http://clamber.pullman.cl'    
+    // urlBase = 'http://clamber.pullman.cl'    
     constructor(private http: HttpClient) { 
     }
 
@@ -109,3 +113,5 @@ export class IntegradorService {
     
     
 }
+
+// http://pullmanapi.pasajeschile.cl/

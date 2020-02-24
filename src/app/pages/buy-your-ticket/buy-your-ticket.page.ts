@@ -881,4 +881,21 @@ export class BuyYourTicketPage implements OnInit {
     // this.router.navigateByUrl(data.destino);
   }
 
+
+  cambioFechaIda() {
+    // (ionChange)="cambioFechaIda()"
+    if (!this.backDate) {
+      // caso que NO exista fecha de regreso definida
+      // se define fecha minima y maxima de fecha de regreso
+      this.minbackDate = this.goDate;
+      this.maxbackDate = moment(this.goDate).add(1, 'y').format();
+    } else if (moment(this.goDate).isAfter(this.backDate)) {
+      // caso que SI exista fecha de regreso definida
+      // se define fecha minima y maxima de fecha de regreso
+      this.backDate = null
+      this.minbackDate = this.goDate;
+      this.maxbackDate = moment(this.goDate).add(1, 'y').format();
+    }
+  }
+
 }

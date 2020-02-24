@@ -56,10 +56,10 @@ export class TransactionVoucherPage implements OnInit {
   ngOnInit() {
 
 
-    if (window.location.port === '8100' && !this.platform.is('cordova') ) {
-      this.isApp= false
-		} else {
-      this.isApp= true
+    if (window.location.port === '8100' && !this.platform.is('cordova')) {
+      this.isApp = false
+    } else {
+      this.isApp = true
     }
     
 // android	a device running Android
@@ -96,11 +96,11 @@ export class TransactionVoucherPage implements OnInit {
 /*     } else {
       
       this.platform.ready().then(() => {
-  
-        
-  
+
+
+
         if (this.postComprobante && this.respPDF) {
-  
+
           this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.READ_EXTERNAL_STORAGE)
             .then(status => {
               if (status.hasPermission) {
@@ -119,7 +119,7 @@ export class TransactionVoucherPage implements OnInit {
                   });
               }
             });
-            
+
         } else {
           this.mys.alertShow('Error!', 'alert', 'error al adquirir datos..')
         }
@@ -343,3 +343,13 @@ export class TransactionVoucherPage implements OnInit {
 
 
 }
+
+
+
+// SI desde Localhost sale http://pullmanapi.pasajeschile.cl   
+// NO desde Localhost sale http://pullmanapi.pasajeschile.cl/serviciosVenta/rest/Servicios/GetConvenio   
+
+
+
+// NO desde Localhost sale http://www.pullman.cl/    y obtiene todo slos puestos llenos
+// http://www.pullman.cl/serviciosVenta/rest/Servicios/GetConvenio
