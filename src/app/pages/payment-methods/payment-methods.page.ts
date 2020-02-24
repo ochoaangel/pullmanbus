@@ -143,13 +143,14 @@ export class PaymentMethodsPage implements OnInit {
           empresa: boleto.service.empresa,
           clase: boleto.piso == "1" ? boleto.service.idClaseBusPisoUno : boleto.service.idClaseBusPisoDos,
           convenio: this.datosConvenio != null ? this.datosConvenio.idConvenio : "",
-          datoConvenio: this.DatosFormulario.rut,
+          datoConvenio: this.datosConvenio != null ? this.datosConvenio.listaAtributo[0].valor : "",
           bus: boleto.piso == "1" ? boleto.service.busPiso1 : boleto.service.busPiso2,
           piso: boleto.piso,
           integrador: boleto.service.integrador
         });
       })
       this.loading += 1
+      console.log(guardarTransaccion)
       this.integradorService.guardarTransaccion(guardarTransaccion).subscribe(resp => {
         this.loading -= 1
         let valor: any = resp;
