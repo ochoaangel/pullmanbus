@@ -301,6 +301,7 @@ export class PaymentMethodsPage implements OnInit {
   };
 
   async popMenu(event) {
+    console.log('event', event);
     const popoverMenu = await this.popoverCtrl.create({
       component: PopMenuComponent,
       event,
@@ -312,7 +313,16 @@ export class PaymentMethodsPage implements OnInit {
 
     // recibo la variable desde el popover y la guardo en data
     const { data } = await popoverMenu.onWillDismiss();
-    this.router.navigateByUrl(data.destino);
+    if (data && data.destino) {
+      if (data.destino === '/login') {
+        this.mys.checkIfExistUsuario().subscribe(exist => {
+          exist ? this.router.navigateByUrl('/user-panel') : this.router.navigateByUrl('/login');
+        })
+      } else {
+        this.router.navigateByUrl(data.destino);
+      }
+    }
+
   }
 
   async popCart(event) {

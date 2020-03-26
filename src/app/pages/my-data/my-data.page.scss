@@ -1,5 +1,6 @@
 ion-header {
-  height: 15vh;
+  height: 17vh;
+  padding-top: 2vh;
   width: 100vw;
   background-color: var(--ion-color-primary);
   text-align: center;
@@ -11,7 +12,8 @@ ion-header {
   width: 100%;
   color: white;
   display: flex;
-  align-items: center;
+  // align-items: center;
+  align-items: flex-end;
   justify-content: center;
 }
 
@@ -60,17 +62,18 @@ ion-header {
   font-size: 2vh;
 }
 
-input {
+input,
+ion-input {
   display: inline-block;
   box-sizing: content-box;
-  // padding: 7px 10px;
-  border: 1px solid #ff9900;
+  padding: 7px 10px;
   -webkit-border-radius: 27px;
-  border-radius: 5px;
-  width: 92%;
-  height: 3vh;
-  padding-left: 5px;
-  font-size: 80%;
+  border-radius: 15px;
+  width: 60vw;
+  --padding-top: 0.3rem;
+  --padding-bottom: 0.3rem;
+  --background: white;
+  font-size: 0.8rem;
 }
 
 .ingresar {
@@ -105,6 +108,7 @@ ion-select {
   height: 7vw;
   padding: 4px 0px 0px 5px;
   border: 1px solid var(--ion-color-primary);
+  font-size: 0.8rem;
 }
 
 ion-checkbox {
@@ -112,4 +116,14 @@ ion-checkbox {
   width: 15px;
   margin-left: 7px;
   margin-top: -2px;
+}
+
+.overIonInput {
+  border: 1px solid var(--ion-color-primary);
+  // padding: 0px 1rem;
+  display: flex;
+  justify-content: center;
+  border-radius: 5px;
+  // margin: 0 10vw;
+  // margin-bottom: 1rem;
 }

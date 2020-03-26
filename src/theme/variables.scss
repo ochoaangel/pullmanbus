@@ -118,14 +118,24 @@ ion-select {
   }
 }
 
-.popMenu, .popLenguage{
-  --background: #0247ac;
+.popMenu {
+  --background: var(--ion-color-secondary);
   --width: 15rem;
-  --border-color: #0247ac;
+  --border-color: var(--ion-color-secondary);
+  ion-item {
+    --background: var(--ion-color-secondary);
+    --border-color: var(--ion-color-secondary);
+  }
 }
 
-.popCart{
-  --background: #0247ac;
+.popLenguage {
+  --background: var(--ion-color-secondary);
+  --width: 15rem;
+  --border-color: var(--ion-color-secondary);
+}
+
+.popCart {
+  --background: var(--ion-color-secondary);
   --width: 97vw;
-  --border-color: #0247ac;
+  --border-color: var(--ion-color-secondary);
 }

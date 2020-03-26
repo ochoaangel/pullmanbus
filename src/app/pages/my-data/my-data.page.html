@@ -7,27 +7,25 @@
     <div style="display: inline; width: 10%;border-color: white; border: solid 1px;margin: 5px;">Es</div>
 
     <div style="width: 60%; height: 100%; display: flex; align-items: center; justify-content: center;">
-      <img src="assets/images/titulo.png" style="height: 90%;object-fit: scale-down;position: relative; z-index: 10; ">
+      <img src="assets/images/titulo.png"
+        style="object-fit: scale-down;position: relative; z-index: 10;height: 7vh; margin-top: 0.6rem;margin-left: 8vw;">
     </div>
 
-    <div style="display: inline; width: 10%;">
-      <ion-icon name="md-cart" style="font-size: 25px;padding-top: 5px;"></ion-icon>
+    <div style="display: inline; width: 10%;text-align: -webkit-right; margin-left: 18px;" (click)="popCart($event)">
+      <img src="assets/icon/Carrito-compra.png" style="height: 1.8rem;">
     </div>
 
-    <div style="display: inline; width: 10%">
+    <div style="display: inline; width: 10%" (click)="popMenu($event)">
       <ion-icon name="md-menu" style="font-size: 25px;padding-top: 5px;"></ion-icon>
     </div>
 
     <div style="display: inline; width: 5%;"></div>
 
   </div>
+  <div class="cabeceraTitulo" *ngIf="!pageMyDataAsRegister"> Mis datos </div>
+  <div class="cabeceraTitulo" *ngIf="pageMyDataAsRegister"> Registrate </div>
 
-
-
-  <div class="cabeceraTitulo">
-    Mis datos
-  </div>
-
+  <ion-progress-bar type="indeterminate" *ngIf="loading" color="secondary"></ion-progress-bar>
 </ion-header>
 
 
@@ -38,112 +36,185 @@
         <ion-row class=" ion-justify-content-center  ion-align-items-center" style="height: 100%">
           <ion-col size="12" style="text-align: center;">
 
+            <form (ngSubmit)='validar(forma)' #forma='ngForm' novalidate=''>
 
-            <ion-row>
-              <ion-col size="12">
-                <ion-icon name="ios-person" style="font-size: 15vh;color: var(--ion-color-primary);"></ion-icon>
-                <ion-text color="primary">
-                  <h6>Carlos Pérez</h6>
-                </ion-text>
-              </ion-col>
-            </ion-row>
+              <ion-row>
+                <ion-col size="12">
+                  <ion-icon name="ios-person" style="font-size: 15vh;color: var(--ion-color-primary);"></ion-icon>
+                  <div style="font-size: 1.5rem; color: var(--ion-color-primary);">{{nombreUsuario | titlecase}}</div>
+                </ion-col>
+              </ion-row>
+
+              <ion-row>
+                <ion-col size="6" class="columnaDoble">
+                  <div class="overIonInput">
+                    <ion-input (keyup)="myKeyUp('rut')" placeholder="RUT" type="text" name="rut"
+                      pattern="^[0-9]+[-|‐]{1}[0-9kK]{1}$" [(ngModel)]="myData.rut" required #rut></ion-input>
+                  </div>
+                </ion-col>
+
+                <ion-col size="6" class="columnaDoble">
+                  <div class="overIonInput">
+                    <ion-input (keyup)="myKeyUp('nombre')" placeholder="Nombre" type="text" name="nombre" minlength="3"
+                      #nombre [(ngModel)]="myData.nombre" required></ion-input>
+                  </div>
+                </ion-col>
+              </ion-row>
 
 
+              <ion-row>
+                <ion-col size="6" class="columnaDoble">
+                  <div class="overIonInput">
+                    <ion-input (keyup)="myKeyUp('apellidoPaterno')" placeholder="Apellido paterno" type="text"
+                      name="apellidoPaterno" #apellidoPaterno [(ngModel)]="myData.apellidoPaterno" minlength="3"
+                      required>
+                    </ion-input>
+                  </div>
+                </ion-col>
+                <ion-col size="6" class="columnaDoble">
+                  <div class="overIonInput">
+                    <ion-input (keyup)="myKeyUp('apellidoMaterno')" placeholder="Apellido materno" type="text"
+                      name="apellidoMaterno" #apellidoMaterno [(ngModel)]="myData.apellidoMaterno" minlength="3"
+                      required>
+                    </ion-input>
+                  </div>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+
+                <ion-col class=" ion-no-padding ion-no-margin" size="6" class="columnaDoble"
+                  style="padding-left: 8px;padding-right: 3px;font-size: 80%;">
+                  <div style="display: inline-block;width: 30%;">
+
+                    <ion-select [interfaceOptions]="diaOptions" class=" ion-no-padding ion-no-margin" multiple="false"
+                      placeholder="d" cancel-text="Cancelar" [(ngModel)]="myData.dia" #dia name='dia' required>
+                      <ion-select-option value="{{i+1}}" *ngFor="let dummy of ' '.repeat(31).split(''), let i = index">
+                        {{i+1}}</ion-select-option>
+                    </ion-select>
+
+                  </div>
+                  <div style="display: inline-block;width: 30%;">
+                    <ion-select [interfaceOptions]="mesOptions" class=" ion-no-padding ion-no-margin" multiple="false"
+                      placeholder="m" cancel-text="Cancelar" [(ngModel)]="myData.mes" #mes name='mes' required>
+                      <ion-select-option value="{{i+1}}" *ngFor="let dummy of ' '.repeat(12).split(''), let i = index">
+                        {{i+1}}</ion-select-option>
+                    </ion-select>
+                  </div>
+                  <div style="display: inline-block;width: 40%;">
+                    <ion-select [interfaceOptions]="anioOptions" class=" ion-no-padding ion-no-margin" multiple="false"
+                      placeholder="aaaa" cancel-text="Cancelar" [(ngModel)]="myData.anio" #anio name='anio' required>
+                      <ion-select-option value="{{i+1+1900}}"
+                        *ngFor="let dummy of ' '.repeat(120).split(''), let i = index">{{i+1+1900}}</ion-select-option>
+                    </ion-select>
+                  </div>
+
+                </ion-col>
+
+                <ion-col size="6" class="columnaDoble">
+                  <ion-row style="justify-content: center;">
+
+                    <ion-radio-group name="genero" allow-empty-selection="false" [(ngModel)]="myData.genero">
+                      <div style="display: flex;flex-direction: row;justify-content: center;align-items: center;">
+                        <ion-radio mode="md" value='F' style="margin-left: 1vw;"></ion-radio>
+                        <div style="font-size: 0.8rem;">Femenino</div>
+                        <ion-radio mode="md" value='M' style="margin-left: 1vw;"></ion-radio>
+                        <div style="font-size: 0.8rem;">Masculino</div>
+                      </div>
+                    </ion-radio-group>
+
+                  </ion-row>
+                </ion-col>
+
+              </ion-row>
+
+              <ion-row>
+                <ion-col size="6" class="columnaDoble">
+                  <div class="overIonInput">
+                    <ion-input (keyup)="myKeyUp('email')" placeholder="email" type="email" name="email"
+                      pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" #email [(ngModel)]="myData.email"
+                      required style="font-size: 0.7rem;"></ion-input>
+                  </div>
+                </ion-col>
+                <ion-col size="6" class="columnaDoble">
+                  <div class="overIonInput" *ngIf="pageMyDataAsRegister">
+                    <ion-input (keyup)="myKeyUp('clave')" placeholder="Clave para iniciar sesión" type="text" name="clave"
+                      minlength="8" #clave [(ngModel)]="myData.clave" required></ion-input>
+                  </div>
+                </ion-col>
+              </ion-row>
+
+              <ion-row>
+                <ion-col size="6" class="columnaDoble">
+                  <div  style="color: var(--ion-color-primary); font-size: 0.6rem;">Teléfono</div >
+                  <div class="overIonInput">
+                    <ion-input (keyup)="myKeyUp('telefono')" placeholder="Teléfono" type="phone" name="telefono"
+                    pattern="^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$" #telefono
+                    [(ngModel)]="myData.telefono" required></ion-input>
+                  </div>
+                </ion-col>
+                <ion-col size="6" class="columnaDoble">
+                  <div style="color: var(--ion-color-primary); font-size: 0.6rem;">Celular</div>
+                  <div class="overIonInput">
+                    <ion-input (keyup)="myKeyUp('celular')" placeholder="Celular" type="phone" name="celular"
+                      pattern="^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$" #celular
+                      [(ngModel)]="myData.celular" required></ion-input>
+                  </div>
+                </ion-col>
+              </ion-row>
+
+              <ion-row>
+                <ion-col size="6" class="columnaDoble">
 
 
-
-            <ion-row>
-              <ion-col size="6" class="columnaDoble">
-                <div style="margin-bottom: 5px;"><input placeholder="RUT" /></div>
-              </ion-col>
-              <ion-col size="6" class="columnaDoble">
-                <div style="margin-bottom: 5px;"><input placeholder="Nombre" /></div>
-              </ion-col>
-            </ion-row>
+                  <!-- <div class="overIonInput">
+                    <ion-input (keyup)="myKeyUp('region')" placeholder="Región" type="text" name="region" minlength="3"
+                      #region [(ngModel)]="myData.region" required></ion-input>
+                  </div> -->
 
 
-            <ion-row>
-              <ion-col size="6" class="columnaDoble">
-                <div style="margin-bottom: 5px;"><input placeholder="Apellido paterno" /></div>
-              </ion-col>
-              <ion-col size="6" class="columnaDoble">
-                <div style="margin-bottom: 5px;"><input placeholder="Apellido materno" /></div>
-              </ion-col>
-            </ion-row>
+                  <ion-select [interfaceOptions]="regionOptions" class=" ion-no-padding ion-no-margin" multiple="false"
+                    placeholder="Seleccione Región" cancel-text="Cancelar" [(ngModel)]="myData.region" #region name='region' (ionChange)="cambioDeRegion()"
+                    required [disabled]="loading">
 
-            <ion-row>
-
-              <ion-col class=" ion-no-padding ion-no-margin" size="6" class="columnaDoble"
-                style="padding-left: 8px;padding-right: 3px;font-size: 80%;">
-                <div style="display: inline-block;width: 30%;">
-
-                  <ion-select class=" ion-no-padding ion-no-margin" multiple="false" placeholder="d" cancel-text="Cancelar">
-                    <ion-select-option value="{{i+1}}" *ngFor="let dummy of ' '.repeat(31).split(''), let i = index">
-                      {{i+1}}</ion-select-option>
+                    <ion-select-option *ngFor="let region of regionesAll" value="{{region.codigo}}">
+                      {{region.descripcion}}
+                    </ion-select-option>
                   </ion-select>
-                  
-                </div>
-                <div style="display: inline-block;width: 30%;">
-                  <ion-select class=" ion-no-padding ion-no-margin" multiple="false" placeholder="m"  cancel-text="Cancelar">
-                    <ion-select-option value="{{i+1}}" *ngFor="let dummy of ' '.repeat(12).split(''), let i = index">
-                      {{i+1}}</ion-select-option>
+
+
+
+
+                </ion-col>
+                <ion-col size="6" class="columnaDoble">
+
+                  <!-- <div class="overIonInput">
+                  <ion-input (keyup)="myKeyUp('ciudad')" placeholder="Ciudad" type="text" name="ciudad" minlength="3"
+                  #ciudad [(ngModel)]="myData.ciudad" required></ion-input>
+                </div> -->
+
+                  <ion-select [interfaceOptions]="cityOptions" class=" ion-no-padding ion-no-margin" multiple="false"
+                    placeholder="Seleccione Ciudad" cancel-text="Cancelar" [(ngModel)]="myData.ciudad" #ciudad name='ciudad'
+                    required [disabled]="loading|| !this.myData.region">
+                    <ion-select-option *ngFor="let ciudades of ciudadesEspecificas" value="{{ciudades.codigo}}">
+                      {{ciudades.nombre}}
+                    </ion-select-option>
                   </ion-select>
-                </div>
-                <div style="display: inline-block;width: 40%;">
-                  <ion-select class=" ion-no-padding ion-no-margin" multiple="false" placeholder="aaaa"  cancel-text="Cancelar">
-                    <ion-select-option value="{{i+1+1900}}"
-                      *ngFor="let dummy of ' '.repeat(120).split(''), let i = index">{{i+1+1900}}</ion-select-option>
-                  </ion-select>
-                </div>
 
-              </ion-col>
-
-              <ion-col size="6" class="columnaDoble">
-                <ion-row>
-                    <div style="display: inline-block;width: 10%;"><ion-checkbox mode="ios"></ion-checkbox></div>
-                    <div style="display: inline-block;width: 40%; font-size: 3vw;">Femenino</div>
-                    <div style="display: inline-block;width: 10%;"><ion-checkbox mode="ios"></ion-checkbox></div>
-                    <div style="display: inline-block;width: 40%; font-size: 3vw;">Masculino</div>
-                </ion-row>
-              </ion-col>
-
-            </ion-row>
-
-            <ion-row>
-              <ion-col size="6" class="columnaDoble">
-                <div style="margin-bottom: 5px;"><input placeholder="E-mail" /></div>
-              </ion-col>
-              <ion-col size="6" class="columnaDoble">
-                <div style="margin-bottom: 5px;"><input placeholder="Ocupación" /></div>
-              </ion-col>
-            </ion-row>
-
-            <ion-row>
-              <ion-col size="6" class="columnaDoble">
-                <div style="margin-bottom: 5px;"><input placeholder="Teléfono" /></div>
-              </ion-col>
-              <ion-col size="6" class="columnaDoble">
-                <div style="margin-bottom: 5px;"><input placeholder="Celular" /></div>
-              </ion-col>
-            </ion-row>
-
-            <ion-row>
-              <ion-col size="6" class="columnaDoble">
-                <div style="margin-bottom: 5px;"><input placeholder="Región" /></div>
-              </ion-col>
-              <ion-col size="6" class="columnaDoble">
-                <div style="margin-bottom: 5px;"><input placeholder="Ciudad" /></div>
-              </ion-col>
-            </ion-row>
+                </ion-col>
+              </ion-row>
 
 
 
-            <ion-row>
-              <ion-col size="12" style="margin-top: 2vh; margin-bottom: 2vh;"><input type="button" class="ingresar"
-                  value="Guardar cambios" routerLink="/user-panel" /></ion-col>
-            </ion-row>
+              <ion-row>
+                <ion-col size="12" style="margin-top: 2vh; margin-bottom: 2vh;">
+                  <input type="button" class="ingresar" value="Guardar cambios" type="submit"
+                    *ngIf="!pageMyDataAsRegister" />
+                  <input type="button" class="ingresar" value="Registrarse" type="submit"
+                    *ngIf="pageMyDataAsRegister" />
+                </ion-col>
+              </ion-row>
 
-
+            </form>
           </ion-col>
         </ion-row>
       </ion-grid>
@@ -152,17 +223,23 @@
 </ion-content>
 
 <ion-footer>
-    <div style=" width: 100%; display: flex;align-items: center;justify-content: center; background-color: var(--ion-color-primary);">
+  <div
+    style=" width: 100%; display: flex;align-items: center;justify-content: center; background-color: var(--ion-color-primary);">
 
-        <ion-button fill="clear" style="color: white;  width: 50%; outline: none;"  routerLink="/user-panel">
-          <ion-icon src="assets/icon/previous.svg"></ion-icon>
-          <div style="display: inline; text-align: left ;padding-left: 10px; text-transform: none;">Regresar</div>
-        </ion-button>
-  
-        <ion-button fill="clear" style="color: white;  width: 50%; outline: none;"  routerLink="/user-panel">
-          <div style="display: inline;  text-align: right;padding-right: 7px;  text-transform: none">Continuar</div>
-          <ion-icon src="assets/icon/previous.svg" style="transform: rotate(180deg);"></ion-icon>
-        </ion-button>
-  
-      </div>
+    <ion-button fill="clear" style="color: white;  width: 50%; outline: none;" routerLink="/login" *ngIf="pageMyDataAsRegister" >
+      <ion-icon src="assets/icon/previous.svg"></ion-icon>
+      <div style="display: inline; text-align: left ;padding-left: 10px; text-transform: none;">Regresar</div>
+    </ion-button>
+
+    <ion-button fill="clear" style="color: white;  width: 50%; outline: none;" routerLink="/user-panel" *ngIf="!pageMyDataAsRegister">
+      <ion-icon src="assets/icon/previous.svg"></ion-icon>
+      <div style="display: inline; text-align: left ;padding-left: 10px; text-transform: none;">Regresar</div>
+    </ion-button>
+
+    <!-- <ion-button fill="clear" style="color: white;  width: 50%; outline: none;" routerLink="/user-panel">
+      <div style="display: inline;  text-align: right;padding-right: 7px;  text-transform: none">Continuar</div>
+      <ion-icon src="assets/icon/previous.svg" style="transform: rotate(180deg);"></ion-icon>
+    </ion-button> -->
+
+  </div>
 </ion-footer>

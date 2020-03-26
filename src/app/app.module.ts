@@ -30,6 +30,9 @@ import { File, IWriteOptions } from "@ionic-native/file/ngx";
 import { FileTransfer, FileTransferObject } from "@ionic-native/file-transfer/ngx";
 import { FileOpener } from "@ionic-native/file-opener/ngx";
 import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
+import { FormsModule } from '@angular/forms';
+
+import { NativeStorage } from '@ionic-native/native-storage/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -41,6 +44,7 @@ import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
     ClickOutsideModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    FormsModule, 
     PipesModule,
     TextMaskModule,
     ComponentsModule,
@@ -60,7 +64,8 @@ import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
     FileTransfer,
     FileOpener,
     File,
-    AndroidPermissions
+    AndroidPermissions,
+    NativeStorage
   ],
   bootstrap: [AppComponent]
 })
