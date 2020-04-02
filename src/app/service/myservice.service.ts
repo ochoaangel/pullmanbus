@@ -46,6 +46,7 @@ export class MyserviceService {
     return new Observable((observer: Subscriber<any>) => {
 
       let plt = this.platform.platforms()
+      console.log('plt',plt);
 
       // let msj=''
       // plt.forEach(element => {
@@ -67,7 +68,7 @@ export class MyserviceService {
 
 
       } else {
-        // console.log('No tiene mobilweb');
+        console.log('No tiene mobilweb');
 
         this.nativeStorage.getItem('usuario')
           .then(
@@ -80,7 +81,11 @@ export class MyserviceService {
                 observer.complete()
               }
             },
-            error => { console.error('error al leer el LocalSorage:::', error) }
+            error => { 
+              observer.next(false)
+              observer.complete()
+              console.error('error al leer el LocalSorage:::', error)
+             }
           );
       }
 

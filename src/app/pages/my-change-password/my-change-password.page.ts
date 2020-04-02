@@ -89,11 +89,11 @@ export class MyChangePasswordPage implements OnInit {
 
 
   validar(forma) {
-    if (forma.invalid) { this.mys.alertShow('Verifique!! ', 'alert', 'Complete todos los campos y deben ser m�nimo 8 caracteres') }
+    if (forma.invalid) { this.mys.alertShow('Verifique!! ', 'alert', 'Complete todos los campos y deben ser mínimo 8 caracteres') }
     else if (this.myData.nuevaPassword !== this.myData.nuevaPasswordReperida) { this.mys.alertShow('Verifique!! ', 'alert', 'Las nuevas password deben coincidir..') }
     else {
 
-      console.log('Listoo, pas� las validaciones..');
+      console.log('Listoo, pasó las validaciones..');
       let dataFiltrada = this.myData
       delete dataFiltrada.nuevaPasswordReperida
       console.log('dataFiltrada', dataFiltrada);
@@ -105,7 +105,7 @@ export class MyChangePasswordPage implements OnInit {
           this.myData.nuevaPassword = ''
           this.myData.nuevaPasswordReperida = ''
           this.myData.password = ''
-          this.mys.alertShow('�xito!! ', 'checkmark-circle', resultado.mensaje)
+          this.mys.alertShow('Éxito!! ', 'checkmark-circle', resultado.mensaje)
         } else {
           this.myData.nuevaPassword = ''
           this.myData.nuevaPasswordReperida = ''

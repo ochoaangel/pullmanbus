@@ -98,7 +98,7 @@ export class UserPanelPage implements OnInit {
   cerrarSesion() {
     this.mys.closeSessionUser().subscribe(data => {
       console.log('ejetutada closeSessionUser ');
-      this.mys.alertShow('Éxito!!', 'checkmark-circle', ', Sesión cerrada exitosamente..')
+      this.mys.alertShow('Éxito!!', 'checkmark-circle', 'Sesión cerrada exitosamente..')
       this.router.navigateByUrl('/login')
     })
   }

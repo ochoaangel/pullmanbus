@@ -71,6 +71,7 @@ export class PaymentMethodsPage implements OnInit {
     guide: false,
     showMask: false,
     mask: ['+', /\d/, /\d/, /\d/, /\d/]
+    
   };
 
   ngOnInit() {

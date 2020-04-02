@@ -54,7 +54,7 @@ export class MyDataPage implements OnInit {
     },
     {
       codigo: "1",
-      descripcion: "I Tarapac�",
+      descripcion: "I Tarapacá",
       ordenGeografico: "2"
     },
     {
@@ -74,12 +74,12 @@ export class MyDataPage implements OnInit {
     },
     {
       codigo: "5",
-      descripcion: "V Valpara�so",
+      descripcion: "V Valparaíso",
       ordenGeografico: "6"
     },
     {
       codigo: "13",
-      descripcion: "Regi�n Metropolitana",
+      descripcion: "Región Metropolitana",
       ordenGeografico: "7"
     },
     {
@@ -94,17 +94,17 @@ export class MyDataPage implements OnInit {
     },
     {
       codigo: "8",
-      descripcion: "VIII Biob�o",
+      descripcion: "VIII Biobío",
       ordenGeografico: "10"
     },
     {
       codigo: "9",
-      descripcion: "IX La Araucan�a",
+      descripcion: "IX La Araucanía",
       ordenGeografico: "11"
     },
     {
       codigo: "14",
-      descripcion: "XIV Los R�os",
+      descripcion: "XIV Los Ríos",
       ordenGeografico: "12"
     },
     {
@@ -114,20 +114,20 @@ export class MyDataPage implements OnInit {
     },
     {
       codigo: "11",
-      descripcion: "XI Ays�n",
+      descripcion: "XI Aysén",
       ordenGeografico: "14"
     },
     {
       codigo: "12",
-      descripcion: "XII Magallanes y Ant�rtica",
+      descripcion: "XII Magallanes y Antártica",
       ordenGeografico: "15"
     }
   ]
 
-  diaOptions = { header: 'Elige el d�a' };
+  diaOptions = { header: 'Elige el día' };
   mesOptions = { header: 'Elige el mes' };
-  anioOptions = { header: 'Elige el a�o' };
-  regionOptions = { header: 'Elija su regi�n' };
+  anioOptions = { header: 'Elige el año' };
+  regionOptions = { header: 'Elija su región' };
   cityOptions = { header: 'Elija su ciudad' };
 
   constructor(
@@ -185,7 +185,7 @@ export class MyDataPage implements OnInit {
           this.myData.estado = usuario.usuario.estado
           this.myData.rut = usuario.usuario.rut
 
-          this.myData.dia = parseInt(moment(usuario.usuario.fechaNacimiento).format('D'))+1+''
+          this.myData.dia = parseInt(moment(usuario.usuario.fechaNacimiento).format('D')) + 1 + ''
           this.myData.mes = moment(usuario.usuario.fechaNacimiento).format('M')
           this.myData.anio = moment(usuario.usuario.fechaNacimiento).format('YYYY')
 
@@ -194,8 +194,8 @@ export class MyDataPage implements OnInit {
           this.myData.fechaActivacion = moment(usuario.usuario.fechaActivacion).format('DD-MM-YYYY')
 
           this.myData.genero = usuario.usuario.genero
-          this.myData.telefono = usuario.usuario.telefono ||'+56'
-          this.myData.celular = usuario.usuario.celular||'+56'
+          this.myData.telefono = usuario.usuario.telefono || '+56'
+          this.myData.celular = usuario.usuario.celular || '+56'
           this.myData.ciudad = usuario.usuario.ciudad
 
 
@@ -210,7 +210,7 @@ export class MyDataPage implements OnInit {
             this.nombreUsuario = 'Usuario'
             console.log('this.nombre2', this.nombreUsuario);
           }
-          console.log('this.myData',this.myData)
+          console.log('this.myData', this.myData)
         })
 
       } else {
@@ -226,10 +226,7 @@ export class MyDataPage implements OnInit {
     // console.log('presionado elemento: ', elemento);
   }
 
-  genero($event) {
-
-
-  }
+  genero($event) { }
 
   validar(forma) {
     console.log('forma', forma);
@@ -237,29 +234,29 @@ export class MyDataPage implements OnInit {
     console.log('this.myData.fechaNacimiento', this.myData.fechaNacimiento);
 
     if (forma.controls.rut.errors) {
-      this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca un RUT v�lido')      // } else if (rut valido) {console.log('rut valido');
+      this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca un RUT válido')      // } else if (rut valido) {console.log('rut valido');
     } else if (forma.controls.nombre.errors) {
-      this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca un nombre v�lido')
+      this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca un nombre válido')
     } else if (forma.controls.apellidoPaterno.errors) {
-      this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca un apellido Paterno v�lido')
+      this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca un apellido Paterno válido')
     } else if (forma.controls.apellidoMaterno.errors) {
-      this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca un apellido materno v�lido')
+      this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca un apellido materno válido')
     } else if (!moment(this.myData.fechaNacimiento, ["DD-MM-YYYY", "D-MM-YYYY", "D-M-YYYY", "DD-M-YYYY"], true).isValid()) {
-      this.mys.alertShow('Verifique!! ', 'alert', 'Verifique que la fecha de nacimiento sea v�lida')
+      this.mys.alertShow('Verifique!! ', 'alert', 'Verifique que la fecha de nacimiento sea válida')
     } else if (forma.controls.email.errors) {
-      this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca un email v�lido')
+      this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca un email válido')
     } else if (forma.controls.clave && forma.controls.clave.errors && this.pageMyDataAsRegister) {
-      this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca una clave para inicio de sesi�n v�lida y mayor o igual a 8 caracteres')
+      this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca una clave para inicio de sesión válida y mayor o igual a 8 caracteres')
       // } else if (forma.controls.ocupacion.errors) {
-      //   this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca ocupacion v�lida')
+      //   this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca ocupacion válida')
     } else if (forma.controls.telefono.errors && this.myData.telefono !== '+56') {
-      this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca un tel�fono v�lido')
+      this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca un teléfono válido')
     } else if (forma.controls.celular.errors) {
-      this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca un celular v�lido')
-    // } else if (forma.controls.region.errors) {
-    //   this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca una regi�n v�lida')
-    // } else if (forma.controls.ciudad.errors) {
-    //   this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca una ciudad v�lida')
+      this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca un celular válido')
+      // } else if (forma.controls.region.errors) {
+      //   this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca una regi�n válida')
+      // } else if (forma.controls.ciudad.errors) {
+      //   this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca una ciudad válida')
     } else {
       console.log('fiiiiiiiiinnnnnnnnnnnnnnnn');
 
@@ -286,59 +283,108 @@ export class MyDataPage implements OnInit {
 
       this.pageMyDataAsRegister ? objetoAenviar['clave'] = this.myData.clave : null
       console.log('guardado usuario:', objetoAenviar);
-      this.loading = true
-      this.integrador.usuarioGuardar(objetoAenviar).subscribe((respuesta: any) => {
-        this.loading = false
 
-        if (respuesta.exito) {
+      if (this.pageMyDataAsRegister) {
+
+        this.loading = true
+        this.integrador.usuarioInscribir(objetoAenviar).subscribe((respuesta: any) => {
+          this.loading = false
+
+          if (respuesta.exito) {
 
 
-          this.usuario.usuario.rut = objetoAenviar.rut
-          this.usuario.usuario.nombre = objetoAenviar.nombre
-          this.usuario.usuario.apellidoPaterno = objetoAenviar.apellidoPaterno
-          this.usuario.usuario.apellidoMaterno = objetoAenviar.apellidoMaterno
-          this.usuario.usuario.email = objetoAenviar.email
-          this.usuario.usuario.estado = objetoAenviar.estado
-          this.usuario.usuario.genero = objetoAenviar.genero
-          this.usuario.usuario.telefono = objetoAenviar.telefono
-          this.usuario.usuario.celular = objetoAenviar.celular
-          this.usuario.usuario.ciudad = objetoAenviar.ciudad
-          this.usuario.usuario.region = objetoAenviar.region
+            this.usuario.usuario.rut = objetoAenviar.rut
+            this.usuario.usuario.nombre = objetoAenviar.nombre
+            this.usuario.usuario.apellidoPaterno = objetoAenviar.apellidoPaterno
+            this.usuario.usuario.apellidoMaterno = objetoAenviar.apellidoMaterno
+            this.usuario.usuario.email = objetoAenviar.email
+            this.usuario.usuario.estado = objetoAenviar.estado
+            this.usuario.usuario.genero = objetoAenviar.genero
+            this.usuario.usuario.telefono = objetoAenviar.telefono
+            this.usuario.usuario.celular = objetoAenviar.celular
+            this.usuario.usuario.ciudad = objetoAenviar.ciudad
+            this.usuario.usuario.region = objetoAenviar.region
 
-          this.usuario.usuario.fechaNacimiento = parseInt(moment(objetoAenviar.fechaNacimiento, "DD-MM-YYYY").format('x'))
+            this.usuario.usuario.fechaNacimiento = parseInt(moment(objetoAenviar.fechaNacimiento, "DD-MM-YYYY").format('x'))
 
-          this.mys.closeSessionUser().subscribe(cerrado => {
-            this.mys.saveUsuario(this.usuario).subscribe(guardado => {
-              if (guardado) {
-                console.log('guardadooooooo');
-                this.mys.alertShow('�xito!!','checkmark-circle','Datos Actualizados exitosamente..')
-              } else {
-                this.mys.alertShow('�xito!!','alert','Hubo inconvenientes al actualizar los datos..')
-                console.log('NOOO guardadooooooo');
-              }
+            this.mys.closeSessionUser().subscribe(cerrado => {
+              this.mys.saveUsuario(this.usuario).subscribe(guardado => {
+                if (guardado) {
+                  console.log('guardadooooooo');
+                  this.mys.alertShow('Éxito!!', 'checkmark-circle', 'Datos Actualizados exitosamente..')
+                } else {
+                  this.mys.alertShow('Éxito!!', 'alert', 'Hubo inconvenientes al actualizar los datos..')
+                  console.log('NOOO guardadooooooo');
+                }
+              })
             })
-          })
 
-          console.log('this.usuario', this.usuario);
-
-
-        } else {
-          this.mys.alertShow('Error ', 'alert', respuesta.mensaje || 'Hubo un error al guardar los datos del usuario..')
-        }
+            console.log('this.usuario', this.usuario);
 
 
-        console.log('respuesta', respuesta);
-      })
+          } else {
+            this.mys.alertShow('Error ', 'alert', respuesta.mensaje || 'Hubo un error al guardar los datos del usuario..')
+          }
 
-      // console.log('objetoAenviar', objetoAenviar);
-      // console.log('this.myData', this.myData);
+
+          console.log('respuesta', respuesta);
+        })
+
+      } else {
+
+        this.loading = true
+        this.integrador.usuarioGuardar(objetoAenviar).subscribe((respuesta: any) => {
+          this.loading = false
+
+          if (respuesta.exito) {
+
+
+            this.usuario.usuario.rut = objetoAenviar.rut
+            this.usuario.usuario.nombre = objetoAenviar.nombre
+            this.usuario.usuario.apellidoPaterno = objetoAenviar.apellidoPaterno
+            this.usuario.usuario.apellidoMaterno = objetoAenviar.apellidoMaterno
+            this.usuario.usuario.email = objetoAenviar.email
+            this.usuario.usuario.estado = objetoAenviar.estado
+            this.usuario.usuario.genero = objetoAenviar.genero
+            this.usuario.usuario.telefono = objetoAenviar.telefono
+            this.usuario.usuario.celular = objetoAenviar.celular
+            this.usuario.usuario.ciudad = objetoAenviar.ciudad
+            this.usuario.usuario.region = objetoAenviar.region
+
+            this.usuario.usuario.fechaNacimiento = parseInt(moment(objetoAenviar.fechaNacimiento, "DD-MM-YYYY").format('x'))
+
+            this.mys.closeSessionUser().subscribe(cerrado => {
+              this.mys.saveUsuario(this.usuario).subscribe(guardado => {
+                if (guardado) {
+                  console.log('guardadooooooo');
+                  this.mys.alertShow('Éxito!!', 'checkmark-circle', 'Datos Actualizados exitosamente..')
+                } else {
+                  this.mys.alertShow('Éxito!!', 'alert', 'Hubo inconvenientes al actualizar los datos..')
+                  console.log('NOOO guardadooooooo');
+                }
+              })
+            })
+
+            console.log('this.usuario', this.usuario);
+
+
+          } else {
+            this.mys.alertShow('Error ', 'alert', respuesta.mensaje || 'Hubo un error al guardar los datos del usuario..')
+          }
+
+
+          console.log('respuesta', respuesta);
+        })
+
+      }
+
 
 
     }
 
   }// fin validar
 
-  
+
   async popMenu(event) {
     console.log('event', event);
     const popoverMenu = await this.popoverCtrl.create({

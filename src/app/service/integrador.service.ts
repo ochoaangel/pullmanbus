@@ -120,21 +120,28 @@ export class IntegradorService {
     //////////////////////// Gestion de Usuario ///////////////////////////////////////
     autenticarLogin(params: any): Observable<any[]> {
         let urlFinal
-        let dirProxy = '/srv-privado-viajaenbus-web/rest/usuario/autenticar'
+        let dirProxy = '/srv-privado-web/rest/usuario/autenticar'
         this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy
         return this.http.post<any[]>(urlFinal, params);
     }
     
     usuarioCambiarPassword(params: any): Observable<any[]> {
         let urlFinal
-        let dirProxy = '/srv-privado-viajaenbus-web/rest/usuario/cambioPassowrd'
+        let dirProxy = '/srv-privado-web/rest/usuario/cambioPassowrd'
         this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy
         return this.http.post<any[]>(urlFinal, params);
     }
     
     usuarioGuardar(params: any): Observable<any[]> {
         let urlFinal
-        let dirProxy = '/srv-privado-viajaenbus-web/rest/usuario/guardar'
+        let dirProxy = '/srv-privado-web/rest/usuario/guardarUsuario'
+        this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy
+        return this.http.post<any[]>(urlFinal, params);
+    }
+    
+    usuarioInscribir(params: any): Observable<any[]> {
+        let urlFinal
+        let dirProxy = '/srv-privado-web/rest/usuario/inscribirUsuario'
         this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy
         return this.http.post<any[]>(urlFinal, params);
     }
@@ -142,7 +149,7 @@ export class IntegradorService {
 
     usuarioRecuperarPassword(params: any): Observable<any[]> {
         let urlFinal
-        let dirProxy = '/srv-privado-viajaenbus-web/rest/usuario/recuperarPassword'
+        let dirProxy = '/srv-privado-web/rest/usuario/recuperarPassword'
         this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy
         return this.http.post<any[]>(urlFinal, params);
     }
@@ -152,14 +159,14 @@ export class IntegradorService {
     //////////////////////// Gestion de Boletos ///////////////////////////////////////
     buscarTransaccionPorEmail(params: any): Observable<any[]> {
         let urlFinal
-        let dirProxy = '/srv-privado-viajaenbus-web/rest/compra/buscarTransaccionPorEmail'
+        let dirProxy = '/srv-privado-web/rest/compra/obtenerTransacciones'
         this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy
         return this.http.post<any[]>(urlFinal, params);
     }
     
     buscarBoletoPorCodigo(params: any): Observable<any[]> {
         let urlFinal
-        let dirProxy = '/srv-privado-viajaenbus-web/rest/compra/buscarBoletoPorCodigo'
+        let dirProxy = '/srv-privado-web/rest/compra/obtenerBoleto'
         this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy
         return this.http.post<any[]>(urlFinal, params);
     }
@@ -175,14 +182,14 @@ export class IntegradorService {
     
     buscarRegionesRegistroDeUsuario(): Observable<any[]> {
         let urlFinal
-        let dirProxy = '/srv-privado-viajaenbus-web/rest/parametros/buscarRegiones'
+        let dirProxy = '/srv-privado-web/rest/parametros/obtenerRegiones'
         this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy
         return this.http.post<any[]>(urlFinal, '');
     }
     
     buscarCiudadPorRegionesRegistroDeUsuario(params: any): Observable<any[]> {
         let urlFinal
-        let dirProxy = '/srv-privado-viajaenbus-web/rest/parametros/buscarCiudadPorRegion'
+        let dirProxy = '/srv-privado-web/rest/parametros/obtenerCiudades'
         this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy
         return this.http.post<any[]>(urlFinal, params);
     }
@@ -191,14 +198,14 @@ export class IntegradorService {
     
     buscarBancos(): Observable<any[]> {
         let urlFinal
-        let dirProxy = '/srv-privado-viajaenbus-web/rest/parametros/obtenerBanco'
+        let dirProxy = '/srv-privado-web/rest/parametros/obtenerBanco'
         this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy
         return this.http.post<any[]>(urlFinal, '');
     }
     
     buscarTipoDeCuentas(params: any): Observable<any[]> {
         let urlFinal
-        let dirProxy = '/srv-privado-viajaenbus-web/rest/parametros/obtenerTipoCuenta'
+        let dirProxy = '/srv-privado-web/rest/parametros/obtenerTipoCuenta'
         this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy
         return this.http.post<any[]>(urlFinal, params);
     }
