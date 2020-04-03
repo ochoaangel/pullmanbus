@@ -129,6 +129,8 @@
 
               <ion-row>
                 <ion-col size="6" class="columnaDoble">
+                  <div style="color: var(--ion-color-primary); font-size: 0.6rem;">Correo</div>
+
                   <div class="overIonInput">
                     <ion-input (keyup)="myKeyUp('email')" placeholder="email" type="email" name="email"
                       pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" #email [(ngModel)]="myData.email"
@@ -136,13 +138,20 @@
                   </div>
                 </ion-col>
                 <ion-col size="6" class="columnaDoble">
-                  <div class="overIonInput" *ngIf="pageMyDataAsRegister">
+                  <!-- <div class="overIonInput" *ngIf="pageMyDataAsRegister">
                     <ion-input (keyup)="myKeyUp('clave')" placeholder="Clave para iniciar sesión" type="text" name="clave"
                       minlength="8" #clave [(ngModel)]="myData.clave" required></ion-input>
+                  </div> -->
+                  <div style="color: var(--ion-color-primary); font-size: 0.6rem;">Celular</div>
+                  <div class="overIonInput">
+                    <ion-input (keyup)="myKeyUp('celular')" placeholder="Celular" type="phone" name="celular"
+                      pattern="^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$" #celular
+                      [(ngModel)]="myData.celular" required></ion-input>
                   </div>
+
                 </ion-col>
               </ion-row>
-
+<!-- 
               <ion-row>
                 <ion-col size="6" class="columnaDoble">
                   <div  style="color: var(--ion-color-primary); font-size: 0.6rem;">Teléfono</div >
@@ -160,7 +169,7 @@
                       [(ngModel)]="myData.celular" required></ion-input>
                   </div>
                 </ion-col>
-              </ion-row>
+              </ion-row> -->
 
               <ion-row>
                 <ion-col size="6" class="columnaDoble">

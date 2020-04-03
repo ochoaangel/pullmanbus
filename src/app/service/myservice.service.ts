@@ -150,13 +150,16 @@ export class MyserviceService {
 
         localStorage.removeItem('usuario');
 
-        // console.log('tiene mobilweb');
+        console.log('tiene mobilweb');
         let usuariox = localStorage.getItem("usuario")
-
+        console.log('tiene mobilweb2');
+        
         if (usuariox) {
+          console.log('tiene mobilweb3');
           observer.next(false)
           observer.complete()
         } else {
+          console.log('tiene mobilweb4');
           observer.next(true)
           observer.complete()
         }

@@ -185,21 +185,27 @@ export class MyDataPage implements OnInit {
           this.myData.estado = usuario.usuario.estado
           this.myData.rut = usuario.usuario.rut
 
-          this.myData.dia = parseInt(moment(usuario.usuario.fechaNacimiento).format('D')) + 1 + ''
-          this.myData.mes = moment(usuario.usuario.fechaNacimiento).format('M')
-          this.myData.anio = moment(usuario.usuario.fechaNacimiento).format('YYYY')
 
-          this.myData.fechaNacimiento = moment(usuario.usuario.fechaNacimiento).format('L')
-          this.myData.fechaCreacion = moment(usuario.usuario.fechaCreacion).format('DD-MM-YYYY')
-          this.myData.fechaActivacion = moment(usuario.usuario.fechaActivacion).format('DD-MM-YYYY')
+
+
+          console.log('888888888888888888', usuario.usuario.fechaNacimiento);
+
+          this.myData.dia = moment.utc(usuario.usuario.fechaNacimiento).format('D')
+          // this.myData.dia = parseInt(moment.utc(usuario.usuario.fechaNacimiento).format('D')) + 1 + ''
+          this.myData.mes = moment.utc(usuario.usuario.fechaNacimiento).format('M')
+          this.myData.anio = moment.utc(usuario.usuario.fechaNacimiento).format('YYYY')
+
+          this.myData.fechaNacimiento = moment.utc(usuario.usuario.fechaNacimiento).toISOString()
+          this.myData.fechaCreacion = moment.utc(usuario.usuario.fechaCreacion).format('DD-MM-YYYY')
+          this.myData.fechaActivacion = moment.utc(usuario.usuario.fechaActivacion).format('DD-MM-YYYY')
 
           this.myData.genero = usuario.usuario.genero
           this.myData.telefono = usuario.usuario.telefono || '+56'
           this.myData.celular = usuario.usuario.celular || '+56'
-          this.myData.ciudad = usuario.usuario.ciudad
+          this.myData.ciudad = usuario.usuario.ciudadCodigo || ''
 
 
-          this.myData.region = usuario.usuario.region
+          this.myData.region = usuario.usuario.region || ''
 
           this.cambioDeRegion()
 
@@ -228,6 +234,7 @@ export class MyDataPage implements OnInit {
 
   genero($event) { }
 
+
   validar(forma) {
     console.log('forma', forma);
     this.myData.fechaNacimiento = `${this.myData.dia}-${this.myData.mes}-${this.myData.anio}`
@@ -245,13 +252,13 @@ export class MyDataPage implements OnInit {
       this.mys.alertShow('Verifique!! ', 'alert', 'Verifique que la fecha de nacimiento sea válida')
     } else if (forma.controls.email.errors) {
       this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca un email válido')
-    } else if (forma.controls.clave && forma.controls.clave.errors && this.pageMyDataAsRegister) {
-      this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca una clave para inicio de sesión válida y mayor o igual a 8 caracteres')
+      // } else if (forma.controls.clave && forma.controls.clave.errors && this.pageMyDataAsRegister) {
+      //   this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca una clave para inicio de sesión válida y mayor o igual a 8 caracteres')
       // } else if (forma.controls.ocupacion.errors) {
       //   this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca ocupacion válida')
-    } else if (forma.controls.telefono.errors && this.myData.telefono !== '+56') {
-      this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca un teléfono válido')
-    } else if (forma.controls.celular.errors) {
+      // } else if (forma.controls.telefono.errors && this.myData.telefono !== '+56') {
+      //   this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca un teléfono válido')
+    } else if (forma.controls.celular.errors && this.myData.celular !== '+56') {
       this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca un celular válido')
       // } else if (forma.controls.region.errors) {
       //   this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca una regi�n válida')
@@ -260,28 +267,77 @@ export class MyDataPage implements OnInit {
     } else {
       console.log('fiiiiiiiiinnnnnnnnnnnnnnnn');
 
+      //   {
+      //     "rut":"1-9",
+      //     "email":"ochoaangel@gmail.com",
+      //     "nombre":"angel",
+      //     "apellidoMaterno":"ochoa",
+      //     "apellidoPaterno":"perez",
+      //     "fechaNacimiento":"1980-01-01T03:00:00.000+0000",
+      //     "genero":"M",
+      //     "telefono":"45533681"
+      //   }
+
+      //   {
+      //     "rut": "1-9",
+      //     "email": "OCHOAANGEL@GMAIL.COM",
+      //     "nombre": "angel",
+      //     "apellidoMaterno": "ochoa",
+      //     "apellidoPaterno": "perez",
+      //     "fechaNacimiento": "1980-01-01T03:00:00.000+0000",
+      //     "genero": "M",
+      //     "telefono": "45533682",
+
+      //     "direccion": "Sininfo",
+      //     "ciudadCodigo": "00000000",
+      //     "estado": "ACT",
+      //     "fechaCreacion": "2020-04-03T03:00:00.000+0000",
+      //     "fechaActivacion": "2020-04-03T03:00:00.000+0000",
+      //     "password": "",
+      //     "nombreCompleto": "angel perez ochoa"
+      // }
+
+
+
+
+
+
+
+
       let objetoAenviar = {
         rut: this.myData.rut,
+        email: this.myData.email,
         nombre: this.myData.nombre,
         apellidoPaterno: this.myData.apellidoPaterno,
         apellidoMaterno: this.myData.apellidoMaterno,
-        email: this.myData.email,
-        estado: this.myData.estado,
-        fechaCreacion: this.myData.fechaCreacion,
-        fechaNacimiento: this.myData.fechaNacimiento,
-        password: this.myData.password,
-
+        fechaNacimiento: moment.utc(`${this.myData.dia}-${this.myData.mes}-${this.myData.anio}`, 'DD-MM-YYYY').format('YYYY-MM-DDTSS:SS:SS.SSS+SSSS'),
         genero: this.myData.genero,
         telefono: this.myData.telefono,
-        celular: this.myData.celular,
-        ciudad: this.myData.ciudad,
-        // profesion: this.m  yData.profesion,
-        // areaFono: this.myData.areaFono,
-        // areaCelular: this.myData.areaCelular,
-        region: this.myData.region
+
+
+
+        // estado: this.myData.estado,
+        // fechaCreacion: this.myData.fechaCreacion,
+        // password: this.myData.password,
+        // celular: this.myData.celular,
+        // ciudad: this.myData.ciudad,
+        // // profesion: this.m  yData.profesion,
+        // // areaFono: this.myData.areaFono,
+        // // areaCelular: this.myData.areaCelular,
+        // region: this.myData.region
       }
 
-      this.pageMyDataAsRegister ? objetoAenviar['clave'] = this.myData.clave : null
+      if (!this.pageMyDataAsRegister) {
+        // objetoAenviar['direccion'] = this.myData.direccion
+        objetoAenviar['ciudadCodigo'] = this.myData.ciudad
+        objetoAenviar['estado'] = this.myData.estado
+        objetoAenviar['fechaCreacion'] = moment.utc(this.myData.fechaCreacion, 'DD-MM-YYYY').format('YYYY-MM-DDTSS:SS:SS.SSS+SSSS')
+        objetoAenviar['fechaActivacion'] = moment.utc(this.myData.fechaActivacion, 'DD-MM-YYYY').format('YYYY-MM-DDTSS:SS:SS.SSS+SSSS')
+        objetoAenviar['direccion'] = 'Sininfo'
+        objetoAenviar['nombreCompleto'] = `${this.myData.nombre} ${this.myData.apellidoPaterno} ${this.myData.apellidoMaterno}`
+      }
+
+
       console.log('guardado usuario:', objetoAenviar);
 
       if (this.pageMyDataAsRegister) {
@@ -293,33 +349,39 @@ export class MyDataPage implements OnInit {
           if (respuesta.exito) {
 
 
-            this.usuario.usuario.rut = objetoAenviar.rut
-            this.usuario.usuario.nombre = objetoAenviar.nombre
-            this.usuario.usuario.apellidoPaterno = objetoAenviar.apellidoPaterno
-            this.usuario.usuario.apellidoMaterno = objetoAenviar.apellidoMaterno
-            this.usuario.usuario.email = objetoAenviar.email
-            this.usuario.usuario.estado = objetoAenviar.estado
-            this.usuario.usuario.genero = objetoAenviar.genero
-            this.usuario.usuario.telefono = objetoAenviar.telefono
-            this.usuario.usuario.celular = objetoAenviar.celular
-            this.usuario.usuario.ciudad = objetoAenviar.ciudad
-            this.usuario.usuario.region = objetoAenviar.region
+            // this.usuario.usuario.rut = objetoAenviar.rut
+            // this.usuario.usuario.nombre = objetoAenviar.nombre
+            // this.usuario.usuario.apellidoPaterno = objetoAenviar.apellidoPaterno
+            // this.usuario.usuario.apellidoMaterno = objetoAenviar.apellidoMaterno
+            // this.usuario.usuario.email = objetoAenviar.email
+            // // this.usuario.usuario.estado = objetoAenviar.estado
+            // this.usuario.usuario.genero = objetoAenviar.genero
+            // this.usuario.usuario.telefono = objetoAenviar.telefono
+            // // this.usuario.usuario.celular = objetoAenviar.celular
+            // // this.usuario.usuario.ciudad = objetoAenviar.ciudad
+            // // this.usuario.usuario.region = objetoAenviar.region
 
-            this.usuario.usuario.fechaNacimiento = parseInt(moment(objetoAenviar.fechaNacimiento, "DD-MM-YYYY").format('x'))
+            // this.usuario.usuario.fechaNacimiento = objetoAenviar.fechaNacimiento
 
             this.mys.closeSessionUser().subscribe(cerrado => {
-              this.mys.saveUsuario(this.usuario).subscribe(guardado => {
-                if (guardado) {
-                  console.log('guardadooooooo');
-                  this.mys.alertShow('Éxito!!', 'checkmark-circle', 'Datos Actualizados exitosamente..')
-                } else {
-                  this.mys.alertShow('Éxito!!', 'alert', 'Hubo inconvenientes al actualizar los datos..')
-                  console.log('NOOO guardadooooooo');
-                }
-              })
+
+              console.log('sssssssssssssss');
+              // this.mys.saveUsuario(this.usuario).subscribe(guardado => {
+              // if (guardado) {
+              //   console.log('guardadooooooo');
+              this.mys.alertShow('Éxito!!', 'checkmark-circle', 'Usuario Registrado Exitosamente,\nFué enviado por correo el password para iniciar sesión..')
+              this.router.navigateByUrl('/login')
+              // } else {
+              //   this.mys.alertShow('Éxito!!', 'alert', 'Hubo inconvenientes al actualizar los datos..')
+              //   console.log('NOOO guardadooooooo');
+              // }
             })
 
-            console.log('this.usuario', this.usuario);
+
+
+            // })
+
+            // console.log('this.usuario', this.usuario);
 
 
           } else {
@@ -344,20 +406,21 @@ export class MyDataPage implements OnInit {
             this.usuario.usuario.apellidoPaterno = objetoAenviar.apellidoPaterno
             this.usuario.usuario.apellidoMaterno = objetoAenviar.apellidoMaterno
             this.usuario.usuario.email = objetoAenviar.email
-            this.usuario.usuario.estado = objetoAenviar.estado
+            // this.usuario.usuario.estado = objetoAenviar.estado
             this.usuario.usuario.genero = objetoAenviar.genero
             this.usuario.usuario.telefono = objetoAenviar.telefono
-            this.usuario.usuario.celular = objetoAenviar.celular
-            this.usuario.usuario.ciudad = objetoAenviar.ciudad
-            this.usuario.usuario.region = objetoAenviar.region
+            // this.usuario.usuario.celular = objetoAenviar.celular
+            // this.usuario.usuario.ciudad = objetoAenviar.ciudad
+            // this.usuario.usuario.region = objetoAenviar.region
 
-            this.usuario.usuario.fechaNacimiento = parseInt(moment(objetoAenviar.fechaNacimiento, "DD-MM-YYYY").format('x'))
+            this.usuario.usuario.fechaNacimiento = objetoAenviar.fechaNacimiento
 
             this.mys.closeSessionUser().subscribe(cerrado => {
               this.mys.saveUsuario(this.usuario).subscribe(guardado => {
                 if (guardado) {
                   console.log('guardadooooooo');
                   this.mys.alertShow('Éxito!!', 'checkmark-circle', 'Datos Actualizados exitosamente..')
+                  this.ionViewWillEnter()
                 } else {
                   this.mys.alertShow('Éxito!!', 'alert', 'Hubo inconvenientes al actualizar los datos..')
                   console.log('NOOO guardadooooooo');
