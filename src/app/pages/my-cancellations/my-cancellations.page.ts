@@ -80,8 +80,8 @@ export class MyCancellationsPage implements OnInit {
         nombre: "Banco Internacional"
       },
       {
-        codigo: "Banco Ita� Chile",
-        nombre: "Banco Ita� Chile"
+        codigo: "Banco Itaú Chile",
+        nombre: "Banco Itaú Chile"
       },
       {
         codigo: "Banco Penta",
@@ -144,7 +144,9 @@ export class MyCancellationsPage implements OnInit {
       this.usuario = usuario
       this.loading++
       let data = { email: (usuario.usuario.email).toLowerCase() }
+
       this.integrador.buscarTransaccionPorEmail(data).subscribe(transacciones => {
+
         this.loading--
         this.transaccionesAll = transacciones
 
@@ -156,8 +158,12 @@ export class MyCancellationsPage implements OnInit {
             // buscando cada boleto de cada transaccion
             this.boletosAll = []
             this.loading++
-            this.integrador.buscarBoletoPorCodigo({ email: usuario.usuario.email, codigo: transaccion.codigo }).subscribe(boletos => {
+            // let myParams = { email: usuario.usuario.email, codigo: transaccion.codigo }
+            let myParams = { codigo: transaccion.codigo }
+            console.log('myParams',myParams);
+            this.integrador.buscarBoletoPorCodigo(myParams).subscribe(boletos => {
               this.loading--
+              console.log('------------------boletos',boletos);
 
               // boletos.forEach(boleto => {
               //   if (boleto.estado === 'ACT') {

@@ -422,7 +422,7 @@ export class MyDataPage implements OnInit {
                   this.mys.alertShow('Éxito!!', 'checkmark-circle', 'Datos Actualizados exitosamente..')
                   this.ionViewWillEnter()
                 } else {
-                  this.mys.alertShow('Éxito!!', 'alert', 'Hubo inconvenientes al actualizar los datos..')
+                  this.mys.alertShow('Error!!', 'alert', 'Hubo inconvenientes al actualizar los datos..')
                   console.log('NOOO guardadooooooo');
                 }
               })

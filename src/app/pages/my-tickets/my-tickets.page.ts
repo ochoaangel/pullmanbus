@@ -83,8 +83,8 @@ export class MyTicketsPage implements OnInit {
         nombre: "Banco Internacional"
       },
       {
-        codigo: "Banco Ita� Chile",
-        nombre: "Banco Ita� Chile"
+        codigo: "Banco Itaù Chile",
+        nombre: "Banco Itaù Chile"
       },
       {
         codigo: "Banco Penta",
@@ -160,7 +160,7 @@ export class MyTicketsPage implements OnInit {
             // buscando cada boleto de cada transaccion
             this.boletosAll = []
             this.loading++
-            this.integrador.buscarBoletoPorCodigo({ email: usuario.usuario.email, codigo: transaccion.codigo }).subscribe(boletos => {
+            this.integrador.buscarBoletoPorCodigo({ codigo: transaccion.codigo }).subscribe(boletos => {
               this.loading--
 
               boletos.forEach(boleto => {

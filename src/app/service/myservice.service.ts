@@ -110,7 +110,7 @@ export class MyserviceService {
           observer.next(JSON.parse(usuariox))
           observer.complete()
         } else {
-          observer.next(JSON.parse(usuariox))
+          observer.next()
           observer.complete()
         }
 

@@ -209,7 +209,41 @@ export class IntegradorService {
         this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy
         return this.http.post<any[]>(urlFinal, params);
     }
+    ///////////////////////////////////////////////////////////////////////////////////
+    //////////////////////// Canje Boletos ///////////////////////////////////////
     
+    
+    canjeValidar(params: any): Observable<any[]> {
+        let urlFinal
+        let dirProxy = '/srv-privado-web/rest/compra/validarBoletoCanje'
+        this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy
+        return this.http.post<any[]>(urlFinal, params);
+    }
+    
+    canjeBoleto(params): Observable<any[]> {
+        let urlFinal
+        let dirProxy = '/srv-privado-web/rest/compra/canjearBoletoCanje'
+        this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy
+        return this.http.post<any[]>(urlFinal, params);
+    }
+    
+    canjeGenerarComprobante(params: any): Observable<any[]> {
+        let urlFinal
+        let dirProxy = '/srv-privado-web/rest/compra/generarComprobante'
+        this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy
+        return this.http.post<any[]>(urlFinal, params);
+    }
+    
+    canjeBuscarInfoBoleto(params: any): Observable<any[]> {
+        let urlFinal
+        let dirProxy = '/srv-privado-web/rest/compra/buscarBoleto'
+        this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy
+        return this.http.post<any[]>(urlFinal, params);
+    }
+    
+    
+
+
     
 
 
