@@ -184,6 +184,7 @@ export class MyTicketsPage implements OnInit {
                 this.boletosAll.push(boleto)
               });
               this.boletosAll = _.sortBy(this.boletosAll, 'myEstado')
+              console.log('this.boletosAll',this.boletosAll,);
             })
           });
 
