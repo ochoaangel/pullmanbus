@@ -51,15 +51,15 @@ export class LoginPage implements OnInit {
     public mys: MyserviceService,
     private popoverCtrl: PopoverController,
   ) {
-    console.log('pasó por Constructor'); 
+    //console.log('pasó por Constructor'); 
   }
   
   ngOnInit() { 
-    console.log('pasó por ngOnInit'); 
+    //console.log('pasó por ngOnInit'); 
   }
   
   ionViewWillEnter() {
-    console.log('pasó por ionViewWillEnter'); 
+    //console.log('pasó por ionViewWillEnter'); 
     
     this.mys.checkIfExistUsuario().subscribe(exist => {
       exist ? this.router.navigateByUrl('/user-panel') : console.log('No existe usuario logeado..');
@@ -70,12 +70,12 @@ export class LoginPage implements OnInit {
   enviar() { }
 
   validar(forma) {
-    console.log(forma)
+    //console.log(forma)
     forma.controls.usuario.invalid ? this.showUsuarioError = true : null;
 
     if (forma.valid) {
       this.loading = true
-      console.log('this.mydata', this.mydata);
+      //console.log('this.mydata', this.mydata);
       this.integradorService.autenticarLogin(this.mydata).subscribe((data: any) => {
         this.loading = false
 
@@ -102,16 +102,16 @@ export class LoginPage implements OnInit {
 
   irAregistro() {
     this.router.navigateByUrl('/my-data')
-    console.log('Redirigiendo de login a Registro...');
+    //console.log('Redirigiendo de login a Registro...');
   }
 
   irAolvidoCntrasena() {
     this.router.navigateByUrl('/recover-password')
-    console.log('Redirigiendo de login a Olvidó contraseña...');
+    //console.log('Redirigiendo de login a Olvidó contraseña...');
   }
 
   async popMenu(event) {
-    console.log('event', event);
+    //console.log('event', event);
     const popoverMenu = await this.popoverCtrl.create({
       component: PopMenuComponent,
       event,

@@ -48,15 +48,15 @@
               <ion-row>
                 <ion-col size="6" class="columnaDoble">
                   <div class="overIonInput">
-                    <ion-input (keyup)="myKeyUp('rut')" placeholder="RUT" type="text" name="rut"
-                      pattern="^[0-9]+[-|‐]{1}[0-9kK]{1}$" [(ngModel)]="myData.rut" required #rut></ion-input>
+                    <ion-input  placeholder="RUT" type="text" name="rut"
+                      pattern="^[0-9]+[-|‐]{1}[0-9kK]{1}$" [(ngModel)]="myData.rut" required #rut clearOnEdit></ion-input>
                   </div>
                 </ion-col>
 
                 <ion-col size="6" class="columnaDoble">
                   <div class="overIonInput">
-                    <ion-input (keyup)="myKeyUp('nombre')" placeholder="Nombre" type="text" name="nombre" minlength="3"
-                      #nombre [(ngModel)]="myData.nombre" required></ion-input>
+                    <ion-input  placeholder="Nombre" type="text" name="nombre" minlength="3"
+                      #nombre [(ngModel)]="myData.nombre" required clearOnEdit></ion-input>
                   </div>
                 </ion-col>
               </ion-row>
@@ -65,18 +65,18 @@
               <ion-row>
                 <ion-col size="6" class="columnaDoble">
                   <div class="overIonInput">
-                    <ion-input (keyup)="myKeyUp('apellidoPaterno')" placeholder="Apellido paterno" type="text"
+                    <ion-input  placeholder="Apellido paterno" type="text"
                       name="apellidoPaterno" #apellidoPaterno [(ngModel)]="myData.apellidoPaterno" minlength="3"
-                      required>
-                    </ion-input>
+                      required clearOnEdit>
+                     </ion-input>
                   </div>
                 </ion-col>
                 <ion-col size="6" class="columnaDoble">
                   <div class="overIonInput">
-                    <ion-input (keyup)="myKeyUp('apellidoMaterno')" placeholder="Apellido materno" type="text"
+                    <ion-input  placeholder="Apellido materno" type="text"
                       name="apellidoMaterno" #apellidoMaterno [(ngModel)]="myData.apellidoMaterno" minlength="3"
-                      required>
-                    </ion-input>
+                      required clearOnEdit>
+                     </ion-input>
                   </div>
                 </ion-col>
               </ion-row>
@@ -132,21 +132,21 @@
                   <div style="color: var(--ion-color-primary); font-size: 0.6rem;">Correo</div>
 
                   <div class="overIonInput">
-                    <ion-input (keyup)="myKeyUp('email')" placeholder="email" type="email" name="email"
+                    <ion-input  placeholder="email" type="email" name="email"
                       pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" #email [(ngModel)]="myData.email"
-                      required style="font-size: 0.7rem;"></ion-input>
+                      required style="font-size: 0.7rem;" clearOnEdit></ion-input>
                   </div>
                 </ion-col>
                 <ion-col size="6" class="columnaDoble">
                   <!-- <div class="overIonInput" *ngIf="pageMyDataAsRegister">
-                    <ion-input (keyup)="myKeyUp('clave')" placeholder="Clave para iniciar sesión" type="text" name="clave"
-                      minlength="8" #clave [(ngModel)]="myData.clave" required></ion-input>
+                    <ion-input  placeholder="Clave para iniciar sesión" type="text" name="clave"
+                      minlength="8" #clave [(ngModel)]="myData.clave" required clearOnEdit></ion-input>
                   </div> -->
                   <div style="color: var(--ion-color-primary); font-size: 0.6rem;">Celular</div>
                   <div class="overIonInput">
-                    <ion-input (keyup)="myKeyUp('celular')" placeholder="Celular" type="phone" name="celular"
+                    <ion-input  placeholder="Celular" type="phone" name="celular"
                       pattern="^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$" #celular
-                      [(ngModel)]="myData.celular" required></ion-input>
+                      [(ngModel)]="myData.celular" required clearOnEdit></ion-input>
                   </div>
 
                 </ion-col>
@@ -156,7 +156,7 @@
                 <ion-col size="6" class="columnaDoble">
                   <div  style="color: var(--ion-color-primary); font-size: 0.6rem;">Teléfono</div >
                   <div class="overIonInput">
-                    <ion-input (keyup)="myKeyUp('telefono')" placeholder="Teléfono" type="phone" name="telefono"
+                    <ion-input  placeholder="Teléfono" type="phone" name="telefono"
                     pattern="^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$" #telefono
                     [(ngModel)]="myData.telefono" required></ion-input>
                   </div>
@@ -164,7 +164,7 @@
                 <ion-col size="6" class="columnaDoble">
                   <div style="color: var(--ion-color-primary); font-size: 0.6rem;">Celular</div>
                   <div class="overIonInput">
-                    <ion-input (keyup)="myKeyUp('celular')" placeholder="Celular" type="phone" name="celular"
+                    <ion-input  placeholder="Celular" type="phone" name="celular"
                       pattern="^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$" #celular
                       [(ngModel)]="myData.celular" required></ion-input>
                   </div>
@@ -176,7 +176,7 @@
 
 
                   <!-- <div class="overIonInput">
-                    <ion-input (keyup)="myKeyUp('region')" placeholder="Región" type="text" name="region" minlength="3"
+                    <ion-input  placeholder="Región" type="text" name="region" minlength="3"
                       #region [(ngModel)]="myData.region" required></ion-input>
                   </div> -->
 
@@ -197,7 +197,7 @@
                 <ion-col size="6" class="columnaDoble">
 
                   <!-- <div class="overIonInput">
-                  <ion-input (keyup)="myKeyUp('ciudad')" placeholder="Ciudad" type="text" name="ciudad" minlength="3"
+                  <ion-input  placeholder="Ciudad" type="text" name="ciudad" minlength="3"
                   #ciudad [(ngModel)]="myData.ciudad" required></ion-input>
                 </div> -->
 

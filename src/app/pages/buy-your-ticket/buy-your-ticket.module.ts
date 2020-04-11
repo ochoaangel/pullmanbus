@@ -7,6 +7,10 @@ import { IonicModule } from '@ionic/angular';
 import { BuyYourTicketPageRoutingModule } from './buy-your-ticket-routing.module';
 
 import { BuyYourTicketPage } from './buy-your-ticket.page';
+
+
+
+
 import { PipesModule } from 'src/app/pipes/pipes.module';
 import { PopMenuComponent } from 'src/app/components/pop-menu/pop-menu.component';
 import { ComponentsModule } from 'src/app/components/components.module';

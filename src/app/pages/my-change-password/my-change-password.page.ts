@@ -48,7 +48,7 @@ export class MyChangePasswordPage implements OnInit {
   }
 
   async popMenu(event) {
-    console.log('event', event);
+    //console.log('event', event);
     const popoverMenu = await this.popoverCtrl.create({
       component: PopMenuComponent,
       event,
@@ -93,14 +93,14 @@ export class MyChangePasswordPage implements OnInit {
     else if (this.myData.nuevaPassword !== this.myData.nuevaPasswordReperida) { this.mys.alertShow('Verifique!! ', 'alert', 'Las nuevas password deben coincidir..') }
     else {
 
-      console.log('Listoo, pasó las validaciones..');
+      //console.log('Listoo, pasó las validaciones..');
       let dataFiltrada = this.myData
       delete dataFiltrada.nuevaPasswordReperida
-      console.log('dataFiltrada', dataFiltrada);
+      //console.log('dataFiltrada', dataFiltrada);
       this.loading = true
       this.integradorService.usuarioCambiarPassword(dataFiltrada).subscribe((resultado: any) => {
         this.loading = false
-        console.log('resultado', resultado)
+        //console.log('resultado', resultado)
         if (resultado.exito) {
           this.myData.nuevaPassword = ''
           this.myData.nuevaPasswordReperida = ''

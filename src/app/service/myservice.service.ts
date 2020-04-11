@@ -46,17 +46,11 @@ export class MyserviceService {
     return new Observable((observer: Subscriber<any>) => {
 
       let plt = this.platform.platforms()
-      console.log('plt',plt);
 
-      // let msj=''
-      // plt.forEach(element => {
-      //   msj = msj + element+'/'
-      // });
-      // alert(msj)
 
 
       if (plt.includes('mobileweb') || plt.includes('desktop')) {
-        // console.log('tiene mobilweb');
+        // //console.log('tiene mobilweb');
 
         if (localStorage.getItem("usuario")) {
           observer.next(true)
@@ -68,7 +62,7 @@ export class MyserviceService {
 
 
       } else {
-        console.log('No tiene mobilweb');
+        //console.log('No tiene mobilweb');
 
         this.nativeStorage.getItem('usuario')
           .then(
@@ -103,7 +97,7 @@ export class MyserviceService {
 
       let plt = this.platform.platforms()
       if (plt.includes('mobileweb') || plt.includes('desktop')) {
-        console.log('tiene mobilweb');
+        //console.log('tiene mobilweb');
         let usuariox = localStorage.getItem("usuario")
 
         if (usuariox) {
@@ -116,7 +110,7 @@ export class MyserviceService {
 
 
       } else {
-        // console.log('No tiene mobilweb');
+        // //console.log('No tiene mobilweb');
 
         this.nativeStorage.getItem('usuario')
           .then(
@@ -145,28 +139,28 @@ export class MyserviceService {
     return new Observable((observer: Subscriber<any>) => {
 
       let plt = this.platform.platforms()
-      console.log('plt', plt);
+      //console.log('plt', plt);
       if (plt.includes('mobileweb') || plt.includes('desktop')) {
 
         localStorage.removeItem('usuario');
 
-        console.log('tiene mobilweb');
+        //console.log('tiene mobilweb');
         let usuariox = localStorage.getItem("usuario")
-        console.log('tiene mobilweb2');
+        //console.log('tiene mobilweb2');
         
         if (usuariox) {
-          console.log('tiene mobilweb3');
+          //console.log('tiene mobilweb3');
           observer.next(false)
           observer.complete()
         } else {
-          console.log('tiene mobilweb4');
+          //console.log('tiene mobilweb4');
           observer.next(true)
           observer.complete()
         }
 
 
       } else {
-        // console.log('No tiene mobilweb');
+        // //console.log('No tiene mobilweb');
 
         this.nativeStorage.remove('usuario')
           .then(
@@ -196,7 +190,7 @@ export class MyserviceService {
 
       let plt = this.platform.platforms()
       if (plt.includes('mobileweb') || plt.includes('desktop')) {
-        // console.log('tiene mobilweb');
+        // //console.log('tiene mobilweb');
 
         localStorage.setItem("usuario", JSON.stringify(datosUsuario));
 
@@ -210,14 +204,14 @@ export class MyserviceService {
 
 
       } else {
-        // console.log('No tiene mobilweb');
+        // //console.log('No tiene mobilweb');
 
 
         this.nativeStorage.setItem('usuario', datosUsuario)
           .then(
             data => {
               // Verificando que si se guard{o}
-              console.log('Stored first item!', data)
+              //console.log('Stored first item!', data)
 
               this.nativeStorage.getItem('usuario')
                 .then(

@@ -26,7 +26,7 @@
 
 
   <div class="cabeceraTitulo">
-    Anulaciones
+    Devoluciones
   </div>
   <ion-progress-bar type="indeterminate" *ngIf="loading>0" color="secondary"></ion-progress-bar>
 
@@ -46,7 +46,7 @@
 
               <ion-row>
                 <ion-text color="primary">
-                  <p>Debe seleccionar el o los boletos que desea anular. La anulación debe ser realizada por lo menos 4
+                  <p>Debe seleccionar el o los boletos que desea devolver. La devolución debe ser realizada por lo menos 4
                     hrs antes de la salida del servicio</p>
                   <p style="padding: 0 1rem;">* Si la compra se Realizó con tarjeta de crédito, se generará una reversa
                     en su cuenta, si se realizó
@@ -110,8 +110,8 @@
                   <ion-button
                     style="width: -webkit-fill-available; transform: none;--background:var(--ion-color-secondary)"
                     (click)="anular()" [disabled]="nBoletosSeleccionados<1">
-                    <div *ngIf="nBoletosSeleccionados>0">Anular seleccionados</div>
-                    <div *ngIf="nBoletosSeleccionados<1">Seleccione Boletos para anular</div>
+                    <div *ngIf="nBoletosSeleccionados>0">Devolver seleccionados</div>
+                    <div *ngIf="nBoletosSeleccionados<1">Seleccione Boletos para devolver</div>
                   </ion-button>
                 </ion-col>
               </ion-row>
@@ -124,7 +124,7 @@
                 Buscando boletos..
               </ion-col>
               <ion-col size="12" style="padding:0px 3vw" *ngIf="loading<1">
-                No se han encontraron boletos Activos para Anular..
+                No se han encontraron boletos Activos para devolver..
               </ion-col>
             </ion-row>
 

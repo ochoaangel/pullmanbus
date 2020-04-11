@@ -170,11 +170,11 @@ export class MyDataPage implements OnInit {
 
     this.mys.checkIfExistUsuario().subscribe(existe => {
       if (existe) {
-        console.log('Usuario Registrado, Entonces Modifica');
+        //console.log('Usuario Registrado, Entonces Modifica');
         this.pageMyDataAsRegister = false
         this.loading = true
         this.mys.getUser().subscribe(usuario => {
-          console.log('usuario', usuario);
+          //console.log('usuario', usuario);
           this.loading = false
           this.usuario = usuario
 
@@ -188,7 +188,7 @@ export class MyDataPage implements OnInit {
 
 
 
-          console.log('888888888888888888', usuario.usuario.fechaNacimiento);
+          //console.log('888888888888888888', usuario.usuario.fechaNacimiento);
 
           this.myData.dia = moment.utc(usuario.usuario.fechaNacimiento).format('D')
           // this.myData.dia = parseInt(moment.utc(usuario.usuario.fechaNacimiento).format('D')) + 1 + ''
@@ -211,37 +211,37 @@ export class MyDataPage implements OnInit {
 
           if (usuario.usuario.nombre && usuario.usuario.apellidoPaterno) {
             this.nombreUsuario = usuario.usuario.nombre + ' ' + usuario.usuario.apellidoPaterno
-            console.log('this.nombre', this.nombreUsuario);
+            //console.log('this.nombre', this.nombreUsuario);
           } else {
             this.nombreUsuario = 'Usuario'
-            console.log('this.nombre2', this.nombreUsuario);
+            //console.log('this.nombre2', this.nombreUsuario);
           }
-          console.log('this.myData', this.myData)
+          //console.log('this.myData', this.myData)
         })
 
       } else {
-        console.log('Usuario NO Registrado, Entonces Registra');
+        //console.log('Usuario NO Registrado, Entonces Registra');
         this.pageMyDataAsRegister = true
-        console.log('this.nombreUsuario', this.nombreUsuario);
+        //console.log('this.nombreUsuario', this.nombreUsuario);
       }
     })
   }
 
 
-  myKeyUp(elemento) {
-    // console.log('presionado elemento: ', elemento);
-  }
+  // myKeyUp(elemento) {
+  //   // //console.log('presionado elemento: ', elemento);
+  // }
 
   genero($event) { }
 
 
   validar(forma) {
-    console.log('forma', forma);
+    //console.log('forma', forma);
     this.myData.fechaNacimiento = `${this.myData.dia}-${this.myData.mes}-${this.myData.anio}`
-    console.log('this.myData.fechaNacimiento', this.myData.fechaNacimiento);
+    //console.log('this.myData.fechaNacimiento', this.myData.fechaNacimiento);
 
     if (forma.controls.rut.errors) {
-      this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca un RUT válido')      // } else if (rut valido) {console.log('rut valido');
+      this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca un RUT válido')      // } else if (rut valido) {//console.log('rut valido');
     } else if (forma.controls.nombre.errors) {
       this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca un nombre válido')
     } else if (forma.controls.apellidoPaterno.errors) {
@@ -265,7 +265,7 @@ export class MyDataPage implements OnInit {
       // } else if (forma.controls.ciudad.errors) {
       //   this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca una ciudad válida')
     } else {
-      console.log('fiiiiiiiiinnnnnnnnnnnnnnnn');
+      //console.log('fiiiiiiiiinnnnnnnnnnnnnnnn');
 
       //   {
       //     "rut":"1-9",
@@ -338,7 +338,7 @@ export class MyDataPage implements OnInit {
       }
 
 
-      console.log('guardado usuario:', objetoAenviar);
+      //console.log('guardado usuario:', objetoAenviar);
 
       if (this.pageMyDataAsRegister) {
 
@@ -365,15 +365,15 @@ export class MyDataPage implements OnInit {
 
             this.mys.closeSessionUser().subscribe(cerrado => {
 
-              console.log('sssssssssssssss');
+              //console.log('sssssssssssssss');
               // this.mys.saveUsuario(this.usuario).subscribe(guardado => {
               // if (guardado) {
-              //   console.log('guardadooooooo');
+              //   //console.log('guardadooooooo');
               this.mys.alertShow('Éxito!!', 'checkmark-circle', 'Usuario Registrado Exitosamente,\nFué enviado por correo el password para iniciar sesión..')
               this.router.navigateByUrl('/login')
               // } else {
               //   this.mys.alertShow('Éxito!!', 'alert', 'Hubo inconvenientes al actualizar los datos..')
-              //   console.log('NOOO guardadooooooo');
+              //   //console.log('NOOO guardadooooooo');
               // }
             })
 
@@ -381,7 +381,7 @@ export class MyDataPage implements OnInit {
 
             // })
 
-            // console.log('this.usuario', this.usuario);
+            // //console.log('this.usuario', this.usuario);
 
 
           } else {
@@ -389,7 +389,7 @@ export class MyDataPage implements OnInit {
           }
 
 
-          console.log('respuesta', respuesta);
+          //console.log('respuesta', respuesta);
         })
 
       } else {
@@ -418,17 +418,17 @@ export class MyDataPage implements OnInit {
             this.mys.closeSessionUser().subscribe(cerrado => {
               this.mys.saveUsuario(this.usuario).subscribe(guardado => {
                 if (guardado) {
-                  console.log('guardadooooooo');
+                  //console.log('guardadooooooo');
                   this.mys.alertShow('Éxito!!', 'checkmark-circle', 'Datos Actualizados exitosamente..')
                   this.ionViewWillEnter()
                 } else {
                   this.mys.alertShow('Error!!', 'alert', 'Hubo inconvenientes al actualizar los datos..')
-                  console.log('NOOO guardadooooooo');
+                  //console.log('NOOO guardadooooooo');
                 }
               })
             })
 
-            console.log('this.usuario', this.usuario);
+            //console.log('this.usuario', this.usuario);
 
 
           } else {
@@ -436,7 +436,7 @@ export class MyDataPage implements OnInit {
           }
 
 
-          console.log('respuesta', respuesta);
+          //console.log('respuesta', respuesta);
         })
 
       }
@@ -449,7 +449,7 @@ export class MyDataPage implements OnInit {
 
 
   async popMenu(event) {
-    console.log('event', event);
+    //console.log('event', event);
     const popoverMenu = await this.popoverCtrl.create({
       component: PopMenuComponent,
       event,
@@ -499,7 +499,7 @@ export class MyDataPage implements OnInit {
 
   cambioDeRegion() {
     this.loading = true
-    console.log('cambiooooo', this.myData.region);
+    //console.log('cambiooooo', this.myData.region);
     this.integrador.buscarCiudadPorRegionesRegistroDeUsuario({ codigo: this.myData.region }).subscribe(ciudades => {
       this.loading = false
       this.ciudadesEspecificas = ciudades

@@ -45,7 +45,7 @@ export class TransactionVoucherPage implements OnInit {
     this.integradorService.buscarEncabezado({ "orden": this.codigo }).subscribe((resp: any) => {
       this.loading -= 1
       this.encabezado = resp;
-      console.log(this.encabezado);
+      //console.log(this.encabezado);
       if(this.encabezado.estado=='ACTI'){
         this.encabezado.fechaCompra = new Date(this.encabezado.fechaCompra).toLocaleString(); 
       }

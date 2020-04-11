@@ -1,26 +1,31 @@
 <ion-header no-border>
 
   <div class="cabeceraGeneral">
-
     <div style="display: inline; width: 5%;"></div>
 
-    <div style="display: inline; width: 10%;border-color: white; border: solid 1px;margin: 5px;">Es</div>
-
-    <div style="width: 60%; height: 100%; display: flex; align-items: center; justify-content: center;">
-      <img src="assets/images/titulo.png" style="height: 90%;object-fit: scale-down;position: relative; z-index: 10; ">
+    <div style="display: inline; width: 10%;border-color: white; border: solid
+      1px;margin: 5px;">
+      Es
     </div>
 
-    <div style="display: inline; width: 10%;">
+    <div style="width: 60%; height: 100%; display: flex; align-items: center;
+      justify-content: center;" routerLink="/home">
+      <img src="assets/images/titulo.png" style="height: 90%;object-fit:
+        scale-down;position: relative; z-index: 10;" />
+    </div>
+
+    <div style="display: inline; width: 10%;" (click)="popCart($event)">
       <ion-icon name="md-cart" style="font-size: 25px;padding-top: 5px;"></ion-icon>
     </div>
 
-    <div style="display: inline; width: 10%">
+    <div style="display: inline; width: 10%" (click)="popMenu($event)">
       <ion-icon name="md-menu" style="font-size: 25px;padding-top: 5px;"></ion-icon>
     </div>
 
     <div style="display: inline; width: 5%;"></div>
-
   </div>
+
+
 
   <div class="cabeceraTitulo">
     Cambio de boleto
@@ -45,7 +50,7 @@
               <div style="display: flex; flex-direction: row; width: 100%;">
 
                 <div class="overIonInput" style="width: 60%;margin-right: 0.9rem;">
-                  <ion-input placeholder="Número de Boleto" type="text" name="boleto" #boleto
+                  <ion-input placeholder="Código de Boleto" type="text" name="boleto" #boleto
                     [(ngModel)]="myData.boleto" required [disabled]="loading>0">
                   </ion-input>
                 </div>
@@ -79,12 +84,12 @@
 
                 <div style="display: flex; flex-direction: row;font-size: 0.7rem; padding-bottom: 5px;">
                   <div style="width: 15%;text-align: right;font-weight: bold;padding-right: 5px;">Valor:</div>
-                  <div style="width: 35%;text-align: left;"> ${{ existeBoleto.valor.toLocaleString('de-DE')}}</div>
+                  <div style="width: 35%;text-align: left;"> ${{ valor.toLocaleString('de-DE')}}</div>
                   <div style="width: 15%;text-align: right;font-weight: bold;padding-right: 5px;">Estado:</div>
                   <div style="width: 35%;text-align: left;">{{existeBoleto.estadoActualDescripcion|titlecase}}</div>
                 </div>
 
-                <div style="display: flex; flex-direction: row;font-size: 0.7rem; padding-bottom: 5px;">
+                <div style="display: flex; flex-direction: row;font-size: 0.7rem; padding-bottom: 5px;" *ngIf="compra==='internet'">
                   <div style="width: 15%;text-align: right;font-weight: bold;padding-right: 5px;">Fecha:</div>
                   <div style="width: 35%;text-align: left;">{{existeBoleto.fechaEmbarcacion}}</div>
                   <div style="width: 15%;text-align: right;font-weight: bold;padding-right: 5px;">Hora:</div>
@@ -113,21 +118,21 @@
 
                 <ion-col class="ion-no-margin" size="12">
 
-                  <!-- compra por Ventanilla -->
+                  <!-- compra por Ventanilla  (email ruti)-->
                   <div *ngIf="compra==='ventanilla'">
                     <!-- email y rut -->
                     <ion-row>
                       <ion-col size="6" class="columnaDoble">
                         <div class="overIonInput">
                           <ion-input placeholder="Email" type="email" name="email"
-                            pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" #email [(ngModel)]="myData.email"
+                            pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" #email [(ngModel)]="myData.email" [disabled]="usuario"
                             required></ion-input>
                         </div>
                       </ion-col>
 
                       <ion-col size="6" class="columnaDoble">
                         <div class="overIonInput">
-                          <ion-input placeholder="RUT" type="text" name="rut" pattern="^[0-9]+[-|‐]{1}[0-9kK]{1}$"
+                          <ion-input placeholder="RUT" type="text" name="rut" pattern="^[0-9]+[-|‐]{1}[0-9kK]{1}$" [disabled]="usuario"
                             [(ngModel)]="myData.rut" required #rut></ion-input>
                         </div>
                       </ion-col>
@@ -137,16 +142,38 @@
                     <ion-row>
                       <ion-col size="6" class="columnaDoble">
                         <div class="overIonInput">
-                          <ion-input placeholder="Fecha viaje" type="text" name="fecha" [(ngModel)]="myData.fecha"
-                            required #fecha></ion-input>
+
+                            <ion-datetime
+                            name="fecha"
+                            #fecha
+                            displayFormat="DD/MM/YYYY"
+                            placeholder="Fecha Embarque"
+                            cancelText="Cancelar"
+                            doneText="Listo"
+                            mode="ios"
+                            [(ngModel)]="myData.fecha"
+                            [min]="ionActualDate"
+                            [max]="ionLimitTravelDate"
+                            ></ion-datetime>
+
                         </div>
                       </ion-col>
 
                       <ion-col size="6" class="columnaDoble">
                         <div class="overIonInput">
-                          <ion-input placeholder="Hora" type="text" name="hora" #hora [(ngModel)]="myData.hora"
-                            required>
-                          </ion-input>
+
+                          <ion-datetime
+                          name="hora"
+                          #hora
+                          displayFormat="HH:mm"
+                          placeholder="Hora Embarque"
+                          cancelText="Cancelar"
+                          doneText="Listo"
+                          mode="ios" 
+                          [(ngModel)]="myData.hora"
+                          ></ion-datetime>
+
+
                         </div>
                       </ion-col>
                     </ion-row>
@@ -154,13 +181,13 @@
                   </div>
 
 
-                  <!-- compra por Internet -->
+                  <!-- compra por Internet  (emaili rut)-->
                   <div *ngIf="compra==='internet'">
                     <ion-row>
                       <ion-col size="12" class="columnaDoble">
                         <div class="overIonInput">
                           <ion-input placeholder="Email" type="email" name="emaili"
-                            pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" #emaili [(ngModel)]="myData.emaili"
+                            pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" #emaili [(ngModel)]="myData.email" [disabled]="usuario"
                             required></ion-input>
                         </div>
                       </ion-col>
@@ -169,8 +196,8 @@
                     <ion-row>
                       <ion-col size="6" class="columnaDoble">
                         <div class="overIonInput">
-                          <ion-input placeholder="RUT" type="text" name="ruti" pattern="^[0-9]+[-|‐]{1}[0-9kK]{1}$"
-                            [(ngModel)]="myData.ruti" required #ruti></ion-input>
+                          <ion-input placeholder="RUT" type="text" name="ruti" pattern="^[0-9]+[-|‐]{1}[0-9kK]{1}$" [disabled]="usuario"
+                            [(ngModel)]="myData.rut" required #ruti></ion-input>
                         </div>
                       </ion-col>
                     </ion-row>
@@ -203,8 +230,7 @@
               <!-- boton Cambiar -->
               <ion-row>
                 <ion-col size="12">
-                  <input style="width: 40%;" type="button" class="ingresar" value="Cambiar" type="submit" name="cambiar"
-                    #cambiar />
+                  <input style="width: 40%;" type="button" class="ingresar" value="Cambiar" type="submit" />
                 </ion-col>
               </ion-row>
 

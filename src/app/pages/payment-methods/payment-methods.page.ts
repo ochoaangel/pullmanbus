@@ -82,9 +82,9 @@ export class PaymentMethodsPage implements OnInit {
 
 
     this.mys.getUser().subscribe(usuario => {
-      console.log('usuario', usuario);
+      //console.log('usuario', usuario);
       if (usuario) {
-        console.log('usuario Registrado');
+        //console.log('usuario Registrado');
         this.usuario = usuario
         this.registrado = true
 
@@ -97,11 +97,11 @@ export class PaymentMethodsPage implements OnInit {
 
 
       } else {
-        console.log('usuario NO registrado');
+        //console.log('usuario NO registrado');
         this.usuario = null
         this.registrado = false
       }
-      console.log('registrado', this.registrado);
+      //console.log('registrado', this.registrado);
     })
 
 
@@ -113,13 +113,13 @@ export class PaymentMethodsPage implements OnInit {
       this.ticket = JSON.parse(localStorage.getItem('ticket'))
       this.mys.total = this.totalFinal
       this.mys.ticket = this.ticket
-      console.log('Leido del Storage');
+      //console.log('Leido del Storage');
     } else {
       this.totalFinal = this.mys.total;
       this.ticket = this.mys.ticket;
       localStorage.setItem('totalFinal', JSON.stringify(this.totalFinal))
       localStorage.setItem('ticket', JSON.stringify(this.ticket))
-      console.log('Guardado en el localStorage');
+      //console.log('Guardado en el localStorage');
     }
 
 
@@ -208,9 +208,9 @@ export class PaymentMethodsPage implements OnInit {
         });
       })
       this.loading += 1
-      console.log('guardarTransaccion', guardarTransaccion)
+      //console.log('guardarTransaccion', guardarTransaccion)
       this.integradorService.guardarTransaccion(guardarTransaccion).subscribe(resp => {
-        console.log('resp', resp);
+        //console.log('resp', resp);
         this.loading -= 1
         let valor: any = resp;
         if (valor.exito) {
@@ -351,7 +351,7 @@ export class PaymentMethodsPage implements OnInit {
         this.totalFinal = Number(this.datosConvenio.totalApagar);
         this.mostrarTarifaAtachada = true;
         //this.datosConvenio.listaBoleto.forEach(boleto => {
-        //  console.log(boleto.valor);
+        //  //console.log(boleto.valor);
         //});
       } else {
         this.datosConvenio = null;
@@ -360,7 +360,7 @@ export class PaymentMethodsPage implements OnInit {
   };
 
   async popMenu(event) {
-    console.log('event', event);
+    //console.log('event', event);
     const popoverMenu = await this.popoverCtrl.create({
       component: PopMenuComponent,
       event,

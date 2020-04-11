@@ -160,10 +160,10 @@ export class MyCancellationsPage implements OnInit {
             this.loading++
             // let myParams = { email: usuario.usuario.email, codigo: transaccion.codigo }
             let myParams = { codigo: transaccion.codigo }
-            console.log('myParams',myParams);
+            //console.log('myParams', myParams);
             this.integrador.buscarBoletoPorCodigo(myParams).subscribe(boletos => {
               this.loading--
-              console.log('------------------boletos',boletos);
+              //console.log('------------------boletos', boletos);
 
               // boletos.forEach(boleto => {
               //   if (boleto.estado === 'ACT') {
@@ -176,6 +176,8 @@ export class MyCancellationsPage implements OnInit {
 
                 if (boleto.estado === 'NUL') {
                   estadoBoleto = 'ANULADO'
+                } else if (boleto.estado === 'CAN') {
+                  estadoBoleto = 'DEVUELTO'
                 } else {
                   // posibles casos activos
                   let actualDate = moment()
@@ -193,9 +195,9 @@ export class MyCancellationsPage implements OnInit {
                 boleto['myEstado'] = estadoBoleto
                 // this.boletosAll.push(boleto)
                 // estadoBoleto === 'ACTIVO' ? this.boletosAll.push(boleto):this.boletosAll.push(boleto)
-                estadoBoleto === 'ACTIVO' ? this.boletosAll.push(boleto):null
+                estadoBoleto === 'ACTIVO' ? this.boletosAll.push(boleto) : null
               });
-              console.log('this.boletosAll', this.boletosAll);
+              //console.log('this.boletosAll', this.boletosAll);
             })
           });
 
@@ -208,7 +210,7 @@ export class MyCancellationsPage implements OnInit {
 
 
   async popMenu(event) {
-    console.log('event', event);
+    //console.log('event', event);
     const popoverMenu = await this.popoverCtrl.create({
       component: PopMenuComponent,
       event,
@@ -248,8 +250,8 @@ export class MyCancellationsPage implements OnInit {
   }
 
   anular() {
-    // console.log('this.boletosAll', this.boletosAll);
-    // console.log('',);
+    // //console.log('this.boletosAll', this.boletosAll);
+    // //console.log('',);
     if (!this.myData.rutTitular) {
       this.mys.alertShow('Verifique', 'alert', 'Ingrese rut del Titular')
     } else if (!/^[0-9]+[-|-]{1}[0-9kK]{1}$/.test(this.myData.rutTitular)) {
@@ -262,7 +264,7 @@ export class MyCancellationsPage implements OnInit {
       this.mys.alertShow('Verifique', 'alert', 'Ingrese un numero de cuenta')
     } else {
 
-      console.log('listooooooxxxxx');
+      //console.log('listooooooxxxxx');
       // this.ionViewWillEnter()
       let contador = 0
       this.boletosAll.forEach(boleto => {
@@ -281,15 +283,15 @@ export class MyCancellationsPage implements OnInit {
             integrador: boleto.integrador
           }
           // alert(contador)
-          console.log('dataEnviadoParaAnular', contador, data);
+          //console.log('dataEnviadoParaAnular', contador, data);
           this.loading++
           this.integrador.anularBoleto(data).subscribe((resultado: any) => {
             this.loading--
-            console.log('resultado', resultado);
+            //console.log('resultado', resultado);
             if (resultado.exito) {
-              alert(`Boleto ${data.boleto} \nFecha:${boleto.imprimeVoucher.fechaSalida}\nHora:${boleto.imprimeVoucher.horaSalida}\nAsiento:${boleto.imprimeVoucher.asiento}\nBoleto Anulado Exitosamente`)
+              alert(`Boleto ${data.boleto} \nFecha:${boleto.imprimeVoucher.fechaSalida}\nHora:${boleto.imprimeVoucher.horaSalida}\nAsiento:${boleto.imprimeVoucher.asiento}\nBoleto devuelto Exitosamente`)
             } else {
-              alert(`Boleto ${data.boleto} \nFecha:${boleto.imprimeVoucher.fechaSalida}\nHora:${boleto.imprimeVoucher.horaSalida}\nAsiento:${boleto.imprimeVoucher.asiento}\n${resultado.mensaje || 'Error al Anular el Boleto, Verifique los datos e intente nuevamente..'}`)
+              alert(`Boleto ${data.boleto} \nFecha:${boleto.imprimeVoucher.fechaSalida}\nHora:${boleto.imprimeVoucher.horaSalida}\nAsiento:${boleto.imprimeVoucher.asiento}\n${resultado.mensaje || 'Error al devolver el Boleto, Verifique los datos e intente nuevamente..'}`)
             }
           })
 
@@ -308,16 +310,16 @@ export class MyCancellationsPage implements OnInit {
   }
 
   checkboxChanged() {
-    console.log('CHANGED_this.boletosAll', this.boletosAll);
+    //console.log('CHANGED_this.boletosAll', this.boletosAll);
     let nSelected = 0
     this.boletosAll.forEach(element => {
       element.selected ? nSelected++ : null
     });
     this.nBoletosSeleccionados = nSelected
-    console.log('nSelected', nSelected);
+    //console.log('nSelected', nSelected);
   }
 
-  actualizar(){
+  actualizar() {
     this.ionViewWillEnter()
   }
 

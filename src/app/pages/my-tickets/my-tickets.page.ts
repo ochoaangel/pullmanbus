@@ -168,6 +168,8 @@ export class MyTicketsPage implements OnInit {
 
                 if (boleto.estado === 'NUL') {
                   estadoBoleto = 'ANULADO'
+                } else if (boleto.estado === 'CAN') {
+                  estadoBoleto = 'DEVUELTO'
                 } else {
                   // posibles casos activos
                   let fechaSalida = moment(`${boleto.imprimeVoucher.fechaSalida} ${boleto.imprimeVoucher.horaSalida}`, 'DD/MM/YYYY HH:mm')
@@ -184,7 +186,7 @@ export class MyTicketsPage implements OnInit {
                 this.boletosAll.push(boleto)
               });
               this.boletosAll = _.sortBy(this.boletosAll, 'myEstado')
-              console.log('this.boletosAll',this.boletosAll,);
+              //console.log('this.boletosAll',this.boletosAll,);
             })
           });
 
@@ -197,7 +199,7 @@ export class MyTicketsPage implements OnInit {
 
 
   async popMenu(event) {
-    console.log('event', event);
+    //console.log('event', event);
     const popoverMenu = await this.popoverCtrl.create({
       component: PopMenuComponent,
       event,
@@ -237,8 +239,8 @@ export class MyTicketsPage implements OnInit {
   }
 
   anular() {
-    // console.log('this.boletosAll', this.boletosAll);
-    // console.log('',);
+    // //console.log('this.boletosAll', this.boletosAll);
+    // //console.log('',);
     if (!this.myData.rutTitular) {
       this.mys.alertShow('Verifique', 'alert', 'Ingrese rut del Titular')
     } else if (!/^[0-9]+[-|-]{1}[0-9kK]{1}$/.test(this.myData.rutTitular)) {
@@ -251,7 +253,7 @@ export class MyTicketsPage implements OnInit {
       this.mys.alertShow('Verifique', 'alert', 'Ingrese un numero de cuenta')
     } else {
 
-      console.log('listooooooxxxxx');
+      //console.log('listooooooxxxxx');
       // this.ionViewWillEnter()
       let contador = 0
       this.boletosAll.forEach(boleto => {
@@ -270,11 +272,11 @@ export class MyTicketsPage implements OnInit {
             integrador: boleto.integrador
           }
           // alert(contador)
-          // console.log('data', contador, data);
+          // //console.log('data', contador, data);
           this.loading++
           this.integrador.anularBoleto(data).subscribe((resultado: any) => {
             this.loading--
-            console.log('resultado', resultado);
+            //console.log('resultado', resultado);
             if (resultado.exito) {
               alert(`Boleto ${data.boleto} \nFecha:${boleto.imprimeVoucher.fechaSalida}\nHora:${boleto.imprimeVoucher.horaSalida}\nAsiento:${boleto.imprimeVoucher.horaSalida}\n${resultado.mensaje}`)
             } else {
@@ -297,13 +299,13 @@ export class MyTicketsPage implements OnInit {
   }
 
   checkboxChanged() {
-    console.log('CHANGED_this.boletosAll', this.boletosAll);
+    //console.log('CHANGED_this.boletosAll', this.boletosAll);
     let nSelected = 0
     this.boletosAll.forEach(element => {
       element.selected ? nSelected++ : null
     });
     this.nBoletosSeleccionados = nSelected
-    console.log('nSelected', nSelected);
+    //console.log('nSelected', nSelected);
   }
 
   actualizar() {
