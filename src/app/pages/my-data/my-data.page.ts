@@ -46,84 +46,7 @@ export class MyDataPage implements OnInit {
   }
 
   ciudadesEspecificas = []
-  regionesAll = [
-    {
-      codigo: "15",
-      descripcion: "XV Arica y Parinacota",
-      ordenGeografico: "1"
-    },
-    {
-      codigo: "1",
-      descripcion: "I Tarapacá",
-      ordenGeografico: "2"
-    },
-    {
-      codigo: "2",
-      descripcion: "II Antofagasta",
-      ordenGeografico: "3"
-    },
-    {
-      codigo: "3",
-      descripcion: "III Atacama",
-      ordenGeografico: "4"
-    },
-    {
-      codigo: "4",
-      descripcion: "IV Coquimbo",
-      ordenGeografico: "5"
-    },
-    {
-      codigo: "5",
-      descripcion: "V Valparaíso",
-      ordenGeografico: "6"
-    },
-    {
-      codigo: "13",
-      descripcion: "Región Metropolitana",
-      ordenGeografico: "7"
-    },
-    {
-      codigo: "6",
-      descripcion: "VI O'Higgins",
-      ordenGeografico: "8"
-    },
-    {
-      codigo: "7",
-      descripcion: "VII Maule",
-      ordenGeografico: "9"
-    },
-    {
-      codigo: "8",
-      descripcion: "VIII Biobío",
-      ordenGeografico: "10"
-    },
-    {
-      codigo: "9",
-      descripcion: "IX La Araucanía",
-      ordenGeografico: "11"
-    },
-    {
-      codigo: "14",
-      descripcion: "XIV Los Ríos",
-      ordenGeografico: "12"
-    },
-    {
-      codigo: "10",
-      descripcion: "X Los Lagos",
-      ordenGeografico: "13"
-    },
-    {
-      codigo: "11",
-      descripcion: "XI Aysén",
-      ordenGeografico: "14"
-    },
-    {
-      codigo: "12",
-      descripcion: "XII Magallanes y Antártica",
-      ordenGeografico: "15"
-    }
-  ]
-
+  regionesAll
   diaOptions = { header: 'Elige el día' };
   mesOptions = { header: 'Elige el mes' };
   anioOptions = { header: 'Elige el año' };
@@ -141,6 +64,11 @@ export class MyDataPage implements OnInit {
   ngOnInit() { }
 
   ionViewWillEnter() {
+
+    this.integrador.buscarRegionesRegistroDeUsuario().subscribe(regiones => {
+      this.regionesAll = regiones
+    })
+
 
 
     this.myData = {
@@ -174,7 +102,7 @@ export class MyDataPage implements OnInit {
         this.pageMyDataAsRegister = false
         this.loading = true
         this.mys.getUser().subscribe(usuario => {
-          //console.log('usuario', usuario);
+          // console.log('usuario', usuario);
           this.loading = false
           this.usuario = usuario
 
@@ -201,12 +129,12 @@ export class MyDataPage implements OnInit {
 
           this.myData.genero = usuario.usuario.genero
           this.myData.telefono = usuario.usuario.telefono || '+56'
-          this.myData.celular = usuario.usuario.celular || '+56'
+          this.myData.celular = usuario.usuario.telefono || '+56'
           this.myData.ciudad = usuario.usuario.ciudadCodigo || ''
+          this.myData.region = usuario.usuario.regionCodigo || ''
 
 
-          this.myData.region = usuario.usuario.region || ''
-
+console.log('myData',this.myData);
           this.cambioDeRegion()
 
           if (usuario.usuario.nombre && usuario.usuario.apellidoPaterno) {
@@ -312,24 +240,15 @@ export class MyDataPage implements OnInit {
         apellidoMaterno: this.myData.apellidoMaterno,
         fechaNacimiento: moment.utc(`${this.myData.dia}-${this.myData.mes}-${this.myData.anio}`, 'DD-MM-YYYY').format('YYYY-MM-DDTSS:SS:SS.SSS+SSSS'),
         genero: this.myData.genero,
-        telefono: this.myData.telefono,
-
-
-
-        // estado: this.myData.estado,
-        // fechaCreacion: this.myData.fechaCreacion,
-        // password: this.myData.password,
-        // celular: this.myData.celular,
-        // ciudad: this.myData.ciudad,
-        // // profesion: this.m  yData.profesion,
-        // // areaFono: this.myData.areaFono,
-        // // areaCelular: this.myData.areaCelular,
-        // region: this.myData.region
+        telefono: this.myData.celular,
+        ciudadCodigo : this.myData.ciudad || '',
+        regionCodigo : this.myData.region || '',
       }
+
+
 
       if (!this.pageMyDataAsRegister) {
         // objetoAenviar['direccion'] = this.myData.direccion
-        objetoAenviar['ciudadCodigo'] = this.myData.ciudad
         objetoAenviar['estado'] = this.myData.estado
         objetoAenviar['fechaCreacion'] = moment.utc(this.myData.fechaCreacion, 'DD-MM-YYYY').format('YYYY-MM-DDTSS:SS:SS.SSS+SSSS')
         objetoAenviar['fechaActivacion'] = moment.utc(this.myData.fechaActivacion, 'DD-MM-YYYY').format('YYYY-MM-DDTSS:SS:SS.SSS+SSSS')
@@ -338,7 +257,7 @@ export class MyDataPage implements OnInit {
       }
 
 
-      //console.log('guardado usuario:', objetoAenviar);
+      // console.log('guardado usuario:', objetoAenviar);
 
       if (this.pageMyDataAsRegister) {
 
@@ -347,21 +266,6 @@ export class MyDataPage implements OnInit {
           this.loading = false
 
           if (respuesta.exito) {
-
-
-            // this.usuario.usuario.rut = objetoAenviar.rut
-            // this.usuario.usuario.nombre = objetoAenviar.nombre
-            // this.usuario.usuario.apellidoPaterno = objetoAenviar.apellidoPaterno
-            // this.usuario.usuario.apellidoMaterno = objetoAenviar.apellidoMaterno
-            // this.usuario.usuario.email = objetoAenviar.email
-            // // this.usuario.usuario.estado = objetoAenviar.estado
-            // this.usuario.usuario.genero = objetoAenviar.genero
-            // this.usuario.usuario.telefono = objetoAenviar.telefono
-            // // this.usuario.usuario.celular = objetoAenviar.celular
-            // // this.usuario.usuario.ciudad = objetoAenviar.ciudad
-            // // this.usuario.usuario.region = objetoAenviar.region
-
-            // this.usuario.usuario.fechaNacimiento = objetoAenviar.fechaNacimiento
 
             this.mys.closeSessionUser().subscribe(cerrado => {
 
@@ -410,8 +314,8 @@ export class MyDataPage implements OnInit {
             this.usuario.usuario.genero = objetoAenviar.genero
             this.usuario.usuario.telefono = objetoAenviar.telefono
             // this.usuario.usuario.celular = objetoAenviar.celular
-            // this.usuario.usuario.ciudad = objetoAenviar.ciudad
-            // this.usuario.usuario.region = objetoAenviar.region
+            this.usuario.usuario.ciudadCodigo = objetoAenviar.ciudadCodigo
+            this.usuario.usuario.regionCodigo = objetoAenviar.regionCodigo
 
             this.usuario.usuario.fechaNacimiento = objetoAenviar.fechaNacimiento
 
@@ -507,27 +411,3 @@ export class MyDataPage implements OnInit {
   }
 } // fin clase ppal
 
-
-          ////////////////////////////////////////// Recibido de api
-          // nombre: "angelox"
-          // apellidoPaterno: "ochoa"
-          // apellidoMaterno: "alarcon"
-          // email: "ochoaangelox@gmail.com"
-          // estado: "ACT"
-          // fechaNacimiento: 435726000000
-          // fechaCreacion: 1586487600000
-          // fechaActivacion: 1586487600000
-          // password: "d1079ca8833395c01233c96f4ec4065221801037"
-          // rut: "11111111-1"
-          ////////////////////////////////////////// Enviado a la api
-          // {
-          //   "nombre":"angelox",
-          //   "apellidoPaterno":"ochoa",
-          //   "apellidoMaterno":"alarcon",
-          //   "email":"ochoaangelox@gmail.com",
-          //   "estado":"ACT",
-          //   "fechaCreacion":"10-04-2020",
-          //   "fechaNacimiento":"23-10-1983",
-          //   "password":"123456"
-          //   "rut":"11111111-1",
-          // }

@@ -184,7 +184,7 @@ export class IntegradorService {
         let urlFinal
         let dirProxy = '/srv-privado-web/rest/parametros/obtenerRegiones'
         this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy
-        return this.http.post<any[]>(urlFinal, '');
+        return this.http.post<any[]>(urlFinal, {});
     }
     
     buscarCiudadPorRegionesRegistroDeUsuario(params: any): Observable<any[]> {
