@@ -16,10 +16,10 @@ import { PopoverController } from '@ionic/angular';
 })
 export class MyDataPage implements OnInit {
 
-  pageMyDataAsRegister = false
-  nombreUsuario = 'Usuario'
-  usuario
-  loading = false
+  pageMyDataAsRegister = false;
+  nombreUsuario = 'Usuario';
+  usuario;
+  loading = false;
   myData = {
     rut: "",
     email: "",
@@ -33,8 +33,8 @@ export class MyDataPage implements OnInit {
     password: "",
     clave: "",
 
-    telefono: '+56',
-    celular: '+56',
+    telefono: '',
+    celular: '',
     region: '',
     ciudad: '',
 
@@ -43,10 +43,10 @@ export class MyDataPage implements OnInit {
     mes: '',
     anio: '',
     genero: ''
-  }
+  };
 
-  ciudadesEspecificas = []
-  regionesAll
+  ciudadesEspecificas = [];
+  regionesAll;
   diaOptions = { header: 'Elige el día' };
   mesOptions = { header: 'Elige el mes' };
   anioOptions = { header: 'Elige el año' };
@@ -66,8 +66,8 @@ export class MyDataPage implements OnInit {
   ionViewWillEnter() {
 
     this.integrador.buscarRegionesRegistroDeUsuario().subscribe(regiones => {
-      this.regionesAll = regiones
-    })
+      this.regionesAll = _.sortBy(regiones, 'descripcion');
+    });
 
 
 
@@ -94,65 +94,65 @@ export class MyDataPage implements OnInit {
       mes: '',
       anio: '',
       genero: ''
-    }
+    };
 
     this.mys.checkIfExistUsuario().subscribe(existe => {
       if (existe) {
-        //console.log('Usuario Registrado, Entonces Modifica');
-        this.pageMyDataAsRegister = false
-        this.loading = true
+        // console.log('Usuario Registrado, Entonces Modifica');
+        this.pageMyDataAsRegister = false;
+        this.loading = true;
         this.mys.getUser().subscribe(usuario => {
           // console.log('usuario', usuario);
-          this.loading = false
-          this.usuario = usuario
+          this.loading = false;
+          this.usuario = usuario;
 
-          this.myData.nombre = this.titleCase(usuario.usuario.nombre)
-          this.myData.apellidoPaterno = this.titleCase(usuario.usuario.apellidoPaterno)
-          this.myData.apellidoMaterno = this.titleCase(usuario.usuario.apellidoMaterno)
-          this.myData.email = usuario.usuario.email
-          this.myData.estado = usuario.usuario.estado
-          this.myData.rut = usuario.usuario.rut
-
-
+          this.myData.nombre = this.titleCase(usuario.usuario.nombre);
+          this.myData.apellidoPaterno = this.titleCase(usuario.usuario.apellidoPaterno);
+          this.myData.apellidoMaterno = this.titleCase(usuario.usuario.apellidoMaterno);
+          this.myData.email = usuario.usuario.email;
+          this.myData.estado = usuario.usuario.estado;
+          this.myData.rut = usuario.usuario.rut;
 
 
-          //console.log('888888888888888888', usuario.usuario.fechaNacimiento);
 
-          this.myData.dia = moment.utc(usuario.usuario.fechaNacimiento).format('D')
+
+          // console.log('888888888888888888', usuario.usuario.fechaNacimiento);
+
+          this.myData.dia = moment.utc(usuario.usuario.fechaNacimiento).format('D');
           // this.myData.dia = parseInt(moment.utc(usuario.usuario.fechaNacimiento).format('D')) + 1 + ''
-          this.myData.mes = moment.utc(usuario.usuario.fechaNacimiento).format('M')
-          this.myData.anio = moment.utc(usuario.usuario.fechaNacimiento).format('YYYY')
+          this.myData.mes = moment.utc(usuario.usuario.fechaNacimiento).format('M');
+          this.myData.anio = moment.utc(usuario.usuario.fechaNacimiento).format('YYYY');
 
-          this.myData.fechaNacimiento = moment.utc(usuario.usuario.fechaNacimiento).toISOString()
-          this.myData.fechaCreacion = moment.utc(usuario.usuario.fechaCreacion).format('DD-MM-YYYY')
-          this.myData.fechaActivacion = moment.utc(usuario.usuario.fechaActivacion).format('DD-MM-YYYY')
+          this.myData.fechaNacimiento = moment.utc(usuario.usuario.fechaNacimiento).toISOString();
+          this.myData.fechaCreacion = moment.utc(usuario.usuario.fechaCreacion).format('DD-MM-YYYY');
+          this.myData.fechaActivacion = moment.utc(usuario.usuario.fechaActivacion).format('DD-MM-YYYY');
 
-          this.myData.genero = usuario.usuario.genero
-          this.myData.telefono = usuario.usuario.telefono || '+56'
-          this.myData.celular = usuario.usuario.telefono || '+56'
-          this.myData.ciudad = usuario.usuario.ciudadCodigo || ''
-          this.myData.region = usuario.usuario.regionCodigo || ''
+          this.myData.genero = usuario.usuario.genero;
+          this.myData.telefono = usuario.usuario.telefono || '';
+          this.myData.celular = usuario.usuario.telefono || '';
+          this.myData.ciudad = usuario.usuario.ciudadCodigo || '';
+          this.myData.region = usuario.usuario.regionCodigo || '';
 
 
-console.log('myData',this.myData);
-          this.cambioDeRegion()
+// console.log('myData',this.myData);
+          this.cambioDeRegion();
 
           if (usuario.usuario.nombre && usuario.usuario.apellidoPaterno) {
-            this.nombreUsuario = usuario.usuario.nombre + ' ' + usuario.usuario.apellidoPaterno
-            //console.log('this.nombre', this.nombreUsuario);
+            this.nombreUsuario = usuario.usuario.nombre + ' ' + usuario.usuario.apellidoPaterno;
+            // console.log('this.nombre', this.nombreUsuario);
           } else {
-            this.nombreUsuario = 'Usuario'
-            //console.log('this.nombre2', this.nombreUsuario);
+            this.nombreUsuario = 'Usuario';
+            // console.log('this.nombre2', this.nombreUsuario);
           }
-          //console.log('this.myData', this.myData)
-        })
+          // console.log('this.myData', this.myData)
+        });
 
       } else {
-        //console.log('Usuario NO Registrado, Entonces Registra');
-        this.pageMyDataAsRegister = true
-        //console.log('this.nombreUsuario', this.nombreUsuario);
+        // console.log('Usuario NO Registrado, Entonces Registra');
+        this.pageMyDataAsRegister = true;
+        // console.log('this.nombreUsuario', this.nombreUsuario);
       }
-    })
+    });
   }
 
 
@@ -164,22 +164,22 @@ console.log('myData',this.myData);
 
 
   validar(forma) {
-    //console.log('forma', forma);
-    this.myData.fechaNacimiento = `${this.myData.dia}-${this.myData.mes}-${this.myData.anio}`
-    //console.log('this.myData.fechaNacimiento', this.myData.fechaNacimiento);
+    // console.log('forma', forma);
+    this.myData.fechaNacimiento = `${this.myData.dia}-${this.myData.mes}-${this.myData.anio}`;
+    // console.log('this.myData.fechaNacimiento', this.myData.fechaNacimiento);
 
     if (forma.controls.rut.errors) {
-      this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca un RUT válido')      // } else if (rut valido) {//console.log('rut valido');
+      this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca un RUT válido');      // } else if (rut valido) {//console.log('rut valido');
     } else if (forma.controls.nombre.errors) {
-      this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca un nombre válido')
+      this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca un nombre válido');
     } else if (forma.controls.apellidoPaterno.errors) {
-      this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca un apellido Paterno válido')
+      this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca un apellido Paterno válido');
     } else if (forma.controls.apellidoMaterno.errors) {
-      this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca un apellido materno válido')
+      this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca un apellido materno válido');
     } else if (!moment(this.myData.fechaNacimiento, ["DD-MM-YYYY", "D-MM-YYYY", "D-M-YYYY", "DD-M-YYYY"], true).isValid()) {
-      this.mys.alertShow('Verifique!! ', 'alert', 'Verifique que la fecha de nacimiento sea válida')
+      this.mys.alertShow('Verifique!! ', 'alert', 'Verifique que la fecha de nacimiento sea válida');
     } else if (forma.controls.email.errors) {
-      this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca un email válido')
+      this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca un email válido');
       // } else if (forma.controls.clave && forma.controls.clave.errors && this.pageMyDataAsRegister) {
       //   this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca una clave para inicio de sesión válida y mayor o igual a 8 caracteres')
       // } else if (forma.controls.ocupacion.errors) {
@@ -187,13 +187,13 @@ console.log('myData',this.myData);
       // } else if (forma.controls.telefono.errors && this.myData.telefono !== '+56') {
       //   this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca un teléfono válido')
     } else if (forma.controls.celular.errors && this.myData.celular !== '+56') {
-      this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca un celular válido')
+      this.mys.alertShow('Verifique!! ', 'alert','Verifique el celular e intente nuevamente..<br> ingrese de 6 a 9 caracteres sin código de país');
       // } else if (forma.controls.region.errors) {
       //   this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca una regi�n válida')
       // } else if (forma.controls.ciudad.errors) {
       //   this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca una ciudad válida')
     } else {
-      //console.log('fiiiiiiiiinnnnnnnnnnnnnnnn');
+      // console.log('fiiiiiiiiinnnnnnnnnnnnnnnn');
 
       //   {
       //     "rut":"1-9",
@@ -243,17 +243,17 @@ console.log('myData',this.myData);
         telefono: this.myData.celular,
         ciudadCodigo : this.myData.ciudad || '',
         regionCodigo : this.myData.region || '',
-      }
+      };
 
 
 
       if (!this.pageMyDataAsRegister) {
         // objetoAenviar['direccion'] = this.myData.direccion
-        objetoAenviar['estado'] = this.myData.estado
-        objetoAenviar['fechaCreacion'] = moment.utc(this.myData.fechaCreacion, 'DD-MM-YYYY').format('YYYY-MM-DDTSS:SS:SS.SSS+SSSS')
-        objetoAenviar['fechaActivacion'] = moment.utc(this.myData.fechaActivacion, 'DD-MM-YYYY').format('YYYY-MM-DDTSS:SS:SS.SSS+SSSS')
-        objetoAenviar['direccion'] = 'Sininfo'
-        objetoAenviar['nombreCompleto'] = `${this.myData.nombre} ${this.myData.apellidoPaterno} ${this.myData.apellidoMaterno}`
+        objetoAenviar['estado'] = this.myData.estado;
+        objetoAenviar['fechaCreacion'] = moment.utc(this.myData.fechaCreacion, 'DD-MM-YYYY').format('YYYY-MM-DDTSS:SS:SS.SSS+SSSS');
+        objetoAenviar['fechaActivacion'] = moment.utc(this.myData.fechaActivacion, 'DD-MM-YYYY').format('YYYY-MM-DDTSS:SS:SS.SSS+SSSS');
+        objetoAenviar['direccion'] = 'Sininfo';
+        objetoAenviar['nombreCompleto'] = `${this.myData.nombre} ${this.myData.apellidoPaterno} ${this.myData.apellidoMaterno}`;
       }
 
 
@@ -261,25 +261,25 @@ console.log('myData',this.myData);
 
       if (this.pageMyDataAsRegister) {
 
-        this.loading = true
+        this.loading = true;
         this.integrador.usuarioInscribir(objetoAenviar).subscribe((respuesta: any) => {
-          this.loading = false
+          this.loading = false;
 
           if (respuesta.exito) {
 
             this.mys.closeSessionUser().subscribe(cerrado => {
 
-              //console.log('sssssssssssssss');
+              // console.log('sssssssssssssss');
               // this.mys.saveUsuario(this.usuario).subscribe(guardado => {
               // if (guardado) {
               //   //console.log('guardadooooooo');
-              this.mys.alertShow('Éxito!!', 'checkmark-circle', 'Usuario Registrado Exitosamente,\nFué enviado por correo el password para iniciar sesión..')
-              this.router.navigateByUrl('/login')
+              this.mys.alertShow('Éxito!!', 'checkmark-circle', 'Usuario Registrado Exitosamente,\nfué enviado por correo el password para iniciar sesión..');
+              this.router.navigateByUrl('/login');
               // } else {
               //   this.mys.alertShow('Éxito!!', 'alert', 'Hubo inconvenientes al actualizar los datos..')
               //   //console.log('NOOO guardadooooooo');
               // }
-            })
+            });
 
 
 
@@ -289,59 +289,59 @@ console.log('myData',this.myData);
 
 
           } else {
-            this.mys.alertShow('Error ', 'alert', respuesta.mensaje || 'Hubo un error al guardar los datos del usuario..')
+            this.mys.alertShow('Error ', 'alert', respuesta.mensaje || 'Hubo un error al guardar los datos del usuario..');
           }
 
 
-          //console.log('respuesta', respuesta);
-        })
+          // console.log('respuesta', respuesta);
+        });
 
       } else {
 
-        this.loading = true
+        this.loading = true;
         this.integrador.usuarioGuardar(objetoAenviar).subscribe((respuesta: any) => {
-          this.loading = false
+          this.loading = false;
 
           if (respuesta.exito) {
 
 
-            this.usuario.usuario.rut = objetoAenviar.rut
-            this.usuario.usuario.nombre = objetoAenviar.nombre
-            this.usuario.usuario.apellidoPaterno = objetoAenviar.apellidoPaterno
-            this.usuario.usuario.apellidoMaterno = objetoAenviar.apellidoMaterno
-            this.usuario.usuario.email = objetoAenviar.email
+            this.usuario.usuario.rut = objetoAenviar.rut;
+            this.usuario.usuario.nombre = objetoAenviar.nombre;
+            this.usuario.usuario.apellidoPaterno = objetoAenviar.apellidoPaterno;
+            this.usuario.usuario.apellidoMaterno = objetoAenviar.apellidoMaterno;
+            this.usuario.usuario.email = objetoAenviar.email;
             // this.usuario.usuario.estado = objetoAenviar.estado
-            this.usuario.usuario.genero = objetoAenviar.genero
-            this.usuario.usuario.telefono = objetoAenviar.telefono
+            this.usuario.usuario.genero = objetoAenviar.genero;
+            this.usuario.usuario.telefono = objetoAenviar.telefono;
             // this.usuario.usuario.celular = objetoAenviar.celular
-            this.usuario.usuario.ciudadCodigo = objetoAenviar.ciudadCodigo
-            this.usuario.usuario.regionCodigo = objetoAenviar.regionCodigo
+            this.usuario.usuario.ciudadCodigo = objetoAenviar.ciudadCodigo;
+            this.usuario.usuario.regionCodigo = objetoAenviar.regionCodigo;
 
-            this.usuario.usuario.fechaNacimiento = objetoAenviar.fechaNacimiento
+            this.usuario.usuario.fechaNacimiento = objetoAenviar.fechaNacimiento;
 
             this.mys.closeSessionUser().subscribe(cerrado => {
               this.mys.saveUsuario(this.usuario).subscribe(guardado => {
                 if (guardado) {
-                  //console.log('guardadooooooo');
-                  this.mys.alertShow('Éxito!!', 'checkmark-circle', 'Datos Actualizados exitosamente..')
-                  this.ionViewWillEnter()
+                  // console.log('guardadooooooo');
+                  this.mys.alertShow('Éxito!!', 'checkmark-circle', 'Datos Actualizados exitosamente..');
+                  this.ionViewWillEnter();
                 } else {
-                  this.mys.alertShow('Error!!', 'alert', 'Hubo inconvenientes al actualizar los datos..')
-                  //console.log('NOOO guardadooooooo');
+                  this.mys.alertShow('Error!!', 'alert', 'Hubo inconvenientes al actualizar los datos..');
+                  // console.log('NOOO guardadooooooo');
                 }
-              })
-            })
+              });
+            });
 
-            //console.log('this.usuario', this.usuario);
+            // console.log('this.usuario', this.usuario);
 
 
           } else {
-            this.mys.alertShow('Error ', 'alert', respuesta.mensaje || 'Hubo un error al guardar los datos del usuario..')
+            this.mys.alertShow('Error ', 'alert', respuesta.mensaje || 'Hubo un error al guardar los datos del usuario..');
           }
 
 
-          //console.log('respuesta', respuesta);
-        })
+          // console.log('respuesta', respuesta);
+        });
 
       }
 
@@ -353,7 +353,7 @@ console.log('myData',this.myData);
 
 
   async popMenu(event) {
-    //console.log('event', event);
+    // console.log('event', event);
     const popoverMenu = await this.popoverCtrl.create({
       component: PopMenuComponent,
       event,
@@ -369,7 +369,7 @@ console.log('myData',this.myData);
       if (data.destino === '/login') {
         this.mys.checkIfExistUsuario().subscribe(exist => {
           exist ? this.router.navigateByUrl('/user-panel') : this.router.navigateByUrl('/login');
-        })
+        });
       } else {
         this.router.navigateByUrl(data.destino);
       }
@@ -402,12 +402,12 @@ console.log('myData',this.myData);
   }
 
   cambioDeRegion() {
-    this.loading = true
-    //console.log('cambiooooo', this.myData.region);
+    this.loading = true;
+    // console.log('cambiooooo', this.myData.region);
     this.integrador.buscarCiudadPorRegionesRegistroDeUsuario({ codigo: this.myData.region }).subscribe(ciudades => {
-      this.loading = false
-      this.ciudadesEspecificas = ciudades
-    })
+      this.loading = false;
+      this.ciudadesEspecificas = _.sortBy(ciudades, 'nombre');
+    });
   }
 } // fin clase ppal
 

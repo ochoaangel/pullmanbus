@@ -145,7 +145,7 @@
                   <div style="color: var(--ion-color-primary); font-size: 0.6rem;">Celular</div>
                   <div class="overIonInput">
                     <ion-input  placeholder="Celular" type="phone" name="celular"
-                      pattern="^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$" #celular
+                      pattern="^[0-9]{6,9}$" #celular
                       [(ngModel)]="myData.celular" required clearOnEdit></ion-input>
                   </div>
 
