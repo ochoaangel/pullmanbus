@@ -84,8 +84,8 @@ export class MyDataPage implements OnInit {
       password: "",
       clave: "",
 
-      telefono: '+56',
-      celular: '+56',
+      telefono: '',
+      celular: '',
       region: '',
       ciudad: '',
 
