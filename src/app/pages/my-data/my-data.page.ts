@@ -21,17 +21,17 @@ export class MyDataPage implements OnInit {
   usuario;
   loading = false;
   myData = {
-    rut: "",
-    email: "",
-    nombre: "",
-    apellidoMaterno: "",
-    apellidoPaterno: "",
-    estado: "ACT",
-    fechaCreacion: "",
-    fechaNacimiento: "",
-    fechaActivacion: "",
-    password: "",
-    clave: "",
+    rut: '',
+    email: '',
+    nombre: '',
+    apellidoMaterno: '',
+    apellidoPaterno: '',
+    estado: 'ACT',
+    fechaCreacion: '',
+    fechaNacimiento: '',
+    fechaActivacion: '',
+    password: '',
+    clave: '',
 
     telefono: '',
     celular: '',
@@ -72,17 +72,17 @@ export class MyDataPage implements OnInit {
 
 
     this.myData = {
-      rut: "",
-      email: "",
-      nombre: "",
-      apellidoMaterno: "",
-      apellidoPaterno: "",
-      estado: "ACT",
-      fechaCreacion: "",
-      fechaNacimiento: "",
-      fechaActivacion: "",
-      password: "",
-      clave: "",
+      rut: '',
+      email: '',
+      nombre: '',
+      apellidoMaterno: '',
+      apellidoPaterno: '',
+      estado: 'ACT',
+      fechaCreacion: '',
+      fechaNacimiento: '',
+      fechaActivacion: '',
+      password: '',
+      clave: '',
 
       telefono: '',
       celular: '',
@@ -176,7 +176,7 @@ export class MyDataPage implements OnInit {
       this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca un apellido Paterno válido');
     } else if (forma.controls.apellidoMaterno.errors) {
       this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca un apellido materno válido');
-    } else if (!moment(this.myData.fechaNacimiento, ["DD-MM-YYYY", "D-MM-YYYY", "D-M-YYYY", "DD-M-YYYY"], true).isValid()) {
+    } else if (!moment(this.myData.fechaNacimiento, ['DD-MM-YYYY', 'D-MM-YYYY', 'D-M-YYYY', 'DD-M-YYYY'], true).isValid()) {
       this.mys.alertShow('Verifique!! ', 'alert', 'Verifique que la fecha de nacimiento sea válida');
     } else if (forma.controls.email.errors) {
       this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca un email válido');
@@ -359,7 +359,7 @@ export class MyDataPage implements OnInit {
       event,
       mode: 'ios',
       backdropDismiss: true,
-      cssClass: "popMenu"
+      cssClass: 'popMenu'
     });
     await popoverMenu.present();
 
@@ -383,7 +383,7 @@ export class MyDataPage implements OnInit {
       event,
       mode: 'ios',
       backdropDismiss: true,
-      cssClass: "popCart"
+      cssClass: 'popCart'
     });
     await popoverCart.present();
 

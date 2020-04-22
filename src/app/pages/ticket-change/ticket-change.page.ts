@@ -1,246 +1,289 @@
-import { Component, OnInit } from '@angular/core';
-import { MyserviceService } from 'src/app/service/myservice.service';
-import { IntegradorService } from 'src/app/service/integrador.service';
-import { Router } from '@angular/router';
-import * as moment from 'moment';
-import { PopoverController } from '@ionic/angular';
-import { PopMenuComponent } from 'src/app/components/pop-menu/pop-menu.component';
-import { PopCartComponent } from 'src/app/components/pop-cart/pop-cart.component';
-
+import { Component, OnInit } from "@angular/core";
+import { MyserviceService } from "src/app/service/myservice.service";
+import { IntegradorService } from "src/app/service/integrador.service";
+import { Router } from "@angular/router";
+import * as moment from "moment";
+import { PopoverController } from "@ionic/angular";
+import { PopMenuComponent } from "src/app/components/pop-menu/pop-menu.component";
+import { PopCartComponent } from "src/app/components/pop-cart/pop-cart.component";
 
 @Component({
-  selector: 'app-ticket-change',
-  templateUrl: './ticket-change.page.html',
-  styleUrls: ['./ticket-change.page.scss'],
+  selector: "app-ticket-change",
+  templateUrl: "./ticket-change.page.html",
+  styleUrls: ["./ticket-change.page.scss"],
 })
 export class TicketChangePage implements OnInit {
+  compra;
+  existeBoleto;
+  loading = 0;
 
-  compra
-  existeBoleto
-  loading = 0
+  usuario = null;
 
-  usuario = null
+  valor = 0;
 
-  valor = 0
-
-
-  ionActualDate
-  ionLimitTravelDate
-  ionTravelTime
-  statusTimeDate: boolean
-
+  ionActualDate;
+  ionLimitTravelDate;
+  ionTravelTime;
+  statusTimeDate: boolean;
 
   myData = {
-    email: '',
-    rut: '',
-    fecha: '',
-    hora: '',
-    boleto: '',
-    acuerdo: false
-  }
+    email: "",
+    rut: "",
+    fecha: "",
+    hora: "",
+    boleto: "",
+    acuerdo: false,
+  };
 
   constructor(
     private mys: MyserviceService,
     private integrador: IntegradorService,
     private router: Router,
-    private popoverCtrl: PopoverController,
-
+    private popoverCtrl: PopoverController
   ) {
-    this.compra = 'ventanilla'   //  internet ó ventanilla
-    this.existeBoleto = null
+    this.compra = "ventanilla"; //  internet ó ventanilla
+    this.existeBoleto = null;
   }
 
   ngOnInit() {
-    this.mys.checkIfExistUsuario().subscribe(res1 => {
+    this.mys.checkIfExistUsuario().subscribe((res1) => {
       if (res1) {
-        this.mys.getUser().subscribe(usuario => {
-          this.usuario = usuario
-          //console.log('usuario', usuario);
+        this.mys.getUser().subscribe((usuario) => {
+          this.usuario = usuario;
+          // console.log('usuario', usuario);
 
-
-          this.myData.rut = this.usuario.usuario.rut
+          this.myData.rut = this.usuario.usuario.rut;
           // this.myData.ruti = this.usuario.usuario.rut
-          this.myData.email = this.usuario.usuario.email
+          this.myData.email = this.usuario.usuario.email;
           // this.myData.emaili = this.usuario.usuario.email
-        })
+        });
       } else {
-        console.warn('no hay  usuario registrado');
+        console.warn("no hay  usuario registrado");
       }
-    })
+    });
   }
 
-
   consultar() {
-    //console.log('this.myData', this.myData);
+    // console.log('this.myData', this.myData);
 
-    this.existeBoleto = null
+    this.existeBoleto = null;
 
     if (this.myData.boleto) {
-      this.loading++
-      this.integrador.canjeValidar({ boleto: this.myData.boleto + "" }).subscribe((validado: any) => {
-        this.loading--
-        //console.log('validado', validado);
+      this.loading++;
+      this.integrador
+        .canjeValidar({ boleto: this.myData.boleto + "" })
+        .subscribe((validado: any) => {
+          this.loading--;
+          // console.log('validado', validado);
 
+          if (validado.exito) {
+            this.loading++;
+            this.integrador
+              .canjeBuscarInfoBoleto({ boleto: this.myData.boleto + "" })
+              .subscribe((infoBoleto: any) => {
+                this.loading--;
 
-        if (validado.exito) {
+                let estado = infoBoleto.estadoActualDescripcion;
+                console.log("infoBoleto", infoBoleto);
 
-          this.loading++
-          this.integrador.canjeBuscarInfoBoleto({ boleto: this.myData.boleto + "" }).subscribe((infoBoleto: any) => {
-            this.loading--
+                if (estado === "IDA" || estado === "ENTREGADO") {
+                  // console.log('es IDA o entregado');
 
-            let estado = infoBoleto.estadoActualDescripcion
-            console.log('infoBoleto', infoBoleto);
+                  /////////////////////////////////////
+                  // let actual = moment.utc()
+                  let embarcacionFecha = `${infoBoleto.fechaEmbarcacion} ${infoBoleto.horaEmbarcacion}`;
 
-            if (estado === 'IDA' || estado === 'ENTREGADO') {
-              //console.log('es IDA o entregado');
+                  let today = moment.utc().format("DD/MM/YYYY"); // para quitar las horas y munutos..
 
-              /////////////////////////////////////
-              // let actual = moment.utc()
-              let embarcacionFecha = `${infoBoleto.fechaEmbarcacion} ${infoBoleto.horaEmbarcacion}`
+                  // fecha embarque
+                  let filtroEmbarque = moment
+                    .utc(embarcacionFecha, "DD/MM/YYYY HH:mm")
+                    .format("DD/MM/YYYY");
+                  let unixEmbarque = moment
+                    .utc(filtroEmbarque, "DD/MM/YYYY")
+                    .unix();
 
-              let today = moment.utc().format('DD/MM/YYYY')   //para quitar las horas y munutos..
+                  // referencia a hoy menos 3 dias
+                  let unixTope = moment
+                    .utc(today, "DD/MM/YYYY")
+                    .subtract(3, "days")
+                    .unix();
 
-              // fecha embarque
-              let filtroEmbarque = moment.utc(embarcacionFecha, 'DD/MM/YYYY HH:mm').format('DD/MM/YYYY')
-              let unixEmbarque = moment.utc(filtroEmbarque, 'DD/MM/YYYY').unix()
-
-              // referencia a hoy menos 3 dias
-              let unixTope = moment.utc(today, 'DD/MM/YYYY').subtract(3, 'days').unix()
-
-              if (unixEmbarque > unixTope) {
-
-                /////// final
-                this.existeBoleto = infoBoleto
-                this.valor = parseInt(infoBoleto.valor)
-                this.compra = infoBoleto.tipoCompra === 'INT' ? 'internet' : 'ventanilla';
-
-
-              } else {
-                this.mys.alertShow('Error!!', 'alert', 'El boleto, no puede ser cambiado, superó el límite de fecha..')
-              }
-
-            } else {
-              this.mys.alertShow('Error!!', 'alert', validado.mensaje || 'El boleto no es de ida o no se ha entregado..')
-            }
-
-          })
-
-        } else {
-          this.mys.alertShow('Error!!', 'alert', 'Este Boleto No puede ser cambiado..')
-        }
-
-      })
-
+                  if (unixEmbarque > unixTope) {
+                    /////// final
+                    this.existeBoleto = infoBoleto;
+                    this.valor = parseInt(infoBoleto.valor);
+                    this.compra =
+                      infoBoleto.tipoCompra === "INT"
+                        ? "internet"
+                        : "ventanilla";
+                  } else {
+                    this.mys.alertShow(
+                      "Error!!",
+                      "alert",
+                      "El boleto, no puede ser cambiado, superó el límite de fecha.."
+                    );
+                  }
+                } else {
+                  this.mys.alertShow(
+                    "Error!!",
+                    "alert",
+                    validado.mensaje ||
+                      "El boleto no es de ida o no se ha entregado.."
+                  );
+                }
+              });
+          } else {
+            this.mys.alertShow(
+              "Error!!",
+              "alert",
+              "Este Boleto No puede ser cambiado.."
+            );
+          }
+        });
     } else {
-      this.mys.alertShow('Error!!', 'alert', 'Ingrese in boleto válido para consultar..')
+      this.mys.alertShow(
+        "Error!!",
+        "alert",
+        "Ingrese in boleto válido para consultar.."
+      );
     }
-
   }
 
   cambiar(forma) {
+    let ventanilla = this.compra === "ventanilla" ? true : false;
+    // console.log('forma', forma);
+    // console.log('this.myData', this.myData);
 
-    let ventanilla = this.compra === 'ventanilla' ? true : false;
-    //console.log('forma', forma);
-    //console.log('this.myData', this.myData);
-
-    if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.myData.email)) {
-      this.mys.alertShow('Error!!', 'alert', 'Verifique el correo e intente nuevamente.')
+    if (
+      !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.myData.email)
+    ) {
+      this.mys.alertShow(
+        "Error!!",
+        "alert",
+        "Verifique el correo e intente nuevamente."
+      );
     } else if (!/^[0-9]+[-|-]{1}[0-9kK]{1}$/.test(this.myData.rut)) {
-      this.mys.alertShow('Error!!', 'alert', 'Verifique el rut e intente nuevamente.')
+      this.mys.alertShow(
+        "Error!!",
+        "alert",
+        "Verifique el rut e intente nuevamente."
+      );
     } else if (!this.myData.fecha && ventanilla) {
-      this.mys.alertShow('Error!!', 'alert', 'Debe ingresar una fecha válida.. intente de nuevo..')
+      this.mys.alertShow(
+        "Error!!",
+        "alert",
+        "Debe ingresar una fecha válida.. intente de nuevo.."
+      );
     } else if (!this.myData.hora && ventanilla) {
-      this.mys.alertShow('Error!!', 'alert', 'Debe ingresar una hora válida.. Intente de nuevo..')
+      this.mys.alertShow(
+        "Error!!",
+        "alert",
+        "Debe ingresar una hora válida.. Intente de nuevo.."
+      );
     } else if (!this.myData.acuerdo) {
-      this.mys.alertShow('Error!!', 'alert', 'Debe aceptar los términos y condiciones de compras para continuar..')
+      this.mys.alertShow(
+        "Error!!",
+        "alert",
+        "Debe aceptar los términos y condiciones de compras para continuar.."
+      );
     } else {
-
-      let validadaFecha = false
+      let validadaFecha = false;
       if (ventanilla) {
+        let inFecha = moment(this.myData.fecha).format("DD/MM/YYYY");
+        let inHora = moment(this.myData.hora).format("HH:mm");
+        let inAllingresado = `${inFecha} ${inHora}`;
 
-        let inFecha = moment(this.myData.fecha).format('DD/MM/YYYY')
-        let inHora = moment(this.myData.hora).format('HH:mm')
-        let inAllingresado = `${inFecha} ${inHora}`
-
-        let embarcacion = `${this.existeBoleto.fechaEmbarcacion} ${this.existeBoleto.horaEmbarcacion}`
-        //console.log('embarcacion,inAllingresado', embarcacion, inAllingresado);
+        let embarcacion = `${this.existeBoleto.fechaEmbarcacion} ${this.existeBoleto.horaEmbarcacion}`;
+        // console.log('embarcacion,inAllingresado', embarcacion, inAllingresado);
 
         if (inAllingresado === embarcacion) {
-          //console.log('SII iguales');
-          validadaFecha = true
+          // console.log('SII iguales');
+          validadaFecha = true;
         } else {
-          //console.log('NOO iguales');
-          this.mys.alertShow('Error!!', 'alert', 'No se puede cambiar el boleto,<br> la fecha u hora ingresada no coincide con la del boleto..')
-          let validadaFecha = false
+          // console.log('NOO iguales');
+          this.mys.alertShow(
+            "Error!!",
+            "alert",
+            "No se puede cambiar el boleto,<br> la fecha u hora ingresada no coincide con la del boleto.."
+          );
+          let validadaFecha = false;
         }
-
       } else {
         // por internet
-        validadaFecha = true
+        validadaFecha = true;
       }
-
 
       if (validadaFecha) {
         let dataPost = {
           boleto: this.myData.boleto,
           email: this.myData.email,
           usuario: this.myData.email,
-          rut: this.myData.rut
-        }
-        //console.log('existeBoleto', this.existeBoleto);
-        //console.log('dataPost', dataPost);
+          rut: this.myData.rut,
+        };
+        // console.log('existeBoleto', this.existeBoleto);
+        // console.log('dataPost', dataPost);
 
-        console.log('consiltandooooo api');
+        // console.log("consiltandooooo api");
         this.integrador.canjeBoleto(dataPost).subscribe((res: any) => {
-          console.log('res', res);
+          console.log("res", res);
           if (res.exito) {
-            this.mys.alertShow('Error!!', 'checkmark-circle', 'Su boleto ha sido cambiado..')
+            let codigo = res.mensaje ? `<br>Nuevo código: ${res.mensaje}` : ``;
+
+            this.mys.alertShow(
+              "Éxito!!",
+              "checkmark-circle",
+              "Su boleto ha sido cambiado.." + codigo
+            );
+            this.existeBoleto = null;
+            this.myData.boleto = "";
           } else {
-            this.mys.alertShow('Error!!', 'alert', 'No se pudo cambiar el boleto.. intente de nuevo..')
+            this.mys.alertShow(
+              "Error!!",
+              "alert",
+              "No se pudo cambiar el boleto.. intente de nuevo.."
+            );
           }
-
-        })
+        });
       }
-
-
     }
 
     // this.mys.alertShow('Error!!', 'alert', 'En desarrollo.. ')
-
   }
 
   async popMenu(event) {
-    //console.log('event', event);
+    // console.log('event', event);
     const popoverMenu = await this.popoverCtrl.create({
       component: PopMenuComponent,
       event,
-      mode: 'ios',
+      mode: "ios",
       backdropDismiss: true,
-      cssClass: "popMenu"
+      cssClass: "popMenu",
     });
     await popoverMenu.present();
 
     // recibo la variable desde el popover y la guardo en data
     const { data } = await popoverMenu.onWillDismiss();
     if (data && data.destino) {
-      if (data.destino === '/login') {
-        this.mys.checkIfExistUsuario().subscribe(exist => {
-          exist ? this.router.navigateByUrl('/user-panel') : this.router.navigateByUrl('/login');
-        })
+      if (data.destino === "/login") {
+        this.mys.checkIfExistUsuario().subscribe((exist) => {
+          exist
+            ? this.router.navigateByUrl("/user-panel")
+            : this.router.navigateByUrl("/login");
+        });
       } else {
         this.router.navigateByUrl(data.destino);
       }
     }
-
   }
 
   async popCart(event) {
     const popoverCart = await this.popoverCtrl.create({
       component: PopCartComponent,
       event,
-      mode: 'ios',
+      mode: "ios",
       backdropDismiss: true,
-      cssClass: "popCart"
+      cssClass: "popCart",
     });
     await popoverCart.present();
 
@@ -248,6 +291,4 @@ export class TicketChangePage implements OnInit {
     // const { data } = await popoverCart.onWillDismiss();
     // this.router.navigateByUrl(data.destino);
   }
-
-
 }
