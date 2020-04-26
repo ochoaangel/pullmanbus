@@ -47,11 +47,11 @@ export class MyDataPage implements OnInit {
 
   ciudadesEspecificas = [];
   regionesAll;
-  diaOptions = { header: 'Elige el día' };
-  mesOptions = { header: 'Elige el mes' };
-  anioOptions = { header: 'Elige el año' };
-  regionOptions = { header: 'Elija su región' };
-  cityOptions = { header: 'Elija su ciudad' };
+  diaOptions = { header: 'Elige el día', mode:'ios'};
+  mesOptions = { header: 'Elige el mes', mode:'ios' };
+  anioOptions = { header: 'Elige el año', mode:'ios' };
+  regionOptions = { header: 'Elija su región', mode:'ios' };
+  cityOptions = { header: 'Elija su ciudad', mode:'ios'};
 
   constructor(
     private mys: MyserviceService,
@@ -408,6 +408,10 @@ export class MyDataPage implements OnInit {
       this.loading = false;
       this.ciudadesEspecificas = _.sortBy(ciudades, 'nombre');
     });
+  }
+
+  prueba(event){
+    console.log('pruebaaaaxx',event);
   }
 } // fin clase ppal
 

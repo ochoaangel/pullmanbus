@@ -174,8 +174,8 @@ export class PaymentMethodsPage implements OnInit {
         medioDePago: this.DatosFormulario.convenioDown,
         puntoVenta: "WEBM",
 
-        // montoTotal: this.totalFinal,
-        montoTotal: this.totalFinal/1000,
+        // montoTotal: this.totalFinal/1000,
+        montoTotal: this.totalFinal,
 
         idSistema: 5,
         listaCarrito: []
@@ -192,10 +192,10 @@ export class PaymentMethodsPage implements OnInit {
           origen: boleto.service.idTerminalOrigen,
           destino: boleto.service.idTerminalDestino,
 
-          // monto: boleto.valor,
-          // precio: boleto.valor,
-          monto: boleto.valor/1000,
-          precio: boleto.valor/1000,
+          // monto: boleto.valor/1000,
+          // precio: boleto.valor/1000,
+          monto: boleto.valor,
+          precio: boleto.valor,
 
           descuento: this.datosConvenio != null ? this.datosConvenio.descuento : 0,
           empresa: boleto.service.empresa,

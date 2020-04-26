@@ -85,23 +85,23 @@
                 <ion-col class=" ion-no-padding ion-no-margin" size="6" class="columnaDoble"
                   style="padding-left: 8px;padding-right: 3px;font-size: 80%;">
                   <div style="display: inline-block;width: 30%;">
-
-                    <ion-select [interfaceOptions]="diaOptions" class=" ion-no-padding ion-no-margin" multiple="false"
-                      placeholder="d" cancel-text="Cancelar" [(ngModel)]="myData.dia" #dia name='dia' required>
-                      <ion-select-option value="{{i+1}}" *ngFor="let dummy of ' '.repeat(31).split(''), let i = index">
+ 
+                    <ion-select interface='popover'  [interfaceOptions]="diaOptions" class=" ion-no-padding ion-no-margin" multiple="false"
+                    placeholder="d" cancel-text="Cancelar" [(ngModel)]="myData.dia" #dia name='dia' required>
+                      <ion-select-option (click)="prueba($event)" value="{{i+1}}" *ngFor="let dummy of ' '.repeat(31).split(''), let i = index">
                         {{i+1}}</ion-select-option>
                     </ion-select>
 
                   </div>
                   <div style="display: inline-block;width: 30%;">
-                    <ion-select [interfaceOptions]="mesOptions" class=" ion-no-padding ion-no-margin" multiple="false"
+                    <ion-select  interface='popover'  [interfaceOptions]="mesOptions" class=" ion-no-padding ion-no-margin" multiple="false"
                       placeholder="m" cancel-text="Cancelar" [(ngModel)]="myData.mes" #mes name='mes' required>
                       <ion-select-option value="{{i+1}}" *ngFor="let dummy of ' '.repeat(12).split(''), let i = index">
                         {{i+1}}</ion-select-option>
                     </ion-select>
                   </div>
                   <div style="display: inline-block;width: 40%;">
-                    <ion-select [interfaceOptions]="anioOptions" class=" ion-no-padding ion-no-margin" multiple="false"
+                    <ion-select  interface='popover'  [interfaceOptions]="anioOptions" class=" ion-no-padding ion-no-margin" multiple="false"
                       placeholder="aaaa" cancel-text="Cancelar" [(ngModel)]="myData.anio" #anio name='anio' required>
                       <ion-select-option value="{{i+1+1900}}"
                         *ngFor="let dummy of ' '.repeat(120).split(''), let i = index">{{i+1+1900}}</ion-select-option>
@@ -181,7 +181,7 @@
                   </div> -->
 
 
-                  <ion-select [interfaceOptions]="regionOptions" class=" ion-no-padding ion-no-margin" multiple="false"
+                  <ion-select  interface='popover'  [interfaceOptions]="regionOptions" class=" ion-no-padding ion-no-margin" multiple="false"
                     placeholder="Seleccione Región" cancel-text="Cancelar" [(ngModel)]="myData.region" #region name='region' (ionChange)="cambioDeRegion()"
                     required [disabled]="loading">
 
@@ -201,7 +201,7 @@
                   #ciudad [(ngModel)]="myData.ciudad" required></ion-input>
                 </div> -->
 
-                  <ion-select [interfaceOptions]="cityOptions" class=" ion-no-padding ion-no-margin" multiple="false"
+                  <ion-select  interface='popover'  [interfaceOptions]="cityOptions" class=" ion-no-padding ion-no-margin" multiple="false"
                     placeholder="Seleccione Ciudad" cancel-text="Cancelar" [(ngModel)]="myData.ciudad" #ciudad name='ciudad'
                     required [disabled]="loading|| !this.myData.region">
                     <ion-select-option *ngFor="let ciudades of ciudadesEspecificas" value="{{ciudades.codigo}}">
