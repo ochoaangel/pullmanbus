@@ -50,11 +50,89 @@
           <p>9.- Para compras realizadas en ventanilla como medio de validacion debera ingresar la fecha y hora de su
             viaje</p>
           <p>10.- Obtendra un pasaje abierto sin confirmar el que podra ser canjeado por un nuevo boleto</p>
-          <p style="text-align: center;
+
+
+          <!-- <p style="text-align: center;
           font-weight: bold;
-          font-size: 0.8rem;color: var(--ion-color-secondary); ">Esperamos haber respondido a sus duda, puede llamar al
+          font-size: 0.8rem;color: var(--ion-color-secondary); ">
+          Esperamos haber respondido a sus duda, puede llamar al
             siguiente numero 600 600 0018 o
-            enviar un email a atencion.cliente@pullmanbus.cl</p>
+            enviar un email a atencion.cliente@pullmanbus.cl
+          </p> -->
+
+          <ion-grid class="ion-no-padding ion-no-margin" >
+            <ion-row
+              class="ion-no-padding ion-no-margin ion-justify-content-center"
+              style="height: 100%;"
+            >
+              <ion-col
+                class="ion-no-padding ion-no-margin"
+                size="12"
+                style="text-align: center;"
+              >
+                <ion-row>
+                  <ion-text color="primary" style="width: 100%;">
+                    <h6 style="color:var(--ion-color-secondary)">
+                      Esperamos haber respondido a sus dudas<br> para más información:
+                    </h6>
+                  </ion-text>
+                </ion-row>
+    
+                <ion-row
+                  style="
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    margin: 1rem 0;
+                    /* padding-left: 15vw; */
+                  
+                  "
+                >
+                <div>Llama al:</div>
+                  <a button href="tel:6006000018" color="primary">
+                    <div style="display: flex; flex-direction: row;">
+                      <ion-icon
+                        name="call"
+                        style="margin-right: 0.5rem;"
+                      ></ion-icon>
+                      <div>
+                        Call Center: 600 600 00 18
+                      </div>
+                    </div>
+                  </a>
+                </ion-row>
+    
+                <ion-row
+                  style="
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    margin: 1rem 0;
+                    /* padding-left: 15vw; */
+                  "
+                >
+                Envianos un correo al:
+                  <a
+                    button
+                    href="mailto:atencion.cliente@pullmanbus.cl"
+                    color="primary"
+                  >
+                    <div style="display: flex; flex-direction: row;">
+                      <ion-icon
+                        name="mail"
+                        style="margin-right: 0.5rem;"
+                      ></ion-icon>
+                      <div>
+                        atencion.cliente@pullmanbus.cl
+                      </div>
+                    </div>
+                  </a>
+                </ion-row>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
 
 
         </ion-col>

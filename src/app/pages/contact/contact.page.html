@@ -84,45 +84,56 @@
                 </h6>
               </ion-text>
             </ion-row>
+
             <ion-row
               style="
                 display: flex;
                 flex-direction: row;
-                /* justify-content: center; */
+                justify-content: center;
                 align-items: center;
                 margin: 1rem 0;
-                padding-left: 15vw;
+                /* padding-left: 15vw; */
               "
             >
-              <ion-icon style="margin: 0 0.8rem; color: var(--ion-color-primary);"   name="phone-portrait"></ion-icon>
-              <ion-text style="color: gray; font-size: 11px; ">
-                Call Center: 600 600 00 18
-              </ion-text>
+              <a button href="tel:6006000018" color="primary">
+                <div style="display: flex; flex-direction: row;">
+                  <ion-icon
+                    name="call"
+                    style="margin-right: 0.5rem;"
+                  ></ion-icon>
+                  <div>
+                    Call Center: 600 600 00 18
+                  </div>
+                </div>
+              </a>
             </ion-row>
 
             <ion-row
               style="
                 display: flex;
                 flex-direction: row;
-                /* justify-content: center; */
+                justify-content: center;
                 align-items: center;
-                padding-left: 15vw;
+                margin: 1rem 0;
+                /* padding-left: 15vw; */
               "
             >
-              <ion-icon style="margin: 0 0.8rem; color: var(--ion-color-primary);" name="mail"></ion-icon>
-              <ion-text style="color: gray; font-size: 11px;">
-                atencion.cliente@pullmanbus.cl
-              </ion-text>
+              <a
+                button
+                href="mailto:atencion.cliente@pullmanbus.cl"
+                color="primary"
+              >
+                <div style="display: flex; flex-direction: row;">
+                  <ion-icon
+                    name="mail"
+                    style="margin-right: 0.5rem;"
+                  ></ion-icon>
+                  <div>
+                    atencion.cliente@pullmanbus.cl
+                  </div>
+                </div>
+              </a>
             </ion-row>
-
-            <!-- 
-             <ion-row>
-              <ion-button
-                style=" width: -webkit-fill-available; text-transform: none; margin-top: 30px;">
-                <ion-icon name="call" style="    margin-right: 10px;"></ion-icon>Llamar
-              </ion-button>
-            </ion-row>
-          -->
           </ion-col>
         </ion-row>
       </ion-grid>

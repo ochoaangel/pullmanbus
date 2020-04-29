@@ -159,3 +159,11 @@ ion-select-popover {
   bottom: 1% !important;
   border: 2px solid var(--ion-color-secondary);
 }
+
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline-offset: 0px !important;
+  outline: none !important;
+}

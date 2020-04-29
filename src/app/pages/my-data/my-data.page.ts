@@ -413,5 +413,18 @@ export class MyDataPage implements OnInit {
   prueba(event){
     console.log('pruebaaaaxx',event);
   }
+
+  rutFunction(rawValue) {
+    let numbers = rawValue.match(/\d|k|K/g);
+    let numberLength = 0;
+    if (numbers) {
+      numberLength = numbers.join("").length;
+    }
+    if (numberLength > 8) {
+      return [/[1-9]/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /[0-9|k|K]/];
+    } else {
+      return [/[1-9]/,       '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /[0-9|k|K]/];
+    }
+  }
 } // fin clase ppal
 

@@ -17,24 +17,25 @@ import { PipesModule } from './pipes/pipes.module';
 import { TextMaskModule } from 'angular2-text-mask';
 import { ComponentsModule } from './components/components.module';
 
-import { TranslateModule, TranslateLoader } from "@ngx-translate/core";
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { HttpClient, HttpClientModule } from "@angular/common/http";
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
-
-import { File, IWriteOptions } from "@ionic-native/file/ngx";
-import { FileTransfer, FileTransferObject } from "@ionic-native/file-transfer/ngx";
-import { FileOpener } from "@ionic-native/file-opener/ngx";
+import { File, IWriteOptions } from '@ionic-native/file/ngx';
+import {
+  FileTransfer,
+  FileTransferObject,
+} from '@ionic-native/file-transfer/ngx';
+import { FileOpener } from '@ionic-native/file-opener/ngx';
 import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-
-
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
+import { CallNumber } from '@ionic-native/call-number/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -46,7 +47,7 @@ import { NativeStorage } from '@ionic-native/native-storage/ngx';
     ClickOutsideModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    FormsModule, 
+    FormsModule,
     ReactiveFormsModule,
     PipesModule,
     TextMaskModule,
@@ -54,11 +55,10 @@ import { NativeStorage } from '@ionic-native/native-storage/ngx';
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        useFactory: (createTranslateLoader),
-        deps: [HttpClient]
-      }
-    })
-
+        useFactory: createTranslateLoader,
+        deps: [HttpClient],
+      },
+    }),
   ],
   providers: [
     StatusBar,
@@ -66,10 +66,11 @@ import { NativeStorage } from '@ionic-native/native-storage/ngx';
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     FileTransfer,
     FileOpener,
+    CallNumber,
     File,
     AndroidPermissions,
-    NativeStorage
+    NativeStorage,
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
