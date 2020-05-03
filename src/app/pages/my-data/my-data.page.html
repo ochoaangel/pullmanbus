@@ -159,7 +159,7 @@
                       class="ion-no-padding ion-no-margin" multiple="false" placeholder="aaaa" cancel-text="Cancelar"
                       [(ngModel)]="myData.anio" #anio name="anio" required>
                       <ion-select-option value="{{i+1+1900}}"
-                        *ngFor="let dummy of ' '.repeat(120).split(''), let i = index">{{i+1+1900}}</ion-select-option>
+                        *ngFor="let dummy of ' '.repeat(119).split(''), let i = index">{{i+1+1900}}</ion-select-option>
                     </ion-select>
                   </div>
                 </ion-col>
@@ -200,7 +200,7 @@
                     Celular
                   </div>
                   <div class="overIonInput">
-                    <ion-input placeholder="Celular" type="phone" name="celular" pattern="^[0-9]{6,9}$" #celular
+                    <ion-input placeholder="Celular" type="phone" name="celular" pattern="^[0-9]{9,10}$" #celular
                       [(ngModel)]="myData.celular" required clearOnEdit></ion-input>
                   </div>
                 </ion-col>

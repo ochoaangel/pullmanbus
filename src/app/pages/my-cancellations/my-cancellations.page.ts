@@ -151,7 +151,7 @@ export class MyCancellationsPage implements OnInit {
         this.transaccionesAll = transacciones
 
         if (transacciones.length < 1) {
-          this.mys.alertShow('Sin Transacciones', 'alert', 'no hay transacciones registradas para mostrar')
+          this.mys.alertShow('Sin Transacciones', 'alert', 'No hay transacciones registradas para mostrar')
           this.router.navigateByUrl('/my-cancellations')
         } else {
           this.transaccionesAll.forEach(transaccion => {
