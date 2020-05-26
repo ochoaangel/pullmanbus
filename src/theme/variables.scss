@@ -5,17 +5,17 @@
 :root {
   --ion-color-primary: #fe5200;
   // --ion-color-primary: #0247ac;
-  --ion-color-primary-rgb: 254,82,0;
+  --ion-color-primary-rgb: 254, 82, 0;
   --ion-color-primary-contrast: #ffffff;
-  --ion-color-primary-contrast-rgb: 255,255,255;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
   --ion-color-primary-shade: #e04800;
   --ion-color-primary-tint: #fe631a;
 
   // --ion-color-secondary: #fe5200;
   --ion-color-secondary: #0247ac;
-  --ion-color-secondary-rgb: 2,71,172;
+  --ion-color-secondary-rgb: 2, 71, 172;
   --ion-color-secondary-contrast: #ffffff;
-  --ion-color-secondary-contrast-rgb: 255,255,255;
+  --ion-color-secondary-contrast-rgb: 255, 255, 255;
   --ion-color-secondary-shade: #023e97;
   --ion-color-secondary-tint: #1b59b4;
   // /** primary **/
@@ -118,14 +118,52 @@ ion-select {
   }
 }
 
-.popMenu, .popLenguage{
-  --background: #0247ac;
+.popMenu {
+  --background: var(--ion-color-secondary);
   --width: 15rem;
-  --border-color: #0247ac;
+  --border-color: var(--ion-color-secondary);
+  ion-item {
+    --background: var(--ion-color-secondary);
+    --border-color: var(--ion-color-secondary);
+  }
 }
 
-.popCart{
-  --background: #0247ac;
+.popLenguage {
+  --background: var(--ion-color-secondary);
+  --width: 15rem;
+  --border-color: var(--ion-color-secondary);
+}
+
+.popCart {
+  --background: var(--ion-color-secondary);
   --width: 97vw;
-  --border-color: #0247ac;
+  --border-color: var(--ion-color-secondary);
+}
+
+ion-select-popover {
+  .sc-ion-select-popover-md {
+    padding-top: 0;
+  }
+  ion-list-header {
+    padding-left: 1rem;
+    background-color: var(--ion-color-secondary);
+    color: white;
+  }
+}
+
+.popover-arrow.sc-ion-popover-ios:after {
+  background-color: var(--ion-color-secondary);
+}
+
+.popover-content.sc-ion-popover-ios {
+  bottom: 1% !important;
+  border: 2px solid var(--ion-color-secondary);
+}
+
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline-offset: 0px !important;
+  outline: none !important;
 }

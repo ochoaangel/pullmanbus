@@ -12,10 +12,18 @@ ion-header {
   width: 100%;
   color: white;
   display: flex;
-  // align-items: center;
-  align-items: flex-end;
+  align-items: center;
   justify-content: center;
 }
+// .cabeceraGeneral {
+//   height: 50%;
+//   width: 100%;
+//   color: white;
+//   display: flex;
+//   // align-items: center;
+//   align-items: flex-end;
+//   justify-content: center;
+// }
 
 .cabeceraTitulo {
   height: 50%;
@@ -62,8 +70,9 @@ ion-header {
   font-size: 2vh;
 }
 
-// input,
-ion-input {
+input,
+ion-input,
+ion-datetime {
   display: inline-block;
   box-sizing: content-box;
   padding: 7px 10px;
@@ -74,6 +83,8 @@ ion-input {
   --padding-bottom: 0.3rem;
   --background: white;
   font-size: 0.8rem;
+  --padding-start: 0.5rem;
+  padding: 0.3rem;
 }
 
 .ingresar {
@@ -89,6 +100,7 @@ ion-input {
   color: rgba(255, 255, 255, 1);
   background: #0247ac;
   width: 40vw;
+  text-align: center;
 }
 
 .columnaDoble {
@@ -124,16 +136,7 @@ ion-checkbox {
   display: flex;
   justify-content: center;
   border-radius: 5px;
-  height: 1.6rem;
+  margin: 0.2rem;
   // margin: 0 10vw;
   // margin-bottom: 1rem;
 }
-
-input {
-  width: 95%;
-  border: 0;
-  font-size: 0.8rem;
-  text-align: center;
-}
-
-

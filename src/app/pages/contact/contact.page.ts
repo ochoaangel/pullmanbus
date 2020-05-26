@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { CallNumber } from '@ionic-native/call-number/ngx';
+
 
 @Component({
   selector: 'app-contact',
@@ -7,9 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ContactPage implements OnInit {
 
-  constructor() { }
+  constructor(
+    private callNumber: CallNumber
+  ) { }
 
   ngOnInit() {
   }
+
 
 }

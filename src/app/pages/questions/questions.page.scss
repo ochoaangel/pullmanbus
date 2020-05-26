@@ -12,8 +12,7 @@ ion-header {
   width: 100%;
   color: white;
   display: flex;
-  // align-items: center;
-  align-items: flex-end;
+  align-items: center;
   justify-content: center;
 }
 
@@ -62,7 +61,7 @@ ion-header {
   font-size: 2vh;
 }
 
-// input,
+input,
 ion-input {
   display: inline-block;
   box-sizing: content-box;
@@ -124,16 +123,11 @@ ion-checkbox {
   display: flex;
   justify-content: center;
   border-radius: 5px;
-  height: 1.6rem;
   // margin: 0 10vw;
   // margin-bottom: 1rem;
 }
 
-input {
-  width: 95%;
-  border: 0;
-  font-size: 0.8rem;
-  text-align: center;
+p {
+  font-size: 0.7rem;
+  padding: 0 10vw;
 }
-
-

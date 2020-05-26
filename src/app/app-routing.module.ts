@@ -86,7 +86,15 @@ const routes: Routes = [
   {
     path: 'recover-password',
     loadChildren: () => import('./pages/recover-password/recover-password.module').then(m => m.RecoverPasswordPageModule)
+  },  {
+    path: 'ticket-change',
+    loadChildren: () => import('./pages/ticket-change/ticket-change.module').then( m => m.TicketChangePageModule)
   },
+  {
+    path: 'questions',
+    loadChildren: () => import('./pages/questions/questions.module').then( m => m.QuestionsPageModule)
+  },
+
 
 
 ];

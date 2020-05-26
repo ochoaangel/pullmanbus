@@ -1,0 +1,262 @@
+<ion-header no-border>
+
+  <div class="cabeceraGeneral">
+    <div style="display: inline; width: 5%;"></div>
+
+    <div style="display: inline; width: 10%;border-color: white; border: solid
+      1px;margin: 5px;">
+      Es
+    </div>
+
+    <div style="width: 60%; height: 100%; display: flex; align-items: center;
+      justify-content: center;" routerLink="/home">
+      <img src="assets/images/titulo.png" style="height: 90%;object-fit:
+        scale-down;position: relative; z-index: 10;" />
+    </div>
+
+    <div style="display: inline; width: 10%;" (click)="popCart($event)">
+      <ion-icon name="md-cart" style="font-size: 25px;padding-top: 5px;"></ion-icon>
+    </div>
+
+    <div style="display: inline; width: 10%" (click)="popMenu($event)">
+      <ion-icon name="md-menu" style="font-size: 25px;padding-top: 5px;"></ion-icon>
+    </div>
+
+    <div style="display: inline; width: 5%;"></div>
+  </div>
+
+
+
+  <div class="cabeceraTitulo">
+    Cambio de boleto
+  </div>
+  <ion-progress-bar type="indeterminate" *ngIf="loading>0" color="secondary"></ion-progress-bar>
+
+</ion-header>
+
+<ion-content style="width: 100%;height: 100%;">
+  <div style=" height: 100%; background-color: white ; ">
+    <ion-grid class=" ion-no-padding ion-no-margin" style="height: 100%;">
+      <ion-row class=" ion-no-padding  ion-no-margin ion-justify-content-center" style="height: 100%">
+        <ion-col class=" ion-no-padding ion-no-margin" size="12" style="text-align: center;">
+
+
+          <!-- ingreso de boleto -->
+          <ion-row style="padding: 1rem;">
+            <ion-col size="12">
+
+              <div style="margin-bottom: 0.5rem;">Ingrese un número de boleto</div>
+
+              <div style="display: flex; flex-direction: row; width: 100%;">
+
+                <div class="overIonInput" style="width: 60%;margin-right: 0.9rem;">
+                  <ion-input placeholder="Código de Boleto" type="text" name="boleto" #boleto
+                    [(ngModel)]="myData.boleto" required [disabled]="loading>0">
+                  </ion-input>
+                </div>
+
+                <input style="width: 40%;" type="button" class="ingresar" value="Consultar" type="submit"
+                  (click)="consultar()" [disabled]="loading>0" />
+
+              </div>
+
+            </ion-col>
+          </ion-row>
+
+          <!-- solo cuando se puede cambiar boleto -->
+          <div *ngIf="existeBoleto">
+
+
+            <!-- Datos boleto -->
+            <ion-row class="ion-no-margin">
+              <ion-col class="ion-no-margin" size="12"
+                style="background-color: var(--ion-color-secondary); color: white;">
+                <div style="text-align: left; padding-left: 10px;"> Datos boleto </div>
+              </ion-col>
+              <ion-col class="ion-no-margin" size="12">
+
+                <div style="display: flex; flex-direction: row;font-size: 0.7rem; padding-bottom: 5px;">
+                  <div style="width: 15%;text-align: right;font-weight: bold;padding-right: 5px;">Origen:</div>
+                  <div style="width: 35%;text-align: left;">{{existeBoleto.origenNombre | titlecase}}</div>
+                  <div style="width: 15%;text-align: right;font-weight: bold;padding-right: 5px;">Destino:</div>
+                  <div style="width: 35%;text-align: left;">{{existeBoleto.destinoNombre  | titlecase}}</div>
+                </div>
+
+                <div style="display: flex; flex-direction: row;font-size: 0.7rem; padding-bottom: 5px;">
+                  <div style="width: 15%;text-align: right;font-weight: bold;padding-right: 5px;">Valor:</div>
+                  <div style="width: 35%;text-align: left;"> ${{ valor.toLocaleString('de-DE')}}</div>
+                  <div style="width: 15%;text-align: right;font-weight: bold;padding-right: 5px;">Estado:</div>
+                  <div style="width: 35%;text-align: left;">{{existeBoleto.estadoActualDescripcion|titlecase}}</div>
+                </div>
+
+                <div style="display: flex; flex-direction: row;font-size: 0.7rem; padding-bottom: 5px;" *ngIf="compra==='internet'">
+                  <div style="width: 15%;text-align: right;font-weight: bold;padding-right: 5px;">Fecha:</div>
+                  <div style="width: 35%;text-align: left;">{{existeBoleto.fechaEmbarcacion}}</div>
+                  <div style="width: 15%;text-align: right;font-weight: bold;padding-right: 5px;">Hora:</div>
+                  <div style="width: 35%;text-align: left;">{{existeBoleto.horaEmbarcacion}}</div>
+                </div>
+
+                <div style="display: flex; flex-direction: row;font-size: 0.7rem; padding-bottom: 5px;">
+                  <div style="width: 15%;text-align: right;font-weight: bold;padding-right: 5px;">Clase:</div>
+                  <div style="width: 35%;text-align: left;">{{existeBoleto.clase | titlecase}}</div>
+                  <div style="width: 15%;text-align: right;font-weight: bold;padding-right: 5px;">Asiento:</div>
+                  <div style="width: 35%;text-align: left;">{{existeBoleto.asiento}}</div>
+                </div>
+
+              </ion-col>
+            </ion-row>
+
+            <form (ngSubmit)='cambiar(forma)' #forma='ngForm' novalidate=''>
+
+
+              <!-- Datos cambio boleto -->
+              <ion-row class="ion-no-margin">
+                <ion-col class="ion-no-margin" size="12"
+                  style="background-color: var(--ion-color-secondary); color: white;">
+                  <div style="text-align: left; padding-left: 10px;"> Datos cambio de boletos </div>
+                </ion-col>
+
+                <ion-col class="ion-no-margin" size="12">
+
+                  <!-- compra por Ventanilla  (email ruti)-->
+                  <div *ngIf="compra==='ventanilla'">
+                    <!-- email y rut -->
+                    <ion-row>
+                      <ion-col size="6" class="columnaDoble">
+                        <div class="overIonInput">
+                          <ion-input placeholder="Email" type="email" name="email"
+                            pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" #email [(ngModel)]="myData.email" [disabled]="usuario"
+                            required></ion-input>
+                        </div>
+                      </ion-col>
+
+                      <ion-col size="6" class="columnaDoble">
+                        <div class="overIonInput">
+                          <ion-input placeholder="RUT" type="text" name="rut" pattern="^[0-9]+[-|‐]{1}[0-9kK]{1}$" [disabled]="usuario"
+                            [(ngModel)]="myData.rut" required #rut></ion-input>
+                        </div>
+                      </ion-col>
+                    </ion-row>
+
+                    <!-- fecha y hora -->
+                    <ion-row>
+                      <ion-col size="6" class="columnaDoble">
+                        <div class="overIonInput">
+
+                            <ion-datetime
+                            name="fecha"
+                            #fecha
+                            displayFormat="DD/MM/YYYY"
+                            placeholder="Fecha Embarque"
+                            cancelText="Cancelar"
+                            doneText="Listo"
+                            mode="ios"
+                            [(ngModel)]="myData.fecha"
+                            [min]="ionActualDate"
+                            [max]="ionLimitTravelDate"
+                            ></ion-datetime>
+
+                        </div>
+                      </ion-col>
+
+                      <ion-col size="6" class="columnaDoble">
+                        <div class="overIonInput">
+
+                          <ion-datetime
+                          name="hora"
+                          #hora
+                          displayFormat="HH:mm"
+                          placeholder="Hora Embarque"
+                          cancelText="Cancelar"
+                          doneText="Listo"
+                          mode="ios" 
+                          [(ngModel)]="myData.hora"
+                          ></ion-datetime>
+
+
+                        </div>
+                      </ion-col>
+                    </ion-row>
+
+                  </div>
+
+
+                  <!-- compra por Internet  (emaili rut)-->
+                  <div *ngIf="compra==='internet'">
+                    <ion-row>
+                      <ion-col size="12" class="columnaDoble">
+                        <div class="overIonInput">
+                          <ion-input placeholder="Email" type="email" name="emaili"
+                            pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" #emaili [(ngModel)]="myData.email" [disabled]="usuario"
+                            required></ion-input>
+                        </div>
+                      </ion-col>
+                    </ion-row>
+
+                    <ion-row>
+                      <ion-col size="6" class="columnaDoble">
+                        <div class="overIonInput">
+                          <ion-input placeholder="RUT" type="text" name="ruti" pattern="^[0-9]+[-|‐]{1}[0-9kK]{1}$" [disabled]="usuario"
+                            [(ngModel)]="myData.rut" required #ruti></ion-input>
+                        </div>
+                      </ion-col>
+                    </ion-row>
+
+                  </div>
+
+
+                </ion-col>
+              </ion-row>
+
+
+
+              <!-- acuerdos -->
+              <ion-row>
+                <ion-col size="12">
+                  <div style="display: flex;margin: 1.5rem;">
+                    <ion-checkbox [(ngModel)]="myData.acuerdo" #acuerdo name="acuerdo"
+                      style="min-height: 1rem;min-width: 1rem;margin: 0 2vw;">
+                    </ion-checkbox>
+                    <ion-text style="font-size: 0.8rem; text-align: justify;">
+                      He leído y estoy de acuerdo con
+                      <strong style="color: #0247ac;">los términos y condiciones de la
+                        compra</strong>
+                    </ion-text>
+                  </div>
+                </ion-col>
+              </ion-row>
+
+
+              <!-- boton Cambiar -->
+              <ion-row>
+                <ion-col size="12">
+                  <input style="width: 40%;" type="button" class="ingresar" value="Cambiar" type="submit" />
+                </ion-col>
+              </ion-row>
+
+
+            </form>
+
+          </div>
+
+
+
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+</ion-content>
+
+
+<ion-footer no-border style=" width: 100vw;background-color: var(--ion-color-primary);color: white;">
+  <div style="width: 100%; display: flex;justify-content: center;">
+
+    <ion-button slot="start" fill="clear" style="color: white; width: 50%; outline: none;" routerLink="/home">
+      <ion-icon src="assets/icon/previous.svg"></ion-icon>
+      <div style="display: inline; text-align: left ;padding-left: 10px; text-transform: none;">Regresar</div>
+    </ion-button>
+
+    <div style="width: 50%;"> </div>
+
+  </div>
+</ion-footer>

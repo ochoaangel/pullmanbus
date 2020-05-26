@@ -4,7 +4,12 @@ import { AlertController, PopoverController } from '@ionic/angular';
 import * as _ from 'underscore';
 import * as moment from 'moment';
 import { PopMenuComponent } from '../components/pop-menu/pop-menu.component';
+
 import { Router } from '@angular/router';
+import { NativeStorage } from '@ionic-native/native-storage/ngx';
+import { Platform } from '@ionic/angular';
+import { Observable, Subscriber } from 'rxjs';
+
 
 @Injectable({
   providedIn: 'root'
@@ -17,10 +22,226 @@ export class MyserviceService {
   goTicket;
   BackTicket;
   // regresandoAticket = false;
-  total=0;
+  total = 0;
   temporalComprasCarrito;
 
-  constructor(public alertController: AlertController, public popoverCtrl: PopoverController, public router: Router) { }
+
+  // pageMyDataAsRegister = true
+
+  constructor(
+    public alertController: AlertController,
+    public popoverCtrl: PopoverController,
+    public router: Router,
+    private nativeStorage: NativeStorage,
+    public platform: Platform
+  ) { }
+
+
+
+
+  /**
+   * Obtiene todos los post que existen en la api
+   */
+  checkIfExistUsuario(): Observable<any> {
+    return new Observable((observer: Subscriber<any>) => {
+
+      let plt = this.platform.platforms()
+
+
+
+      if (plt.includes('mobileweb') || plt.includes('desktop')) {
+        // //console.log('tiene mobilweb');
+
+        if (localStorage.getItem("usuario")) {
+          observer.next(true)
+          observer.complete()
+        } else {
+          observer.next(false)
+          observer.complete()
+        }
+
+
+      } else {
+        //console.log('No tiene mobilweb');
+
+        this.nativeStorage.getItem('usuario')
+          .then(
+            data => {
+              if (data) {
+                observer.next(true)
+                observer.complete()
+              } else {
+                observer.next(false)
+                observer.complete()
+              }
+            },
+            error => { 
+              observer.next(false)
+              observer.complete()
+              console.error('error al leer el LocalSorage:::', error)
+             }
+          );
+      }
+
+
+
+    });
+  } // 
+
+
+  /**
+ * Obtiene todos los post que existen en la api
+ */
+  getUser(): Observable<any> {
+    return new Observable((observer: Subscriber<any>) => {
+
+      let plt = this.platform.platforms()
+      if (plt.includes('mobileweb') || plt.includes('desktop')) {
+        //console.log('tiene mobilweb');
+        let usuariox = localStorage.getItem("usuario")
+
+        if (usuariox) {
+          observer.next(JSON.parse(usuariox))
+          observer.complete()
+        } else {
+          observer.next()
+          observer.complete()
+        }
+
+
+      } else {
+        // //console.log('No tiene mobilweb');
+
+        this.nativeStorage.getItem('usuario')
+          .then(
+            data => {
+              if (data) {
+                observer.next(data)
+                observer.complete()
+              } else {
+                observer.next(data)
+                observer.complete()
+              }
+            },
+            error => { console.error('error al leer el LocalSorage:', error) }
+          );
+      }
+
+
+
+    });
+  } // 
+  /**
+ * Obtiene todos los post que existen en la api
+ */
+
+  closeSessionUser(): Observable<any> {
+    return new Observable((observer: Subscriber<any>) => {
+
+      let plt = this.platform.platforms()
+      //console.log('plt', plt);
+      if (plt.includes('mobileweb') || plt.includes('desktop')) {
+
+        localStorage.removeItem('usuario');
+
+        //console.log('tiene mobilweb');
+        let usuariox = localStorage.getItem("usuario")
+        //console.log('tiene mobilweb2');
+        
+        if (usuariox) {
+          //console.log('tiene mobilweb3');
+          observer.next(false)
+          observer.complete()
+        } else {
+          //console.log('tiene mobilweb4');
+          observer.next(true)
+          observer.complete()
+        }
+
+
+      } else {
+        // //console.log('No tiene mobilweb');
+
+        this.nativeStorage.remove('usuario')
+          .then(
+            data => {
+              if (data) {
+                observer.next(true)
+                observer.complete()
+              } else {
+                observer.next(true)
+                observer.complete()
+              }
+            },
+            error => { console.error('error al leer el LocalSorage:', error) }
+          );
+      }
+
+    });
+  } // 
+
+
+
+  /**
+   * Obtiene todos los post que existen en la api
+   */
+  saveUsuario(datosUsuario): Observable<any> {
+    return new Observable((observer: Subscriber<any>) => {
+
+      let plt = this.platform.platforms()
+      if (plt.includes('mobileweb') || plt.includes('desktop')) {
+        // //console.log('tiene mobilweb');
+
+        localStorage.setItem("usuario", JSON.stringify(datosUsuario));
+
+        if (localStorage.getItem("usuario")) {
+          observer.next(true)
+          observer.complete()
+        } else {
+          observer.next(false)
+          observer.complete()
+        }
+
+
+      } else {
+        // //console.log('No tiene mobilweb');
+
+
+        this.nativeStorage.setItem('usuario', datosUsuario)
+          .then(
+            data => {
+              // Verificando que si se guard{o}
+              //console.log('Stored first item!', data)
+
+              this.nativeStorage.getItem('usuario')
+                .then(
+                  data => {
+                    if (data) {
+                      observer.next(true)
+                      observer.complete()
+                    } else {
+                      observer.next(false)
+                      observer.complete()
+                    }
+                  },
+                  error => { console.error('error al leer el LocalSorage:', error) }
+                );
+
+            },
+            error => console.error('Error storing item', error)
+          );
+
+
+
+      }
+
+
+
+    });
+  } // 
+
+
+
 
 
 
@@ -160,7 +381,6 @@ export class MyserviceService {
         break;
     }
 
-    // return `${diaL},${diaN} ${mesL} ${anoNumero} `;
     return { diaL, mesL, diaN, mesN, anoN, horaH, horaM };
   }
 

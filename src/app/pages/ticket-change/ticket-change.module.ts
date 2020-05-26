@@ -4,14 +4,15 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { MyCancellationsPageRoutingModule } from './my-cancellations-routing.module';
+import { TicketChangePageRoutingModule } from './ticket-change-routing.module';
 
-import { MyCancellationsPage } from './my-cancellations.page';
+import { TicketChangePage } from './ticket-change.page';
+
+import { PipesModule } from 'src/app/pipes/pipes.module';
 import { PopMenuComponent } from 'src/app/components/pop-menu/pop-menu.component';
 import { ComponentsModule } from 'src/app/components/components.module';
 import { PopCartComponent } from 'src/app/components/pop-cart/pop-cart.component';
 import { PopLanguageComponent } from 'src/app/components/pop-language/pop-language.component';
-
 
 @NgModule({
   entryComponents: [PopMenuComponent, PopCartComponent, PopLanguageComponent],
@@ -19,9 +20,10 @@ import { PopLanguageComponent } from 'src/app/components/pop-language/pop-langua
     CommonModule,
     FormsModule,
     IonicModule,
-    MyCancellationsPageRoutingModule,
+    TicketChangePageRoutingModule,
+    PipesModule,
     ComponentsModule
   ],
-  declarations: [MyCancellationsPage]
+  declarations: [TicketChangePage]
 })
-export class MyCancellationsPageModule {}
+export class TicketChangePageModule {}

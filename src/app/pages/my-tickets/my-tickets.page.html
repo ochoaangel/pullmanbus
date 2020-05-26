@@ -7,14 +7,15 @@
     <div style="display: inline; width: 10%;border-color: white; border: solid 1px;margin: 5px;">Es</div>
 
     <div style="width: 60%; height: 100%; display: flex; align-items: center; justify-content: center;">
-      <img src="assets/images/titulo.png" style="height: 90%;object-fit: scale-down;position: relative; z-index: 10; ">
+      <img src="assets/images/titulo.png"
+        style="object-fit: scale-down;position: relative; z-index: 10;height: 7vh; margin-top: 0.6rem;margin-left: 8vw;">
     </div>
 
-    <div style="display: inline; width: 10%;">
-      <ion-icon name="md-cart" style="font-size: 25px;padding-top: 5px;"></ion-icon>
+    <div style="display: inline; width: 10%;text-align: -webkit-right; margin-left: 18px;" (click)="popCart($event)">
+      <img src="assets/icon/Carrito-compra.png" style="height: 1.8rem;">
     </div>
 
-    <div style="display: inline; width: 10%">
+    <div style="display: inline; width: 10%" (click)="popMenu($event)">
       <ion-icon name="md-menu" style="font-size: 25px;padding-top: 5px;"></ion-icon>
     </div>
 
@@ -27,6 +28,7 @@
   <div class="cabeceraTitulo">
     Mis tickets
   </div>
+  <ion-progress-bar type="indeterminate" *ngIf="loading>0" color="secondary"></ion-progress-bar>
 
 </ion-header>
 
@@ -34,42 +36,149 @@
   <div style="width: 100%;height: 100%; background-color: var(--ion-color-primary);">
     <div style=" height: 100%; background-color: white ;margin: 0px 0px 0px 0px;">
       <ion-grid class=" ion-no-padding ion-no-margin" style="height: 100%;">
-        <ion-row class=" ion-no-padding  ion-no-margin ion-justify-content-center"  style="height: 100%">
+        <ion-row class=" ion-no-padding  ion-no-margin ion-justify-content-center" style="height: 100%">
           <ion-col class=" ion-no-padding ion-no-margin" size="12" style="text-align: center;">
 
 
 
-            <ion-row class=" ion-no-padding ion-no-margin" class="ticket" *ngFor="let item of [1,1,1,1,1,1]">
-              <ion-row class=" ion-no-padding ion-no-margin" style="width: 100%;">
-                <ion-col size="3" class=" ion-no-padding ion-no-margin" class="cabeceraCadaTicket">Origen/Terminal</ion-col>
-                <ion-col size="3" class=" ion-no-padding ion-no-margin" class="cabeceraCadaTicket">Destino/Terminal</ion-col>
-                <ion-col size="3" class=" ion-no-padding ion-no-margin" class="cabeceraCadaTicket">Fecha/Hora Salida</ion-col>
-                <ion-col size="2" class=" ion-no-padding ion-no-margin" class="cabeceraCadaTicket">Asiento</ion-col>
-                <ion-col size="1" class=" ion-no-padding ion-no-margin" class="cabeceraCadaTicket"></ion-col>
+
+            <div *ngIf="boletosAll.length<-100">
+
+              <ion-row>
+                <ion-text color="primary">
+                  <p>Debe seleccionar el o los boletos que desea devolver. La devolución debe ser realizada por lo menos 4
+                    hrs antes de la salida del servicio</p>
+                  <p style="padding: 0 1rem;">* Si la compra se Realizó con tarjeta de crédito, se generará una reversa
+                    en su cuenta, si se realizó con tarjeta de débito, se realizará una transferencia a la cuenta que entregue para este fin. La
+                    devolución o reversa se hará en un plazo máximo de 6 días hábiles.</p>
+                </ion-text>
               </ion-row>
-              <ion-row class=" ion-no-padding ion-no-margin" style="width: 100%;">
-                <ion-col size="3" class=" ion-no-padding ion-no-margin" class="infoCadaTicket">Santiago /<br> Term. Alameda</ion-col>
-                <ion-col size="3" class=" ion-no-padding ion-no-margin" class="infoCadaTicket">Algarrobo /<br> Algarrobo</ion-col>
-                <ion-col size="3" class=" ion-no-padding ion-no-margin" class="infoCadaTicket">21-nov-19 /<br> 22:30</ion-col>
-                <ion-col size="2" class=" ion-no-padding ion-no-margin" class="infoCadaTicket">23-24</ion-col>
-                <ion-col size="1" class=" ion-no-padding ion-no-margin" class="infoCadaTicket">
-                  <ion-checkbox mode="ios" style="position: relative; left: -7px; height: 5vw; width: 5vw;"></ion-checkbox>
+
+
+              <!-- linea1 -->
+              <ion-row>
+                <ion-col size="6">
+
+                  <ion-select [interfaceOptions]="tipoDeCuentaOptions" class=" ion-no-padding ion-no-margin"
+                    multiple="false" placeholder="Tipo de Cuenta" cancel-text="Cancelar"
+                    [(ngModel)]="myData.tipoDeCuenta" #tipoDeCuenta name='tipoDeCuenta' required>
+
+                    <ion-select-option *ngFor="let tipoDeCuenta of myData.tiposDeCuentas"
+                      value="{{tipoDeCuenta.codigo}}">
+                      {{tipoDeCuenta.nombre}}
+                    </ion-select-option>
+                  </ion-select>
+                </ion-col>
+
+                <ion-col size="6">
+                  <div class="overIonInput">
+                    <ion-input type="text" placeholder="Número de Cuenta" [(ngModel)]="myData.numeroDeCuenta"
+                      #numeroDeCuenta name='numeroDeCuenta'></ion-input>
+                  </div>
                 </ion-col>
               </ion-row>
+
+              <!-- linea2 -->
+              <ion-row>
+                <ion-col size="6">
+
+                  <ion-select [interfaceOptions]="bancoOptions" class=" ion-no-padding ion-no-margin" multiple="false"
+                    placeholder="Banco" cancel-text="Cancelar" [(ngModel)]="myData.banco" #banco name='banco' required>
+
+                    <ion-select-option *ngFor="let banco of this.myData.bancos" value="{{banco.codigo}}">
+                      {{banco.nombre}}
+                    </ion-select-option>
+                  </ion-select>
+                </ion-col>
+
+                <ion-col size="6">
+                  <!-- <ion-col size="12"> -->
+
+                  <div class="overIonInput">
+                    <ion-input type="text" placeholder="RUT del titular de la cuenta" [(ngModel)]="myData.rutTitular"
+                      #rutTitular name='rutTitular'></ion-input>
+                  </div>
+                  <!-- </ion-col> -->
+                </ion-col>
+              </ion-row>
+
+              <!-- linea3 -->
+              <ion-row>
+                <ion-col size="12">
+
+                  <ion-button
+                    style="width: -webkit-fill-available; transform: none;--background:var(--ion-color-secondary)"
+                    (click)="anular()" [disabled]="nBoletosSeleccionados<1">
+                    <div *ngIf="nBoletosSeleccionados>0">Devolver seleccionados</div>
+                    <div *ngIf="nBoletosSeleccionados<1">Seleccione Boletos para devolver</div>
+                  </ion-button>
+                </ion-col>
+              </ion-row>
+
+            </div>
+
+            <!-- linea3 -->
+            <ion-row *ngIf="loading==0">
+              <ion-col size="12">
+
+                <ion-button
+                  style="width: -webkit-fill-available; transform: none;--background:var(--ion-color-secondary)"
+                  (click)="actualizar() " [disabled]="loading>0">
+                  <div>Actualizar</div>
+                </ion-button>
+              </ion-col>
             </ion-row>
 
 
+            <ion-row class=" ion-no-padding ion-no-margin" class="ticket"
+              *ngFor="let boleto of boletosAll;  let i=index">
+              <ion-row class=" ion-no-padding ion-no-margin" style="width: 100%; display: flex; align-items: center;">
+                <ion-col size="3" class=" ion-no-padding ion-no-margin" class="cabeceraCadaTicket">Origen/Terminal </ion-col>
+                <ion-col size="3" class=" ion-no-padding ion-no-margin" class="cabeceraCadaTicket">Destino/Terminal </ion-col>
+                <ion-col size="3" class=" ion-no-padding ion-no-margin" class="cabeceraCadaTicket">Fecha<br>Hora Salida </ion-col>
+                <ion-col size="1" class=" ion-no-padding ion-no-margin" class="cabeceraCadaTicket">Asiento</ion-col>
+                <ion-col size="2" class=" ion-no-padding ion-no-margin" class="cabeceraCadaTicket">Estado</ion-col>
+              </ion-row>
 
-            <ion-row style="padding-top: 10px;">
+              <ion-row class=" ion-no-padding ion-no-margin" style="width: 100%;">
+                <ion-col size="3" class=" ion-no-padding ion-no-margin" class="infoCadaTicket">
+                  {{boleto.imprimeVoucher.nombreTerminalOrigen}}</ion-col>
+                <ion-col size="3" class=" ion-no-padding ion-no-margin" class="infoCadaTicket">
+                  {{boleto.imprimeVoucher.nombreTerminalDestino}}</ion-col>
+                <ion-col size="3" class=" ion-no-padding ion-no-margin" class="infoCadaTicket">
+                  {{boleto.imprimeVoucher.fechaSalida}}<br>{{boleto.imprimeVoucher.horaSalida}} </ion-col>
+                <ion-col size="1" class=" ion-no-padding ion-no-margin" class="infoCadaTicket">
+                  {{boleto.imprimeVoucher.asiento}}</ion-col>
+                  <ion-col size="2" class=" ion-no-padding ion-no-margin" class="infoCadaTicket">
+                    <div class="textoVertical" *ngIf="boleto.myEstado === 'INACTIVO'" style="font-weight:normal ;"> INACTIVO</div>
+                    <div class="textoVertical" *ngIf="boleto.myEstado === 'DEVUELTO'" style="font-weight:normal ;"> INACTIVO</div>
+                    <div class="textoVertical" *ngIf="boleto.myEstado === 'ANULADO'" style="color: var(--ion-color-danger);">DEVUELTO</div>
+                    <div class="textoVertical" *ngIf="boleto.myEstado === 'ACTIVO'" style="color: var(--ion-color-secondary);"> ACTIVO</div>
+                  </ion-col>
+              </ion-row>
+
+            </ion-row>
+
+
+            <!-- botones -->
+            <!-- <ion-row style="padding-top: 10px;" *ngIf="boletosAll.length>0">
               <ion-col size="6" style="padding:0px 3vw">
-                <ion-button style="width: 100%; text-transform: none;">
-                  Anular
-                </ion-button>
+                <ion-button style="width: 100%; text-transform: none;" (click)="anular()"> Anular </ion-button>
               </ion-col>
               <ion-col size="6" style="padding:0px 3vw">
                 <ion-button style="width: 100%; text-transform: none;">
                   Volver a Agendar
                 </ion-button>
+              </ion-col>
+            </ion-row> -->
+
+            <!-- mensajes -->
+            <ion-row style="padding-top: 10px;" *ngIf="boletosAll.length<1">
+              <ion-col size="12" style="padding:0px 3vw" *ngIf="loading>=1">
+                Buscando boletos..
+              </ion-col>
+              <ion-col size="12" style="padding:0px 3vw" *ngIf="loading<1">
+                No se han encontraron boletos..
               </ion-col>
             </ion-row>
 
@@ -83,19 +192,20 @@
 </ion-content>
 
 <ion-footer>
-    <div style=" width: 100%; display: flex;align-items: center;justify-content: center; background-color: var(--ion-color-primary);">
+  <div
+    style=" width: 100%; display: flex;align-items: center;justify-content: center; background-color: var(--ion-color-primary);">
 
-        <ion-button fill="clear" style="color: white;  width: 50%; outline: none;"  routerLink="/user-panel">
-          <ion-icon src="assets/icon/previous.svg"></ion-icon>
-          <!-- <ion-icon src="assets/icon/asiento.svg" style="color: white;"></ion-icon> -->
-          <div style="display: inline; text-align: left ;padding-left: 10px; text-transform: none;">Regresar</div>
-        </ion-button>
+    <ion-button fill="clear" style="color: white;  width: 50%; outline: none;" routerLink="/user-panel">
+      <ion-icon src="assets/icon/previous.svg"></ion-icon>
+      <!-- <ion-icon src="assets/icon/asiento.svg" style="color: white;"></ion-icon> -->
+      <div style="display: inline; text-align: left ;padding-left: 10px; text-transform: none;">Regresar</div>
+    </ion-button>
 
-        <!-- <div style="width: 50%;"></div> -->
-          <ion-button fill="clear" style="color: white;  width: 50%; outline: none;"  routerLink="/payment-methods">
-          <div style="display: inline;  text-align: right;padding-right: 7px;  text-transform: none">Continuar</div>
-          <ion-icon src="assets/icon/previous.svg" style="transform: rotate(180deg);"></ion-icon>
-        </ion-button>
-  
-      </div>
+    <!-- <div style="width: 50%;"></div> -->
+    <!-- <ion-button fill="clear" style="color: white;  width: 50%; outline: none;" routerLink="/payment-methods">
+      <div style="display: inline;  text-align: right;padding-right: 7px;  text-transform: none">Continuar</div>
+      <ion-icon src="assets/icon/previous.svg" style="transform: rotate(180deg);"></ion-icon>
+    </ion-button> -->
+
+  </div>
 </ion-footer>

@@ -25,12 +25,11 @@
 
   </div>
 
-
-
   <div class="cabeceraTitulo">
     Medios de pago
   </div>
-  <ion-progress-bar type="indeterminate" *ngIf="loading>0"  color="secondary"></ion-progress-bar>
+
+  <ion-progress-bar type="indeterminate" *ngIf="loading>0" color="secondary"></ion-progress-bar>
 
 </ion-header>
 
@@ -76,8 +75,7 @@
               </ion-radio-group>
             </ion-list>
 
-            <div style="text-align: center; margin-top: 1vh;"
-              *ngIf="listaDetalleConvenio.length > 0 ">
+            <div style="text-align: center; margin-top: 1vh;" *ngIf="listaDetalleConvenio.length > 0 ">
               <div style="background-color: var(--ion-color-primary);color: white; border-radius: 40px 40px 5px 5px; ">
                 Datos Convenio</div>
             </div>
@@ -107,14 +105,18 @@
               <div style="text-align: center; display: flex;" *ngFor="let input of listaDetalleConvenio">
                 <div *ngIf="(input.Estado == 'ACT' && input.VisibleUsr == 'SI' && input.TipoDato == 'ETIQUETA')"
                   style="width: 100%; display: flex; justify-content: center; align-items: center;">
-                  <input type="text" [textMask]={mask:rutFunction,guide:false} [(ngModel)]="input.Valor"
-                    name="input.Valor" #input_rut (keypress)="tecleado($event)" placeholder="{{input.Valor}}">
+                  <input type="text" [textMask]="{mask:rutFunction,guide:false}" [(ngModel)]="DatosFormulario.rut"
+                    name="input.Valor" #input_rut (keypress)="tecleado($event)" placeholder="{{input.Valor}}"
+                    [disabled]="registrado">
+                  <!-- <input type="text" [textMask]={mask:rutFunction,guide:false} [(ngModel)]="input.Valor"
+                    name="input.Valor" #input_rut (keypress)="tecleado($event)" placeholder="{{input.Valor}}"> -->
                 </div>
               </div>
 
               <!-- boton Validar -->
               <div style="width: 100%; display: flex; justify-content: center; align-items: center;">
-                <ion-button (click)="validarDatosConvenio()" style="color: white;  width:100% ;padding: 0 3vw; outline: none; text-transform: none;--background: var(--ion-color-primary);">
+                <ion-button (click)="validarDatosConvenio()" [disabled]='registrado'
+                  style="color: white;  width:100% ;padding: 0 3vw; outline: none; text-transform: none;--background: var(--ion-color-primary);">
                   Validar
                 </ion-button>
               </div>
@@ -143,25 +145,32 @@
               <div style=" width: 35%;">
                 <input style="text-align: center; margin: 0.8vh 0vw 0.8vh 3vw; font-size: 0.8rem;"
                   [textMask]="maskCodigo" type="text" placeholder="Código País" [(ngModel)]="DatosFormulario.codigo"
-                  name="codigo" #input_codigo (keypress)="tecleado($event)" (keyup.enter)="setFocus('telefono')">
+                  name="codigo" #input_codigo (keypress)="tecleado($event)" (keyup.enter)="setFocus('telefono')"
+                  [disabled]="registrado">
               </div>
               <div style=" width: 65%;">
-                <input type="text" [textMask]={mask:telefonoFunction,guide:false} placeholder="Teléfono"
-                  [(ngModel)]="DatosFormulario.telefono" name="telefono" #input_telefono (keypress)="tecleado($event)"
-                  (keyup.enter)="setFocus('email')">
+                <input type="text" 
+                placeholder="Teléfono" 
+                [(ngModel)]="DatosFormulario.telefono" 
+                name="telefono"
+                (keypress)="tecleado($event)"
+                (keyup.enter)="setFocus('email')" 
+                [disabled]="registrado"
+                #input_telefono 
+                >
               </div>
             </div>
 
             <!-- 7ma fila -->
             <div style="text-align: center;">
               <input type="email" placeholder="E-mail" [(ngModel)]="DatosFormulario.email" name="email" #input_email
-                (keypress)="tecleado($event)" (keyup.enter)="setFocus('email2')">
+                (keypress)="tecleado($event)" (keyup.enter)="setFocus('email2')" [disabled]="registrado">
             </div>
 
             <!-- 8va fila -->
             <div style="text-align: center;">
               <input type="email" placeholder="Re-ingresar" [(ngModel)]="DatosFormulario.email2" name="email2"
-                #input_email2 (keypress)="tecleado($event)">
+                #input_email2 (keypress)="tecleado($event)" [disabled]="registrado">
             </div>
 
             <!-- 9na fila -->
@@ -214,15 +223,16 @@
   </div>
 </ion-content>
 
+
 <ion-footer>
-  <div style=" width: 100%; display: flex;align-items: center;justify-content: center; background-color: var(--ion-color-primary);">
+  <div
+    style=" width: 100%; display: flex;align-items: center;justify-content: center; background-color: var(--ion-color-primary);">
 
     <ion-button fill="clear" style="color: white;  width: 50%; outline: none;" routerLink="/purchase-detail">
       <ion-icon src="assets/icon/previous.svg"></ion-icon>
       <div style="display: inline; text-align: left ;padding-left: 10px; text-transform: none;">Regresar</div>
     </ion-button>
 
-    <!-- <div style="width: 50%;"></div> -->
     <ion-button fill="clear" style="color: white;  width: 50%; outline: none;" (click)="pagar()">
       <div style="display: inline;  text-align: right;padding-right: 7px;  text-transform: none">Pagar</div>
       <ion-icon src="assets/icon/previous.svg" style="transform: rotate(180deg);"></ion-icon>

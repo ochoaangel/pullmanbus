@@ -22,7 +22,9 @@ export class PaymentMethodsPage implements OnInit {
   constructor(private router: Router,
     private integradorService: IntegradorService,
     private popoverCtrl: PopoverController,
-    private mys: MyserviceService) {
+    private mys: MyserviceService
+
+  ) {
     this.loading = 2
 
 
@@ -44,11 +46,13 @@ export class PaymentMethodsPage implements OnInit {
   }
 
   mostrarTarifaAtachada = false;
-  totalSinDscto:number;
-  totalFinal:number;
+  totalSinDscto: number;
+  totalFinal: number;
 
   acuerdo = { acuerdo: false }
   ticket
+  usuario
+  registrado: boolean
 
   DatosFormulario = {
     convenioUp: null,
@@ -71,18 +75,65 @@ export class PaymentMethodsPage implements OnInit {
     guide: false,
     showMask: false,
     mask: ['+', /\d/, /\d/, /\d/, /\d/]
+
   };
 
   ngOnInit() {
-    this.totalFinal = this.mys.total;
-    this.ticket = this.mys.ticket;
+
+
+    this.mys.getUser().subscribe(usuario => {
+      //console.log('usuario', usuario);
+      if (usuario) {
+        //console.log('usuario Registrado');
+        this.usuario = usuario
+        this.registrado = true
+
+        this.DatosFormulario.rut = this.usuario.usuario.rut
+        this.DatosFormulario.telefono = this.usuario.usuario.telefono
+        this.DatosFormulario.email = this.usuario.usuario.email
+        this.DatosFormulario.email2 = this.usuario.usuario.email
+
+
+
+
+      } else {
+        //console.log('usuario NO registrado');
+        this.usuario = null
+        this.registrado = false
+      }
+      //console.log('registrado', this.registrado);
+    })
+
+
+
+
+    let info = localStorage.getItem('ticket')
+    if (info) {
+      this.totalFinal = JSON.parse(localStorage.getItem('totalFinal'))
+      this.ticket = JSON.parse(localStorage.getItem('ticket'))
+      this.mys.total = this.totalFinal
+      this.mys.ticket = this.ticket
+      //console.log('Leido del Storage');
+    } else {
+      this.totalFinal = this.mys.total;
+      this.ticket = this.mys.ticket;
+      localStorage.setItem('totalFinal', JSON.stringify(this.totalFinal))
+      localStorage.setItem('ticket', JSON.stringify(this.ticket))
+      //console.log('Guardado en el localStorage');
+    }
+
+
+    // this.totalFinal = this.mys.total;
+    // this.ticket = this.mys.ticket;
+
+
   }
 
   seleccionadoConvenioUp(convenio) {
     this.totalFinal = this.mys.total;
     this.mostrarTarifaAtachada = false;
-    if(convenio!='BCNSD'){
-      this.DatosFormulario.convenioDown='WBPAY';
+    if (convenio != 'BCNSD') {
+      this.DatosFormulario.convenioDown = 'WBPAY';
     }
     this.loading += 1
     this.integradorService.getDetalleConvenio({ "convenio": convenio }).subscribe(detalleConvenio => {
@@ -92,13 +143,13 @@ export class PaymentMethodsPage implements OnInit {
         item.Placeholder = item.Valor;
       });
 
-    },erro=>this.loading -= 1)
+    }, erro => this.loading -= 1)
   }
 
   seleccionadoMedioPago(medioPago) {
     this.DatosFormulario.convenioDown = medioPago;
-     if (this.DatosFormulario.convenioDown === 'BCNSD') {
-      this.DatosFormulario.convenioUp="";
+    if (this.DatosFormulario.convenioDown === 'BCNSD') {
+      this.DatosFormulario.convenioUp = "";
       this.seleccionadoConvenioUp(medioPago);
     }else{
       if( this.DatosFormulario.convenioUp==undefined || this.DatosFormulario.convenioUp===""){
@@ -129,6 +180,7 @@ export class PaymentMethodsPage implements OnInit {
         medioDePago: this.DatosFormulario.convenioDown,
         puntoVenta: "PUL",
         montoTotal: this.totalFinal,
+
         idSistema: 5,
         listaCarrito: []
       }
@@ -167,12 +219,13 @@ export class PaymentMethodsPage implements OnInit {
       this.loading += 1
       
       this.integradorService.guardarTransaccion(guardarTransaccion).subscribe(resp => {
+        //console.log('resp', resp);
         this.loading -= 1
         let valor: any = resp;
         if (valor.exito) {
           formularioTBKWS(valor.url, valor.token);
         } else {
-          this.mys.alertShow('¡Verifique!', 'alert', valor.mensaje);
+          this.mys.alertShow('¡Verifique!', 'alert', valor.mensaje || 'Error, Verifique los datos ingresados..');
         }
       })
       //this.router.navigateByUrl('/transaction-voucher')
@@ -310,10 +363,11 @@ export class PaymentMethodsPage implements OnInit {
       } else {
         this.datosConvenio = null;
       }
-    },error=>this.loading -= 1)
+    }, error => this.loading -= 1)
   };
 
   async popMenu(event) {
+    //console.log('event', event);
     const popoverMenu = await this.popoverCtrl.create({
       component: PopMenuComponent,
       event,
@@ -325,7 +379,16 @@ export class PaymentMethodsPage implements OnInit {
 
     // recibo la variable desde el popover y la guardo en data
     const { data } = await popoverMenu.onWillDismiss();
-    this.router.navigateByUrl(data.destino);
+    if (data && data.destino) {
+      if (data.destino === '/login') {
+        this.mys.checkIfExistUsuario().subscribe(exist => {
+          exist ? this.router.navigateByUrl('/user-panel') : this.router.navigateByUrl('/login');
+        })
+      } else {
+        this.router.navigateByUrl(data.destino);
+      }
+    }
+
   }
 
   async popCart(event) {
