@@ -38,7 +38,8 @@
   <div class="cabeceraTitulo" style="font-size: 0.8rem;" *ngIf="way==='back'">
     {{this.ticket.destiny.nombre  | titlecase }} a {{this.ticket.origin.nombre  | titlecase }} {{backDate}}
   </div>
-  <ion-progress-bar type="indeterminate" *ngIf="loadingBus || loadingSeat>0 || loadingService"  color="secondary"></ion-progress-bar>
+  <ion-progress-bar type="indeterminate" *ngIf="loadingBus || loadingSeat>0 || loadingService" color="secondary">
+  </ion-progress-bar>
 
 </ion-header>
 
@@ -46,8 +47,7 @@
   <div style="width: 100%;height: 100%; background-color: var(--ion-color-primary);padding: 0">
     <div style=" height: 100%; background-color: white ;margin: 0px 0px 0px 0px;">
       <ion-grid style="height: 100%;" class="ion-no-margin ion-no-padding">
-        <ion-row style="height: 100%"
-          class="ion-no-margin ion-no-padding ion-justify-content-center ">
+        <ion-row style="height: 100%" class="ion-no-margin ion-no-padding ion-justify-content-center ">
           <ion-col size="12" style="text-align: center;" class="ion-no-margin ion-no-padding">
 
             <!-- <ion-row style="position: absolute; z-index: 3; right: 47%; top: -2rem;" *ngIf="loadingService">
@@ -72,6 +72,21 @@
               <div style="display:flex; flex-direction: column;">
 
                 <div style="display: flex; flex-direction: row;">
+                  <!-- columna 1   -->
+                  <div class="box myServiceColumn" style="width: 15%;">
+                    <div class="ribbon"><span> {{' '}} Descuento %</span></div>
+                    <!-- <div
+                      style="width: 2rem;height: 1rem; background-color: var(--ion-color-primary); color: var(--ion-color-light);transform: rotate(-45deg);">
+                      Texto
+                    </div> -->
+
+                    <!-- <div class="myServiceRow" style="height: 1.9rem;"><img src="assets/images/flecha002.png"
+                        style="height: 1.5rem;  margin-top: 0.2rem; object-fit: scale-down;"></div>
+                    <div class="myServiceRow" style="display: flex; align-items: center; color: gray;">
+                      <ion-icon style="font-size: 0.9rem;" name="clock"></ion-icon>
+                    </div> -->
+                  </div>
+
                   <!-- columna 2   -->
                   <div class="myServiceColumn" style="width: 5%;">
                     <div class="myServiceRow" style="height: 1.9rem;"><img src="assets/images/flecha002.png"
@@ -92,7 +107,7 @@
                   </div>
 
                   <!-- columna 4   -->
-                  <div class="myServiceColumn" style="width: 60%;text-align: left;">
+                  <div class="myServiceColumn" style="width: 45%;text-align: left;">
 
                     <div style="display: flex; flex-direction: row;">
                       <div class="myServiceRow" style="width:85%; font-weight: bold;">
@@ -113,7 +128,7 @@
 
                   <!-- columna 5   -->
                   <div class="myServiceColumn"
-                    style="width: 30%;text-align: left; position: absolute; right: 0; margin-top: 2rem; ">
+                    style="width: 15%;text-align: left; position: absolute; right: 0; margin-top: 2rem; ">
 
                     <div *ngIf="svc.my_comprasByService && svc.my_comprasByService.length>0"
                       style=" width: 25%;display: flex;justify-content: flex-end;align-items: center; flex-direction: row; position: absolute; margin-top: -2rem; right: 1rem; font-size: 0.9rem;">
@@ -136,18 +151,33 @@
                     <div class="myServiceRow" style="align-items: center; justify-content: center; ">
                       <ion-button fill="clear" (click)="myServiceSelection(i)" [disabled]="loadingBus"
                         *ngIf="(!svc.checked && !svc.my_comprasByService) ||  (  !svc.checked &&  svc.my_comprasByService && svc.my_comprasByService.length===0)"
-                        style="color: white; outline: none;  --padding-start: 0;--padding-end: 0; --background: #0247ac;text-transform: none; font-size: 0.8rem;width: 90%;">
-                        Comprar
+                        style="color: white; outline: none;  --padding-start: 0;--padding-end: 0; --background: #0247ac;text-transform: none; font-size: 0.8rem;width: 2.5rem; height: 2.5rem; --border-radius:3rem">
+                        <ion-icon style="color: white;zoom: 5;" name="md-arrow-dropdown"></ion-icon>
                       </ion-button>
                       <ion-button fill="clear" (click)="myServiceSelection(i)" [disabled]="loadingBus"
                         *ngIf="!svc.checked && svc.my_comprasByService && svc.my_comprasByService.length>0"
+                        style="color: white; outline: none;  --padding-start: 0;--padding-end: 0; --background: #0247ac;text-transform: none; font-size: 0.8rem;width: 2.5rem; height: 2.5rem; --border-radius:3rem">
+                        <ion-icon style="color: white;zoom: 5;" name="md-arrow-dropdown"></ion-icon>
+                      </ion-button>
+                      <ion-button fill="clear" (click)="myServiceSelection(i)" *ngIf="svc.checked"
+                        [disabled]="loadingBus"
+                        style="color: white; outline: none;  --padding-start: 0;--padding-end: 0; --background: #0247ac;text-transform: none; font-size: 0.8rem;width: 2.5rem; height: 2.5rem; --border-radius:3rem">
+                        <ion-icon style="color: white;zoom: 5;" name="md-arrow-dropup"></ion-icon>
+                      </ion-button>
+                      <!-- <ion-button fill="clear" (click)="myServiceSelection(i)" [disabled]="loadingBus"
+                        *ngIf="(!svc.checked && !svc.my_comprasByService) ||  (  !svc.checked &&  svc.my_comprasByService && svc.my_comprasByService.length===0)"
+                        style="color: white; outline: none;  --padding-start: 0;--padding-end: 0; --background: #0247ac;text-transform: none; font-size: 0.8rem;width: 90%;">
+                        Comprar
+                      </ion-button> -->
+                      <!-- <ion-button fill="clear" (click)="myServiceSelection(i)" [disabled]="loadingBus"
+                        *ngIf="!svc.checked && svc.my_comprasByService && svc.my_comprasByService.length>0"
                         style="color: white; outline: none;  --padding-start: 0;--padding-end: 0; --background: #0247ac;text-transform: none; font-size: 0.8rem;width: 90%;">
                         Editar
-                      </ion-button>
-                      <ion-button fill="clear" (click)="myServiceSelection(i)" *ngIf="svc.checked" [disabled]="loadingBus"
+                      </ion-button> -->
+                      <!-- <ion-button fill="clear" (click)="myServiceSelection(i)" *ngIf="svc.checked" [disabled]="loadingBus"
                         style="color: white; outline: none;  --padding-start: 0;--padding-end: 0; --background: #0247ac;text-transform: none; font-size: 0.8rem;width: 90%;">
                         Ocultar
-                      </ion-button>
+                      </ion-button> -->
                     </div>
 
                   </div>
@@ -156,6 +186,19 @@
 
               </div>
               <div style="display: flex; flex-direction: row; padding-top: 0.5rem;">
+                <!-- columna 0   -->
+                <div class="myServiceColumn" style="width: 15%;text-align: left;     padding-left: 1%;">
+                  <!-- <div class="myServiceRow">
+                    <div
+                      style="border: 1px solid var(--ion-color-primary);color: var(--ion-color-primary);    width: fit-content; padding: 0 0.5rem; border-radius: 10px; font-size: 0.6rem; font-weight: bold; ">
+                      Piso 1</div>
+                  </div>
+                  <div class="myServiceRow">{{svc.servicioPrimerPiso | titlecase}}</div>
+                  <div class="myServiceRow">
+                    <div style="display: flex; align-items: center; justify-content: left;">Valor:
+                      ${{svc.tarifaPrimerPisoInternet}}</div>
+                  </div> -->
+                </div>
                 <!-- columna 1   -->
                 <div class="myServiceColumn" style="width: 35%;text-align: left;     padding-left: 1%;">
                   <div class="myServiceRow">
@@ -171,7 +214,7 @@
                 </div>
 
                 <!-- columna 2   -->
-                <div class="myServiceColumn" style="width: 60%;text-align: left;" *ngIf="svc.tarifaSegundoPiso">
+                <div class="myServiceColumn" style="width: 45%;text-align: left;" *ngIf="svc.tarifaSegundoPiso">
                   <div class="myServiceRow">
                     <div
                       style="background-color: var(--ion-color-primary); color: white;width: fit-content; padding: 0 0.5rem; border-radius: 10px; font-size: 0.6rem;">
@@ -228,7 +271,7 @@
 
                                     <ion-button fill="clear" style="margin-left: 4vw; color: var(--ion-color-primary); outline:
                                     none;padding:0;font-size: 0vw; display: contents;"
-                                      (click)="presionadoAsiento('1',y,x)"  [disabled]="loadingSeat>0">
+                                      (click)="presionadoAsiento('1',y,x)" [disabled]="loadingSeat>0">
                                       <img src="assets/icon/png/Asiento-ocupado.png"
                                         *ngIf="asiento.estado==='ocupado'" />
                                       <img src="assets/icon/png/Asiento-disponible.png"
@@ -247,14 +290,15 @@
                             </div>
 
                             <!-- //* piso2 -->
-                                <div style="width: 100%;height: 100%;" *ngIf="!piso1 && tarifaPiso2">
+                            <div style="width: 100%;height: 100%;" *ngIf="!piso1 && tarifaPiso2">
                               <div style="width: 100%; display: flex;" *ngFor="let columna of bus['2'] ; let y= index">
                                 <div style="width: 100%; display: flex;" *ngFor="let asiento of columna ; let x= index">
 
                                   <ion-button fill="clear" style="margin-left: 4vw; color: var(--ion-color-primary); outline:
                                     none;padding:0;font-size: 0vw;display: contents;"
                                     (click)="presionadoAsiento('2',y,x)"
-                                    *ngIf="asiento.estado ==='libre' || asiento.estado ==='ocupado'  || asiento.estado ==='seleccionado'" [disabled]="loadingSeat>0">
+                                    *ngIf="asiento.estado ==='libre' || asiento.estado ==='ocupado'  || asiento.estado ==='seleccionado'"
+                                    [disabled]="loadingSeat>0">
                                     <img src="assets/icon/png/Asiento-ocupado.png" *ngIf="asiento.estado==='ocupado'" />
                                     <img src="assets/icon/png/Asiento-disponible.png"
                                       *ngIf="asiento.estado==='libre'" />
@@ -268,7 +312,7 @@
 
                                 </div>
                               </div>
-                            </div> 
+                            </div>
 
 
 
@@ -369,13 +413,15 @@
       </div>
     </ion-button> -->
 
-    <ion-button fill="clear" style="color: var(--ion-color-primary); outline: none; width: 100%;   --padding-start: 0;--padding-end: 0;"
+    <ion-button fill="clear"
+      style="color: var(--ion-color-primary); outline: none; width: 100%;   --padding-start: 0;--padding-end: 0;"
       *ngIf="tarifaTotal == 0" (click)="continuar()">
 
       <div style="display: inline;  text-align: left; text-transform: none;font-size: 1rem;font-weight:bold">
         Continuar
       </div>
-      <ion-icon src="assets/icon/previous.svg" style="transform: rotate(180deg); color: var(--ion-color-primary);font-size: 3vw;">
+      <ion-icon src="assets/icon/previous.svg"
+        style="transform: rotate(180deg); color: var(--ion-color-primary);font-size: 3vw;">
       </ion-icon>
     </ion-button>
 
@@ -383,7 +429,8 @@
 
 
   <!-- 2da Fila menu -->
-  <div style=" width: 100%; display: flex;align-items: center;justify-content: center; background-color: var(--ion-color-primary);"
+  <div
+    style=" width: 100%; display: flex;align-items: center;justify-content: center; background-color: var(--ion-color-primary);"
     *ngIf="tarifaTotal &&  tarifaTotal !== 0">
     <div
       style="width: 50%;display: inline;  text-align: left;padding-right: 7px;  text-transform: none;padding-left: 20px;font-size: 1.3rem;color: white;font-weight: bold; ">
@@ -391,7 +438,8 @@
     </div>
 
     <ion-button fill="clear" style="color: white;  width: 50%; outline: none;" (click)="continuar()">
-      <div style="display: inline;  text-align: right;padding-right: 7px;  text-transform: none;font-size: 1rem; font-weight: bold;">
+      <div
+        style="display: inline;  text-align: right;padding-right: 7px;  text-transform: none;font-size: 1rem; font-weight: bold;">
         Continuar
       </div>
       <ion-icon src="assets/icon/previous.svg" style="transform: rotate(180deg);font-size: 2.5vw;"></ion-icon>

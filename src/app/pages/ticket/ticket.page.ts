@@ -151,6 +151,7 @@ export class TicketPage implements OnInit {
 
     this.integradorService.getService(findService).subscribe(data => {
       this.allServices = data;
+      console.log('this.allServices', this.allServices);
       this.loadingService = false;
       this.allServices.forEach(servicio => {
         this.comprasDetalles.forEach(compra => {
@@ -284,7 +285,7 @@ export class TicketPage implements OnInit {
 
   presionadoAsiento(piso: string, y: number, x: number) {
 
-    this.comprasByService? null:this.comprasByService = []
+    this.comprasByService ? null : this.comprasByService = []
 
     if (this.compras.length >= 4 && this.way === 'go' && this.bus[piso][y][x]['estado'] === 'libre') {
       this.allServices.forEach(element => {

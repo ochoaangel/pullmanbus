@@ -14,7 +14,7 @@ export class IntegradorService {
     // sinProxy= false 
     //urlBase = 'http://pullmanapi.pasajeschile.cl'
     // urlBase = 'http://clamber.pullman.cl'    
-    constructor(private http: HttpClient) { 
+    constructor(private http: HttpClient) {
     }
 
 
@@ -34,6 +34,7 @@ export class IntegradorService {
 
     getService(ticket: any): Observable<any[]> {
         let urlFinal
+        console.log('XXXXXXXXXXXXX_', JSON.stringify(ticket));
         let dirProxy = '/integrador-web/rest/private/venta/obtenerServicio'
         this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy
         return this.http.post<any[]>(urlFinal, ticket);
@@ -124,21 +125,21 @@ export class IntegradorService {
         this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy
         return this.http.post<any[]>(urlFinal, params);
     }
-    
+
     usuarioCambiarPassword(params: any): Observable<any[]> {
         let urlFinal
         let dirProxy = '/srv-privado-web/rest/usuario/cambioPassowrd'
         this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy
         return this.http.post<any[]>(urlFinal, params);
     }
-    
+
     usuarioGuardar(params: any): Observable<any[]> {
         let urlFinal
         let dirProxy = '/srv-privado-web/rest/usuario/guardarUsuario'
         this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy
         return this.http.post<any[]>(urlFinal, params);
     }
-    
+
     usuarioInscribir(params: any): Observable<any[]> {
         let urlFinal
         let dirProxy = '/srv-privado-web/rest/usuario/inscribirUsuario'
@@ -163,14 +164,14 @@ export class IntegradorService {
         this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy
         return this.http.post<any[]>(urlFinal, params);
     }
-    
+
     buscarBoletoPorCodigo(params: any): Observable<any[]> {
         let urlFinal
         let dirProxy = '/srv-privado-web/rest/compra/obtenerBoleto'
         this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy
         return this.http.post<any[]>(urlFinal, params);
     }
-    
+
     anularBoleto(params: any): Observable<any[]> {
         let urlFinal
         let dirProxy = '/integrador-web/rest/private/venta/anularVenta'
@@ -179,14 +180,14 @@ export class IntegradorService {
     }
     ///////////////////////////////////////////////////////////////////////////////////
     //////////////////////// Gestion localidades ///////////////////////////////////////
-    
+
     buscarRegionesRegistroDeUsuario(): Observable<any[]> {
         let urlFinal
         let dirProxy = '/srv-privado-web/rest/parametros/obtenerRegiones'
         this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy
         return this.http.post<any[]>(urlFinal, {});
     }
-    
+
     buscarCiudadPorRegionesRegistroDeUsuario(params: any): Observable<any[]> {
         let urlFinal
         let dirProxy = '/srv-privado-web/rest/parametros/obtenerCiudades'
@@ -195,14 +196,14 @@ export class IntegradorService {
     }
     ///////////////////////////////////////////////////////////////////////////////////
     //////////////////////// Gestion bancos ///////////////////////////////////////
-    
+
     buscarBancos(): Observable<any[]> {
         let urlFinal
         let dirProxy = '/srv-privado-web/rest/parametros/obtenerBanco'
         this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy
         return this.http.post<any[]>(urlFinal, '');
     }
-    
+
     buscarTipoDeCuentas(params: any): Observable<any[]> {
         let urlFinal
         let dirProxy = '/srv-privado-web/rest/parametros/obtenerTipoCuenta'
@@ -211,40 +212,40 @@ export class IntegradorService {
     }
     ///////////////////////////////////////////////////////////////////////////////////
     //////////////////////// Canje Boletos ///////////////////////////////////////
-    
-    
+
+
     canjeValidar(params: any): Observable<any[]> {
         let urlFinal
         let dirProxy = '/srv-privado-web/rest/compra/validarBoletoCanje'
         this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy
         return this.http.post<any[]>(urlFinal, params);
     }
-    
+
     canjeBoleto(params): Observable<any[]> {
         let urlFinal
         let dirProxy = '/srv-privado-web/rest/compra/canjearBoletoCanje'
         this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy
         return this.http.post<any[]>(urlFinal, params);
     }
-    
+
     canjeGenerarComprobante(params: any): Observable<any[]> {
         let urlFinal
         let dirProxy = '/srv-privado-web/rest/compra/generarComprobante'
         this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy
         return this.http.post<any[]>(urlFinal, params);
     }
-    
+
     canjeBuscarInfoBoleto(params: any): Observable<any[]> {
         let urlFinal
         let dirProxy = '/srv-privado-web/rest/compra/buscarBoleto'
         this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy
         return this.http.post<any[]>(urlFinal, params);
     }
-    
-    
 
 
-    
+
+
+
 
 
 }

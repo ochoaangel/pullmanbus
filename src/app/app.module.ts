@@ -9,7 +9,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
-import { ClickOutsideModule } from 'ng-click-outside';
+// import { ClickOutsideModule } from 'ng-click-outside';
 // import { HttpClientModule } from '@angular/common/http';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -36,6 +36,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { CallNumber } from '@ionic-native/call-number/ngx';
+
+import { ClickOutsideModule } from 'ng-click-outside/lib_commonjs';
 
 @NgModule({
   declarations: [AppComponent],
