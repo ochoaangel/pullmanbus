@@ -49,7 +49,6 @@ export class TransactionVoucherPage implements OnInit {
       if(this.encabezado.estado=='ACTI'){
         this.encabezado.fechaCompra = new Date(this.encabezado.fechaCompra).toLocaleString(); 
       }
-
     })
   }
 
