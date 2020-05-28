@@ -192,21 +192,23 @@ ion-checkbox {
 }
 .ribbon span {
   font-size: 10px;
-  font-weight: bold;
+  // font-weight: bold;
   color: #fff;
-  text-transform: uppercase;
+  // text-transform: uppercase;
   text-align: center;
-  line-height: 20px;
+  line-height: 9px;
   transform: rotate(-45deg);
   -webkit-transform: rotate(-45deg);
   width: 100px;
   display: block;
-  background: #79a70a;
-  background: linear-gradient(#f70505 0%, #8f0808 100%);
-  box-shadow: 0 3px 10px -5px rgba(0, 0, 0, 1);
+  background: var(--ion-color-primary);
+  // background: #79a70a;
+  // background: linear-gradient(#f70505 0%, #8f0808 100%);
+  // box-shadow: 0 3px 10px -5px rgba(0, 0, 0, 1);
   position: absolute;
   top: 19px;
   left: -21px;
+  padding: 1px 15px;
 }
 .ribbon span::before {
   content: '';
