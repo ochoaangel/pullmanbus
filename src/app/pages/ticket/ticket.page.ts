@@ -152,6 +152,8 @@ export class TicketPage implements OnInit {
     this.integradorService.getService(findService).subscribe(data => {
       this.allServices = data;
       console.log('this.allServices', this.allServices);
+      console.log('this.allServicesTRUE', this.allServices.filter(x => x.promocion));
+
       this.loadingService = false;
       this.allServices.forEach(servicio => {
         this.comprasDetalles.forEach(compra => {

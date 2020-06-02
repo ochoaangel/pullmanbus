@@ -13,8 +13,8 @@ export class RecoverPasswordPage implements OnInit {
 
   myData = {
     email: "",
-  }
-  loading = false
+  };
+  loading = false;
   constructor(
     private mys: MyserviceService,
     private integrador: IntegradorService,
@@ -25,25 +25,25 @@ export class RecoverPasswordPage implements OnInit {
 
   ngOnInit() {
   }
-  validar() {}
+  validar() { }
 
   enviar() {
     if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.myData.email)) {
 
-      this.loading = true
+      this.loading = true;
       this.integrador.usuarioRecuperarPassword(this.myData).subscribe((data: any) => {
-        this.loading = false
+        this.loading = false;
         if (data.exito) {
-          this.mys.alertShow('Éxito !!', 'checkmark-circle', data.mensaje)
-          this.router.navigateByUrl('/login')
-        } else { 
-          this.mys.alertShow('Verifique !!', 'alert', data.mensaje)
-          this.myData.email = ''
+          this.mys.alertShow('Éxito !!', 'checkmark-circle', data.mensaje);
+          this.router.navigateByUrl('/login');
+        } else {
+          this.mys.alertShow('Verifique !!', 'alert', data.mensaje);
+          this.myData.email = '';
         }
-      })
+      });
 
     } else {
-      this.mys.alertShow('Verifique!!', 'alert', 'Verifique que el email sea v�lido.. <br>Intente de nuevo..')
+      this.mys.alertShow('Verifique!!', 'alert', 'Verifique que el email sea v�lido.. <br>Intente de nuevo..');
     }
   }
 

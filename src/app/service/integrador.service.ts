@@ -155,9 +155,9 @@ export class IntegradorService {
         return this.http.post<any[]>(urlFinal, params);
     }
 
-
     ///////////////////////////////////////////////////////////////////////////////////
     //////////////////////// Gestion de Boletos ///////////////////////////////////////
+
     buscarTransaccionPorEmail(params: any): Observable<any[]> {
         let urlFinal
         let dirProxy = '/srv-privado-web/rest/compra/obtenerTransacciones'
@@ -243,7 +243,15 @@ export class IntegradorService {
     }
 
 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    // promociones
 
+    buscaCaluga(params: any): Observable<any[]> {
+        let urlFinal
+        let dirProxy = '/administracion-web/rest/private/contenido/buscarCaluga'
+        this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy
+        return this.http.post<any[]>(urlFinal, params);
+    }
 
 
 

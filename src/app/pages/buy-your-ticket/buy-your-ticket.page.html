@@ -44,6 +44,7 @@
   <div style="width: 100%; height: -webkit-fill-available;background-color: var(--ion-color-primary);">
     <div style="height: 100%; background-color: var(--ion-color-primary) ;margin: 0px 0px 0px 0px;">
       <ion-grid style="height: 100%;background-color: var(--ion-color-primary);" class="ion-no-margin ion-no-padding">
+
         <!-- solo cuando hay que elegir origen o destino -->
         <ion-row *ngIf="showSelection" style="background-color: var(--ion-color-primary);">
           <ion-col size="12" style="background-color: var(--ion-color-primary) ">
@@ -73,6 +74,7 @@
           </ion-col>
         </ion-row>
 
+
         <!-- resto de la pagina -->
         <ion-row style="height: 100%;background-color: var(--ion-color-primary);"
           class="ion-no-margin ion-no-padding ion-justify-content-center ion-align-items-center">
@@ -80,8 +82,31 @@
             <!-- Spinner -->
             <div *ngIf="!showSelection">
 
+              <ion-slides mode="ios" *ngIf="promociones && promociones.length>0">
+                <ion-slide *ngFor="let promo of promociones">
+                  <div style="width: 100%; display: flex; flex-direction: row;">
+                    <!-- <div style="width: 50%;border-radius: 0.5rem 0 0 0.5rem;"> -->
+                    <img src="{{promo.urlImagen}}" alt=""
+                      style="object-fit: cover;width: 50%;border-radius: 1rem 0 0 1rem;border: 1px solid var(--ion-color-light);">
+                    <!-- </div> -->
+                    <div
+                      style="width: 50%;background-color: var(--ion-color-light);border-radius: 0 1rem  1rem 0;color: var(--ion-color-dark);display: flex; flex-direction: column;border: 1px solid var(--ion-color-light);">
+                      <div style="font-size: 4vw;">{{promo.titulo}}</div>
+                      <div style="font-size: 3vw;">{{promo.contenido}}</div>
+                      <div style="font-size: 4vw; display: flex; justify-content: center;">
+                        <div
+                          style="background-color: var(--ion-color-primary); color:var(--ion-color-light) ; width: 40%;border-radius: 0.5rem;">
+                          ${{promo.tarifas}}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </ion-slide>
+              </ion-slides>
+
+
               <!-- boton para Seleccionar Origen -->
-              <ion-row style="margin-top: 2vh;" class="ion-no-margin
+              <ion-row style="margin-top: 1vh;" class="ion-no-margin
                 ion-no-padding ion-justify-content-center">
                 <ion-col size="12" class="ion-justify-content-center ion-no-margin ion-no-padding
                   ion-align-items-center" style="display: contents">
@@ -119,7 +144,7 @@
               </ion-row>
 
               <!-- boton para Seleccionar Destino -->
-              <ion-row style="margin-top: 2vh;" class="ion-no-margin
+              <ion-row style="margin-top: 1vh;" class="ion-no-margin
                 ion-no-padding ion-justify-content-center">
                 <ion-col size="12" class="ion-justify-content-center ion-no-margin ion-no-padding
                   ion-align-items-center" style="display: contents">
@@ -161,7 +186,7 @@
               </ion-row>
 
               <!-- Fecha de Ida -->
-              <ion-row style="padding-top: 2vh; background-color: var(--ion-color-primary);" class="ion-no-margin
+              <ion-row style="padding-top: 1vh; background-color: var(--ion-color-primary);" class="ion-no-margin
                 ion-no-padding ion-justify-content-center">
                 <ion-col size="12" class="ion-justify-content-center
                   ion-no-margin
@@ -195,7 +220,7 @@
               </ion-row>
 
               <!-- Fecha Retorno -->
-              <ion-row style="padding-top: 2vh;background-color: var(--ion-color-primary);"
+              <ion-row style="padding-top: 1vh;background-color: var(--ion-color-primary);"
                 class="ion-no-margin ion-no-padding ion-justify-content-center">
                 <ion-col size="12"
                   class="ion-justify-content-center ion-no-margin ion-no-padding ion-align-items-center"
@@ -230,9 +255,9 @@
               </ion-row>
 
               <!-- boton buscar pasajes -->
-              <ion-row style="padding-top: 4vh;background-color: var(--ion-color-primary);"
+              <ion-row style="padding-top: 1vh;background-color: var(--ion-color-primary);"
                 class="ion-no-margin ion-no-padding ion-justify-content-center">
-                <ion-button (click)="btnSearch()" *ngIf="!showSelection" color="secondary">
+                <ion-button [disabled]='loading' (click)="btnSearch()" *ngIf="!showSelection" color="secondary">
                   <ion-icon name="md-search"></ion-icon>
                   <div style="display: inline; text-align: left ;padding-left: 10px;
                     text-transform: none;">

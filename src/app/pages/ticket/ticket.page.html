@@ -75,8 +75,8 @@
                   <!-- columna 1   -->
                   <div class="myServiceColumn" style="width: 15%;">
 
-                    <div class="box">
-                      <!-- <div class="box" *ngIf="svc.promocion"> -->
+                    <!-- <div class="box"> -->
+                    <div class="box" *ngIf="svc.promocion">
                       <div class="ribbon"><span> {{' '+svc.textoPromocion}} </span></div>
                       <!-- <div
                       style="width: 2rem;height: 1rem; background-color: var(--ion-color-primary); color: var(--ion-color-light);transform: rotate(-45deg);">
@@ -155,18 +155,19 @@
                     <div class="myServiceRow" style="align-items: center; justify-content: center; ">
                       <ion-button fill="clear" (click)="myServiceSelection(i)" [disabled]="loadingBus"
                         *ngIf="(!svc.checked && !svc.my_comprasByService) ||  (  !svc.checked &&  svc.my_comprasByService && svc.my_comprasByService.length===0)"
-                        style="color: white; outline: none;  --padding-start: 0;--padding-end: 0; --background: #0247ac;text-transform: none; font-size: 0.8rem;width: 2.5rem; height: 2.5rem; --border-radius:3rem">
+                        style="color: white; --background-hover: #3880ff; outline: none;  --padding-start: 0;--padding-end: 0; --background: #0247ac;text-transform: none; font-size: 0.8rem;width: 2.5rem; height: 2.5rem; --border-radius:3rem">
                         <ion-icon style="color: white;zoom: 5;" name="md-arrow-dropdown"></ion-icon>
                       </ion-button>
                       <ion-button fill="clear" (click)="myServiceSelection(i)" [disabled]="loadingBus"
                         *ngIf="!svc.checked && svc.my_comprasByService && svc.my_comprasByService.length>0"
-                        style="color: white; outline: none;  --padding-start: 0;--padding-end: 0; --background: #0247ac;text-transform: none; font-size: 0.8rem;width: 2.5rem; height: 2.5rem; --border-radius:3rem">
+                        style="color: white; --background-hover: #3880ff; outline: none;  --padding-start: 0;--padding-end: 0; --background: #0247ac;text-transform: none; font-size: 0.8rem;width: 2.5rem; height: 2.5rem; --border-radius:3rem">
                         <ion-icon style="color: white;zoom: 5;" name="md-arrow-dropdown"></ion-icon>
                       </ion-button>
                       <ion-button fill="clear" (click)="myServiceSelection(i)" *ngIf="svc.checked"
                         [disabled]="loadingBus"
-                        style="color: white; outline: none;  --padding-start: 0;--padding-end: 0; --background: #0247ac;text-transform: none; font-size: 0.8rem;width: 2.5rem; height: 2.5rem; --border-radius:3rem">
-                        <ion-icon style="color: white;zoom: 5;" name="md-arrow-dropup"></ion-icon>
+                        style="color: white;--background-hover: #3880ff; outline: none;  --padding-start: 0;--padding-end: 0; --background: #0247ac;text-transform: none; font-size: 0.8rem;width: 2.5rem; height: 2.5rem; --border-radius:3rem">
+                        <ion-icon style="color:  white;zoom: 5;" name="md-arrow-dropup">
+                        </ion-icon>
                       </ion-button>
                       <!-- <ion-button fill="clear" (click)="myServiceSelection(i)" [disabled]="loadingBus"
                         *ngIf="(!svc.checked && !svc.my_comprasByService) ||  (  !svc.checked &&  svc.my_comprasByService && svc.my_comprasByService.length===0)"
