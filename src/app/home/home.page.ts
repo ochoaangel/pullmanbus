@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MyserviceService } from '../service/myservice.service';
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { IntegradorService } from '../service/integrador.service';
 
 @Component({
   selector: 'app-home',
@@ -10,11 +11,12 @@ import { Router } from '@angular/router';
 })
 export class HomePage implements OnInit {
   options = { initialSlide: 0, slidesPerView: 1, autoplay: true, speed: 4000 };
-
+  carrusel = [];
   constructor(
     private mys: MyserviceService,
     public alertController: AlertController,
-    public router: Router
+    public router: Router,
+    private integradorService:IntegradorService
 
   ) {
 
@@ -26,7 +28,9 @@ export class HomePage implements OnInit {
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
-
+    this.integradorService.buscarCarrusel().subscribe(resp=>{
+      this.carrusel=resp;
+    });
   }
 
   ionViewWillEnter() {
