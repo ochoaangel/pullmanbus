@@ -122,23 +122,25 @@ ion-checkbox {
 .pisoShow {
   background-color: blue;
   color: white;
-  width: 15vw;
-  border-radius: 4px;
-  padding: 0px;
+  width: 20vw;
+  border-radius: 7px;
+  padding: 6px;
   font-size: 0.8rem;
   text-align: center;
   margin: 1vw;
+  border: 1px solid blue;
 }
 
 .pisoHiden {
   background-color: white;
   color: blue;
-  width: 15vw;
-  border-radius: 4px;
-  padding: 0px;
+  width: 20vw;
+  border-radius: 7px;
+  padding: 6px;
   font-size: 0.8rem;
   text-align: center;
   margin: 1vw;
+  border: 1px solid blue;
 }
 
 .myServiceColumn {
@@ -173,16 +175,12 @@ ion-checkbox {
 }
 
 .box {
-  // width: 200px;
-  // height: 300px;
   position: relative;
-  // border: 1px solid #bbb;
-  // background: #eee;
 }
 .ribbon {
   position: absolute;
-  left: -5px;
-  top: -5px;
+  left: -4px;
+  top: -8px;
   z-index: 1;
   overflow: hidden;
   width: 75px;

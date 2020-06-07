@@ -13,7 +13,7 @@
     <div style="display: inline; width: 10%;" (click)="popCart($event)">
       <ion-icon name="md-cart" style="font-size: 25px;padding-top: 5px;"></ion-icon>
       <ion-badge color="dark" mode="ios" *ngIf="ticket.comprasDetalles && ticket.comprasDetalles.length>0"
-        style="position: absolute; left: 81%; top: 2px; font-size: 0.7rem;opacity: 0.7; background-color: #0247ac;">
+        style="position: absolute; left: 81%; top: 10%; font-size: 0.7rem;opacity: 0.7; background-color: #0247ac;">
         {{ticket.comprasDetalles.length}}</ion-badge>
     </div>
 
@@ -149,15 +149,9 @@
                   [disabled]="registrado">
               </div>
               <div style=" width: 65%;">
-                <input type="text" 
-                placeholder="Teléfono" 
-                [(ngModel)]="DatosFormulario.telefono" 
-                name="telefono"
-                (keypress)="tecleado($event)"
-                (keyup.enter)="setFocus('email')" 
-                [disabled]="registrado"
-                #input_telefono 
-                >
+                <input type="text" placeholder="Teléfono" [(ngModel)]="DatosFormulario.telefono" name="telefono"
+                  (keypress)="tecleado($event)" (keyup.enter)="setFocus('email')" [disabled]="registrado"
+                  #input_telefono>
               </div>
             </div>
 

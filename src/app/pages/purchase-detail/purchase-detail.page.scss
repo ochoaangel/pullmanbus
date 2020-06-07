@@ -28,7 +28,11 @@ ion-header {
 
 .cabeceraTitulo2 {
   // height: 50%;
-  background-color: #f2f2f2; font-size: 2vw;padding: 5px 0;margin: 3px 0px; width: 100%;
+  background-color: #f2f2f2;
+  font-size: 2vw;
+  padding: 5px 0;
+  margin: 3px 0px;
+  width: 100%;
   // width: 100%;
   // color: white;
   // display: flex;
@@ -129,4 +133,58 @@ ion-select {
 }
 .even {
   background-color: white;
+}
+
+.ribbon {
+  position: absolute;
+  left: -5px;
+  top: 0px;
+  z-index: 1;
+  overflow: hidden;
+  width: 110px;
+  height: 75px;
+  text-align: right;
+  margin-left: 0.3rem;
+}
+.ribbon span {
+  font-size: 10px;
+  // font-weight: bold;
+  color: #fff;
+  // text-transform: uppercase;
+  text-align: center;
+  line-height: 9px;
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+  width: 100px;
+  display: block;
+  background: var(--ion-color-primary);
+  // background: #79a70a;
+  // background: linear-gradient(#f70505 0%, #8f0808 100%);
+  // box-shadow: 0 3px 10px -5px rgba(0, 0, 0, 1);
+  position: absolute;
+  top: 23px;
+  left: -23px;
+  padding: 4px 10px;
+}
+.ribbon span::before {
+  content: '';
+  position: absolute;
+  left: 0px;
+  top: 100%;
+  z-index: -1;
+  border-left: 3px solid #8f0808;
+  border-right: 3px solid transparent;
+  border-bottom: 3px solid transparent;
+  border-top: 3px solid #8f0808;
+}
+.ribbon span::after {
+  content: '';
+  position: absolute;
+  right: 0px;
+  top: 100%;
+  z-index: -1;
+  border-left: 3px solid transparent;
+  border-right: 3px solid #8f0808;
+  border-bottom: 3px solid transparent;
+  border-top: 3px solid #8f0808;
 }

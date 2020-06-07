@@ -13,7 +13,7 @@
     <div style="display: inline; width: 10%;" (click)="popCart($event)">
       <ion-icon name="md-cart" style="font-size: 25px;padding-top: 5px;"></ion-icon>
       <ion-badge color="dark" mode="ios" *ngIf="ticket.comprasDetalles && ticket.comprasDetalles.length>0"
-        style="position: absolute; left: 81%; top: 2px; font-size: 0.7rem;opacity: 0.7; background-color: #0247ac;">
+        style="position: absolute; left: 81%; top: 10%; font-size: 0.7rem;opacity: 0.7; background-color: #0247ac;">
         {{ticket.comprasDetalles.length}}</ion-badge>
     </div>
 
@@ -28,7 +28,7 @@
   <div class="cabeceraTitulo">
     Detalles de Compra
   </div>
-  <ion-progress-bar type="indeterminate" *ngIf="loading"  color="secondary"></ion-progress-bar>
+  <ion-progress-bar type="indeterminate" *ngIf="loading" color="secondary"></ion-progress-bar>
 
 </ion-header>
 
@@ -62,7 +62,11 @@
 
             <!-- bucle PASAJES  -->
             <div *ngFor="let pasaje of this.ticket.comprasDetalles; let i= index"
-              style="width: 100%;margin: 1vh 0; padding: 2vh 0;" [ngClass]="(i % 2 == 0) ? 'odd' : 'even'">
+              style=" position: relative;;width: 100%;margin: 1vh 0; padding: 2vh 0;"
+              [ngClass]="(i % 2 == 0) ? 'odd' : 'even'">
+
+              <!-- muestro el ribbon -->
+              <div class="ribbon" *ngIf="pasaje.promocion"><span>Con Promoción</span></div>
 
               <div>
 
@@ -91,11 +95,16 @@
                 <!-- //* linea2 -->
                 <div style="width: 100%; display: flex;  font-size: 1.5rem;">
 
-                  <div style=" width: 33%;text-align: -webkit-center; font-weight: bold;" *ngIf="pasaje.way==='go'">
+                  <div style=" width: 33%;text-align: -webkit-center; font-weight: bold;"
+                    *ngIf="pasaje.way==='go' && !pasaje.promocion">
                     Ida
                   </div>
-                  <div style=" width: 33%;text-align: -webkit-center; font-weight: bold;" *ngIf="pasaje.way==='back'">
+                  <div style=" width: 33%;text-align: -webkit-center; font-weight: bold;"
+                    *ngIf="pasaje.way==='back' && !pasaje.promocion">
                     Regreso
+                  </div>
+                  <div style=" width: 33%;text-align: -webkit-center; font-weight: bold;" *ngIf="pasaje.promocion">
+                    Ida <br>Regreso
                   </div>
 
                   <div
@@ -156,7 +165,7 @@
                       (click)="EliminarPasaje(pasaje.way, pasaje.idServicio, pasaje.asiento, pasaje.fila, pasaje.columna,pasaje.piso)"
                       style="color: white; outline: none;  --padding-start: 0;--padding-end: 0; --background: #0f69ec;text-transform: none; font-size: 0.8rem;width: 9rem;max-height: 2rem;">
                       Eliminar pasaje
-                    </ion-button>  
+                    </ion-button>
                   </div>
 
                 </div>
@@ -370,7 +379,8 @@
 
 <ion-footer>
 
-  <div style=" width: 100%; display: flex;align-items: center;justify-content: center; background-color: var(--ion-color-primary);">
+  <div
+    style=" width: 100%; display: flex;align-items: center;justify-content: center; background-color: var(--ion-color-primary);">
 
     <!-- <div
       style="width: 50%;display: inline;  text-align: left;padding-right: 7px;  text-transform: none;padding-left: 20px;font-size: 1.2rem;color: white;font-weight: bold; ">
