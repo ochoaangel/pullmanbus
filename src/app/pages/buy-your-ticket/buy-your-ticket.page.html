@@ -80,10 +80,10 @@
           class="ion-no-margin ion-no-padding ion-justify-content-center ion-align-items-center">
           <ion-col size="12" style="text-align: center;" class="ion-no-margin ion-no-padding">
             <!-- Spinner -->
-            <div *ngIf="!showSelection">
+            <div *ngIf="!showSelection" style="display: flex; flex-direction: column;">
 
               <!-- Slider Etapa 1 Banner -->
-              <ion-slides mode="ios" *ngIf="promociones && promociones.length>0">
+              <ion-slides mode="ios" *ngIf="promociones && promociones.length>0" style="background-color: aquamarine;">
                 <ion-slide *ngFor="let promo of promociones">
                   <div style="width: 100%; display: flex; flex-direction: row;">
                     <!-- <div style="width: 50%;border-radius: 0.5rem 0 0 0.5rem;"> -->
@@ -105,169 +105,174 @@
                 </ion-slide>
               </ion-slides>
 
+              <div>
 
-              <!-- boton para Seleccionar Origen -->
-              <ion-row style="margin-top: 1vh;" class="ion-no-margin
+                <!-- boton para Seleccionar Origen -->
+                <ion-row style="margin-top: 1vh;" class="ion-no-margin
                 ion-no-padding ion-justify-content-center">
-                <ion-col size="12" class="ion-justify-content-center ion-no-margin ion-no-padding
+                  <ion-col size="12" class="ion-justify-content-center ion-no-margin ion-no-padding
                   ion-align-items-center" style="display: contents">
 
 
-                  <div style="width: 100%; display: flex; padding: 0.4rem 1.5rem; align-items: center;">
-                    <ion-icon style="margin: 0; font-size: 1.5rem; padding-right: 0.7rem; color: white;" name="pin">
-                    </ion-icon>
-                    <ion-label style="color: white;"> Origen</ion-label>
-                  </div>
+                    <div style="width: 100%; display: flex; padding: 0.4rem 1.5rem; align-items: center;">
+                      <ion-icon style="margin: 0; font-size: 1.5rem; padding-right: 0.7rem; color: white;" name="pin">
+                      </ion-icon>
+                      <ion-label style="color: white;"> Origen</ion-label>
+                    </div>
 
-                  <div
-                    style="text-align: center; width: 97%; border: 1px solid var(--ion-color-primary); border-radius: 5px;background-color:white">
-                    <ion-button fill="clear" style="color: white; width: 100%; outline: none; text-transform: none;"
-                      [disabled]="loading" (click)="btnSelecccionarOrigen()">
+                    <div
+                      style="text-align: center; width: 97%; border: 1px solid var(--ion-color-primary); border-radius: 5px;background-color:white">
+                      <ion-button fill="clear" style="color: white; width: 100%; outline: none; text-transform: none;"
+                        [disabled]="loading" (click)="btnSelecccionarOrigen()">
 
-                      <div style="display: flex; flex-direction: row; width: 100%;">
-                        <div
-                          style="display: flex;color: black; width: 93%;align-items: center; font-size: 1rem; font-size: 1.5rem;">
-                          <ion-text *ngIf="!myOrigin" style="font-size: 1.1rem;color: var(--ion-color-primary);">
-                            Seleccione..</ion-text>
-                          <ion-text *ngIf="myOrigin" style="font-size: 1.1rem;color: var(--ion-color-primary);">
-                            {{ myOrigin.nombre | titlecase }}
-                          </ion-text>
+                        <div style="display: flex; flex-direction: row; width: 100%;">
+                          <div
+                            style="display: flex;color: black; width: 93%;align-items: center; font-size: 1rem; font-size: 1.5rem;">
+                            <ion-text *ngIf="!myOrigin" style="font-size: 1.1rem;color: var(--ion-color-primary);">
+                              Seleccione..</ion-text>
+                            <ion-text *ngIf="myOrigin" style="font-size: 1.1rem;color: var(--ion-color-primary);">
+                              {{ myOrigin.nombre | titlecase }}
+                            </ion-text>
+                          </div>
+                          <div style="display: flex;color: black; width: 7%;justify-content: flex-end;">
+                            <ion-icon class="iconEditable" style="margin:0; color: var(--ion-color-primary);;"
+                              name="arrow-dropdown">
+                            </ion-icon>
+                          </div>
                         </div>
-                        <div style="display: flex;color: black; width: 7%;justify-content: flex-end;">
-                          <ion-icon class="iconEditable" style="margin:0; color: var(--ion-color-primary);;"
-                            name="arrow-dropdown">
-                          </ion-icon>
-                        </div>
-                      </div>
-                    </ion-button>
-                  </div>
-                </ion-col>
-              </ion-row>
+                      </ion-button>
+                    </div>
+                  </ion-col>
+                </ion-row>
 
-              <!-- boton para Seleccionar Destino -->
-              <ion-row style="margin-top: 1vh;" class="ion-no-margin
+                <!-- boton para Seleccionar Destino -->
+                <ion-row style="margin-top: 1vh;" class="ion-no-margin
                 ion-no-padding ion-justify-content-center">
-                <ion-col size="12" class="ion-justify-content-center ion-no-margin ion-no-padding
+                  <ion-col size="12" class="ion-justify-content-center ion-no-margin ion-no-padding
                   ion-align-items-center" style="display: contents">
 
-                  <div style="width: 100%; display: flex; padding: 0.4rem 1.5rem; align-items: center;">
-                    <ion-icon style="margin: 0; font-size: 1.5rem; padding-right: 0.7rem; color: white;" name="pin">
-                    </ion-icon>
-                    <ion-label style="color: white;"> Destino</ion-label>
-                  </div>
+                    <div style="width: 100%; display: flex; padding: 0.4rem 1.5rem; align-items: center;">
+                      <ion-icon style="margin: 0; font-size: 1.5rem; padding-right: 0.7rem; color: white;" name="pin">
+                      </ion-icon>
+                      <ion-label style="color: white;"> Destino</ion-label>
+                    </div>
 
-                  <div style="text-align: center; width: 97%; border: 1px solid
+                    <div style="text-align: center; width: 97%; border: 1px solid
                     var(--ion-color-primary); border-radius: 5px;background-color:white">
-                    <ion-button fill="clear" style="color: white; width: 100%;
+                      <ion-button fill="clear" style="color: white; width: 100%;
                       outline: none; text-transform: none;" [disabled]="loading || !myOrigin"
-                      (click)="btnSelecccionarDestino()">
-                      <div style="display: flex; flex-direction: row; width:
+                        (click)="btnSelecccionarDestino()">
+                        <div style="display: flex; flex-direction: row; width:
                         100%;">
 
-                        <div style="display: flex;color: black; width:
+                          <div style="display: flex;color: black; width:
                           93%;align-items: center; font-size: 1rem; font-size:
                           1.5rem;">
-                          <ion-text *ngIf="!myDestiny" style="font-size:
+                            <ion-text *ngIf="!myDestiny" style="font-size:
                             1.1rem;color: var(--ion-color-primary);">Seleccione..</ion-text>
-                          <ion-text *ngIf="myDestiny" style="font-size:
+                            <ion-text *ngIf="myDestiny" style="font-size:
                             1.1rem;color: var(--ion-color-primary);">
-                            {{ myDestiny.nombre | titlecase }}
-                          </ion-text>
-                        </div>
-                        <div style="display: flex;color: black; width:
+                              {{ myDestiny.nombre | titlecase }}
+                            </ion-text>
+                          </div>
+                          <div style="display: flex;color: black; width:
                           7%;justify-content: flex-end;">
-                          <ion-icon class="iconEditable" style="margin:0;color: var(--ion-color-primary);"
-                            name="arrow-dropdown">
-                          </ion-icon>
+                            <ion-icon class="iconEditable" style="margin:0;color: var(--ion-color-primary);"
+                              name="arrow-dropdown">
+                            </ion-icon>
+                          </div>
                         </div>
-                      </div>
-                    </ion-button>
-                  </div>
-                </ion-col>
-              </ion-row>
+                      </ion-button>
+                    </div>
+                  </ion-col>
+                </ion-row>
 
-              <!-- Fecha de Ida -->
-              <ion-row style="padding-top: 1vh; background-color: var(--ion-color-primary);" class="ion-no-margin
+                <!-- Fecha de Ida -->
+                <ion-row style="padding-top: 1vh; background-color: var(--ion-color-primary);" class="ion-no-margin
                 ion-no-padding ion-justify-content-center">
-                <ion-col size="12" class="ion-justify-content-center
+                  <ion-col size="12" class="ion-justify-content-center
                   ion-no-margin
                   ion-no-padding ion-align-items-center" style="display:
                   contents">
 
-                  <div style="width: 100%; display: flex; padding: 0.4rem 1.5rem; align-items: center;">
-                    <ion-icon style="margin: 0; font-size: 1.5rem; padding-right: 0.7rem; color: white;"
-                      name="calendar"> </ion-icon>
-                    <ion-label style="color: white;"> Fecha ida</ion-label>
-                  </div>
-
-                  <div
-                    style="text-align: center; width: 97%; border: 1px solid var(--ion-color-primary); border-radius: 5px;">
-                    <ion-item style="width: 100%;/*height: 8vh*/;border-radius: 5px; height: 2.8rem;">
-                      <ion-datetime displayFormat="DD/MM/YYYY" placeholder="Seleccione.." cancelText="Cancelar"
-                        doneText="Listo" mode="ios" [(ngModel)]="goDate" [min]="mingoDate" [max]="maxgoDate"
-                        style="color: var(--ion-color-primary);font-size: 1.1rem;" (ionChange)="cambioFechaIda()">
-                      </ion-datetime>
-                      <ion-icon style="margin:0; color: var(--ion-color-primary);;" slot="end" name="arrow-dropdown">
-                      </ion-icon>
-                    </ion-item>
-
-                    <div
-                      style="width: 100%;background-color: coral; border-radius: 5px 5px;padding: 0.1rem;padding-top: 0.1rem;"
-                      *ngIf="goDate">
-                      <ion-text style="color: white;font-size: 1rem;">{{ goDate | date2line}}</ion-text>
-                    </div>
-                  </div>
-                </ion-col>
-              </ion-row>
-
-              <!-- Fecha Retorno -->
-              <ion-row style="padding-top: 1vh;background-color: var(--ion-color-primary);"
-                class="ion-no-margin ion-no-padding ion-justify-content-center">
-                <ion-col size="12"
-                  class="ion-justify-content-center ion-no-margin ion-no-padding ion-align-items-center"
-                  style="display: contents">
-
-                  <div style="width: 100%; display: flex; padding: 0.4rem 1.5rem; align-items: center;">
-                    <ion-icon style="margin: 0; font-size: 1.5rem; padding-right: 0.7rem; color: white;"
-                      name="calendar">
-                    </ion-icon>
-                    <ion-label style="color: white;"> Fecha regreso</ion-label>
-                  </div>
-
-                  <div
-                    style="text-align: center; width: 97%; border: 1px solid var(--ion-color-primary); border-radius: 5px;">
-                    <ion-item style="width: 100%;/*height: 8vh*/;border-radius: 5px; height: 2.8rem;">
-                      <ion-datetime displayFormat="DD/MM/YYYY" placeholder="Seleccione.." cancelText="Sin regreso"
-                        (ionCancel)="noBack()" doneText="Listo" mode="ios" [(ngModel)]="backDate" [min]="minbackDate"
-                        [max]="maxbackDate" style="color: var(--ion-color-primary);font-size: 1.1rem;"></ion-datetime>
-                      <ion-icon style="margin:0; color: var(--ion-color-primary);;" slot="end" name="arrow-dropdown">
-                      </ion-icon>
-
-                    </ion-item>
-
-                    <div
-                      style="width: 100%;background-color: coral; border-radius: 5px 5px;padding: 0.1rem;padding-top: 0.1rem;"
-                      *ngIf="backDate">
-                      <ion-text style="color: white;font-size: 1rem;">{{ backDate | date2line}}</ion-text>
+                    <div style="width: 100%; display: flex; padding: 0.4rem 1.5rem; align-items: center;">
+                      <ion-icon style="margin: 0; font-size: 1.5rem; padding-right: 0.7rem; color: white;"
+                        name="calendar"> </ion-icon>
+                      <ion-label style="color: white;"> Fecha ida</ion-label>
                     </div>
 
-                  </div>
-                </ion-col>
-              </ion-row>
+                    <div
+                      style="text-align: center; width: 97%; border: 1px solid var(--ion-color-primary); border-radius: 5px;">
+                      <ion-item style="width: 100%;/*height: 8vh*/;border-radius: 5px; height: 2.8rem;">
+                        <ion-datetime displayFormat="DD/MM/YYYY" placeholder="Seleccione.." cancelText="Cancelar"
+                          doneText="Listo" mode="ios" [(ngModel)]="goDate" [min]="mingoDate" [max]="maxgoDate"
+                          style="color: var(--ion-color-primary);font-size: 1.1rem;" (ionChange)="cambioFechaIda()">
+                        </ion-datetime>
+                        <ion-icon style="margin:0; color: var(--ion-color-primary);;" slot="end" name="arrow-dropdown">
+                        </ion-icon>
+                      </ion-item>
 
-              <!-- boton buscar pasajes -->
-              <ion-row style="padding-top: 1vh;background-color: var(--ion-color-primary);"
-                class="ion-no-margin ion-no-padding ion-justify-content-center">
-                <ion-button [disabled]='loading' (click)="btnSearch()" *ngIf="!showSelection" color="secondary">
-                  <ion-icon name="md-search"></ion-icon>
-                  <div style="display: inline; text-align: left ;padding-left: 10px;
+                      <div
+                        style="width: 100%;background-color: coral; border-radius: 5px 5px;padding: 0.1rem;padding-top: 0.1rem;"
+                        *ngIf="goDate">
+                        <ion-text style="color: white;font-size: 1rem;">{{ goDate | date2line}}</ion-text>
+                      </div>
+                    </div>
+                  </ion-col>
+                </ion-row>
+
+                <!-- Fecha Retorno -->
+                <ion-row style="padding-top: 1vh;background-color: var(--ion-color-primary);"
+                  class="ion-no-margin ion-no-padding ion-justify-content-center">
+                  <ion-col size="12"
+                    class="ion-justify-content-center ion-no-margin ion-no-padding ion-align-items-center"
+                    style="display: contents">
+
+                    <div style="width: 100%; display: flex; padding: 0.4rem 1.5rem; align-items: center;">
+                      <ion-icon style="margin: 0; font-size: 1.5rem; padding-right: 0.7rem; color: white;"
+                        name="calendar">
+                      </ion-icon>
+                      <ion-label style="color: white;"> Fecha regreso</ion-label>
+                    </div>
+
+                    <div
+                      style="text-align: center; width: 97%; border: 1px solid var(--ion-color-primary); border-radius: 5px;">
+                      <ion-item style="width: 100%;/*height: 8vh*/;border-radius: 5px; height: 2.8rem;">
+                        <ion-datetime displayFormat="DD/MM/YYYY" placeholder="Seleccione.." cancelText="Sin regreso"
+                          (ionCancel)="noBack()" doneText="Listo" mode="ios" [(ngModel)]="backDate" [min]="minbackDate"
+                          [max]="maxbackDate" style="color: var(--ion-color-primary);font-size: 1.1rem;"></ion-datetime>
+                        <ion-icon style="margin:0; color: var(--ion-color-primary);;" slot="end" name="arrow-dropdown">
+                        </ion-icon>
+
+                      </ion-item>
+
+                      <div
+                        style="width: 100%;background-color: coral; border-radius: 5px 5px;padding: 0.1rem;padding-top: 0.1rem;"
+                        *ngIf="backDate">
+                        <ion-text style="color: white;font-size: 1rem;">{{ backDate | date2line}}</ion-text>
+                      </div>
+
+                    </div>
+                  </ion-col>
+                </ion-row>
+
+                <!-- boton buscar pasajes -->
+                <ion-row style="padding-top: 1vh;background-color: var(--ion-color-primary);"
+                  class="ion-no-margin ion-no-padding ion-justify-content-center">
+                  <ion-button [disabled]='loading' (click)="btnSearch()" *ngIf="!showSelection" color="secondary">
+                    <ion-icon name="md-search"></ion-icon>
+                    <div style="display: inline; text-align: left ;padding-left: 10px;
                     text-transform: none;">
-                    Buscar pasajes
-                  </div>
-                </ion-button>
+                      Buscar pasajes
+                    </div>
+                  </ion-button>
 
-              </ion-row>
+                </ion-row>
+
+              </div>
+
             </div>
+
           </ion-col>
         </ion-row>
 
