@@ -242,6 +242,14 @@ export class IntegradorService {
         return this.http.post<any[]>(urlFinal, params);
     }
 
+    buscarCarrusel(): Observable<any[]> {
+        let urlFinal
+        let dirProxy = '/administracion-web/rest/private/contenido/obtenerSeccion'
+        this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy
+        let params = { "portal": { "id": 5 }, "portalSeccion": { "id": "2" } };
+        return this.http.post<any[]>(urlFinal, params);
+    }
+
 
     ///////////////////////////////////////////////////////////////////////////////////////
     // promociones

@@ -46,6 +46,7 @@ export class PaymentMethodsPage implements OnInit {
   }
 
   mostrarTarifaAtachada = false;
+
   totalSinDscto: number;
   totalFinal: number;
 
@@ -78,8 +79,12 @@ export class PaymentMethodsPage implements OnInit {
 
   };
 
+  // ngOnInit() { }
   ngOnInit() {
+    this.ionViewWillEnter();
+  }
 
+  ionViewWillEnter() {
 
     this.mys.getUser().subscribe(usuario => {
       //console.log('usuario', usuario);
@@ -125,7 +130,9 @@ export class PaymentMethodsPage implements OnInit {
 
     // this.totalFinal = this.mys.total;
     // this.ticket = this.mys.ticket;
-
+    // console.log('this.totalFinal', this.totalFinal);
+    // console.log('this.mys.total', this.mys.total);
+    // console.log('this.mys.ticket', this.mys.ticket);
 
   }
 
@@ -151,6 +158,12 @@ export class PaymentMethodsPage implements OnInit {
     if (this.DatosFormulario.convenioDown === 'BCNSD') {
       this.DatosFormulario.convenioUp = "";
       this.seleccionadoConvenioUp(medioPago);
+    } else {
+      if (this.DatosFormulario.convenioUp == undefined || this.DatosFormulario.convenioUp === "") {
+        this.totalFinal = this.mys.total;
+        this.mostrarTarifaAtachada = false;
+        this.listaDetalleConvenio = [];
+      }
     }
   }
 
@@ -172,15 +185,22 @@ export class PaymentMethodsPage implements OnInit {
         email: this.DatosFormulario.email,
         rut: this.DatosFormulario.rut,
         medioDePago: this.DatosFormulario.convenioDown,
-        puntoVenta: "WEBM",
-
-        // montoTotal: this.totalFinal/1000,
+        puntoVenta: "PUL",
         montoTotal: this.totalFinal,
 
         idSistema: 5,
         listaCarrito: []
       }
       this.mys.ticket.comprasDetalles.forEach(boleto => {
+        let valor;
+        if (this.datosConvenio != null && this.datosConvenio.mensaje == 'OK') {
+          let fecha = boleto.service.fechaSalida.split("/");
+          valor = this.datosConvenio.listaBoleto.find(boleto2 =>
+            boleto.service.idServicio == boleto2.idServicio &&
+            boleto.asiento == boleto2.asiento &&
+            (fecha[2] + fecha[1] + fecha[0]) == boleto2.fechaSalida
+          );
+        }
         guardarTransaccion.listaCarrito.push({
           servicio: boleto.service.idServicio,
           fechaServicio: boleto.service.fechaServicio,
@@ -191,13 +211,9 @@ export class PaymentMethodsPage implements OnInit {
           asiento: boleto.asiento,
           origen: boleto.service.idTerminalOrigen,
           destino: boleto.service.idTerminalDestino,
-
-          // monto: boleto.valor/1000,
-          // precio: boleto.valor/1000,
-          monto: boleto.valor,
-          precio: boleto.valor,
-
-          descuento: this.datosConvenio != null ? this.datosConvenio.descuento : 0,
+          monto: valor ? valor.valor : boleto.valor,
+          precio: valor ? valor.pago : boleto.valor,
+          descuento: valor ? valor.descuento : 0,
           empresa: boleto.service.empresa,
           clase: boleto.piso == "1" ? boleto.service.idClaseBusPisoUno : boleto.service.idClaseBusPisoDos,
           convenio: this.datosConvenio != null ? this.datosConvenio.idConvenio : "",
@@ -208,7 +224,7 @@ export class PaymentMethodsPage implements OnInit {
         });
       })
       this.loading += 1
-      //console.log('guardarTransaccion', guardarTransaccion)
+
       this.integradorService.guardarTransaccion(guardarTransaccion).subscribe(resp => {
         //console.log('resp', resp);
         this.loading -= 1
@@ -346,13 +362,11 @@ export class PaymentMethodsPage implements OnInit {
     this.integradorService.getDescuentoConvenio(validarConvenio).subscribe(data => {
       this.loading -= 1
       this.datosConvenio = data;
+
       if (this.datosConvenio.mensaje == 'OK') {
-        this.totalSinDscto = this.totalFinal;
+        this.totalSinDscto = this.mys.total;
         this.totalFinal = Number(this.datosConvenio.totalApagar);
         this.mostrarTarifaAtachada = true;
-        //this.datosConvenio.listaBoleto.forEach(boleto => {
-        //  //console.log(boleto.valor);
-        //});
       } else {
         this.datosConvenio = null;
       }

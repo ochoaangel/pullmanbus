@@ -28,6 +28,10 @@ export class PurchaseDetailPage implements OnInit {
 
 
   ngOnInit() {
+    this.ionViewWillEnter();
+  }
+
+  ionViewWillEnter() {
     if (this.mys.ticket) {
       this.ticket = this.mys.ticket;
       this.way = this.mys.way;
@@ -37,7 +41,11 @@ export class PurchaseDetailPage implements OnInit {
       });
       this.tarifaTotal = total_general;
     }
-  }  
+    // console.log('this.tarifaTotalWillEnter', this.tarifaTotal);
+    // console.log('this.mys.totalWillEnter', this.mys.total);
+    // console.log('this.mys.ticketWillEnter', this.mys.ticket);
+
+  }
 
   continuar() {
 
@@ -46,8 +54,15 @@ export class PurchaseDetailPage implements OnInit {
       this.router.navigateByUrl('/home');
     } else if ((this.ticket.tripType === 'goBack' && this.way === 'back') || (this.ticket.tripType === 'goOnly')) {
       this.mys.total = this.tarifaTotal;
-      this.router.navigateByUrl('/payment-methods');
+      localStorage.setItem('totalFinal', JSON.stringify(this.tarifaTotal));
+      localStorage.setItem('ticket', JSON.stringify(this.ticket));
       this.mys.ticket = this.ticket;
+
+      // console.log('this.tarifaTotalWillLeave', this.tarifaTotal);
+      // console.log('this.mys.totalWillLeave', this.mys.total);
+      // console.log('this.mys.ticketWillLeave', this.mys.ticket);
+
+      this.router.navigateByUrl('/payment-methods');
     } else if (this.ticket.tripType === 'goBack' && this.way === 'go') {
 
       this.way = 'back'
@@ -108,6 +123,12 @@ export class PurchaseDetailPage implements OnInit {
     this.mys.ticket = this.eliminarAsientoDeTicketCompras(this.ticket, way, idServicio, asiento, y, x, piso)
     // this.mys.ticket = this.ticket;
     this.eliminadoAsiento = true;
+
+
+    if (total_general === 0) {
+      this.router.navigateByUrl('/ticket');
+    }
+
   }
 
   volver() {
@@ -151,7 +172,7 @@ export class PurchaseDetailPage implements OnInit {
           if (index3 !== -1) { item.my_comprasByService.splice(index3, 1); }
         }
       });
-        // item.idServicio === idServicio ? item.my_Bus[piso][y][x]['estado'] = 'libre' : null
+      // item.idServicio === idServicio ? item.my_Bus[piso][y][x]['estado'] = 'libre' : null
       // });
       let index3 = ticket.backCompras.indexOf(texto)
       if (index3 !== -1) { ticket.backCompras.splice(index3, 1); }
@@ -160,7 +181,7 @@ export class PurchaseDetailPage implements OnInit {
   }
 
   async popMenu(event) {
-    //console.log('event', event);
+    // console.log('event', event);
     const popoverMenu = await this.popoverCtrl.create({
       component: PopMenuComponent,
       event,
