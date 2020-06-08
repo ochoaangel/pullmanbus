@@ -83,27 +83,29 @@
             <div *ngIf="!showSelection" style="display: flex; flex-direction: column;">
 
               <!-- Slider Etapa 1 Banner -->
-              <ion-slides mode="ios" *ngIf="promociones && promociones.length>0" style="background-color: transparent;">
-                <ion-slide *ngFor="let promo of promociones">
-                  <div style="width: 100%; display: flex; flex-direction: row;">
-                    <!-- <div style="width: 50%;border-radius: 0.5rem 0 0 0.5rem;"> -->
-                    <img src="{{promo.urlImagen}}" alt=""
-                      style="object-fit: cover;width: 50%;border-radius: 1rem 0 0 1rem;border: 1px solid var(--ion-color-light);">
-                    <!-- </div> -->
-                    <div
-                      style="width: 50%;background-color: var(--ion-color-light);border-radius: 0 1rem  1rem 0;color: var(--ion-color-dark);display: flex; flex-direction: column;border: 1px solid var(--ion-color-light);">
-                      <div style="font-size: 4vw;">{{promo.titulo}}</div>
-                      <div style="font-size: 3vw;">{{promo.contenido}}</div>
-                      <div style="font-size: 4vw; display: flex; justify-content: center;">
-                        <div
-                          style="background-color: var(--ion-color-primary); color:var(--ion-color-light) ; width: 40%;border-radius: 0.5rem;">
-                          ${{promo.tarifas}}
+              <div *ngIf="promociones && promociones.length>0" style="background-color: transparent;">
+                <ion-slides mode="ios">
+                  <ion-slide *ngFor="let promo of promociones">
+                    <div style="width: 100%; display: flex; flex-direction: row;">
+                      <!-- <div style="width: 50%;border-radius: 0.5rem 0 0 0.5rem;"> -->
+                      <img src="{{promo.urlImagen}}" alt=""
+                        style="object-fit: cover;width: 50vw;border-radius: 1rem 0 0 1rem;border: 1px solid var(--ion-color-light);">
+                      <!-- </div> -->
+                      <div
+                        style="width: 50vw; align-items: center; justify-content: center; background-color: var(--ion-color-light);border-radius: 0 1rem  1rem 0;color: var(--ion-color-dark);display: flex; flex-direction: column;border: 1px solid var(--ion-color-light);">
+                        <div style="font-weight: bold;">{{promo.titulo}}</div>
+                        <div style="">{{promo.contenido}}</div>
+                        <div style="display: flex; justify-content: center;">
+                          <div
+                            style="background-color: var(--ion-color-primary); color:var(--ion-color-light) ; border-radius: 0.5rem; padding: 5px 20px;">
+                            ${{promo.tarifas}}
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                </ion-slide>
-              </ion-slides>
+                  </ion-slide>
+                </ion-slides>
+              </div>
 
               <div>
 
