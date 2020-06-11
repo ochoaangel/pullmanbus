@@ -122,23 +122,25 @@ ion-checkbox {
 .pisoShow {
   background-color: blue;
   color: white;
-  width: 15vw;
-  border-radius: 4px;
-  padding: 0px;
+  width: 20vw;
+  border-radius: 7px;
+  padding: 6px;
   font-size: 0.8rem;
   text-align: center;
   margin: 1vw;
+  border: 1px solid blue;
 }
 
 .pisoHiden {
   background-color: white;
   color: blue;
-  width: 15vw;
-  border-radius: 4px;
-  padding: 0px;
+  width: 20vw;
+  border-radius: 7px;
+  padding: 6px;
   font-size: 0.8rem;
   text-align: center;
   margin: 1vw;
+  border: 1px solid blue;
 }
 
 .myServiceColumn {
@@ -171,3 +173,86 @@ ion-checkbox {
   color: var(--ion-color-primary);
   // width: -webkit-fill-available;
 }
+
+.box {
+  position: relative;
+}
+.ribbon {
+  position: absolute;
+  left: -4px;
+  top: -8px;
+  z-index: 1;
+  overflow: hidden;
+  width: 75px;
+  height: 75px;
+  text-align: right;
+  margin-left: 0.3rem;
+}
+.ribbon span {
+  font-size: 10px;
+  // font-weight: bold;
+  color: #fff;
+  // text-transform: uppercase;
+  text-align: center;
+  line-height: 9px;
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+  width: 100px;
+  display: block;
+  background: var(--ion-color-primary);
+  // background: #79a70a;
+  // background: linear-gradient(#f70505 0%, #8f0808 100%);
+  // box-shadow: 0 3px 10px -5px rgba(0, 0, 0, 1);
+  position: absolute;
+  top: 19px;
+  left: -21px;
+  padding: 1px 15px;
+}
+.ribbon span::before {
+  content: '';
+  position: absolute;
+  left: 0px;
+  top: 100%;
+  z-index: -1;
+  border-left: 3px solid #8f0808;
+  border-right: 3px solid transparent;
+  border-bottom: 3px solid transparent;
+  border-top: 3px solid #8f0808;
+}
+.ribbon span::after {
+  content: '';
+  position: absolute;
+  right: 0px;
+  top: 100%;
+  z-index: -1;
+  border-left: 3px solid transparent;
+  border-right: 3px solid #8f0808;
+  border-bottom: 3px solid transparent;
+  border-top: 3px solid #8f0808;
+}
+
+// ion-button {
+//   --background: #3880ff;
+//   --background-activated: #3880ff;
+//   --background-activated-opacity: 1;
+//   --background-focused: #3880ff;
+//   --background-focused-opacity: 1;
+//   --background-hover: #3880ff;
+//   --background-hover-opacity: 1;
+//   --border-color: #3880ff;
+//   --border-radius: 8px;
+//   --border-style: solid;
+//   --border-width: 8px;
+//   --box-shadow: 10px 10px;
+//   --color: #ffffff;
+//   --color-activated: #ffffff;
+//   --color-focused: #ffffff;
+//   --color-hover: #ffffff;
+//   --opacity: 1;
+//   --padding-bottom: 4px;
+//   --padding-end: 4px;
+//   --padding-start: 4px;
+//   --padding-top: 4px;
+//   --ripple-color: #1e1e1e;
+//   --transition: background-color 15ms linear;
+// }

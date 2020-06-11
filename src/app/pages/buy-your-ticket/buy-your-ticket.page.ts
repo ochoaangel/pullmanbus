@@ -53,7 +53,10 @@ export class BuyYourTicketPage implements OnInit {
   goBack = false;
 
   inputFiltrado;
-  inputFuente = []
+  inputFuente;
+
+  promociones;  // recibe colecciones
+
 
   constructor(
     private httpClient: HttpClient,
@@ -211,6 +214,7 @@ export class BuyYourTicketPage implements OnInit {
       this.mySelection = '';
       this.myDestiny = item;
     }
+    this.cambioOrigenDestinoIda();
   }
 
   atras() {
@@ -275,6 +279,31 @@ export class BuyYourTicketPage implements OnInit {
       this.minbackDate = this.goDate;
       this.maxbackDate = moment(this.goDate).add(1, 'y').format();
     }
+    this.cambioOrigenDestinoIda();
+  }
+
+
+  cambioOrigenDestinoIda() {
+    if (this.myOrigin && this.myDestiny && this.goDate) {
+      let params = {
+        origen: this.myOrigin.codigo,
+        destino: this.myDestiny.codigo,
+        fechaSalida: moment(this.goDate).format('YYYYMMDD'),
+        etapa: 1,
+      }
+      console.log('params', params);
+      this.loading = true;
+      this.integradorService.buscaCaluga(params).subscribe(resp => {
+        this.loading = false;
+        this.promociones = resp;
+        console.log('resp', resp)
+      });
+
+
+
+    }
+
+
   }
 
 }
