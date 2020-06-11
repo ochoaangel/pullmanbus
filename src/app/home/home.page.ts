@@ -12,11 +12,15 @@ import { IntegradorService } from '../service/integrador.service';
 export class HomePage implements OnInit {
   options = { initialSlide: 0, slidesPerView: 1, autoplay: true, speed: 4000 };
   carrusel = [];
+
+  showMenu1 = true;
+  showMenu2 = false;
+
   constructor(
     private mys: MyserviceService,
     public alertController: AlertController,
     public router: Router,
-    private integradorService:IntegradorService
+    private integradorService: IntegradorService
 
   ) {
 
@@ -28,8 +32,8 @@ export class HomePage implements OnInit {
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
-    this.integradorService.buscarCarrusel().subscribe(resp=>{
-      this.carrusel=resp;
+    this.integradorService.buscarCarrusel().subscribe(resp => {
+      this.carrusel = resp;
     });
   }
 
@@ -47,6 +51,16 @@ export class HomePage implements OnInit {
 
   irPerfil() {
     this.router.navigateByUrl(this.urlPerfil || '/login')
+  }
+
+  mostrarMenu1() {
+    this.showMenu1 = true;
+    this.showMenu2 = false;
+  }
+
+  mostrarMenu2() {
+    this.showMenu1 = false;
+    this.showMenu2 = true;
   }
 
 }
