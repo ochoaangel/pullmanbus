@@ -27,7 +27,7 @@ export class HomePage implements OnInit {
 
   }
 
-  urlPerfil = ''
+  urlPerfil = '';
 
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
@@ -40,17 +40,17 @@ export class HomePage implements OnInit {
   ionViewWillEnter() {
     this.mys.checkIfExistUsuario().subscribe((logeado: any) => {
       if (logeado) {
-        this.urlPerfil = '/user-panel'
+        this.urlPerfil = '/user-panel';
       } else {
-        this.urlPerfil = '/login'
+        this.urlPerfil = '/login';
       }
-    })
+    });
 
   }
 
 
   irPerfil() {
-    this.router.navigateByUrl(this.urlPerfil || '/login')
+    this.router.navigateByUrl(this.urlPerfil || '/login');
   }
 
   mostrarMenu1() {
