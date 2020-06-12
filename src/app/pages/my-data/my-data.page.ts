@@ -58,115 +58,117 @@ export class MyDataPage implements OnInit {
     private integrador: IntegradorService,
     private router: Router,
     private popoverCtrl: PopoverController
-  ) {}
+  ) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   ionViewWillEnter() {
     this.integrador.buscarRegionesRegistroDeUsuario().subscribe((regiones) => {
       this.regionesAll = _.sortBy(regiones, 'descripcion');
-    });
+      console.log('this.regionesAll', this.regionesAll);
 
-    this.myData = {
-      rut: '',
-      email: '',
-      nombre: '',
-      apellidoMaterno: '',
-      apellidoPaterno: '',
-      estado: 'ACT',
-      fechaCreacion: '',
-      fechaNacimiento: '',
-      fechaActivacion: '',
-      password: '',
-      clave: '',
+      this.myData = {
+        rut: '',
+        email: '',
+        nombre: '',
+        apellidoMaterno: '',
+        apellidoPaterno: '',
+        estado: 'ACT',
+        fechaCreacion: '',
+        fechaNacimiento: '',
+        fechaActivacion: '',
+        password: '',
+        clave: '',
 
-      telefono: '',
-      celular: '',
-      region: '',
-      ciudad: '',
+        telefono: '',
+        celular: '',
+        region: '',
+        ciudad: '',
 
-      dia: '',
-      mes: '',
-      anio: '',
-      genero: '',
-    };
+        dia: '',
+        mes: '',
+        anio: '',
+        genero: '',
+      };
 
-    this.mys.checkIfExistUsuario().subscribe((existe) => {
-      if (existe) {
-        // console.log('Usuario Registrado, Entonces Modifica');
-        this.pageMyDataAsRegister = false;
-        this.loading = true;
-        this.mys.getUser().subscribe((usuario) => {
-          // console.log('usuario', usuario);
-          this.loading = false;
-          this.usuario = usuario;
+      this.mys.checkIfExistUsuario().subscribe((existe) => {
+        if (existe) {
+          // console.log('Usuario Registrado, Entonces Modifica');
+          this.pageMyDataAsRegister = false;
+          this.loading = true;
+          this.mys.getUser().subscribe((usuario) => {
+            console.log('usuario', usuario);
+            this.loading = false;
+            this.usuario = usuario;
 
-          this.myData.nombre = this.titleCase(usuario.usuario.nombre);
-          this.myData.apellidoPaterno = this.titleCase(
-            usuario.usuario.apellidoPaterno
-          );
-          this.myData.apellidoMaterno = this.titleCase(
-            usuario.usuario.apellidoMaterno
-          );
-          this.myData.email = usuario.usuario.email;
-          this.myData.estado = usuario.usuario.estado;
-          this.myData.rut = usuario.usuario.rut;
+            this.myData.nombre = this.titleCase(usuario.usuario.nombre);
+            this.myData.apellidoPaterno = this.titleCase(
+              usuario.usuario.apellidoPaterno
+            );
+            this.myData.apellidoMaterno = this.titleCase(
+              usuario.usuario.apellidoMaterno
+            );
+            this.myData.email = usuario.usuario.email;
+            this.myData.estado = usuario.usuario.estado;
+            this.myData.rut = usuario.usuario.rut;
 
-          // console.log('888888888888888888', usuario.usuario.fechaNacimiento);
+            // console.log('888888888888888888', usuario.usuario.fechaNacimiento);
 
-          this.myData.dia = moment
-            .utc(usuario.usuario.fechaNacimiento)
-            .format('D');
-          // this.myData.dia = parseInt(moment.utc(usuario.usuario.fechaNacimiento).format('D')) + 1 + ''
-          this.myData.mes = moment
-            .utc(usuario.usuario.fechaNacimiento)
-            .format('M');
-          this.myData.anio = moment
-            .utc(usuario.usuario.fechaNacimiento)
-            .format('YYYY');
+            this.myData.dia = moment
+              .utc(usuario.usuario.fechaNacimiento)
+              .format('D');
+            // this.myData.dia = parseInt(moment.utc(usuario.usuario.fechaNacimiento).format('D')) + 1 + ''
+            this.myData.mes = moment
+              .utc(usuario.usuario.fechaNacimiento)
+              .format('M');
+            this.myData.anio = moment
+              .utc(usuario.usuario.fechaNacimiento)
+              .format('YYYY');
 
-          this.myData.fechaNacimiento = moment
-            .utc(usuario.usuario.fechaNacimiento)
-            .toISOString();
-          this.myData.fechaCreacion = moment
-            .utc(usuario.usuario.fechaCreacion)
-            .format('DD-MM-YYYY');
-          this.myData.fechaActivacion = moment
-            .utc(usuario.usuario.fechaActivacion)
-            .format('DD-MM-YYYY');
+            this.myData.fechaNacimiento = moment
+              .utc(usuario.usuario.fechaNacimiento)
+              .toISOString();
+            this.myData.fechaCreacion = moment
+              .utc(usuario.usuario.fechaCreacion)
+              .format('DD-MM-YYYY');
+            this.myData.fechaActivacion = moment
+              .utc(usuario.usuario.fechaActivacion)
+              .format('DD-MM-YYYY');
 
-          this.myData.genero = usuario.usuario.genero;
-          this.myData.telefono = usuario.usuario.telefono || '';
-          this.myData.celular = usuario.usuario.telefono || '';
-          this.myData.ciudad = usuario.usuario.ciudadCodigo || '';
-          this.myData.region = usuario.usuario.regionCodigo || '';
+            this.myData.genero = usuario.usuario.genero;
+            this.myData.telefono = usuario.usuario.telefono || '';
+            this.myData.celular = usuario.usuario.telefono || '';
+            this.myData.ciudad = usuario.usuario.ciudadCodigo || '';
+            this.myData.region = usuario.usuario.regionCodigo || '';
 
-          // console.log('myData',this.myData);
-          this.cambioDeRegion();
+            // console.log('myData',this.myData);
+            this.cambioDeRegion();
 
-          if (usuario.usuario.nombre && usuario.usuario.apellidoPaterno) {
-            this.nombreUsuario =
-              usuario.usuario.nombre + ' ' + usuario.usuario.apellidoPaterno;
-            // console.log('this.nombre', this.nombreUsuario);
-          } else {
-            this.nombreUsuario = 'Usuario';
-            // console.log('this.nombre2', this.nombreUsuario);
-          }
-          // console.log('this.myData', this.myData)
-        });
-      } else {
-        // console.log('Usuario NO Registrado, Entonces Registra');
-        this.pageMyDataAsRegister = true;
-        // console.log('this.nombreUsuario', this.nombreUsuario);
-      }
-    });
+            if (usuario.usuario.nombre && usuario.usuario.apellidoPaterno) {
+              this.nombreUsuario =
+                usuario.usuario.nombre + ' ' + usuario.usuario.apellidoPaterno;
+              // console.log('this.nombre', this.nombreUsuario);
+            } else {
+              this.nombreUsuario = 'Usuario';
+              // console.log('this.nombre2', this.nombreUsuario);
+            }
+            // console.log('this.myData', this.myData)
+          });
+        } else {
+          // console.log('Usuario NO Registrado, Entonces Registra');
+          this.pageMyDataAsRegister = true;
+          // console.log('this.nombreUsuario', this.nombreUsuario);
+        }
+        // console.log('this.myData', this.myData);
+      });
+    })
   }
 
   // myKeyUp(elemento) {
   //   // //console.log('presionado elemento: ', elemento);
   // }
 
-  genero($event) {}
+  genero($event) { }
 
   validar(forma) {
     // console.log('forma', forma);
@@ -332,7 +334,7 @@ export class MyDataPage implements OnInit {
                 'Error ',
                 'alert',
                 respuesta.mensaje ||
-                  'Hubo un error al guardar los datos del usuario..'
+                'Hubo un error al guardar los datos del usuario..'
               );
             }
 
@@ -390,7 +392,7 @@ export class MyDataPage implements OnInit {
                 'Error ',
                 'alert',
                 respuesta.mensaje ||
-                  'Hubo un error al guardar los datos del usuario..'
+                'Hubo un error al guardar los datos del usuario..'
               );
             }
 
