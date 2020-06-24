@@ -94,6 +94,14 @@ const routes: Routes = [
     path: 'questions',
     loadChildren: () => import('./pages/questions/questions.module').then( m => m.QuestionsPageModule)
   },
+  {
+    path: 'agencies',
+    loadChildren: () => import('./pages/agencies/agencies.module').then( m => m.AgenciesPageModule)
+  },
+  {
+    path: 'agreements',
+    loadChildren: () => import('./pages/agreements/agreements.module').then( m => m.AgreementsPageModule)
+  },
 
 
 

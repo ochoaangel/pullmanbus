@@ -23,7 +23,7 @@
   </div>
 
   <div class="cabeceraTitulo">
-    Preguntas Frecuentes
+    Agencias
   </div>
 
 </ion-header>
@@ -42,7 +42,7 @@
             <div (click)="clickItem(i)"
               style="background-color: var(--ion-color-secondary); padding: 0.5rem; display: flex; align-items: center; flex-direction: row; margin: 0 1rem;padding: 0.5rem 1rem;">
               <div style="color: white; width: 100%; display: flex; flex-direction: column;">
-                <div style="font-size: 1.1rem;text-transform: uppercase;">{{item.titulo}}</div>
+                <div style="font-size: 1.1rem;text-transform: uppercase;">{{item.descripcion}}</div>
               </div>
               <ion-icon style="color: white;zoom: 1.5;" slot="end" name="add"></ion-icon>
             </div>
@@ -51,16 +51,18 @@
             <div class="animated fadeIn" *ngIf="item.show"
               style="background-color: white; margin: 0 1rem; padding: 1rem;border-radius: 0 0 2rem 2rem;">
 
-              <div *ngFor="let titulo of item.detalle" style="width: 100%; padding: 0 0 5px 0;">
+              <div *ngFor="let ciudad of item.ciudades"
+                style="width: 100%; padding: 0 0 5px 0; display: flex; flex-direction: row; align-items: center;">
 
-                <div>
-                  {{titulo.numeracion+' '+titulo.titulo}}
+                <ion-icon slot="start" name="add"></ion-icon>
+                <div style="margin-left: 1rem; color: var(--ion-color-secondary);">
+                  {{ciudad.nombre}}
                 </div>
 
-                <div *ngFor="let info of titulo.contenido"
+                <!-- <div *ngFor="let info of titulo.contenido"
                   style="font-size: 0.8rem; padding: 3px 0px 3px 20px;text-align: justify;text-indent: 0.5rem;">
                   {{info}}
-                </div>
+                </div> -->
 
               </div>
 

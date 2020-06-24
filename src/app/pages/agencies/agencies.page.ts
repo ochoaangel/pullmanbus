@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { IntegradorService } from 'src/app/service/integrador.service';
+import * as _ from 'underscore';
+import * as moment from 'moment';
 
 @Component({
-  selector: 'app-questions',
-  templateUrl: './questions.page.html',
-  styleUrls: ['./questions.page.scss'],
+  selector: 'app-agencies',
+  templateUrl: './agencies.page.html',
+  styleUrls: ['./agencies.page.scss'],
 })
-export class QuestionsPage implements OnInit {
+export class AgenciesPage implements OnInit {
 
   constructor(
     private integrador: IntegradorService
@@ -16,11 +18,25 @@ export class QuestionsPage implements OnInit {
 
   ngOnInit() {
     console.log('iniciando preguntas');
-    this.integrador.getFaq().subscribe(resp => {
+    this.integrador.buscarRegionesRegistroDeUsuario().subscribe(resp => {
+
+      // console.log('resp', resp);
       this.all = resp;
+
+      this.all.forEach(x => {
+        x.ncodigo = parseInt(x.codigo);
+      });
+
+      this.all = _.sortBy(this.all, 'ncodigo');
+
 
       this.all.forEach(element => {
         element['show'] = false;
+
+        this.integrador.buscarCiudadPorRegionesRegistroDeUsuario({ codigo: element.codigo }).subscribe(ciudades => {
+          element['ciudades'] = ciudades;
+        })
+
       });
 
 

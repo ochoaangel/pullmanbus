@@ -23,7 +23,7 @@
   </div>
 
   <div class="cabeceraTitulo">
-    Preguntas Frecuentes
+    Información de Convenios
   </div>
 
 </ion-header>
@@ -35,38 +35,38 @@
         <ion-col class=" ion-no-padding ion-no-margin" size="12" style="background-color: whitesmoke;">
 
 
-          <div *ngFor="let item of all; let i=index"
-            style="width: 100%; display: flex; flex-direction: column;padding: 0.1rem 0;">
 
-            <!-- azul -->
-            <div (click)="clickItem(i)"
-              style="background-color: var(--ion-color-secondary); padding: 0.5rem; display: flex; align-items: center; flex-direction: row; margin: 0 1rem;padding: 0.5rem 1rem;">
-              <div style="color: white; width: 100%; display: flex; flex-direction: column;">
-                <div style="font-size: 1.1rem;text-transform: uppercase;">{{item.titulo}}</div>
-              </div>
-              <ion-icon style="color: white;zoom: 1.5;" slot="end" name="add"></ion-icon>
-            </div>
 
-            <!-- detalles -->
-            <div class="animated fadeIn" *ngIf="item.show"
-              style="background-color: white; margin: 0 1rem; padding: 1rem;border-radius: 0 0 2rem 2rem;">
 
-              <div *ngFor="let titulo of item.detalle" style="width: 100%; padding: 0 0 5px 0;">
+          <ion-row *ngIf="all" style="margin: 0 0.5rem 10rem 0">
+            <ion-col size="12" size-lg="4" size-md="4" size-sm="4" size-xs="6"
+              *ngFor="let convenio of all; let i= index">
+              <ion-card class="ion-no-padding ion-no-margin"
+                style="margin: 0.5rem; display: flex; flex-direction: column; background-color: white;height: 100%;">
 
-                <div>
-                  {{titulo.numeracion+' '+titulo.titulo}}
+                <img [src]="convenio.img"
+                  style="object-fit: contain; width: 100%; height: 4rem; margin-top: 1rem;padding: 0 0.5rem;" />
+
+                <div style="margin: 0.3rem 0.5rem; text-align: center;">
+                  {{convenio.title}}
                 </div>
 
-                <div *ngFor="let info of titulo.contenido"
-                  style="font-size: 0.8rem; padding: 3px 0px 3px 20px;text-align: justify;text-indent: 0.5rem;">
-                  {{info}}
+                <div style="padding: 0 1rem 1rem 0.7rem; font-size: 0.7rem; text-align: justify;text-indent: 0.4rem;">
+                  {{convenio.description}}
                 </div>
+              </ion-card>
+            </ion-col>
+          </ion-row>
 
-              </div>
 
-            </div>
 
-          </div>
+
+
+
+
+
+
+
 
 
 
