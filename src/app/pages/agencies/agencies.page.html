@@ -35,34 +35,37 @@
         <ion-col class=" ion-no-padding ion-no-margin" size="12" style="background-color: whitesmoke;">
 
 
-          <div *ngFor="let item of all; let i=index"
-            style="width: 100%; display: flex; flex-direction: column;padding: 0.1rem 0;">
+          <div *ngIf="all">
+            <div *ngFor="let item of all; let i=index"
+              style="width: 100%; display: flex; flex-direction: column;padding: 0.1rem 0;">
 
-            <!-- azul -->
-            <div (click)="clickItem(i)"
-              style="background-color: var(--ion-color-secondary); padding: 0.5rem; display: flex; align-items: center; flex-direction: row; margin: 0 1rem;padding: 0.5rem 1rem;">
-              <div style="color: white; width: 100%; display: flex; flex-direction: column;">
-                <div style="font-size: 1.1rem;text-transform: uppercase;">{{item.descripcion}}</div>
-              </div>
-              <ion-icon style="color: white;zoom: 1.5;" slot="end" name="add"></ion-icon>
-            </div>
-
-            <!-- detalles -->
-            <div class="animated fadeIn" *ngIf="item.show"
-              style="background-color: white; margin: 0 1rem; padding: 1rem;border-radius: 0 0 2rem 2rem;">
-
-              <div *ngFor="let ciudad of item.ciudades"
-                style="width: 100%; padding: 0 0 5px 0; display: flex; flex-direction: row; align-items: center;">
-
-                <ion-icon slot="start" name="add"></ion-icon>
-                <div style="margin-left: 1rem; color: var(--ion-color-secondary);">
-                  {{ciudad.nombre}}
+              <!-- azul -->
+              <div (click)="clickItem(i)"
+                style="background-color: var(--ion-color-secondary); padding: 0.5rem; display: flex; align-items: center; flex-direction: row; margin: 0 1rem;padding: 0.5rem 1rem;">
+                <div style="color: white; width: 100%; display: flex; flex-direction: column;">
+                  <div style="font-size: 1.1rem;text-transform: uppercase;">{{item.descripcion}}</div>
                 </div>
+                <ion-icon style="color: white;zoom: 1.5;" slot="end" name="add"></ion-icon>
+              </div>
 
-                <!-- <div *ngFor="let info of titulo.contenido"
+              <!-- detalles -->
+              <div class="animated fadeIn" *ngIf="item.show"
+                style="background-color: white; margin: 0 1rem; padding: 1rem;border-radius: 0 0 2rem 2rem;">
+
+                <div *ngFor="let ciudad of item.ciudades"
+                  style="width: 100%; padding: 0 0 5px 0; display: flex; flex-direction: row; align-items: center;">
+
+                  <ion-icon slot="start" name="add"></ion-icon>
+                  <div style="margin-left: 1rem; color: var(--ion-color-secondary);">
+                    {{ciudad.nombre}}
+                  </div>
+
+                  <!-- <div *ngFor="let info of titulo.contenido"
                   style="font-size: 0.8rem; padding: 3px 0px 3px 20px;text-align: justify;text-indent: 0.5rem;">
                   {{info}}
                 </div> -->
+
+                </div>
 
               </div>
 
@@ -70,6 +73,10 @@
 
           </div>
 
+          <div *ngIf="!all"
+            style="width: 100%; height: 100%;display: flex;justify-content: center;align-items: center;">
+            <ion-spinner color="secondary" name="bubbles" style="zoom: 3;"></ion-spinner>
+          </div>
 
 
         </ion-col>

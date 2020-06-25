@@ -17,7 +17,6 @@ export class AgenciesPage implements OnInit {
   all;
 
   ngOnInit() {
-    console.log('iniciando preguntas');
     this.integrador.buscarRegionesRegistroDeUsuario().subscribe(resp => {
 
       // console.log('resp', resp);
@@ -40,7 +39,7 @@ export class AgenciesPage implements OnInit {
       });
 
 
-      console.log('this.all', this.all);
+      // console.log('this.all', this.all);
     });
 
 
@@ -52,10 +51,6 @@ export class AgenciesPage implements OnInit {
     });
   }
 
-  // mostrar(n) {
-  //   this.ocultarTodo();
-  //   this.all[n]['show'] = true;
-  // }
 
   clickItem(n) {
 

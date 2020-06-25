@@ -15,7 +15,6 @@ export class QuestionsPage implements OnInit {
   all;
 
   ngOnInit() {
-    console.log('iniciando preguntas');
     this.integrador.getFaq().subscribe(resp => {
       this.all = resp;
 
@@ -24,7 +23,7 @@ export class QuestionsPage implements OnInit {
       });
 
 
-      console.log('this.all', this.all);
+      // console.log('this.all', this.all);
     });
 
 

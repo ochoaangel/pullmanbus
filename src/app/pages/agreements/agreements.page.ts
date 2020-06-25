@@ -19,7 +19,7 @@ export class AgreementsPage implements OnInit {
     this.integrador.getListConvenio().subscribe(resp => {
       this.all = resp;
 
-      console.log('this.all', this.all);
+      // console.log('this.all', this.all);
 
       this.all = this.all.map(x => {
 
@@ -31,7 +31,7 @@ export class AgreementsPage implements OnInit {
         return end;
       });
 
-      console.log('this.all', this.all);
+      // console.log('this.all', this.all);
     })
   }
 
