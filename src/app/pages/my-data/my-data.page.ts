@@ -58,9 +58,9 @@ export class MyDataPage implements OnInit {
     private integrador: IntegradorService,
     private router: Router,
     private popoverCtrl: PopoverController
-  ) {}
+  ) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   ionViewWillEnter() {
     this.integrador.buscarRegionesRegistroDeUsuario().subscribe((regiones) => {
@@ -166,7 +166,7 @@ export class MyDataPage implements OnInit {
   //   // //console.log('presionado elemento: ', elemento);
   // }
 
-  genero($event) {}
+  genero($event) { }
 
   validar(forma) {
     // console.log('forma', forma);
@@ -312,12 +312,20 @@ export class MyDataPage implements OnInit {
                 // this.mys.saveUsuario(this.usuario).subscribe(guardado => {
                 // if (guardado) {
                 //   //console.log('guardadooooooo');
+
                 this.mys.alertShow(
                   'Éxito!!',
                   'checkmark-circle',
-                  'Usuario Registrado Exitosamente,\nfué enviado por correo el password para iniciar sesión..'
+                  'Usuario Registrado Exitosamente..'
                 );
-                this.router.navigateByUrl('/login');
+                this.router.navigateByUrl('/home');
+                // this.mys.alertShow(
+                //   'Éxito!!',
+                //   'checkmark-circle',
+                //   'Usuario Registrado Exitosamente,\nfué enviado por correo el password para iniciar sesión..'
+                // );
+                // this.router.navigateByUrl('/login');
+
                 // } else {
                 //   this.mys.alertShow('Éxito!!', 'alert', 'Hubo inconvenientes al actualizar los datos..')
                 //   //console.log('NOOO guardadooooooo');
@@ -332,7 +340,7 @@ export class MyDataPage implements OnInit {
                 'Error ',
                 'alert',
                 respuesta.mensaje ||
-                  'Hubo un error al guardar los datos del usuario..'
+                'Hubo un error al guardar los datos del usuario..'
               );
             }
 
@@ -390,7 +398,7 @@ export class MyDataPage implements OnInit {
                 'Error ',
                 'alert',
                 respuesta.mensaje ||
-                  'Hubo un error al guardar los datos del usuario..'
+                'Hubo un error al guardar los datos del usuario..'
               );
             }
 
