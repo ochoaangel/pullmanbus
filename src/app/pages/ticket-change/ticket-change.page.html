@@ -89,7 +89,8 @@
                   <div style="width: 35%;text-align: left;">{{existeBoleto.estadoActualDescripcion|titlecase}}</div>
                 </div>
 
-                <div style="display: flex; flex-direction: row;font-size: 0.7rem; padding-bottom: 5px;" *ngIf="compra==='internet'">
+                <div style="display: flex; flex-direction: row;font-size: 0.7rem; padding-bottom: 5px;"
+                  *ngIf="compra==='internet'">
                   <div style="width: 15%;text-align: right;font-weight: bold;padding-right: 5px;">Fecha:</div>
                   <div style="width: 35%;text-align: left;">{{existeBoleto.fechaEmbarcacion}}</div>
                   <div style="width: 15%;text-align: right;font-weight: bold;padding-right: 5px;">Hora:</div>
@@ -125,15 +126,15 @@
                       <ion-col size="6" class="columnaDoble">
                         <div class="overIonInput">
                           <ion-input placeholder="Email" type="email" name="email"
-                            pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" #email [(ngModel)]="myData.email" [disabled]="usuario"
-                            required></ion-input>
+                            pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" #email [(ngModel)]="myData.email"
+                            [disabled]="usuario" required></ion-input>
                         </div>
                       </ion-col>
 
                       <ion-col size="6" class="columnaDoble">
                         <div class="overIonInput">
-                          <ion-input placeholder="RUT" type="text" name="rut" pattern="^[0-9]+[-|‐]{1}[0-9kK]{1}$" [disabled]="usuario"
-                            [(ngModel)]="myData.rut" required #rut></ion-input>
+                          <ion-input placeholder="RUT" type="text" name="rut" pattern="^[0-9]+[-|‐]{1}[0-9kK]{1}$"
+                            [disabled]="usuario" [(ngModel)]="myData.rut" required #rut></ion-input>
                         </div>
                       </ion-col>
                     </ion-row>
@@ -143,18 +144,9 @@
                       <ion-col size="6" class="columnaDoble">
                         <div class="overIonInput">
 
-                            <ion-datetime
-                            name="fecha"
-                            #fecha
-                            displayFormat="DD/MM/YYYY"
-                            placeholder="Fecha Embarque"
-                            cancelText="Cancelar"
-                            doneText="Listo"
-                            mode="ios"
-                            [(ngModel)]="myData.fecha"
-                            [min]="ionActualDate"
-                            [max]="ionLimitTravelDate"
-                            ></ion-datetime>
+                          <ion-datetime name="fecha" #fecha displayFormat="DD/MM/YYYY" placeholder="Fecha Embarque"
+                            cancelText="Cancelar" doneText="Listo" mode="ios" [(ngModel)]="myData.fecha"
+                            [min]="ionActualDate" [max]="ionLimitTravelDate"></ion-datetime>
 
                         </div>
                       </ion-col>
@@ -162,16 +154,8 @@
                       <ion-col size="6" class="columnaDoble">
                         <div class="overIonInput">
 
-                          <ion-datetime
-                          name="hora"
-                          #hora
-                          displayFormat="HH:mm"
-                          placeholder="Hora Embarque"
-                          cancelText="Cancelar"
-                          doneText="Listo"
-                          mode="ios" 
-                          [(ngModel)]="myData.hora"
-                          ></ion-datetime>
+                          <ion-datetime name="hora" #hora displayFormat="HH:mm" placeholder="Hora Embarque"
+                            cancelText="Cancelar" doneText="Listo" mode="ios" [(ngModel)]="myData.hora"></ion-datetime>
 
 
                         </div>
@@ -187,8 +171,8 @@
                       <ion-col size="12" class="columnaDoble">
                         <div class="overIonInput">
                           <ion-input placeholder="Email" type="email" name="emaili"
-                            pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" #emaili [(ngModel)]="myData.email" [disabled]="usuario"
-                            required></ion-input>
+                            pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" #emaili [(ngModel)]="myData.email"
+                            [disabled]="usuario" required></ion-input>
                         </div>
                       </ion-col>
                     </ion-row>
@@ -196,8 +180,8 @@
                     <ion-row>
                       <ion-col size="6" class="columnaDoble">
                         <div class="overIonInput">
-                          <ion-input placeholder="RUT" type="text" name="ruti" pattern="^[0-9]+[-|‐]{1}[0-9kK]{1}$" [disabled]="usuario"
-                            [(ngModel)]="myData.rut" required #ruti></ion-input>
+                          <ion-input placeholder="RUT" type="text" name="ruti" pattern="^[0-9]+[-|‐]{1}[0-9kK]{1}$"
+                            [disabled]="usuario" [(ngModel)]="myData.rut" required #ruti></ion-input>
                         </div>
                       </ion-col>
                     </ion-row>
@@ -251,7 +235,8 @@
 <ion-footer no-border style=" width: 100vw;background-color: var(--ion-color-primary);color: white;">
   <div style="width: 100%; display: flex;justify-content: center;">
 
-    <ion-button slot="start" fill="clear" style="color: white; width: 50%; outline: none;" routerLink="/home">
+    <ion-button slot="start" fill="clear" style="color: white; width: 50%; outline: none;"
+      routerLink="/ticket-management">
       <ion-icon src="assets/icon/previous.svg"></ion-icon>
       <div style="display: inline; text-align: left ;padding-left: 10px; text-transform: none;">Regresar</div>
     </ion-button>

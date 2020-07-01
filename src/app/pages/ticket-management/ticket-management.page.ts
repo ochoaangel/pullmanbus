@@ -7,12 +7,13 @@ import { PopoverController } from '@ionic/angular';
 import { PopMenuComponent } from 'src/app/components/pop-menu/pop-menu.component';
 import { PopCartComponent } from 'src/app/components/pop-cart/pop-cart.component';
 
+
 @Component({
-  selector: 'app-ticket-change',
-  templateUrl: './ticket-change.page.html',
-  styleUrls: ['./ticket-change.page.scss'],
+  selector: 'app-ticket-management',
+  templateUrl: './ticket-management.page.html',
+  styleUrls: ['./ticket-management.page.scss'],
 })
-export class TicketChangePage implements OnInit {
+export class TicketManagementPage implements OnInit {
   compra;
   existeBoleto;
   loading = 0;
@@ -59,6 +60,13 @@ export class TicketChangePage implements OnInit {
         });
       } else {
         console.warn('no hay  usuario registrado');
+        this.router.navigateByUrl('/home');
+        this.mys.alertShow(
+          'Error!!',
+          'alert',
+          'El usuario debe haber Iniciado Sesión'
+        );
+
       }
     });
   }

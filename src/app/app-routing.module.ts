@@ -102,6 +102,10 @@ const routes: Routes = [
     path: 'agreements',
     loadChildren: () => import('./pages/agreements/agreements.module').then( m => m.AgreementsPageModule)
   },
+  {
+    path: 'ticket-management',
+    loadChildren: () => import('./pages/ticket-management/ticket-management.module').then( m => m.TicketManagementPageModule)
+  },
 
 
 

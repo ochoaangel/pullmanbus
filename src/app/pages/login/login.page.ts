@@ -83,7 +83,7 @@ export class LoginPage implements OnInit {
           if (data.exito) {
             this.mys.saveUsuario(data).subscribe((result) => {
               result
-                ? this.router.navigateByUrl('/user-panel')
+                ? this.router.navigateByUrl('/home')
                 : console.log('Error al guardar el usiario');
             });
           } else {
