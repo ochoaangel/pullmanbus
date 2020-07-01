@@ -60,36 +60,38 @@
     <div style="height: 100%; background-color: white; margin: 0px 0px 0px 0px;">
       <ion-grid style="height: 100%;">
         <ion-row class="ion-justify-content-center ion-align-items-center" style="height: 100%;">
-          <ion-col size="12" style="text-align: center;">
-            <form (ngSubmit)="validar(forma)" #forma="ngForm" novalidate="">
-              <ion-row>
-                <ion-col size="12">
-                  <ion-icon name="ios-person" style="font-size: 15vh; color: var(--ion-color-primary);"></ion-icon>
-                  <div (clickOutside)="onClickedOutside($event)"
-                    style="font-size: 1.5rem; color: var(--ion-color-primary);">
-                    {{nombreUsuario | titlecase}}
-                  </div>
-                </ion-col>
-              </ion-row>
+          <ion-col size="12" style="align-items: center;" class="ion-justify-content-center">
+            <div style="width: 100%; align-items: center;text-align: center; display: flex;justify-content: center;">
+              <form (ngSubmit)="validar(forma)" #forma="ngForm" novalidate=""
+                style="max-width: 30rem;align-items: center;">
+                <ion-row>
+                  <ion-col size="12" style="text-align: center;">
+                    <ion-icon name="ios-person" style="font-size: 15vh; color: var(--ion-color-primary);"></ion-icon>
+                    <div (clickOutside)="onClickedOutside($event)"
+                      style="font-size: 1.5rem; color: var(--ion-color-primary);">
+                      {{nombreUsuario | titlecase}}
+                    </div>
+                  </ion-col>
+                </ion-row>
 
-              <ion-row>
-                <ion-col size="6" class="columnaDoble">
-                  <!-- <div class="overIonInput">
+                <ion-row>
+                  <ion-col size="6" class="columnaDoble">
+                    <!-- <div class="overIonInput">
                     <ion-input placeholder="RUT" type="text" name="rut" pattern="^[0-9]+[-|‐]{1}[0-9kK]{1}$"
                       [(ngModel)]="myData.rut" required #rut clearOnEdit></ion-input>
                   </div> -->
 
-                  <div class="overIonInput">
+                    <div class="overIonInput">
 
 
-                    <input placeholder="RUT" type="text" name="rut" [textMask]={mask:rutFunction,guide:false}
-                      [(ngModel)]="myData.rut" #rut required clearOnEdit>
+                      <input placeholder="RUT" type="text" name="rut" [textMask]={mask:rutFunction,guide:false}
+                        [(ngModel)]="myData.rut" #rut required clearOnEdit>
 
 
 
-                  </div>
+                    </div>
 
-                  <!-- <div style="width: 100%; display: flex; justify-content: center; align-items: center;">
+                    <!-- <div style="width: 100%; display: flex; justify-content: center; align-items: center;">
                 <input 
                 placeholder="RUT"
                 type="text" 
@@ -100,105 +102,107 @@
                 (keypress)="tecleado($event)" 
                 >
               </div> -->
-                </ion-col>
+                  </ion-col>
 
-                <ion-col size="6" class="columnaDoble">
-                  <div style="position: relative;" class="overIonInput">
-                    <ion-input placeholder="Nombre" type="text" name="nombre" minlength="3" #nombre
-                      [(ngModel)]="myData.nombre" required clearOnEdit></ion-input>
-                  </div>
-                </ion-col>
-              </ion-row>
+                  <ion-col size="6" class="columnaDoble">
+                    <div style="position: relative;" class="overIonInput">
+                      <ion-input placeholder="Nombre" type="text" name="nombre" minlength="3" #nombre
+                        [(ngModel)]="myData.nombre" required clearOnEdit></ion-input>
+                    </div>
+                  </ion-col>
+                </ion-row>
 
-              <ion-row>
-                <ion-col size="6" class="columnaDoble">
-                  <div class="overIonInput">
-                    <ion-input placeholder="Apellido paterno" type="text" name="apellidoPaterno" #apellidoPaterno
-                      [(ngModel)]="myData.apellidoPaterno" minlength="3" required clearOnEdit>
-                    </ion-input>
-                  </div>
-                </ion-col>
-                <ion-col size="6" class="columnaDoble">
-                  <div class="overIonInput">
-                    <ion-input placeholder="Apellido materno" type="text" name="apellidoMaterno" #apellidoMaterno
-                      [(ngModel)]="myData.apellidoMaterno" minlength="3" required clearOnEdit>
-                    </ion-input>
-                  </div>
-                </ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col class="ion-no-padding ion-no-margin" size="6" class="columnaDoble"
-                  style="padding-left: 8px; padding-right: 3px; font-size: 80%;">
-                  <div style="display: inline-block; width: 30%;">
-                    <ion-select interface="popover" [interfaceOptions]="diaOptions" class="ion-no-padding ion-no-margin"
-                      multiple="false" placeholder="d" cancel-text="Cancelar" [(ngModel)]="myData.dia" #dia name="dia"
-                      required>
-                      <ion-select-option (click)="prueba($event)" value="{{i+1}}"
-                        *ngFor="let dummy of ' '.repeat(31).split(''), let i = index">
-                        {{i+1}}</ion-select-option>
-                    </ion-select>
-                  </div>
-                  <div style="display: inline-block; width: 30%;">
-                    <ion-select interface="popover" [interfaceOptions]="mesOptions" class="ion-no-padding ion-no-margin"
-                      multiple="false" placeholder="m" cancel-text="Cancelar" [(ngModel)]="myData.mes" #mes name="mes"
-                      required>
-                      <ion-select-option value="{{i+1}}" *ngFor="let dummy of ' '.repeat(12).split(''), let i = index">
-                        {{i+1}}</ion-select-option>
-                    </ion-select>
-                  </div>
-                  <div style="display: inline-block; width: 40%;">
-                    <ion-select interface="popover" [interfaceOptions]="anioOptions"
-                      class="ion-no-padding ion-no-margin" multiple="false" placeholder="aaaa" cancel-text="Cancelar"
-                      [(ngModel)]="myData.anio" #anio name="anio" required>
-                      <ion-select-option value="{{i+1+1900}}"
-                        *ngFor="let dummy of ' '.repeat(119).split(''), let i = index">{{i+1+1900}}</ion-select-option>
-                    </ion-select>
-                  </div>
-                </ion-col>
+                <ion-row>
+                  <ion-col size="6" class="columnaDoble">
+                    <div class="overIonInput">
+                      <ion-input placeholder="Apellido paterno" type="text" name="apellidoPaterno" #apellidoPaterno
+                        [(ngModel)]="myData.apellidoPaterno" minlength="3" required clearOnEdit>
+                      </ion-input>
+                    </div>
+                  </ion-col>
+                  <ion-col size="6" class="columnaDoble">
+                    <div class="overIonInput">
+                      <ion-input placeholder="Apellido materno" type="text" name="apellidoMaterno" #apellidoMaterno
+                        [(ngModel)]="myData.apellidoMaterno" minlength="3" required clearOnEdit>
+                      </ion-input>
+                    </div>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col class="ion-no-padding ion-no-margin" size="6" class="columnaDoble"
+                    style="padding-left: 8px; padding-right: 3px; font-size: 80%;">
+                    <div style="display: inline-block; width: 30%;">
+                      <ion-select interface="popover" [interfaceOptions]="diaOptions"
+                        class="ion-no-padding ion-no-margin" multiple="false" placeholder="d" cancel-text="Cancelar"
+                        [(ngModel)]="myData.dia" #dia name="dia" required>
+                        <ion-select-option (click)="prueba($event)" value="{{i+1}}"
+                          *ngFor="let dummy of ' '.repeat(31).split(''), let i = index">
+                          {{i+1}}</ion-select-option>
+                      </ion-select>
+                    </div>
+                    <div style="display: inline-block; width: 30%;">
+                      <ion-select interface="popover" [interfaceOptions]="mesOptions"
+                        class="ion-no-padding ion-no-margin" multiple="false" placeholder="m" cancel-text="Cancelar"
+                        [(ngModel)]="myData.mes" #mes name="mes" required>
+                        <ion-select-option value="{{i+1}}"
+                          *ngFor="let dummy of ' '.repeat(12).split(''), let i = index">
+                          {{i+1}}</ion-select-option>
+                      </ion-select>
+                    </div>
+                    <div style="display: inline-block; width: 40%;">
+                      <ion-select interface="popover" [interfaceOptions]="anioOptions"
+                        class="ion-no-padding ion-no-margin" multiple="false" placeholder="aaaa" cancel-text="Cancelar"
+                        [(ngModel)]="myData.anio" #anio name="anio" required>
+                        <ion-select-option value="{{i+1+1900}}"
+                          *ngFor="let dummy of ' '.repeat(119).split(''), let i = index">{{i+1+1900}}
+                        </ion-select-option>
+                      </ion-select>
+                    </div>
+                  </ion-col>
 
-                <ion-col size="6" class="columnaDoble">
-                  <ion-row style="justify-content: center;">
-                    <ion-radio-group name="genero" allow-empty-selection="false" [(ngModel)]="myData.genero">
-                      <div style="
+                  <ion-col size="6" class="columnaDoble">
+                    <ion-row style="justify-content: center;">
+                      <ion-radio-group name="genero" allow-empty-selection="false" [(ngModel)]="myData.genero">
+                        <div style="
                           display: flex;
                           flex-direction: row;
                           justify-content: center;
                           align-items: center;
                           height: 2rem;
                         ">
-                        <ion-radio mode="md" value="F" style="margin-left: 1vw;"></ion-radio>
-                        <div style="font-size: 0.8rem;">Femenino</div>
-                        <ion-radio mode="md" value="M" style="margin-left: 1vw;"></ion-radio>
-                        <div style="font-size: 0.8rem;">Masculino</div>
-                      </div>
-                    </ion-radio-group>
-                  </ion-row>
-                </ion-col>
-              </ion-row>
+                          <ion-radio mode="md" value="F" style="margin-left: 1vw;"></ion-radio>
+                          <div style="font-size: 0.8rem;">Femenino</div>
+                          <ion-radio mode="md" value="M" style="margin-left: 1vw;"></ion-radio>
+                          <div style="font-size: 0.8rem;">Masculino</div>
+                        </div>
+                      </ion-radio-group>
+                    </ion-row>
+                  </ion-col>
+                </ion-row>
 
-              <ion-row>
-                <ion-col size="6" class="columnaDoble">
-                  <div style="color: var(--ion-color-primary); font-size: 0.6rem;">
-                    Correo
-                  </div>
+                <ion-row>
+                  <ion-col size="6" class="columnaDoble">
+                    <div style="color: var(--ion-color-primary); font-size: 0.6rem;">
+                      Correo
+                    </div>
 
-                  <div class="overIonInput">
-                    <ion-input placeholder="email" type="email" name="email"
-                      pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" #email [(ngModel)]="myData.email" required
-                      style="font-size: 0.7rem;" clearOnEdit></ion-input>
-                  </div>
-                </ion-col>
-                <ion-col size="6" class="columnaDoble">
-                  <div style="color: var(--ion-color-primary); font-size: 0.6rem;">
-                    Celular
-                  </div>
-                  <div class="overIonInput">
-                    <ion-input placeholder="Celular" type="phone" name="celular" pattern="^[0-9]{9,10}$" #celular
-                      [(ngModel)]="myData.celular" required clearOnEdit></ion-input>
-                  </div>
-                </ion-col>
-              </ion-row>
-              <!-- 
+                    <div class="overIonInput">
+                      <ion-input placeholder="email" type="email" name="email"
+                        pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" #email [(ngModel)]="myData.email"
+                        required style="font-size: 0.7rem;" clearOnEdit></ion-input>
+                    </div>
+                  </ion-col>
+                  <ion-col size="6" class="columnaDoble">
+                    <div style="color: var(--ion-color-primary); font-size: 0.6rem;">
+                      Celular
+                    </div>
+                    <div class="overIonInput">
+                      <ion-input placeholder="Celular" type="phone" name="celular" pattern="^[0-9]{9,10}$" #celular
+                        [(ngModel)]="myData.celular" required clearOnEdit></ion-input>
+                    </div>
+                  </ion-col>
+                </ion-row>
+                <!-- 
               <ion-row>
                 <ion-col size="6" class="columnaDoble">
                   <div  style="color: var(--ion-color-primary); font-size: 0.6rem;">Teléfono</div >
@@ -218,29 +222,29 @@
                 </ion-col>
               </ion-row> -->
 
-              <ion-row>
-                <ion-col size="6" class="columnaDoble">
-                  <!-- <div class="overIonInput">
+                <ion-row>
+                  <ion-col size="6" class="columnaDoble">
+                    <!-- <div class="overIonInput">
                     <ion-input  placeholder="Región" type="text" name="region" minlength="3"
                       #region [(ngModel)]="myData.region" required></ion-input>
                   </div> -->
 
-                  <div style="color: var(--ion-color-primary); font-size: 0.6rem;">
-                    Región
-                  </div>
+                    <div style="color: var(--ion-color-primary); font-size: 0.6rem;">
+                      Región
+                    </div>
 
-                  <ion-select interface="popover" [interfaceOptions]="regionOptions"
-                    class="ion-no-padding ion-no-margin" multiple="false" placeholder="Seleccione Región"
-                    cancel-text="Cancelar" [(ngModel)]="myData.region" #region name="region"
-                    (ionChange)="cambioDeRegion()" required [disabled]="loading">
-                    <ion-select-option *ngFor="let region of regionesAll" value="{{region.codigo}}">
-                      {{region.descripcion}}
-                    </ion-select-option>
-                  </ion-select>
+                    <ion-select interface="popover" [interfaceOptions]="regionOptions"
+                      class="ion-no-padding ion-no-margin" multiple="false" placeholder="Seleccione Región"
+                      cancel-text="Cancelar" [(ngModel)]="myData.region" #region name="region"
+                      (ionChange)="cambioDeRegion()" required [disabled]="loading">
+                      <ion-select-option *ngFor="let region of regionesAll" value="{{region.codigo}}">
+                        {{region.descripcion}}
+                      </ion-select-option>
+                    </ion-select>
 
 
-                  <!-- div opciones -->
-                  <!-- <div style="
+                    <!-- div opciones -->
+                    <!-- <div style="
                                         position: absolute;
                                         width: 100%;
                                         height: 5rem;
@@ -280,47 +284,42 @@
 
 
 
-                </ion-col>
-                <ion-col size="6" class="columnaDoble">
-                  <!-- <div class="overIonInput">
+                  </ion-col>
+                  <ion-col size="6" class="columnaDoble">
+                    <!-- <div class="overIonInput">
                   <ion-input  placeholder="Ciudad" type="text" name="ciudad" minlength="3"
                   #ciudad [(ngModel)]="myData.ciudad" required></ion-input>
                 </div> -->
-                  <div style="color: var(--ion-color-primary); font-size: 0.6rem;">
-                    Ciudad / Comuna
-                  </div>
+                    <div style="color: var(--ion-color-primary); font-size: 0.6rem;">
+                      Ciudad / Comuna
+                    </div>
 
-                  <ion-select interface="popover" [interfaceOptions]="cityOptions" class="ion-no-padding ion-no-margin"
-                    multiple="false" placeholder="Seleccione Ciudad" cancel-text="Cancelar" [(ngModel)]="myData.ciudad"
-                    #ciudad name="ciudad" required [disabled]="loading|| !this.myData.region">
-                    <ion-select-option *ngFor="let ciudades of ciudadesEspecificas" value="{{ciudades.codigo}}">
-                      {{ciudades.nombre}}
-                    </ion-select-option>
-                  </ion-select>
-                </ion-col>
-              </ion-row>
+                    <ion-select interface="popover" [interfaceOptions]="cityOptions"
+                      class="ion-no-padding ion-no-margin" multiple="false" placeholder="Seleccione Ciudad"
+                      cancel-text="Cancelar" [(ngModel)]="myData.ciudad" #ciudad name="ciudad" required
+                      [disabled]="loading|| !this.myData.region">
+                      <ion-select-option *ngFor="let ciudades of ciudadesEspecificas" value="{{ciudades.codigo}}">
+                        {{ciudades.nombre}}
+                      </ion-select-option>
+                    </ion-select>
+                  </ion-col>
+                </ion-row>
 
-              <ion-row>
-                <ion-col size="12" style="margin-top: 2vh; margin-bottom: 2vh;">
-                  <input type="button" class="ingresar" value="Guardar cambios" type="submit"
-                    *ngIf="!pageMyDataAsRegister" />
-                  <input type="button" class="ingresar" value="Registrarse" type="submit"
-                    *ngIf="pageMyDataAsRegister" />
-                </ion-col>
-              </ion-row>
-            </form>
+                <ion-row>
+                  <ion-col size="12" style="margin-top: 2vh; margin-bottom: 2vh;">
+                    <input type="button" class="ingresar" value="Guardar cambios" type="submit"
+                      *ngIf="!pageMyDataAsRegister" />
+                    <input type="button" class="ingresar" value="Registrarse" type="submit"
+                      *ngIf="pageMyDataAsRegister" />
+                  </ion-col>
+                </ion-row>
+              </form>
+            </div>
           </ion-col>
         </ion-row>
       </ion-grid>
     </div>
   </div>
-
-  <div class="myPage">
-    <div class="myBox" (clickOutside)="onClickedOutside($event)" *ngIf="showBox">
-      Click outside this box to hide
-    </div>
-  </div>
-
 
 
 </ion-content>
