@@ -106,6 +106,22 @@ const routes: Routes = [
     path: 'ticket-management',
     loadChildren: () => import('./pages/ticket-management/ticket-management.module').then( m => m.TicketManagementPageModule)
   },
+  {
+    path: 'special-trip',
+    loadChildren: () => import('./pages/special-trip/special-trip.module').then( m => m.SpecialTripPageModule)
+  },
+  {
+    path: 'current-account',
+    loadChildren: () => import('./pages/current-account/current-account.module').then( m => m.CurrentAccountPageModule)
+  },
+  {
+    path: 'pullman-pass',
+    loadChildren: () => import('./pages/pullman-pass/pullman-pass.module').then( m => m.PullmanPassPageModule)
+  },
+  {
+    path: 'destinations-of-the-month',
+    loadChildren: () => import('./pages/destinations-of-the-month/destinations-of-the-month.module').then( m => m.DestinationsOfTheMonthPageModule)
+  },
 
 
 

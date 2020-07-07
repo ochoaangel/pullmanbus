@@ -7,7 +7,6 @@ import { PopoverController } from '@ionic/angular';
 import { PopMenuComponent } from 'src/app/components/pop-menu/pop-menu.component';
 import { PopCartComponent } from 'src/app/components/pop-cart/pop-cart.component';
 
-
 @Component({
   selector: 'app-ticket-management',
   templateUrl: './ticket-management.page.html',
@@ -66,7 +65,6 @@ export class TicketManagementPage implements OnInit {
           'alert',
           'El usuario debe haber Iniciado Sesión'
         );
-
       }
     });
   }

@@ -1,0 +1,96 @@
+<ion-header no-border>
+
+  <div class="cabeceraGeneral">
+
+    <div style="display: inline; width: 5%;"></div>
+
+    <div style="display: inline; width: 10%;border-color: white; border: solid 1px;margin: 5px;">Es</div>
+
+    <div style="width: 60%; height: 100%; display: flex; align-items: center; justify-content: center;">
+      <img src="assets/images/titulo.png" style="height: 90%;object-fit: scale-down;position: relative; z-index: 10; ">
+    </div>
+
+    <div style="display: inline; width: 10%;">
+      <ion-icon name="md-cart" style="font-size: 25px;padding-top: 5px;"></ion-icon>
+    </div>
+
+    <div style="display: inline; width: 10%">
+      <ion-icon name="md-menu" style="font-size: 25px;padding-top: 5px;"></ion-icon>
+    </div>
+
+    <div style="display: inline; width: 5%;"></div>
+
+  </div>
+
+  <div class="cabeceraTitulo">
+    Preguntas Frecuentes
+  </div>
+
+</ion-header>
+
+<ion-content style="width: 100%;height: 100%;">
+  <div style=" height: 100%; background-color: white ; ">
+    <ion-grid class=" ion-no-padding ion-no-margin" style="height: 100%;">
+      <ion-row class=" ion-no-padding  ion-no-margin ion-justify-content-center" style="height: 100%">
+        <ion-col class=" ion-no-padding ion-no-margin" size="12" style="background-color: whitesmoke;">
+
+          <div *ngIf="all">
+            <div *ngFor="let item of all; let i=index"
+              style="width: 100%; display: flex; flex-direction: column;padding: 0.1rem 0;">
+
+              <!-- azul -->
+              <div (click)="clickItem(i)"
+                style="background-color: var(--ion-color-secondary); padding: 0.5rem; display: flex; align-items: center; flex-direction: row; margin: 0 1rem;padding: 0.5rem 1rem;">
+                <div style="color: white; width: 100%; display: flex; flex-direction: column;">
+                  <div style="font-size: 1.1rem;text-transform: uppercase;">{{item.titulo}}</div>
+                </div>
+                <ion-icon style="color: white;zoom: 1.5;" slot="end" name="add"></ion-icon>
+              </div>
+
+              <!-- detalles -->
+              <div class="animated fadeIn" *ngIf="item.show"
+                style="background-color: white; margin: 0 1rem; padding: 1rem;border-radius: 0 0 2rem 2rem;">
+
+                <div *ngFor="let titulo of item.detalle" style="width: 100%; padding: 0 0 5px 0;">
+
+                  <div>
+                    {{titulo.numeracion+' '+titulo.titulo}}
+                  </div>
+
+                  <div *ngFor="let info of titulo.contenido"
+                    style="font-size: 0.8rem; padding: 3px 0px 3px 20px;text-align: justify;text-indent: 0.5rem;">
+                    {{info}}
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+
+          <div *ngIf="!all"
+            style="width: 100%; height: 100%;display: flex;justify-content: center;align-items: center;">
+            <ion-spinner color="secondary" name="bubbles" style="zoom: 3;"></ion-spinner>
+          </div>
+
+
+
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+</ion-content>
+
+
+<ion-footer no-border style=" width: 100vw;background-color: var(--ion-color-primary);color: white;">
+  <div style="width: 100%; display: flex;justify-content: center;">
+
+    <ion-button slot="start" fill="clear" style="color: white; width: 50%; outline: none;" routerLink="/home">
+      <ion-icon src="assets/icon/previous.svg"></ion-icon>
+      <div style="display: inline; text-align: left ;padding-left: 10px; text-transform: none;">Regresar</div>
+    </ion-button>
+
+    <div style="width: 50%;"> </div>
+  </div>
+</ion-footer>
