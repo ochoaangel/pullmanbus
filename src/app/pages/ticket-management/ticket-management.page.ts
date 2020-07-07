@@ -46,27 +46,27 @@ export class TicketManagementPage implements OnInit {
   }
 
   ngOnInit() {
-    this.mys.checkIfExistUsuario().subscribe((res1) => {
-      if (res1) {
-        this.mys.getUser().subscribe((usuario) => {
-          this.usuario = usuario;
-          // console.log('usuario', usuario);
+    // this.mys.checkIfExistUsuario().subscribe((res1) => {
+    //   if (res1) {
+    //     this.mys.getUser().subscribe((usuario) => {
+    //       this.usuario = usuario;
+    //       // console.log('usuario', usuario);
 
-          this.myData.rut = this.usuario.usuario.rut;
-          // this.myData.ruti = this.usuario.usuario.rut
-          this.myData.email = this.usuario.usuario.email;
-          // this.myData.emaili = this.usuario.usuario.email
-        });
-      } else {
-        console.warn('no hay  usuario registrado');
-        this.router.navigateByUrl('/home');
-        this.mys.alertShow(
-          'Error!!',
-          'alert',
-          'El usuario debe haber Iniciado Sesión'
-        );
-      }
-    });
+    //       this.myData.rut = this.usuario.usuario.rut;
+    //       // this.myData.ruti = this.usuario.usuario.rut
+    //       this.myData.email = this.usuario.usuario.email;
+    //       // this.myData.emaili = this.usuario.usuario.email
+    //     });
+    //   } else {
+    //     console.warn('no hay  usuario registrado');
+    //     this.router.navigateByUrl('/home');
+    //     this.mys.alertShow(
+    //       'Error!!',
+    //       'alert',
+    //       'El usuario debe haber Iniciado Sesión'
+    //     );
+    //   }
+    // });
   }
 
   consultar() {

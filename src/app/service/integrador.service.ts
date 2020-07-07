@@ -261,6 +261,13 @@ export class IntegradorService {
         return this.http.post<any[]>(urlFinal, params);
     }
 
+    guardarSolicitud(params: any): Observable<any[]> {
+        let urlFinal;
+        let dirProxy = '/srv-privado-web/rest/compra/guardarSolicitudServicio';
+        this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy;
+        return this.http.post<any[]>(urlFinal, params);
+    }
+
 
     ///////////////////////////////////////////////////////////////////////////////////////
     // OTROS
