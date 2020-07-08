@@ -280,6 +280,13 @@ export class IntegradorService {
         return this.http.get<any[]>(urlFinal);
     }
 
+    enviarContacto(params): Observable<any[]> {
+        let urlFinal;
+        let dirProxy = '/srv-privado-web/rest/usuario/enviarContacto';
+        this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy;
+        return this.http.post<any>(urlFinal, params);
+    }
+
     getAgencies(): Observable<any[]> {
         let urlFinal = `http://servicios.pullmanbus.cl/serviciosVenta/rest/Servicios/datosAgencia/codciudad=13101420`;
         return this.http.get<any[]>(urlFinal);

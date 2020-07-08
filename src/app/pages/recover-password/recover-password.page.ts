@@ -43,7 +43,7 @@ export class RecoverPasswordPage implements OnInit {
       });
 
     } else {
-      this.mys.alertShow('Verifique!!', 'alert', 'Verifique que el email sea v�lido.. <br>Intente de nuevo..');
+      this.mys.alertShow('Verifique!!', 'alert', 'Verifique que el email sea válido.. <br>Intente de nuevo..');
     }
   }
 

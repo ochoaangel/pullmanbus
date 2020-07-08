@@ -122,6 +122,10 @@ const routes: Routes = [
     path: 'destinations-of-the-month',
     loadChildren: () => import('./pages/destinations-of-the-month/destinations-of-the-month.module').then( m => m.DestinationsOfTheMonthPageModule)
   },
+  {
+    path: 'contact-form',
+    loadChildren: () => import('./pages/contact-form/contact-form.module').then( m => m.ContactFormPageModule)
+  },
 
 
 

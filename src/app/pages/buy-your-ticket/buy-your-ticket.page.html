@@ -86,7 +86,7 @@
               <div *ngIf="promociones && promociones.length>0" style="background-color: transparent;">
                 <ion-slides mode="ios">
                   <ion-slide *ngFor="let promo of promociones">
-                    <div style="width: 100%; display: flex; flex-direction: row;">
+                    <div style="width: 100%; display: flex; flex-direction: row;max-height: 150px;">
                       <!-- <div style="width: 50%;border-radius: 0.5rem 0 0 0.5rem;"> -->
                       <img src="{{promo.urlImagen}}" alt=""
                         style="object-fit: cover;width: 50vw;border-radius: 1rem 0 0 1rem;border: 1px solid var(--ion-color-light);">
