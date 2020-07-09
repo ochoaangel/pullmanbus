@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ɵisDefaultChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { MyserviceService } from 'src/app/service/myservice.service';
 import { IntegradorService } from 'src/app/service/integrador.service';
@@ -30,15 +30,17 @@ export class PaymentMethodsPage implements OnInit {
 
     this.integradorService.getListConvenio().subscribe(convenio => {
       this.listaConvenio = convenio;
+      // console.log('----convenio----', convenio);
       this.loading -= 1
     })
 
     this.datosConvenio = null;
     this.integradorService.getListMedioPago().subscribe(medioPago => {
+      // console.log('----medioPago----', medioPago);
       this.loading -= 1
       medioPago.Convenio.forEach(pago => {
         if (pago.BotonPago == 'SI') {
-          pago.Imagen = pago.Imagen != "" ? "data:image/jpeg;base64," + pago.Imagen : "";
+          pago.Imagen = pago.Imagen != '' ? 'data:image/jpeg;base64,' + pago.Imagen : '';
           this.listaMedioPago.push(pago);
         }
       })
@@ -143,7 +145,7 @@ export class PaymentMethodsPage implements OnInit {
       this.DatosFormulario.convenioDown = 'WBPAY';
     }
     this.loading += 1
-    this.integradorService.getDetalleConvenio({ "convenio": convenio }).subscribe(detalleConvenio => {
+    this.integradorService.getDetalleConvenio({ 'convenio': convenio }).subscribe(detalleConvenio => {
       this.loading -= 1
       this.listaDetalleConvenio = detalleConvenio;
       this.listaDetalleConvenio.forEach(item => {
@@ -156,10 +158,10 @@ export class PaymentMethodsPage implements OnInit {
   seleccionadoMedioPago(medioPago) {
     this.DatosFormulario.convenioDown = medioPago;
     if (this.DatosFormulario.convenioDown === 'BCNSD') {
-      this.DatosFormulario.convenioUp = "";
+      this.DatosFormulario.convenioUp = '';
       this.seleccionadoConvenioUp(medioPago);
     } else {
-      if (this.DatosFormulario.convenioUp == undefined || this.DatosFormulario.convenioUp === "") {
+      if (this.DatosFormulario.convenioUp == undefined || this.DatosFormulario.convenioUp === '') {
         this.totalFinal = this.mys.total;
         this.mostrarTarifaAtachada = false;
         this.listaDetalleConvenio = [];
@@ -183,9 +185,9 @@ export class PaymentMethodsPage implements OnInit {
       // this.mys.alertShow('¡Verifique!', 'alert', 'Todo correcto');
       let guardarTransaccion = {
         email: this.DatosFormulario.email,
-        rut: this.DatosFormulario.rut,
+        rut: this.DatosFormulario.rut.replace(/\./g, ''),
         medioDePago: this.DatosFormulario.convenioDown,
-        puntoVenta: "PUL",
+        puntoVenta: 'PUL',
         montoTotal: this.totalFinal,
 
         idSistema: 5,
@@ -194,7 +196,7 @@ export class PaymentMethodsPage implements OnInit {
       this.mys.ticket.comprasDetalles.forEach(boleto => {
         let valor;
         if (this.datosConvenio != null && this.datosConvenio.mensaje == 'OK') {
-          let fecha = boleto.service.fechaSalida.split("/");
+          let fecha = boleto.service.fechaSalida.split('/');
           valor = this.datosConvenio.listaBoleto.find(boleto2 =>
             boleto.service.idServicio == boleto2.idServicio &&
             boleto.asiento == boleto2.asiento &&
@@ -215,18 +217,19 @@ export class PaymentMethodsPage implements OnInit {
           precio: valor ? valor.pago : boleto.valor,
           descuento: valor ? valor.descuento : 0,
           empresa: boleto.service.empresa,
-          clase: boleto.piso == "1" ? boleto.service.idClaseBusPisoUno : boleto.service.idClaseBusPisoDos,
-          convenio: this.datosConvenio != null ? this.datosConvenio.idConvenio : "",
-          datoConvenio: this.datosConvenio != null ? this.datosConvenio.listaAtributo[0].valor : "",
-          bus: boleto.piso == "1" ? boleto.service.busPiso1 : boleto.service.busPiso2,
+          clase: boleto.piso == '1' ? boleto.service.idClaseBusPisoUno : boleto.service.idClaseBusPisoDos,
+          convenio: this.datosConvenio != null ? this.datosConvenio.idConvenio : '',
+          datoConvenio: this.datosConvenio != null ? this.datosConvenio.listaAtributo[0].valor : '',
+          bus: boleto.piso == '1' ? boleto.service.busPiso1 : boleto.service.busPiso2,
           piso: boleto.piso,
           integrador: boleto.service.integrador
         });
       })
       this.loading += 1
 
+      console.log('guardarTransaccion', guardarTransaccion);
       this.integradorService.guardarTransaccion(guardarTransaccion).subscribe(resp => {
-        //console.log('resp', resp);
+        console.log('respuesta de "guardarTransacción"', resp);
         this.loading -= 1
         let valor: any = resp;
         if (valor.exito) {
@@ -239,15 +242,15 @@ export class PaymentMethodsPage implements OnInit {
     }
 
     function formularioTBKWS(urltbk, token) {
-      var f = document.createElement("form");
-      f.setAttribute('method', "post");
+      var f = document.createElement('form');
+      f.setAttribute('method', 'post');
       f.setAttribute('action', urltbk);
-      var i = document.createElement("input");
-      i.setAttribute('type', "text");
-      i.setAttribute('name', "TBK_TOKEN");
-      i.setAttribute("value", token);
+      var i = document.createElement('input');
+      i.setAttribute('type', 'text');
+      i.setAttribute('name', 'TBK_TOKEN');
+      i.setAttribute('value', token);
       f.appendChild(i.cloneNode());
-      f.style.display = "none";
+      f.style.display = 'none';
       document.body.appendChild(f);
       f.submit();
       document.body.removeChild(f);
@@ -302,7 +305,7 @@ export class PaymentMethodsPage implements OnInit {
     let numbers = rawValue.match(/\d/g);
     let numberLength = 0;
     if (numbers) {
-      numberLength = numbers.join("").length;
+      numberLength = numbers.join('').length;
     }
     if (numberLength > 8) {
       return [/[1-9]/, /[1-9]/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/];
@@ -315,7 +318,7 @@ export class PaymentMethodsPage implements OnInit {
     let numbers = rawValue.match(/\d/g);
     let numberLength = 0;
     if (numbers) {
-      numberLength = numbers.join("").length;
+      numberLength = numbers.join('').length;
     }
 
     if (numberLength > 10) {
@@ -327,35 +330,35 @@ export class PaymentMethodsPage implements OnInit {
 
   validarDatosConvenio() {
     let validarConvenio = {
-      "descuento": "0"
-      , "idConvenio": this.listaDetalleConvenio[0].Convenio
-      , "listaAtributo": []
-      , "listaBoleto": []
-      , "mensaje": ""
-      , "montoTotal": "0"
-      , "totalApagar": "0"
+      'descuento': '0'
+      , 'idConvenio': this.listaDetalleConvenio[0].Convenio
+      , 'listaAtributo': []
+      , 'listaBoleto': []
+      , 'mensaje': ''
+      , 'montoTotal': '0'
+      , 'totalApagar': '0'
     };
     let re = /\./gi;
     this.listaDetalleConvenio.forEach(item => {
-      validarConvenio.listaAtributo.push({ "idCampo": item.Placeholder.trim(), "valor": item.Valor.replace(re, '') });
+      validarConvenio.listaAtributo.push({ 'idCampo': item.Placeholder.trim(), 'valor': item.Valor.replace(re, '') });
     })
 
     this.mys.ticket.comprasDetalles.forEach(boleto => {
-      let fecha = boleto.service.fechaSalida.split("/");
+      let fecha = boleto.service.fechaSalida.split('/');
       validarConvenio.listaBoleto.push({
-        "clase": boleto.piso == 1 ? boleto.service.idClaseBusPisoUno : boleto.service.idClaseBusPisoDos
-        , "descuento": ""
-        , "destino": boleto.service.idTerminalDestino
-        , "fechaSalida": fecha[2] + fecha[1] + fecha[0]
-        , "idServicio": boleto.idServicio
-        , "origen": boleto.service.idTerminalOrigen
-        , "pago": boleto.valor
-        , "piso": boleto.piso
-        , "valor": boleto.valor
-        , "asiento": boleto.asiento
-        , "promocion": "0"
+        'clase': boleto.piso == 1 ? boleto.service.idClaseBusPisoUno : boleto.service.idClaseBusPisoDos
+        , 'descuento': ''
+        , 'destino': boleto.service.idTerminalDestino
+        , 'fechaSalida': fecha[2] + fecha[1] + fecha[0]
+        , 'idServicio': boleto.idServicio
+        , 'origen': boleto.service.idTerminalOrigen
+        , 'pago': boleto.valor
+        , 'piso': boleto.piso
+        , 'valor': boleto.valor
+        , 'asiento': boleto.asiento
+        , 'promocion': '0'
       });
-      validarConvenio.totalApagar = Number(validarConvenio.totalApagar) + Number(boleto.valor) + "";
+      validarConvenio.totalApagar = Number(validarConvenio.totalApagar) + Number(boleto.valor) + '';
     });
     validarConvenio.montoTotal = validarConvenio.totalApagar;
     this.loading += 1
@@ -380,7 +383,7 @@ export class PaymentMethodsPage implements OnInit {
       event,
       mode: 'ios',
       backdropDismiss: true,
-      cssClass: "popMenu"
+      cssClass: 'popMenu'
     });
     await popoverMenu.present();
 
@@ -405,7 +408,7 @@ export class PaymentMethodsPage implements OnInit {
       event,
       mode: 'ios',
       backdropDismiss: true,
-      cssClass: "popCart"
+      cssClass: 'popCart'
     });
     await popoverCart.present();
 
@@ -420,3 +423,4 @@ export class PaymentMethodsPage implements OnInit {
 
 
 }
+
