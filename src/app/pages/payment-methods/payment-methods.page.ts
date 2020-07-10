@@ -16,7 +16,7 @@ export class PaymentMethodsPage implements OnInit {
   listaMedioPago = [];
   listaDetalleConvenio = [];
   datosConvenio: any;
-  loading
+  loading;
   // rutShow = false
 
   constructor(private router: Router,
@@ -25,26 +25,26 @@ export class PaymentMethodsPage implements OnInit {
     private mys: MyserviceService
 
   ) {
-    this.loading = 2
+    this.loading = 2;
 
 
     this.integradorService.getListConvenio().subscribe(convenio => {
       this.listaConvenio = convenio;
       // console.log('----convenio----', convenio);
-      this.loading -= 1
-    })
+      this.loading -= 1;
+    });
 
     this.datosConvenio = null;
     this.integradorService.getListMedioPago().subscribe(medioPago => {
       // console.log('----medioPago----', medioPago);
-      this.loading -= 1
+      this.loading -= 1;
       medioPago.Convenio.forEach(pago => {
         if (pago.BotonPago == 'SI') {
           pago.Imagen = pago.Imagen != '' ? 'data:image/jpeg;base64,' + pago.Imagen : '';
           this.listaMedioPago.push(pago);
         }
-      })
-    })
+      });
+    });
   }
 
   mostrarTarifaAtachada = false;
@@ -52,10 +52,10 @@ export class PaymentMethodsPage implements OnInit {
   totalSinDscto: number;
   totalFinal: number;
 
-  acuerdo = { acuerdo: false }
-  ticket
-  usuario
-  registrado: boolean
+  acuerdo = { acuerdo: false };
+  ticket;
+  usuario;
+  registrado: boolean;
 
   DatosFormulario = {
     convenioUp: null,
@@ -72,7 +72,7 @@ export class PaymentMethodsPage implements OnInit {
     email2: null,
     v_email2: false,
     validandoConRut: false
-  }
+  };
 
   public maskCodigo = {
     guide: false,
@@ -92,40 +92,40 @@ export class PaymentMethodsPage implements OnInit {
       //console.log('usuario', usuario);
       if (usuario) {
         //console.log('usuario Registrado');
-        this.usuario = usuario
-        this.registrado = true
+        this.usuario = usuario;
+        this.registrado = true;
 
-        this.DatosFormulario.rut = this.usuario.usuario.rut
-        this.DatosFormulario.telefono = this.usuario.usuario.telefono
-        this.DatosFormulario.email = this.usuario.usuario.email
-        this.DatosFormulario.email2 = this.usuario.usuario.email
+        this.DatosFormulario.rut = this.usuario.usuario.rut;
+        this.DatosFormulario.telefono = this.usuario.usuario.telefono;
+        this.DatosFormulario.email = this.usuario.usuario.email;
+        this.DatosFormulario.email2 = this.usuario.usuario.email;
 
 
 
 
       } else {
         //console.log('usuario NO registrado');
-        this.usuario = null
-        this.registrado = false
+        this.usuario = null;
+        this.registrado = false;
       }
       //console.log('registrado', this.registrado);
-    })
+    });
 
 
 
 
-    let info = localStorage.getItem('ticket')
+    let info = localStorage.getItem('ticket');
     if (info) {
-      this.totalFinal = JSON.parse(localStorage.getItem('totalFinal'))
-      this.ticket = JSON.parse(localStorage.getItem('ticket'))
-      this.mys.total = this.totalFinal
-      this.mys.ticket = this.ticket
+      this.totalFinal = JSON.parse(localStorage.getItem('totalFinal'));
+      this.ticket = JSON.parse(localStorage.getItem('ticket'));
+      this.mys.total = this.totalFinal;
+      this.mys.ticket = this.ticket;
       //console.log('Leido del Storage');
     } else {
       this.totalFinal = this.mys.total;
       this.ticket = this.mys.ticket;
-      localStorage.setItem('totalFinal', JSON.stringify(this.totalFinal))
-      localStorage.setItem('ticket', JSON.stringify(this.ticket))
+      localStorage.setItem('totalFinal', JSON.stringify(this.totalFinal));
+      localStorage.setItem('ticket', JSON.stringify(this.ticket));
       //console.log('Guardado en el localStorage');
     }
 
@@ -144,15 +144,15 @@ export class PaymentMethodsPage implements OnInit {
     if (convenio != 'BCNSD') {
       this.DatosFormulario.convenioDown = 'WBPAY';
     }
-    this.loading += 1
+    this.loading += 1;
     this.integradorService.getDetalleConvenio({ 'convenio': convenio }).subscribe(detalleConvenio => {
-      this.loading -= 1
+      this.loading -= 1;
       this.listaDetalleConvenio = detalleConvenio;
       this.listaDetalleConvenio.forEach(item => {
         item.Placeholder = item.Valor;
       });
 
-    }, erro => this.loading -= 1)
+    }, erro => this.loading -= 1);
   }
 
   seleccionadoMedioPago(medioPago) {
@@ -192,7 +192,7 @@ export class PaymentMethodsPage implements OnInit {
 
         idSistema: 5,
         listaCarrito: []
-      }
+      };
       this.mys.ticket.comprasDetalles.forEach(boleto => {
         let valor;
         if (this.datosConvenio != null && this.datosConvenio.mensaje == 'OK') {
@@ -224,20 +224,20 @@ export class PaymentMethodsPage implements OnInit {
           piso: boleto.piso,
           integrador: boleto.service.integrador
         });
-      })
-      this.loading += 1
+      });
+      this.loading += 1;
 
       console.log('guardarTransaccion', guardarTransaccion);
       this.integradorService.guardarTransaccion(guardarTransaccion).subscribe(resp => {
         console.log('respuesta de "guardarTransacción"', resp);
-        this.loading -= 1
+        this.loading -= 1;
         let valor: any = resp;
         if (valor.exito) {
           formularioTBKWS(valor.url, valor.token);
         } else {
           this.mys.alertShow('¡Verifique!', 'alert', valor.mensaje || 'Error, Verifique los datos ingresados..');
         }
-      })
+      });
       //this.router.navigateByUrl('/transaction-voucher')
     }
 
@@ -258,7 +258,7 @@ export class PaymentMethodsPage implements OnInit {
   }
 
   aceptarAcuerdo() {
-    if (this.acuerdo.acuerdo) { this.DatosFormulario.acuerdo = true } else { this.DatosFormulario.acuerdo = false }
+    if (this.acuerdo.acuerdo) { this.DatosFormulario.acuerdo = true; } else { this.DatosFormulario.acuerdo = false; }
   }
 
   setFocus(siguiente) {
@@ -339,9 +339,10 @@ export class PaymentMethodsPage implements OnInit {
       , 'totalApagar': '0'
     };
     let re = /\./gi;
+    console.log('listaDetalleConvenio', this.listaDetalleConvenio);
     this.listaDetalleConvenio.forEach(item => {
       validarConvenio.listaAtributo.push({ 'idCampo': item.Placeholder.trim(), 'valor': item.Valor.replace(re, '') });
-    })
+    });
 
     this.mys.ticket.comprasDetalles.forEach(boleto => {
       let fecha = boleto.service.fechaSalida.split('/');
@@ -361,9 +362,14 @@ export class PaymentMethodsPage implements OnInit {
       validarConvenio.totalApagar = Number(validarConvenio.totalApagar) + Number(boleto.valor) + '';
     });
     validarConvenio.montoTotal = validarConvenio.totalApagar;
-    this.loading += 1
+    this.loading += 1;
+
+    console.log('data para getDescuentoConvenio', validarConvenio);
     this.integradorService.getDescuentoConvenio(validarConvenio).subscribe(data => {
-      this.loading -= 1
+
+      console.log('data de getDescuentoConvenio', data);
+
+      this.loading -= 1;
       this.datosConvenio = data;
 
       if (this.datosConvenio.mensaje == 'OK') {
@@ -373,8 +379,8 @@ export class PaymentMethodsPage implements OnInit {
       } else {
         this.datosConvenio = null;
       }
-    }, error => this.loading -= 1)
-  };
+    }, error => this.loading -= 1);
+  }
 
   async popMenu(event) {
     //console.log('event', event);
@@ -393,7 +399,7 @@ export class PaymentMethodsPage implements OnInit {
       if (data.destino === '/login') {
         this.mys.checkIfExistUsuario().subscribe(exist => {
           exist ? this.router.navigateByUrl('/user-panel') : this.router.navigateByUrl('/login');
-        })
+        });
       } else {
         this.router.navigateByUrl(data.destino);
       }
@@ -402,7 +408,7 @@ export class PaymentMethodsPage implements OnInit {
   }
 
   async popCart(event) {
-    this.mys.temporalComprasCarrito = this.mys.ticket.comprasDetalles
+    this.mys.temporalComprasCarrito = this.mys.ticket.comprasDetalles;
     const popoverCart = await this.popoverCtrl.create({
       component: PopCartComponent,
       event,
@@ -418,9 +424,18 @@ export class PaymentMethodsPage implements OnInit {
   }
 
   irAterminos() {
-    this.router.navigateByUrl('/terms-conditions')
+    this.router.navigateByUrl('/terms-conditions');
   }
 
 
 }
+
+
+
+
+
+
+
+
+
 

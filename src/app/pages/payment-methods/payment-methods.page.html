@@ -99,26 +99,39 @@
 
 
 
-            <div *ngIf="listaDetalleConvenio.length > 0 ">
+            <div class="animated fadeIn" *ngIf="listaDetalleConvenio.length > 0 ">
 
               <!-- input con convenio -->
               <div style="text-align: center; display: flex;" *ngFor="let input of listaDetalleConvenio">
                 <div *ngIf="(input.Estado == 'ACT' && input.VisibleUsr == 'SI' && input.TipoDato == 'ETIQUETA')"
-                  style="width: 100%; display: flex; justify-content: center; align-items: center;">
+                  style="width: 100%; display: flex; justify-content: center; align-items: center;padding: 0.5rem 15vw;">
+
                   <input type="text" [textMask]="{mask:rutFunction,guide:false}" [(ngModel)]="DatosFormulario.rut"
                     name="input.Valor" #input_rut (keypress)="tecleado($event)" placeholder="{{input.Valor}}"
-                    [disabled]="registrado">
+                    style="text-align: center;">
+
+                  <!-- <ion-input type="text" [textMask]="{mask:rutFunction,guide:false}" [(ngModel)]="DatosFormulario.rut"
+                    name="input.Valor" #input_rut (keypress)="tecleado($event)" placeholder="{{input.Valor}}"
+                    clearInput="true">
+                  </ion-input> -->
+
+
+
+
                   <!-- <input type="text" [textMask]={mask:rutFunction,guide:false} [(ngModel)]="input.Valor"
                     name="input.Valor" #input_rut (keypress)="tecleado($event)" placeholder="{{input.Valor}}"> -->
+
                 </div>
               </div>
 
               <!-- boton Validar -->
               <div style="width: 100%; display: flex; justify-content: center; align-items: center;">
-                <ion-button (click)="validarDatosConvenio()" [disabled]='registrado'
+
+                <ion-button (click)="validarDatosConvenio()"
                   style="color: white;  width:100% ;padding: 0 3vw; outline: none; text-transform: none;--background: var(--ion-color-primary);">
-                  Validar
+                  Validar RUT
                 </ion-button>
+
               </div>
 
             </div>
@@ -140,7 +153,7 @@
             </div>
 
             <!-- 6ta fila -->
-            <div
+            <!-- <div
               style="text-align: center;display: flex; flex-direction: row; align-items: center;align-items: center;">
               <div style=" width: 35%;">
                 <input style="text-align: center; margin: 0.8vh 0vw 0.8vh 3vw; font-size: 0.8rem;"
@@ -153,22 +166,30 @@
                   (keypress)="tecleado($event)" (keyup.enter)="setFocus('email')" [disabled]="registrado"
                   #input_telefono>
               </div>
-            </div>
+            </div> -->
 
             <!-- 7ma fila -->
-            <div style="text-align: center;">
-              <input type="email" placeholder="E-mail" [(ngModel)]="DatosFormulario.email" name="email" #input_email
-                (keypress)="tecleado($event)" (keyup.enter)="setFocus('email2')" [disabled]="registrado">
+            <div style="text-align: center;padding: 0.5rem 15vw;">
+
+              <ion-input type="email" placeholder="E-mail" [(ngModel)]="DatosFormulario.email" name="email" #input_email
+                (keypress)="tecleado($event)" (keyup.enter)="setFocus('email2')" clearOnEdit="true" clearInput="true">
+              </ion-input>
+
+              <!-- <input type="email" placeholder="E-mail" [(ngModel)]="DatosFormulario.email" name="email" #input_email
+                (keypress)="tecleado($event)" (keyup.enter)="setFocus('email2')"> -->
             </div>
 
             <!-- 8va fila -->
-            <div style="text-align: center;">
-              <input type="email" placeholder="Re-ingresar" [(ngModel)]="DatosFormulario.email2" name="email2"
-                #input_email2 (keypress)="tecleado($event)" [disabled]="registrado">
+            <div style="text-align: center;padding: 0.5rem 15vw;">
+
+              <ion-input type="email" placeholder="Re-ingresar" [(ngModel)]="DatosFormulario.email2" name="email2"
+                #input_email2 (keypress)="tecleado($event)" clearOnEdit="true" clearInput="true">
+              </ion-input>
+
             </div>
 
             <!-- 9na fila -->
-            <div style="text-align: center;">
+            <div style=" text-align: center;">
               <h2 *ngIf="mostrarTarifaAtachada" style="text-decoration:line-through;color: red;">
                 Total: ${{totalSinDscto.toLocaleString('de-DE') }}</h2>
               <h2>Total: ${{totalFinal.toLocaleString('de-DE') }}</h2>
