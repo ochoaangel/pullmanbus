@@ -98,7 +98,8 @@ export class PaymentMethodsPage implements OnInit {
         this.DatosFormulario.rut = this.usuario.usuario.rut;
         this.DatosFormulario.telefono = this.usuario.usuario.telefono;
         this.DatosFormulario.email = this.usuario.usuario.email;
-        this.DatosFormulario.email2 = this.usuario.usuario.email;
+        // this.DatosFormulario.email2 = this.usuario.usuario.email;
+        this.DatosFormulario.email2 = '';
 
 
 
@@ -175,7 +176,7 @@ export class PaymentMethodsPage implements OnInit {
       this.mys.alertShow('¡Verifique!', 'alert', 'Debe ingresar un email válido para continuar con el pago');
     } else if (!this.DatosFormulario.email2) {
       this.mys.alertShow('¡Verifique!', 'alert', 'Debe re-ingresar un email válido para continuar con el pago');
-    } else if (this.DatosFormulario.email !== this.DatosFormulario.email) {
+    } else if (this.DatosFormulario.email.toLowerCase() !== this.DatosFormulario.email2.toLowerCase()) {
       this.mys.alertShow('¡Verifique!', 'alert', 'Verifique Los emails no coinciden, para continuar con el pago');
     } else if (!this.DatosFormulario.convenioDown) {
       this.mys.alertShow('¡Verifique!', 'alert', 'Debe seleccionar un método de pago para continuar');
@@ -264,32 +265,6 @@ export class PaymentMethodsPage implements OnInit {
   setFocus(siguiente) {
   }
 
-  tecleado($event) {
-    switch ($event.target.name) {
-      case 'rut':
-
-        break;
-      case 'codigo':
-
-        break;
-      case 'codigo':
-
-        break;
-      case 'telefono':
-
-        break;
-      case 'email':
-
-        break;
-      case 'email2':
-
-        break;
-
-      default:
-        break;
-    } // fin switch
-
-  } //fin tecleado
 
   nameMask(rawValue: string): RegExp[] {
     const mask = /[A-Za-z]/;
@@ -308,7 +283,7 @@ export class PaymentMethodsPage implements OnInit {
       numberLength = numbers.join('').length;
     }
     if (numberLength > 8) {
-      return [/[1-9]/, /[1-9]/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/];
+      return [/[1-9]/, /[0-9]/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/];
     } else {
       return [/[1-9]/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/];
     }
@@ -339,10 +314,11 @@ export class PaymentMethodsPage implements OnInit {
       , 'totalApagar': '0'
     };
     let re = /\./gi;
-    console.log('listaDetalleConvenio', this.listaDetalleConvenio);
     this.listaDetalleConvenio.forEach(item => {
-      validarConvenio.listaAtributo.push({ 'idCampo': item.Placeholder.trim(), 'valor': item.Valor.replace(re, '') });
+      // validarConvenio.listaAtributo.push({ 'idCampo': item.Placeholder.trim(), 'valor': item.Valor.replace(re, '') });
+      validarConvenio.listaAtributo.push({ 'idCampo': item.Placeholder.trim(), 'valor': this.DatosFormulario.rut.replace(re, '') });
     });
+    // console.log('listaDetalleConvenio', this.listaDetalleConvenio);
 
     this.mys.ticket.comprasDetalles.forEach(boleto => {
       let fecha = boleto.service.fechaSalida.split('/');
@@ -364,19 +340,33 @@ export class PaymentMethodsPage implements OnInit {
     validarConvenio.montoTotal = validarConvenio.totalApagar;
     this.loading += 1;
 
-    console.log('data para getDescuentoConvenio', validarConvenio);
+    // console.log('data para getDescuentoConvenio', validarConvenio);
     this.integradorService.getDescuentoConvenio(validarConvenio).subscribe(data => {
 
-      console.log('data de getDescuentoConvenio', data);
+      // console.log('data de getDescuentoConvenio', data);
+      // console.log('Mensaje Comvenio', data.mensaje);
 
       this.loading -= 1;
       this.datosConvenio = data;
 
-      if (this.datosConvenio.mensaje == 'OK') {
+      if (this.datosConvenio.mensaje && this.datosConvenio.mensaje === 'OK') {
+        this.mys.alertShow('¡Confirmado!', 'done-all', 'RUT con descuento para el convenio seleccionado.');
+
         this.totalSinDscto = this.mys.total;
         this.totalFinal = Number(this.datosConvenio.totalApagar);
         this.mostrarTarifaAtachada = true;
       } else {
+
+        switch (data.mensaje) {
+          case 'RUT SIN DESCUENTO':
+            this.mys.alertShow('¡Verifique!', 'alert', 'RUT sin descuento para el convenio seleccionado.');
+            break;
+
+          default:
+            this.mys.alertShow('¡Verifique!', 'alert', 'RUT No válido para el convenio seleccionado.');
+            break;
+        }
+
         this.datosConvenio = null;
       }
     }, error => this.loading -= 1);

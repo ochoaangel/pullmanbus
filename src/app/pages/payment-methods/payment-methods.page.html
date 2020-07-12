@@ -107,8 +107,7 @@
                   style="width: 100%; display: flex; justify-content: center; align-items: center;padding: 0.5rem 15vw;">
 
                   <input type="text" [textMask]="{mask:rutFunction,guide:false}" [(ngModel)]="DatosFormulario.rut"
-                    name="input.Valor" #input_rut (keypress)="tecleado($event)" placeholder="{{input.Valor}}"
-                    style="text-align: center;">
+                    name="input.Valor" #input_rut placeholder="{{input.Valor}}" style="text-align: center;">
 
                   <!-- <ion-input type="text" [textMask]="{mask:rutFunction,guide:false}" [(ngModel)]="DatosFormulario.rut"
                     name="input.Valor" #input_rut (keypress)="tecleado($event)" placeholder="{{input.Valor}}"
@@ -172,18 +171,18 @@
             <div style="text-align: center;padding: 0.5rem 15vw;">
 
               <ion-input type="email" placeholder="E-mail" [(ngModel)]="DatosFormulario.email" name="email" #input_email
-                (keypress)="tecleado($event)" (keyup.enter)="setFocus('email2')" clearOnEdit="true" clearInput="true">
+                (keyup.enter)="setFocus('email2')" clearOnEdit="true" clearInput="true">
               </ion-input>
 
               <!-- <input type="email" placeholder="E-mail" [(ngModel)]="DatosFormulario.email" name="email" #input_email
-                (keypress)="tecleado($event)" (keyup.enter)="setFocus('email2')"> -->
+                 (keyup.enter)="setFocus('email2')"> -->
             </div>
 
             <!-- 8va fila -->
             <div style="text-align: center;padding: 0.5rem 15vw;">
 
-              <ion-input type="email" placeholder="Re-ingresar" [(ngModel)]="DatosFormulario.email2" name="email2"
-                #input_email2 (keypress)="tecleado($event)" clearOnEdit="true" clearInput="true">
+              <ion-input type="email" placeholder="Re-ingresar correo" [(ngModel)]="DatosFormulario.email2"
+                name="email2" #input_email2 clearOnEdit="true" clearInput="true">
               </ion-input>
 
             </div>
