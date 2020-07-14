@@ -23,13 +23,13 @@ export class BuyYourTicketPage implements OnInit {
   ticket;
 
   showSelection = false;
-  mySelection = ''
+  mySelection = '';
 
   allOrigin = [];
   allDestiny = [];
 
-  myOrigin
-  myDestiny
+  myOrigin;
+  myDestiny;
 
   selectOrigin;
   selectDestiny;
@@ -57,50 +57,54 @@ export class BuyYourTicketPage implements OnInit {
 
   promociones;  // recibe colecciones
 
+  comprasDetalles = [];
+
 
   constructor(
     private httpClient: HttpClient,
     private router: Router,
-    private mys: MyserviceService,
+    public mys: MyserviceService,
     private integradorService: IntegradorService,
     private popoverCtrl: PopoverController,
     private renderer: Renderer,
-
-
-
   ) { this.loading = false; }
-  // @ViewChild('focusInput', { read: '', static: true }) myInput;
-  // @ViewChild('focusInput', { static: true }) myInput: ElementRef
-  // myInput = this.renderer.selectRootElement('focusInput');
 
   ngOnInit() {
     this.mingoDate = moment().format();
     this.maxgoDate = moment().add(1, 'y').format();
     this.minbackDate = moment().format();
     this.maxbackDate = moment().add(1, 'y').format();
-    // this.inputFiltrado = this.inputFuente
-    this.getCityOrigin()
+    this.getCityOrigin();
     this.goDate = moment().format();
+
+  }
+
+  ionViewWillEnter() {
+    this.comprasDetalles = this.mys.ticket && this.mys.ticket.comprasDetalles ? this.mys.ticket.comprasDetalles : null;
+    console.log('comprasDetalles', this.comprasDetalles);
   }
 
   getCityOrigin() {
     this.loading = true;
     this.integradorService.getCityOrigin().subscribe(data => {
       this.loading = false;
-      this.allOrigin = data
-      this.inputFuente = data
-      this.inputFiltrado = data
-    })
+      this.allOrigin = data;
+      this.inputFuente = data;
+      this.inputFiltrado = data;
+      console.log('origenes', data);
+    });
   }
 
   getCityDestination(value: string) {
     this.loading = true;
+
     this.integradorService.getCityDestination(value).subscribe(data => {
       this.loading = false;
-      this.allDestiny = data
-      this.inputFuente = data
-      this.inputFiltrado = data
-    })
+      this.allDestiny = data;
+      this.inputFuente = data;
+      this.inputFiltrado = data;
+      console.log('Destinos de ' + value + ' :', data);
+    });
   }
 
   changeOrigin(value: string) {
@@ -118,25 +122,22 @@ export class BuyYourTicketPage implements OnInit {
     this.goBack ? this.goOnly = false : this.goOnly = true;
   }
 
-  // dateChangeGo() { }
-
-  // dateChangeBack() { }
-
   noBack() { this.backDate = null; }
-
 
 
   btnSearch() {
 
     // PREPARO VARIABLES para guardarlas en el service
-    let item;
-    this.ticket = {};
+
+    // this.ticket = {};
+    this.ticket = this.mys.ticket ? this.mys.ticket : {};
+
     this.ticket['origin'] = this.myOrigin;
     this.ticket['destiny'] = this.myDestiny;
 
     // guardo el tipo de viaje
     if (this.backDate) {
-      this.ticket['tripType'] = 'goBack'
+      this.ticket['tripType'] = 'goBack';
       this.ticket['goDate'] = this.goDate;
       this.ticket['backDate'] = this.backDate;
     } else {
@@ -167,25 +168,26 @@ export class BuyYourTicketPage implements OnInit {
 
   teclaInput($event) {
     if ($event.target.value.length === 0) {
-      this.inputFiltrado = this.inputFuente
+      this.inputFiltrado = this.inputFuente;
     } else {
 
-      let filtradox = []
-      let minuscula1 = $event.target.value.toLowerCase().trim()
+      let filtradox = [];
+      let minuscula1 = $event.target.value.toLowerCase().trim();
       this.inputFuente.forEach(element => {
-        let minuscula2 = element.nombre.toLowerCase().trim()
-        minuscula2.includes(minuscula1) ? filtradox.push(element) : null
+        let minuscula2 = element.nombre.toLowerCase().trim();
+        minuscula2.includes(minuscula1) ? filtradox.push(element) : null;
       });
-      this.inputFiltrado = filtradox
+      this.inputFiltrado = filtradox;
     }
 
   }
 
   btnSelecccionarOrigen() {
     this.inputFuente = this.allOrigin;
-    this.inputFiltrado = this.allOrigin
+    this.inputFiltrado = this.allOrigin;
     this.mySelection = 'origin';
     this.showSelection = true;
+
     // setTimeout(() => {
     //   this.myInput.nativeElement.focus()
     // },150); //a least 150ms.   
@@ -195,7 +197,6 @@ export class BuyYourTicketPage implements OnInit {
   btnSelecccionarDestino() {
     this.showSelection = true;
     this.mySelection = 'destiny';
-    // this.myDestiny = item;
 
     // setTimeout(() => {
     //   this.myInput.nativeElement.focus()
@@ -218,9 +219,9 @@ export class BuyYourTicketPage implements OnInit {
   }
 
   atras() {
-    this.showSelection = false
+    this.showSelection = false;
     this.mySelection = '';
-    this.router.navigateByUrl('/home')
+    this.router.navigateByUrl('/home');
 
   }
 
@@ -241,7 +242,7 @@ export class BuyYourTicketPage implements OnInit {
       if (data.destino === '/login') {
         this.mys.checkIfExistUsuario().subscribe(exist => {
           exist ? this.router.navigateByUrl('/user-panel') : this.router.navigateByUrl('/login');
-        })
+        });
       } else {
         this.router.navigateByUrl(data.destino);
       }
@@ -275,7 +276,7 @@ export class BuyYourTicketPage implements OnInit {
     } else if (moment(this.goDate).isAfter(this.backDate)) {
       // caso que SI exista fecha de regreso definida
       // se define fecha minima y maxima de fecha de regreso
-      this.backDate = null
+      this.backDate = null;
       this.minbackDate = this.goDate;
       this.maxbackDate = moment(this.goDate).add(1, 'y').format();
     }
@@ -290,13 +291,13 @@ export class BuyYourTicketPage implements OnInit {
         destino: this.myDestiny.codigo,
         fechaSalida: moment(this.goDate).format('YYYYMMDD'),
         etapa: 1,
-      }
+      };
       console.log('params', params);
       this.loading = true;
       this.integradorService.buscaCaluga(params).subscribe(resp => {
         this.loading = false;
         this.promociones = resp;
-        console.log('resp', resp)
+        console.log('resp', resp);
       });
 
 
@@ -305,5 +306,6 @@ export class BuyYourTicketPage implements OnInit {
 
 
   }
+
 
 }

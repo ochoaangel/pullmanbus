@@ -26,6 +26,9 @@ export class MyserviceService {
   temporalComprasCarrito;
 
 
+  comprarMas = false;
+
+
   // pageMyDataAsRegister = true
 
   constructor(
@@ -75,11 +78,11 @@ export class MyserviceService {
                 observer.complete()
               }
             },
-            error => { 
+            error => {
               observer.next(false)
               observer.complete()
               console.error('error al leer el LocalSorage:::', error)
-             }
+            }
           );
       }
 
@@ -147,7 +150,7 @@ export class MyserviceService {
         //console.log('tiene mobilweb');
         let usuariox = localStorage.getItem("usuario")
         //console.log('tiene mobilweb2');
-        
+
         if (usuariox) {
           //console.log('tiene mobilweb3');
           observer.next(false)

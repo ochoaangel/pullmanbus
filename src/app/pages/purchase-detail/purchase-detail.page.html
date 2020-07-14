@@ -379,6 +379,76 @@
 
 <ion-footer>
 
+  <div *ngIf="next==='/payment-methods'" style="width: 100%; display: flex;justify-content: space-around;">
+
+    <ion-button fill="clear" (click)="comprarMasPasajes()"
+      style="color: var(--ion-color-primary); outline: none; width: 100%;   --padding-start: 0;--padding-end: 0;">
+      <ion-icon src="assets/icon/previous.svg" style="color: var(--ion-color-primary);font-size: 2.5vw;padding: 3px;">
+      </ion-icon>
+      <div style="display: inline;  text-align: right; text-transform: none;font-size: 1rem; font-weight: bold;">
+        Comprar más pasajes
+      </div>
+    </ion-button>
+
+    <!-- <div class="divSelectMenu">
+        <ion-select multiple="false" placeholder="&#8597; Ordenar" class="selectMenu"
+          [interfaceOptions]="orderWindowsDetail" (ionChange)="orderCambio()" [(ngModel)]="orderSelected"
+          (ionFocus)="orderShowActive = true" (ionCancel)="orderShowActive = false">
+          <ion-select-option value="" *ngIf="!orderShowActive">&#8597; Ordenar</ion-select-option>
+          <ion-select-option value="precioAsc">&#8593; Precio</ion-select-option>
+          <ion-select-option value="precioDsc">&#8595; Precio</ion-select-option>
+          <ion-select-option value="origenAsc">&#8593; Origen</ion-select-option>
+          <ion-select-option value="origenDsc">&#8595; Origen</ion-select-option>
+          <ion-select-option value="destinoAsc">&#8593; Destino</ion-select-option>
+          <ion-select-option value="destinoDsc">&#8595; Destino</ion-select-option>
+          <ion-select-option value="horaAsc">&#8593; Hora</ion-select-option>
+          <ion-select-option value="horaDsc">&#8595; Hora</ion-select-option>
+          <ion-select-option value="empresaAsc">&#8593; Empresa</ion-select-option>
+          <ion-select-option value="empresaDsc">&#8595; Empresa</ion-select-option>
+        </ion-select>
+      </div> -->
+
+    <!-- <div class="divSelectMenu">
+        <ion-select multiple="false" placeholder="&#8597; Filtrar" class="selectMenu"
+          [interfaceOptions]="filterWindowsDetail" (ionChange)="orderCambio()" [(ngModel)]="filterSelected"
+          (ionFocus)="filterShowActive = true" (ionCancel)="filterShowActive = false">
+          <ion-select-option value="" *ngIf="!filterShowActive">&#8597; Filtrar</ion-select-option>
+          <ion-select-option value="precio">Precio</ion-select-option>
+          <ion-select-option value="horario">Horario</ion-select-option>
+          <ion-select-option value="promociones">Promociones</ion-select-option>
+        </ion-select>
+      </div> -->
+
+    <!-- <ion-button fill="clear" style="color: var(--ion-color-primary); outline: none; width: 100%;   --padding-start: 0;--padding-end: 0;">
+          <ion-icon name="md-repeat" style="transform: rotate(90deg); color: var(--ion-color-primary);font-size: 5vw;"></ion-icon>
+          <div style="display: inline;  text-align: right; text-transform: none;font-size: 1rem;font-weight:bold">
+            Ordenar
+          </div>
+        </ion-button>
+    
+        <ion-button fill="clear" style="color: var(--ion-color-primary); outline: none; width: 100%;   --padding-start: 0;--padding-end: 0;"
+          (click)="prueba()">
+          <ion-icon name="md-code-download" style="color: var(--ion-color-primary);font-size: 5vw;padding: 1px;"></ion-icon>
+          <div style="display: inline;  text-align: right; text-transform: none;font-size: 1rem;font-weight:bold">
+            Filtros
+          </div>
+        </ion-button> -->
+
+    <!-- <ion-button fill="clear"
+        style="color: var(--ion-color-primary); outline: none; width: 100%;   --padding-start: 0;--padding-end: 0;"
+        *ngIf="tarifaTotal == 0" (click)="continuar()">
+    
+        <div style="display: inline;  text-align: left; text-transform: none;font-size: 1rem;font-weight:bold">
+          Continuar
+        </div>
+        <ion-icon src="assets/icon/previous.svg"
+          style="transform: rotate(180deg); color: var(--ion-color-primary);font-size: 3vw;">
+        </ion-icon>
+      </ion-button> -->
+
+  </div>
+
+
   <div
     style=" width: 100%; display: flex;align-items: center;justify-content: center; background-color: var(--ion-color-primary);">
 
@@ -394,10 +464,27 @@
         Volver</div>
     </ion-button>
 
-    <ion-button fill="clear" style="color: white;  width: 50%; outline: none;" (click)="continuar()">
+    <ion-button *ngIf="next==='/ticket'" fill="clear" style="color: white;  width: 50%; outline: none;"
+      (click)="continuar('/ticket')">
       <div
         style="display: inline;  text-align: right;padding-right: 7px;  text-transform: none;font-size: 1rem; font-weight: bold;">
         Continuar</div>
+      <ion-icon src="assets/icon/previous.svg" style="transform: rotate(180deg);font-size: 2.5vw;"></ion-icon>
+    </ion-button>
+
+    <ion-button *ngIf="next==='/home'" fill="clear" style="color: white;  width: 50%; outline: none;"
+      (click)="continuar('/home')">
+      <div
+        style="display: inline;  text-align: right;padding-right: 7px;  text-transform: none;font-size: 1rem; font-weight: bold;">
+        Home</div>
+      <ion-icon src="assets/icon/previous.svg" style="transform: rotate(180deg);font-size: 2.5vw;"></ion-icon>
+    </ion-button>
+
+    <ion-button *ngIf="next==='/payment-methods'" fill="clear" style="color: white;  width: 50%; outline: none;"
+      (click)="continuar('/payment-methods')">
+      <div
+        style="display: inline;  text-align: right;padding-right: 7px;  text-transform: none;font-size: 1rem; font-weight: bold;">
+        Pagar</div>
       <ion-icon src="assets/icon/previous.svg" style="transform: rotate(180deg);font-size: 2.5vw;"></ion-icon>
     </ion-button>
 

@@ -256,3 +256,7 @@ ion-checkbox {
 //   --ripple-color: #1e1e1e;
 //   --transition: background-color 15ms linear;
 // }
+
+ion-scroll[direction='y'] {
+  height: 100vh;
+}

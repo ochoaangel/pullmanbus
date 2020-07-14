@@ -26,6 +26,8 @@ export class PurchaseDetailPage implements OnInit {
   eliminadoAsiento = false;
   loading = false
 
+  next;
+
 
   ngOnInit() {
     this.ionViewWillEnter();
@@ -43,33 +45,88 @@ export class PurchaseDetailPage implements OnInit {
     }
     // console.log('this.tarifaTotalWillEnter', this.tarifaTotal);
     // console.log('this.mys.totalWillEnter', this.mys.total);
-    // console.log('this.mys.ticketWillEnter', this.mys.ticket);
+    console.log('this.mys.ticketWillEnter', this.mys.ticket);
 
-  }
-
-  continuar() {
+    //////////////////////////////////////////////////////////////
 
     if (this.tarifaTotal === 0) {
-      this.mys.ticket = null;
-      this.router.navigateByUrl('/home');
+      this.next = '/home';
+      // this.mys.ticket = null;
+      // this.router.navigateByUrl('/home');
     } else if ((this.ticket.tripType === 'goBack' && this.way === 'back') || (this.ticket.tripType === 'goOnly')) {
-      this.mys.total = this.tarifaTotal;
-      localStorage.setItem('totalFinal', JSON.stringify(this.tarifaTotal));
-      localStorage.setItem('ticket', JSON.stringify(this.ticket));
-      this.mys.ticket = this.ticket;
+      // this.mys.total = this.tarifaTotal;
+      // localStorage.setItem('totalFinal', JSON.stringify(this.tarifaTotal));
+      // localStorage.setItem('ticket', JSON.stringify(this.ticket));
+      // this.mys.ticket = this.ticket;
 
       // console.log('this.tarifaTotalWillLeave', this.tarifaTotal);
       // console.log('this.mys.totalWillLeave', this.mys.total);
       // console.log('this.mys.ticketWillLeave', this.mys.ticket);
 
-      this.router.navigateByUrl('/payment-methods');
+      this.next = '/payment-methods';
+      // this.router.navigateByUrl('/payment-methods');
     } else if (this.ticket.tripType === 'goBack' && this.way === 'go') {
 
-      this.way = 'back'
-      this.mys.way = this.way;
-      this.mys.ticket = this.ticket;
-      this.router.navigateByUrl('/ticket');
+      // this.way = 'back'
+      // this.mys.way = this.way;
+      // this.mys.ticket = this.ticket;
+      this.next = '/ticket';
+      // this.router.navigateByUrl('/ticket');
     }
+
+
+
+
+
+
+  }
+
+  continuar(destino) {
+
+    switch (destino) {
+      case '/home':
+        this.mys.ticket = null;
+        break;
+
+      case '/payment-methods':
+        this.mys.total = this.tarifaTotal;
+        localStorage.setItem('totalFinal', JSON.stringify(this.tarifaTotal));
+        localStorage.setItem('ticket', JSON.stringify(this.ticket));
+        this.mys.ticket = this.ticket;
+        break;
+
+      case '/ticket':
+        this.way = 'back'
+        this.mys.way = this.way;
+        this.mys.ticket = this.ticket;
+        break;
+
+      default:
+        break;
+    }
+    this.router.navigateByUrl(destino);
+
+    // if (this.tarifaTotal === 0) {
+    //   this.mys.ticket = null;
+    //   this.router.navigateByUrl('/home');
+    // } else if ((this.ticket.tripType === 'goBack' && this.way === 'back') || (this.ticket.tripType === 'goOnly')) {
+    //   this.mys.total = this.tarifaTotal;
+    //   localStorage.setItem('totalFinal', JSON.stringify(this.tarifaTotal));
+    //   localStorage.setItem('ticket', JSON.stringify(this.ticket));
+    //   this.mys.ticket = this.ticket;
+
+    //   // console.log('this.tarifaTotalWillLeave', this.tarifaTotal);
+    //   // console.log('this.mys.totalWillLeave', this.mys.total);
+    //   // console.log('this.mys.ticketWillLeave', this.mys.ticket);
+
+    //   this.router.navigateByUrl('/payment-methods');
+    // } else if (this.ticket.tripType === 'goBack' && this.way === 'go') {
+
+    //   this.way = 'back'
+    //   this.mys.way = this.way;
+    //   this.mys.ticket = this.ticket;
+    //   this.router.navigateByUrl('/ticket');
+    // }
   }// fin continuar
 
   EliminarPasaje(way, idServicio, asiento, y, x, piso) {
@@ -126,7 +183,8 @@ export class PurchaseDetailPage implements OnInit {
 
 
     if (total_general === 0) {
-      this.router.navigateByUrl('/ticket');
+      this.next = '/home';
+      // this.router.navigateByUrl('/ticket');
     }
 
   }
@@ -221,6 +279,10 @@ export class PurchaseDetailPage implements OnInit {
     // this.router.navigateByUrl(data.destino);
   }
 
+  comprarMasPasajes() {
+    this.mys.comprarMas = true;
+    this.router.navigateByUrl('/buy-your-ticket')
+  }
 
 }
 

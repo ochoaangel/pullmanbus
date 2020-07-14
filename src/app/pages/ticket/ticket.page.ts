@@ -123,11 +123,28 @@ export class TicketPage implements OnInit {
       this.way = this.mys.way;
 
       if (this.way === 'go') {
-        this.compras = this.ticket.goCompras || [];
-        this.allServices = this.ticket.goAllService || this.getServicesAndBus('go');
+
+        if (this.mys.comprarMas) {
+          this.compras = [];
+          this.getServicesAndBus('go');
+          this.mys.comprarMas = false;
+        } else {
+          this.compras = this.ticket.goCompras || [];
+          this.allServices = this.ticket.goAllService || this.getServicesAndBus('go');
+        }
+
+        console.log('this.mys.ticket en GO', this.mys.ticket);
+
       } else {
-        this.compras = this.ticket.backCompras || [];
-        this.allServices = this.ticket.backAllService || this.getServicesAndBus('back');
+        if (this.mys.comprarMas) {
+          this.compras = [];
+          this.getServicesAndBus('back')
+          this.mys.comprarMas = false;
+        } else {
+          this.compras = this.ticket.backCompras || [];
+          this.allServices = this.ticket.backAllService || this.getServicesAndBus('back');
+        }
+        console.log('this.mys.ticket en BACK', this.mys.ticket);
       }
 
       this.comprasDetalles = this.ticket.comprasDetalles || [];
@@ -600,8 +617,10 @@ export class TicketPage implements OnInit {
 
 
   continuar() {
-    if (this.compras.length === 0 && this.way === 'go') {
+    if (this.compras.length === 0 && this.way === 'go' && this.comprasDetalles.length < 4) {
       this.mys.alertShow('¡Verifique!', 'alert', 'Debe seleccionar al menos un asiento de un servicio para continuar..');
+    } else if (this.compras.length === 0 && this.way === 'go' && this.comprasDetalles.length > 3) {
+      this.router.navigateByUrl('/purchase-detail');
     } else if (this.compras.length > 4 && this.way === 'go') {
       this.mys.alertShow('¡Verifique!', 'alert', 'Máximo número de asientos permitidos de ida son 4');
     } else if (this.compras.length > 4 && this.way === 'back') {
@@ -659,7 +678,7 @@ export class TicketPage implements OnInit {
       this.ionViewWillEnter();
     } else {
       this.serviceSelectedNumber = null;
-      this.mys.ticket = null;
+      // this.mys.ticket = null;
       this.router.navigateByUrl('/buy-your-ticket');
     }
   }
