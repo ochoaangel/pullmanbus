@@ -118,6 +118,7 @@ export class TicketPage implements OnInit {
   }
 
   ionViewWillEnter() {
+
     if (this.mys.ticket) {
       this.ticket = this.mys.ticket;
       this.way = this.mys.way;
@@ -373,137 +374,137 @@ export class TicketPage implements OnInit {
   // }
 
   presionadoAsiento(piso: string, y: number, x: number) {
-
-    this.comprasByService ? null : this.comprasByService = [];
-
-    if (this.compras.length >= 4 && this.way === 'go' && this.bus[piso][y][x]['estado'] === 'libre') {
-      this.allServices.forEach(element => {
-        element['checked'] = false;
-      });
+    console.log('this.comprasDetalles', this.comprasDetalles);
+    if (this.comprasDetalles.length > 3) {
       this.mys.alertShow('¡Verifique!', 'alert', 'Máximo número de asientos permitidos de ida son 4');
-    } else if (this.compras.length >= 4 && this.way === 'back' && this.bus[piso][y][x]['estado'] === 'libre') {
-      this.allServices.forEach(element => {
-        element['checked'] = false;
-      });
-      this.mys.alertShow('¡Verifique!', 'alert', 'Máximo número de asientos permitidos de Regreso son 4');
+
     } else {
 
-      let asiento = {
-        'servicio': this.serviceSelected.idServicio,
-        'fecha': this.serviceSelected.fechaSalida,
-        'origen': this.serviceSelected.idTerminalOrigen,
-        'destino': this.serviceSelected.idTerminalDestino,
-        'asiento': this.bus[piso][y][x].asiento,
-        'integrador': this.serviceSelected.integrador
-      };
+
+      this.comprasByService ? null : this.comprasByService = [];
+
+      if (this.compras.length >= 4 && this.way === 'go' && this.bus[piso][y][x]['estado'] === 'libre') {
+        this.allServices.forEach(element => {
+          element['checked'] = false;
+        });
+        this.mys.alertShow('¡Verifique!', 'alert', 'Máximo número de asientos permitidos de ida son 4');
+      } else if (this.compras.length >= 4 && this.way === 'back' && this.bus[piso][y][x]['estado'] === 'libre') {
+        this.allServices.forEach(element => {
+          element['checked'] = false;
+        });
+        this.mys.alertShow('¡Verifique!', 'alert', 'Máximo número de asientos permitidos de Regreso son 4');
+      } else {
+
+        let asiento = {
+          'servicio': this.serviceSelected.idServicio,
+          'fecha': this.serviceSelected.fechaSalida,
+          'origen': this.serviceSelected.idTerminalOrigen,
+          'destino': this.serviceSelected.idTerminalDestino,
+          'asiento': this.bus[piso][y][x].asiento,
+          'integrador': this.serviceSelected.integrador
+        };
 
 
-      if (this.bus[piso][y][x]['estado'] === 'libre') {
+        if (this.bus[piso][y][x]['estado'] === 'libre') {
 
-        this.loadingSeat += 1;
-
-        this.integradorService.validarAsiento(asiento).subscribe(disponible => {
           this.loadingSeat += 1;
-          if (disponible == 0) {
-            this.integradorService.tomarAsiento(asiento).subscribe(resp => {
-              this.loadingSeat -= 2;
-              if (resp === 0) {
-                this.mys.alertShow('¡Verifique!', 'alert', 'Error al tomar asiento.');
-              } else {
-                // this.tomarAsiento(piso, y, x);
-                // this.tomarAsientoPromocion(piso, y, x);
 
-
-                // verificando si el asiento tiene promociòn o no
-                if (
-                  this.serviceSelected.promocion &&
-                  (
-                    (this.serviceSelected.idaVueltaPisoDos && !this.piso1)
-                    ||
-                    (this.serviceSelected.idaVueltaPisoUno && this.piso1)
-                  )
-                ) {
-                  //////////////////////////////////  Asiento CON promoción  //////////////////////////////////////
-
-                  // variable para la api buscaCaluga
-                  let myData = {
-                    origen: this.mys.ticket.origin.codigo,
-                    destino: this.mys.ticket.destiny.codigo,
-                    fechaSalida: moment(this.mys.ticket.goDate).format("YYYYMMDD"),
-                    etapa: 2
-                  };
-                  console.log('myData', myData);
-
-                  this.integradorService.buscaCaluga(myData).subscribe(respuestaBuscaCaluga => {
-
-                    // definiendo variables de tarifas
-                    let tarifaTotalNumero;
-                    let tarifaNormalNumero;
-                    let tarifaDiferencia;
-
-                    if (this.piso1) {
-                      tarifaTotalNumero = parseInt(this.serviceSelected.idaVueltaPisoUno.tarifaTotal.replace('.', ''))
-                      tarifaNormalNumero = this.serviceSelected.tarifaPrimerPisoInternet.replace('.', '')
-                    } else {
-                      tarifaTotalNumero = parseInt(this.serviceSelected.idaVueltaPisoDos.tarifaTotal.replace('.', ''))
-                      tarifaNormalNumero = this.serviceSelected.tarifaSegundoPisoInternet.replace('.', '')
-                    }
-
-                    // calculando diferencia
-                    tarifaDiferencia = tarifaTotalNumero - tarifaNormalNumero;
-
-
-                    // Mostrando el mensaje para seleccionar si está de acuerdo o no al darle valor a promocionEtapa2
-                    this.promoEtapa2 = respuestaBuscaCaluga[0];
-                    this.promoEtapa2['contenido'] = this.promoEtapa2['contenido'].replace('{1}', tarifaDiferencia.toLocaleString('de-DE'));
-                    console.log('this.promoEtapa2', this.promoEtapa2);
-
-
-                    // almaceno variables para cuanso el el modal presione SI , ya tener los datos necesarios almacenados
-                    this.tomarAsientoPromocion = { piso, y, x, promocionTarifaTotal: tarifaTotalNumero };
-                  });
-
-
+          this.integradorService.validarAsiento(asiento).subscribe(disponible => {
+            this.loadingSeat += 1;
+            if (disponible == 0) {
+              this.integradorService.tomarAsiento(asiento).subscribe(resp => {
+                this.loadingSeat -= 2;
+                if (resp === 0) {
+                  this.mys.alertShow('¡Verifique!', 'alert', 'Error al tomar asiento.');
                 } else {
-                  //////////////////////////////////  Asiento SIN promoción  //////////////////////////////////////
-                  this.tomarAsiento(piso, y, x);
+                  // this.tomarAsiento(piso, y, x);
+                  // this.tomarAsientoPromocion(piso, y, x);
+
+
+                  // verificando si el asiento tiene promociòn o no
+                  if (
+                    this.serviceSelected.promocion &&
+                    (
+                      (this.serviceSelected.idaVueltaPisoDos && !this.piso1)
+                      ||
+                      (this.serviceSelected.idaVueltaPisoUno && this.piso1)
+                    )
+                  ) {
+                    //////////////////////////////////  Asiento CON promoción  //////////////////////////////////////
+
+                    // variable para la api buscaCaluga
+                    let myData = {
+                      origen: this.mys.ticket.origin.codigo,
+                      destino: this.mys.ticket.destiny.codigo,
+                      fechaSalida: moment(this.mys.ticket.goDate).format("YYYYMMDD"),
+                      etapa: 2
+                    };
+                    console.log('myData', myData);
+
+                    this.integradorService.buscaCaluga(myData).subscribe(respuestaBuscaCaluga => {
+
+                      // definiendo variables de tarifas
+                      let tarifaTotalNumero;
+                      let tarifaNormalNumero;
+                      let tarifaDiferencia;
+
+                      if (this.piso1) {
+                        tarifaTotalNumero = parseInt(this.serviceSelected.idaVueltaPisoUno.tarifaTotal.replace('.', ''))
+                        tarifaNormalNumero = this.serviceSelected.tarifaPrimerPisoInternet.replace('.', '')
+                      } else {
+                        tarifaTotalNumero = parseInt(this.serviceSelected.idaVueltaPisoDos.tarifaTotal.replace('.', ''))
+                        tarifaNormalNumero = this.serviceSelected.tarifaSegundoPisoInternet.replace('.', '')
+                      }
+
+                      // calculando diferencia
+                      tarifaDiferencia = tarifaTotalNumero - tarifaNormalNumero;
+
+
+                      // Mostrando el mensaje para seleccionar si está de acuerdo o no al darle valor a promocionEtapa2
+                      this.promoEtapa2 = respuestaBuscaCaluga[0];
+                      // console.log('this.promoEtapa2', this.promoEtapa2);
+                      this.promoEtapa2['contenido'] = this.promoEtapa2['contenido'].replace('{1}', tarifaDiferencia.toLocaleString('de-DE'));
+                      console.log('this.promoEtapa2', this.promoEtapa2);
+
+
+                      // almaceno variables para cuanso el el modal presione SI , ya tener los datos necesarios almacenados
+                      this.tomarAsientoPromocion = { piso, y, x, promocionTarifaTotal: tarifaTotalNumero };
+                    });
+
+
+                  } else {
+                    //////////////////////////////////  Asiento SIN promoción  //////////////////////////////////////
+                    this.tomarAsiento(piso, y, x);
+                  }
                 }
+              });
+            } else {
+              this.loadingSeat -= 2;
+              this.mys.alertShow('¡Verifique!', 'alert', 'Asiento no disponible, está siendo reservado por otro cliente.');
+              this.bus[piso][y][x]['estado'] = 'ocupado';
+            }
+          });
 
+        } else if (this.bus[piso][y][x]['estado'] === 'seleccionado') {
+          this.loadingSeat += 1;
 
+          this.integradorService.liberarAsiento(asiento).subscribe(resp => {
+            this.loadingSeat -= 1;
+            if (resp == 0) {
+              this.mys.alertShow('¡Verifique!', 'alert', 'Error al liberar asiento.');
+            } else {
+              this.liberarAsiento(piso, y, x);
+            }
+          });
 
+        }
+        // guardo en this.allServices
+        this.allServices[this.serviceSelectedNumber].my_Bus = this.bus;
+        this.allServices[this.serviceSelectedNumber].my_comprasByService = this.comprasByService;
 
+      } // fin de numeros asientos permitidos
 
-
-
-
-              }
-            });
-          } else {
-            this.loadingSeat -= 2;
-            this.mys.alertShow('¡Verifique!', 'alert', 'Asiento no disponible, está siendo reservado por otro cliente.');
-            this.bus[piso][y][x]['estado'] = 'ocupado';
-          }
-        });
-
-      } else if (this.bus[piso][y][x]['estado'] === 'seleccionado') {
-        this.loadingSeat += 1;
-
-        this.integradorService.liberarAsiento(asiento).subscribe(resp => {
-          this.loadingSeat -= 1;
-          if (resp == 0) {
-            this.mys.alertShow('¡Verifique!', 'alert', 'Error al liberar asiento.');
-          } else {
-            this.liberarAsiento(piso, y, x);
-          }
-        });
-
-      }
-      // guardo en this.allServices
-      this.allServices[this.serviceSelectedNumber].my_Bus = this.bus;
-      this.allServices[this.serviceSelectedNumber].my_comprasByService = this.comprasByService;
-
-    } // fin de numeros asientos permitidos
-
+    }
   } // fin presionado
 
 
