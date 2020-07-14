@@ -130,7 +130,12 @@ export class BuyYourTicketPage implements OnInit {
     // PREPARO VARIABLES para guardarlas en el service
 
     // this.ticket = {};
-    this.ticket = this.mys.ticket ? { comprasDetalles: this.mys.ticket.comprasDetalles, comprasDetallesPosicion: this.mys.ticket.comprasDetallesPosicion } : {};
+    this.ticket = this.mys.ticket ? {
+      comprasDetalles: this.mys.ticket.comprasDetalles,
+      comprasDetallesPosicion: this.mys.ticket.comprasDetallesPosicion,
+      goCompras: this.mys.ticket.comprasDetalles,
+      backCompras: this.mys.ticket.comprasDetalles,
+    } : {};
 
     this.ticket['origin'] = this.myOrigin;
     this.ticket['destiny'] = this.myDestiny;
