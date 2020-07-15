@@ -204,7 +204,8 @@ export class PaymentMethodsPage implements OnInit {
             (fecha[2] + fecha[1] + fecha[0]) == boleto2.fechaSalida
           );
         }
-        guardarTransaccion.listaCarrito.push({
+
+        let end = {
           servicio: boleto.service.idServicio,
           fechaServicio: boleto.service.fechaServicio,
           fechaPasada: boleto.service.fechaSalida,
@@ -224,13 +225,21 @@ export class PaymentMethodsPage implements OnInit {
           bus: boleto.piso == '1' ? boleto.service.busPiso1 : boleto.service.busPiso2,
           piso: boleto.piso,
           integrador: boleto.service.integrador
-        });
+        }
+
+        if (boleto.promocion) {
+          end['idaVuelta'] = true;
+        }
+        // console.log('end', end);
+
+        guardarTransaccion.listaCarrito.push(end);
+
       });
       this.loading += 1;
 
-      console.log('guardarTransaccion', guardarTransaccion);
+      // console.log('guardarTransaccion', guardarTransaccion);
       this.integradorService.guardarTransaccion(guardarTransaccion).subscribe(resp => {
-        console.log('respuesta de "guardarTransacción"', resp);
+        // console.log('respuesta de "guardarTransacción"', resp);
         this.loading -= 1;
         let valor: any = resp;
         if (valor.exito) {
@@ -239,7 +248,7 @@ export class PaymentMethodsPage implements OnInit {
           this.mys.alertShow('¡Verifique!', 'alert', valor.mensaje || 'Error, Verifique los datos ingresados..');
         }
       });
-      //this.router.navigateByUrl('/transaction-voucher')
+      // this.router.navigateByUrl('/transaction-voucher')
     }
 
     function formularioTBKWS(urltbk, token) {
