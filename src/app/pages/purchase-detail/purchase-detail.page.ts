@@ -24,7 +24,7 @@ export class PurchaseDetailPage implements OnInit {
   way;
   tarifaTotal;
   eliminadoAsiento = false;
-  loading = false
+  loading = false;
 
   next;
 
@@ -34,6 +34,8 @@ export class PurchaseDetailPage implements OnInit {
   }
 
   ionViewWillEnter() {
+    console.log('this.mys.ticketWillEnter', this.mys.ticket);
+    console.log('this.mys.totalWillEnter', this.mys.total);
     if (this.mys.ticket) {
       this.ticket = this.mys.ticket;
       this.way = this.mys.way;
@@ -43,9 +45,7 @@ export class PurchaseDetailPage implements OnInit {
       });
       this.tarifaTotal = total_general;
     }
-    // console.log('this.tarifaTotalWillEnter', this.tarifaTotal);
-    // console.log('this.mys.totalWillEnter', this.mys.total);
-    console.log('this.mys.ticketWillEnter', this.mys.ticket);
+    console.log('this.tarifaTotalWillEnter', this.tarifaTotal);
 
     //////////////////////////////////////////////////////////////
 
@@ -96,7 +96,7 @@ export class PurchaseDetailPage implements OnInit {
         break;
 
       case '/ticket':
-        this.way = 'back'
+        this.way = 'back';
         this.mys.way = this.way;
         this.mys.ticket = this.ticket;
         break;
@@ -130,46 +130,79 @@ export class PurchaseDetailPage implements OnInit {
   }// fin continuar
 
   EliminarPasaje(way, idServicio, asiento, y, x, piso) {
-    let texto = way + '_' + idServicio + '_' + asiento
 
-    let index = this.ticket.comprasDetallesPosicion.indexOf(texto);
 
-    // eliminar del backend y (GENERALcomprasDetallesPosicion y GENERALcomprasDetalles ) de ticket
-    if (index !== -1) {
-      // preparando para eliminar en backend
-      let asiento = {
-        "servicio": this.ticket.comprasDetalles[index].idServicio,
-        "fecha": this.ticket.comprasDetalles[index].service.fechaSalida,
-        "origen": this.ticket.comprasDetalles[index].service.idTerminalOrigen,
-        "destino": this.ticket.comprasDetalles[index].service.idTerminalDestino,
-        "asiento": this.ticket.comprasDetalles[index].asiento,
-        "integrador": this.ticket.comprasDetalles[index].service.integrador
-      }
-      this.loading = true
-      // eliminando en backend
-      this.integradorService.liberarAsiento(asiento).subscribe(resp => {
-        this.loading = false
-      })
-      this.ticket.comprasDetallesPosicion.splice(index, 1);
-      this.ticket.comprasDetalles.splice(index, 1);
+    let pasajeAeliminar;
+
+    // elimino el asiento de this.comprasDetalles
+    if (this.ticket.comprasDetalles.length > 0) {
+      pasajeAeliminar = this.ticket.comprasDetalles
+        .filter(x => (x.idServicio === idServicio && x.asiento === asiento))[0];
     }
 
-    // eliminar del (GOcompras y BACKcompras) de ticket
-    if (way === 'go') {
-      let index2 = this.ticket.goCompras.indexOf(texto);
-      if (index2 !== -1) { this.ticket.goCompras.splice(index2, 1); }
-    } else {
-      let index3 = this.ticket.backCompras.indexOf(texto);
-      if (index3 !== -1) { this.ticket.backCompras.splice(index3, 1); }
-    }
+    console.log('pasajeCompleto', pasajeAeliminar);
 
-    let index4 = this.ticket.comprasDetallesPosicion.indexOf(texto);
-    if (index4 !== -1) {
-      this.ticket.comprasDetalles.splice(index4, 1);
-      this.ticket.comprasDetallesPosicion.splice(index4, 1);
-      // this.mys.ticket = this.ticket;
-      this.mys.ticket = this.eliminarAsientoDeTicketCompras(this.ticket, way, idServicio, asiento, y, x, piso)
-    }
+    let asientoToDelete = {
+      servicio: pasajeAeliminar.idServicio,
+      fecha: pasajeAeliminar.service.fechaSalida,
+      origen: pasajeAeliminar.service.idTerminalOrigen,
+      destino: pasajeAeliminar.service.idTerminalDestino,
+      asiento: pasajeAeliminar.asiento,
+      integrador: pasajeAeliminar.service.integrador
+    };
+    this.loading = true;
+    this.integradorService.liberarAsiento(asientoToDelete).subscribe(resp => {
+      this.loading = false;
+    });
+    console.log('this.ticket.comprasDetallesAntes', this.ticket.comprasDetalles);
+
+    this.ticket.comprasDetalles = this.ticket.comprasDetalles
+      .filter(x => !(x.idServicio === idServicio && x.asiento === asiento));
+
+    console.log('this.ticket.comprasDetallesDespues', this.ticket.comprasDetalles);
+
+
+    // let texto = way + '_' + idServicio + '_' + asiento;
+
+    // let index = this.ticket.comprasDetallesPosicion.indexOf(texto);
+
+    // // eliminar del backend y (GENERALcomprasDetallesPosicion y GENERALcomprasDetalles ) de ticket
+    // if (index !== -1) {
+    //   // preparando para eliminar en backend
+    //   let asiento = {
+    //     "servicio": this.ticket.comprasDetalles[index].idServicio,
+    //     "fecha": this.ticket.comprasDetalles[index].service.fechaSalida,
+    //     "origen": this.ticket.comprasDetalles[index].service.idTerminalOrigen,
+    //     "destino": this.ticket.comprasDetalles[index].service.idTerminalDestino,
+    //     "asiento": this.ticket.comprasDetalles[index].asiento,
+    //     "integrador": this.ticket.comprasDetalles[index].service.integrador
+    //   };
+    //   this.loading = true;
+    //   // eliminando en backend
+    //   this.integradorService.liberarAsiento(asiento).subscribe(resp => {
+    //     this.loading = false;
+    //   });
+    //   this.ticket.comprasDetallesPosicion.splice(index, 1);
+    //   this.ticket.comprasDetalles.splice(index, 1);
+    // }
+
+    // // eliminar del (GOcompras y BACKcompras) de ticket
+    // if (way === 'go') {
+    //   let index2 = this.ticket.goCompras.indexOf(texto);
+    //   if (index2 !== -1) { this.ticket.goCompras.splice(index2, 1); }
+    // } else {
+    //   let index3 = this.ticket.backCompras.indexOf(texto);
+    //   if (index3 !== -1) { this.ticket.backCompras.splice(index3, 1); }
+    // }
+
+    // let index4 = this.ticket.comprasDetallesPosicion.indexOf(texto);
+    // if (index4 !== -1) {
+    //   this.ticket.comprasDetalles.splice(index4, 1);
+    //   this.ticket.comprasDetallesPosicion.splice(index4, 1);
+    //   this.mys.ticket = this.eliminarAsientoDeTicketCompras(this.ticket, way, idServicio, asiento, y, x, piso);
+    // }
+
+
 
     let total_general = 0;
     this.ticket.comprasDetalles.forEach(element => {
@@ -177,14 +210,12 @@ export class PurchaseDetailPage implements OnInit {
     });
     this.tarifaTotal = total_general;
 
-    this.mys.ticket = this.eliminarAsientoDeTicketCompras(this.ticket, way, idServicio, asiento, y, x, piso)
-    // this.mys.ticket = this.ticket;
+    this.mys.ticket = this.eliminarAsientoDeTicketCompras(this.ticket, way, idServicio, asiento, y, x, piso);
     this.eliminadoAsiento = true;
 
 
     if (total_general === 0) {
       this.next = '/home';
-      // this.router.navigateByUrl('/ticket');
     }
 
   }
@@ -201,7 +232,7 @@ export class PurchaseDetailPage implements OnInit {
   }
 
   eliminarAsientoDeTicketCompras(ticket, way, idServicio, asiento, y, x, piso) {
-    let texto = way + '_' + idServicio + '_' + asiento
+    let texto = way + '_' + idServicio + '_' + asiento;
 
     // let texto = this.way + '_' + this.serviceSelected.idServicio + '_' + this.bus[piso][y][x]['asiento'];
     // let index3 = this.comprasByService.indexOf(texto)
@@ -211,13 +242,13 @@ export class PurchaseDetailPage implements OnInit {
       ticket.goAllService.forEach(item => {
 
         if (item.idServicio === idServicio) {
-          item.my_Bus[piso][y][x]['estado'] = 'libre'
-          let index3 = item.my_comprasByService.indexOf(texto)
+          item.my_Bus[piso][y][x]['estado'] = 'libre';
+          let index3 = item.my_comprasByService.indexOf(texto);
           if (index3 !== -1) { item.my_comprasByService.splice(index3, 1); }
         }
       });
 
-      let index3 = ticket.goCompras.indexOf(texto)
+      let index3 = ticket.goCompras.indexOf(texto);
       if (index3 !== -1) { ticket.goCompras.splice(index3, 1); }
 
 
@@ -225,17 +256,17 @@ export class PurchaseDetailPage implements OnInit {
       ticket.backAllService.forEach(item => {
 
         if (item.idServicio === idServicio) {
-          item.my_Bus[piso][y][x]['estado'] = 'libre'
-          let index3 = item.my_comprasByService.indexOf(texto)
+          item.my_Bus[piso][y][x]['estado'] = 'libre';
+          let index3 = item.my_comprasByService.indexOf(texto);
           if (index3 !== -1) { item.my_comprasByService.splice(index3, 1); }
         }
       });
       // item.idServicio === idServicio ? item.my_Bus[piso][y][x]['estado'] = 'libre' : null
       // });
-      let index3 = ticket.backCompras.indexOf(texto)
+      let index3 = ticket.backCompras.indexOf(texto);
       if (index3 !== -1) { ticket.backCompras.splice(index3, 1); }
     }
-    return ticket
+    return ticket;
   }
 
   async popMenu(event) {
@@ -255,7 +286,7 @@ export class PurchaseDetailPage implements OnInit {
       if (data.destino === '/login') {
         this.mys.checkIfExistUsuario().subscribe(exist => {
           exist ? this.router.navigateByUrl('/user-panel') : this.router.navigateByUrl('/login');
-        })
+        });
       } else {
         this.router.navigateByUrl(data.destino);
       }
@@ -264,7 +295,7 @@ export class PurchaseDetailPage implements OnInit {
   }
 
   async popCart(event) {
-    this.mys.temporalComprasCarrito = this.ticket.comprasDetalles
+    this.mys.temporalComprasCarrito = this.ticket.comprasDetalles;
     const popoverCart = await this.popoverCtrl.create({
       component: PopCartComponent,
       event,
@@ -281,7 +312,7 @@ export class PurchaseDetailPage implements OnInit {
 
   comprarMasPasajes() {
     this.mys.comprarMas = true;
-    this.router.navigateByUrl('/buy-your-ticket')
+    this.router.navigateByUrl('/buy-your-ticket');
   }
 
 }

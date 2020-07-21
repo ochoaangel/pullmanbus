@@ -237,7 +237,7 @@ export class PaymentMethodsPage implements OnInit {
       });
       this.loading += 1;
 
-      // console.log('guardarTransaccion', guardarTransaccion);
+      console.log('guardarTransaccion', guardarTransaccion.listaCarrito.length, guardarTransaccion.listaCarrito);
       this.integradorService.guardarTransaccion(guardarTransaccion).subscribe(resp => {
         // console.log('respuesta de "guardarTransacción"', resp);
         this.loading -= 1;
@@ -248,7 +248,6 @@ export class PaymentMethodsPage implements OnInit {
           this.mys.alertShow('¡Verifique!', 'alert', valor.mensaje || 'Error, Verifique los datos ingresados..');
         }
       });
-      // this.router.navigateByUrl('/transaction-voucher')
     }
 
     function formularioTBKWS(urltbk, token) {

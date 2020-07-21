@@ -81,7 +81,10 @@ export class BuyYourTicketPage implements OnInit {
 
   ionViewWillEnter() {
     this.comprasDetalles = this.mys.ticket && this.mys.ticket.comprasDetalles ? this.mys.ticket.comprasDetalles : null;
-    console.log('comprasDetalles', this.comprasDetalles);
+    this.myOrigin = null;
+    this.myDestiny = null;
+    this.promociones = null;
+
   }
 
   getCityOrigin() {
@@ -91,7 +94,6 @@ export class BuyYourTicketPage implements OnInit {
       this.allOrigin = data;
       this.inputFuente = data;
       this.inputFiltrado = data;
-      console.log('origenes', data);
     });
   }
 
@@ -103,7 +105,6 @@ export class BuyYourTicketPage implements OnInit {
       this.allDestiny = data;
       this.inputFuente = data;
       this.inputFiltrado = data;
-      console.log('Destinos de ' + value + ' :', data);
     });
   }
 
@@ -127,6 +128,8 @@ export class BuyYourTicketPage implements OnInit {
 
   btnSearch() {
 
+
+    // this.promociones = null;
     // PREPARO VARIABLES para guardarlas en el service
 
     // this.ticket = {};
@@ -192,21 +195,11 @@ export class BuyYourTicketPage implements OnInit {
     this.inputFiltrado = this.allOrigin;
     this.mySelection = 'origin';
     this.showSelection = true;
-
-    // setTimeout(() => {
-    //   this.myInput.nativeElement.focus()
-    // },150); //a least 150ms.   
-    // setTimeout(() => this.myInput.nativeElement.focus(), 15000); 
   }
 
   btnSelecccionarDestino() {
     this.showSelection = true;
     this.mySelection = 'destiny';
-
-    // setTimeout(() => {
-    //   this.myInput.nativeElement.focus()
-    // },150); //a least 150ms.
-    // setTimeout(() => this.myInput.nativeElement.focus(), 15000); 
   }
 
   seleccion(item) {
@@ -224,14 +217,21 @@ export class BuyYourTicketPage implements OnInit {
   }
 
   atras() {
-    this.showSelection = false;
-    this.mySelection = '';
-    this.router.navigateByUrl('/home');
+    console.log('this.inputFuente', this.inputFuente);
+    console.log('this.inputFiltrado', this.inputFiltrado);
 
+    if (this.showSelection) {
+      this.showSelection = false;
+      this.mySelection = '';
+      this.promociones = null;
+    } else {
+      this.showSelection = false;
+      this.mySelection = '';
+      this.router.navigateByUrl('/home');
+    }
   }
 
   async popMenu(event) {
-    //console.log('event', event);
     const popoverMenu = await this.popoverCtrl.create({
       component: PopMenuComponent,
       event,
@@ -272,7 +272,6 @@ export class BuyYourTicketPage implements OnInit {
 
 
   cambioFechaIda() {
-    // (ionChange)="cambioFechaIda()"
     if (!this.backDate) {
       // caso que NO exista fecha de regreso definida
       // se define fecha minima y maxima de fecha de regreso
@@ -297,19 +296,12 @@ export class BuyYourTicketPage implements OnInit {
         fechaSalida: moment(this.goDate).format('YYYYMMDD'),
         etapa: 1,
       };
-      console.log('params', params);
       this.loading = true;
       this.integradorService.buscaCaluga(params).subscribe(resp => {
         this.loading = false;
         this.promociones = resp;
-        console.log('resp', resp);
       });
-
-
-
     }
-
-
   }
 
 
