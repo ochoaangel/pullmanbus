@@ -1,6 +1,6 @@
 ion-header {
   height: 17vh;
-padding-top: 2vh;
+  padding-top: 2vh;
   width: 100vw;
   background-color: var(--ion-color-primary);
   text-align: center;
@@ -62,7 +62,6 @@ padding-top: 2vh;
   font-size: 2vh;
 }
 
-
 .ingresar {
   display: inline-block;
   -webkit-box-sizing: content-box;
@@ -100,8 +99,6 @@ padding-top: 2vh;
   margin-top: 5px;
 }
 
-
-
 input,
 ion-input {
   display: inline-block;
@@ -114,13 +111,15 @@ ion-input {
   --padding-bottom: 0.3rem;
   --background: white;
   font-size: 0.8rem;
+  height: 2rem;
 }
 
 ion-select {
   border-radius: 6px;
   // width: 13vw;
   background-color: white;
-  height: 7vw;
+  // height: 7vw;
+  height: 2rem;
   padding: 4px 0px 0px 5px;
   border: 1px solid var(--ion-color-primary);
 }
@@ -135,7 +134,7 @@ ion-select {
   width: -webkit-fill-available;
 }
 
-p{
+p {
   color: black;
   font-size: 0.6rem;
 }
