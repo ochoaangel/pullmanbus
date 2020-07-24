@@ -166,4 +166,9 @@ textarea:focus,
 select:focus {
   outline-offset: 0px !important;
   outline: none !important;
+  background-color: transparent;
+}
+
+input {
+  background-color: transparent;
 }

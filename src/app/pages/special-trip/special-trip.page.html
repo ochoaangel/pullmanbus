@@ -87,20 +87,23 @@
                   <ion-col size="6" class="columnaDoble">
                     <ion-row style="justify-content: center; display: flex; flex-direction: column;">
                       <div>Tipo de Documento:</div>
-                      <ion-radio-group name="genero" allow-empty-selection="false" [(ngModel)]="myData.documento">
-                        <div style="
-                                            display: flex;
-                                            flex-direction: row;
-                                            justify-content: center;
-                                            align-items: center;
-                                            height: 2rem;
-                                          ">
-                          <ion-radio mode="md" value="C" style="margin-left: 1vw;"></ion-radio>
-                          <div style="font-size: 0.6rem;">CHILENO</div>
-                          <ion-radio mode="md" value="O" style="margin-left: 1vw;"></ion-radio>
-                          <div style="font-size: 0.6rem;">OTRO</div>
-                        </div>
-                      </ion-radio-group>
+                      <!-- <ion-radio-group name="documento" allow-empty-selection="false"
+                                              (ionSelect)="cambioTipoDocumento(myData.documento)" [(ngModel)]="myData.documento"> -->
+                      <div style="
+                                                                  display: flex;
+                                                                  flex-direction: row;
+                                                                  justify-content: center;
+                                                                  align-items: center;
+                                                                  height: 2rem;
+                                                                ">
+                        <ion-checkbox mode="md" checked="myData.documentoC" (click)="cambioTipoDocumento('C')"
+                          [(ngModel)]="myData.documentoC" name="documentoC" style="margin-left: 1vw;">
+                        </ion-checkbox>
+                        <div style="font-size: 0.6rem;">CHILENO</div>
+                        <ion-checkbox mode="md" checked="myData.documentoO" (click)="cambioTipoDocumento('O')"
+                          [(ngModel)]="myData.documentoO" name="documentoO" style="margin-left: 1vw;"></ion-checkbox>
+                        <div style="font-size: 0.6rem;">OTRO</div>
+                      </div>
                     </ion-row>
                   </ion-col>
 
@@ -111,16 +114,16 @@
 
                   <ion-col size="6" class="columnaDoble">
                     <div class="overIonInput">
-                      <ion-input placeholder="Celular" type="phone" name="celular" pattern="^[0-9]{9,10}$" #celular
+                      <ion-input placeholder="Celular" type="phone" name="celular" pattern="^[0-9]{6,10}$" #celular
                         [(ngModel)]="myData.celular" required clearOnEdit></ion-input>
                     </div>
                   </ion-col>
 
                   <ion-col size="6" class="columnaDoble">
                     <div class="overIonInput">
-                      <input placeholder="RUT" type="text" name="rut" [(ngModel)]="myData.rut" #rut required
-                        clearOnEdit>
-                    </div>
+                      <input placeholder="RUT" type="text"
+                        [textMask]="{mask: myData.documentoC ? rutFunction:rutFunctionNo,guide:false}" name="rut"
+                        [(ngModel)]="myData.rut" #rut required clearOnEdit> </div>
                   </ion-col>
 
                 </ion-row>
@@ -128,7 +131,6 @@
                 <!-- 3 -->
                 <ion-row>
                   <ion-col size="6" class="columnaDoble">
-
                     <div class="overIonInput">
                       <ion-input placeholder="email" type="email" name="email"
                         pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" #email [(ngModel)]="myData.email"

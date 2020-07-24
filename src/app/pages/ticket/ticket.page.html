@@ -111,8 +111,8 @@
 
                   <!-- columna 2   -->
                   <div class="myServiceColumn" style="width: 5%;">
-                    <div class="myServiceRow" style="height: 1.9rem;"><img src="assets/images/flecha002.png"
-                        style="height: 1.5rem;  margin-top: 0.2rem; object-fit: scale-down;"></div>
+                    <div class="myServiceRow" style="height:3.7rem;"><img src="assets/images/flecha002.png"
+                        style="height: 2.5rem;  margin-top: 0.2rem; object-fit: scale-down;"></div>
                     <div class="myServiceRow" style="display: flex; align-items: center; color: gray;">
                       <ion-icon style="font-size: 0.9rem;" name="clock"></ion-icon>
                     </div>
@@ -120,8 +120,10 @@
 
                   <!-- columna 3   -->
                   <div class="myServiceColumn" style="width: 30%;text-align: left; ">
-                    <div class="myServiceRow" style="font-weight: bold;">Sal. {{svc.horaSalida}}</div>
-                    <div class="myServiceRow">Lle. {{svc.horaLlegada}}</div>
+                    <div class="myServiceRow" style="font-weight: bold;">Sal. {{svc.fechaSalida}}</div>
+                    <div class="myServiceRow" style="font-weight: bold;margin-left: 1.5rem;">{{svc.horaSalida}}</div>
+                    <div class="myServiceRow">Lle. {{svc.fechaLlegada}}</div>
+                    <div class="myServiceRow" style="margin-left: 1.5rem;">{{svc.horaLlegada}}</div>
                     <div class="myServiceRow">Dur.
                       {{'X'| duration: svc.fechaSalida : svc.horaSalida : svc.fechaLlegada : svc.horaLlegada}}</div>
                     <!-- <div class="myServiceRow" style="margin-top: 0.2rem;">{{svc.servicioPrimerPiso | titlecase }}</div>

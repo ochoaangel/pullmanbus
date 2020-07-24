@@ -7,14 +7,16 @@ import { IonicModule } from '@ionic/angular';
 import { SpecialTripPageRoutingModule } from './special-trip-routing.module';
 
 import { SpecialTripPage } from './special-trip.page';
+import { TextMaskModule } from 'angular2-text-mask';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    TextMaskModule,
     SpecialTripPageRoutingModule
   ],
   declarations: [SpecialTripPage]
 })
-export class SpecialTripPageModule {}
+export class SpecialTripPageModule { }

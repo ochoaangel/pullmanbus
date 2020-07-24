@@ -24,9 +24,9 @@ export class CurrentAccountPage implements OnInit {
     email: '',
     nombre: '',
     celular: '',
-    documento: '',
+    documentoC: true,
+    documentoO: false,
     descripcion: '',
-
   };
 
   constructor(
@@ -46,7 +46,8 @@ export class CurrentAccountPage implements OnInit {
       email: '',
       nombre: '',
       celular: '',
-      documento: '',
+      documentoC: true,
+      documentoO: false,
       descripcion: '',
 
     };
@@ -60,15 +61,17 @@ export class CurrentAccountPage implements OnInit {
     // console.log('forma', forma);
     // console.log('this.myData.fechaNacimiento', this.myData.fechaNacimiento);
 
-    if (forma.controls.rut.errors) {
+    if (this.myData.documentoC && (this.myData.rut.length > 12 || this.myData.rut.length < 11)) {
+      this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca un RUT válido');
+    } else if (this.myData.documentoO && (this.myData.rut.length > 15 || this.myData.rut.length < 7)) {
       this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca un RUT válido');
     } else if (forma.controls.nombre.errors) {
       this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca un nombre válido');
     } else if (forma.controls.email.errors) {
       this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca un email válido');
     } else if (forma.controls.celular.errors && this.myData.celular !== '+56') {
-      this.mys.alertShow('Verifique!! ', 'alert', 'Verifique el celular e intente nuevamente..<br> ingrese de 6 a 9 caracteres sin código de país');
-    } else if (!this.myData.documento) {
+      this.mys.alertShow('Verifique!! ', 'alert', 'Verifique el celular e intente nuevamente..<br> ingrese de 6 a 10 caracteres sin código de país');
+    } else if ((this.myData.documentoC && this.myData.documentoO) || (!this.myData.documentoC && !this.myData.documentoO)) {
       this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca el tipo de documento adecuado.');
     } else if (forma.controls.descripcion.errors) {
       this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca una ciudad válida para continuar.');
@@ -80,7 +83,7 @@ export class CurrentAccountPage implements OnInit {
       let objetoAenviar = {
         tipoSolicitud: 1,
         solicitante: this.myData.nombre,
-        rut: this.myData.rut,
+        rut: this.myData.rut.replace(/\./g, ''),
         telefono: this.myData.celular,
         email: this.myData.email,
         descripcion: this.myData.descripcion,
@@ -91,7 +94,7 @@ export class CurrentAccountPage implements OnInit {
       }
 
 
-      console.log('objetoAenviar', objetoAenviar);
+      // console.log('objetoAenviar', objetoAenviar);
 
       this.integrador.guardarSolicitud(objetoAenviar).subscribe((x: any) => {
         if (x.exito) {
@@ -99,7 +102,7 @@ export class CurrentAccountPage implements OnInit {
           this.router.navigateByUrl('/home');
 
         } else {
-          this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca una ciudad válida para continuar.');
+          this.mys.alertShow('Verifique!! ', 'alert', 'Intente nuevamente..');
 
         }
       });
@@ -155,21 +158,44 @@ export class CurrentAccountPage implements OnInit {
     console.log('pruebaaaaxx', event);
   }
 
+
   rutFunction(rawValue) {
-    let numbers = rawValue.match(/\d|k|K/g);
+    let numbers = rawValue.match(/\d/g);
     let numberLength = 0;
     if (numbers) {
       numberLength = numbers.join('').length;
     }
     if (numberLength > 8) {
-      return [/[1-9]/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /[0-9|k|K]/,
-      ];
+      return [/[1-9]/, /[0-9]/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/];
     } else {
-      return [/[1-9]/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /[0-9|k|K]/,
-      ];
+      return [/[1-9]/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/];
     }
   }
 
+  rutFunctionNo(rawValue) {
+    let numbers = rawValue.match(/\d/g);
+    let numberLength = 0;
+    if (numbers) {
+      numberLength = numbers.join('').length;
+    }
+    return [/[0-9]/, /[0-9]/, /[0-9]/, /[0-9]/, /[0-9]/, /[0-9]/, /[0-9]/, /[0-9]/, /[0-9]/, /[0-9]/, /[0-9]/, /[0-9]/];
+  }
+
+  cambioTipoDocumento(btn) {
+
+    switch (btn) {
+      case 'C':
+        this.myData.documentoO = this.myData.documentoC;
+        break;
+
+      case 'O':
+        this.myData.documentoC = this.myData.documentoO;
+        break;
+
+      default:
+        break;
+    }
+  }
 
 
 }

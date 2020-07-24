@@ -205,6 +205,7 @@ export class PaymentMethodsPage implements OnInit {
           );
         }
 
+
         let end = {
           servicio: boleto.service.idServicio,
           fechaServicio: boleto.service.fechaServicio,
@@ -239,7 +240,7 @@ export class PaymentMethodsPage implements OnInit {
 
       console.log('guardarTransaccion', guardarTransaccion.listaCarrito.length, guardarTransaccion.listaCarrito);
       this.integradorService.guardarTransaccion(guardarTransaccion).subscribe(resp => {
-        // console.log('respuesta de "guardarTransacción"', resp);
+        console.log('respuesta de "guardarTransacción"', resp);
         this.loading -= 1;
         let valor: any = resp;
         if (valor.exito) {
