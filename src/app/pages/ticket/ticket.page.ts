@@ -107,7 +107,36 @@ export class TicketPage implements OnInit {
     private integradorService: IntegradorService,
     private popoverCtrl: PopoverController,
 
-  ) { }
+  ) {
+    this.mys.carritoEliminar.subscribe(eliminar => {
+      console.log('Eliminado desde dentro de tickets', eliminar);
+
+      console.log('comprasDetalles Antes de Resultado', this.comprasDetalles);
+      this.comprasDetalles = this.comprasDetalles.filter(x => !(x.idServicio === eliminar.idServicio && x.asiento === eliminar.asiento));
+      console.log('nowService', this.nowService);
+      if (this.nowService && this.nowService.idServicio === eliminar.idServicio) {
+        console.log('es el servicio abierto en este momento');
+        this.bus[eliminar.piso][eliminar.fila][eliminar.columna]['estado'] = 'libre';
+      } else {
+        console.log('NO es el servicio abierto en este momento');
+        let indexService = this.allServices.findIndex(x => x.idServicio === eliminar.idServicio);
+        console.log('antes Bus', this.allServices[indexService]['my_Bus']);
+        this.allServices[indexService]['my_Bus'][eliminar.piso][eliminar.fila][eliminar.columna]['estado'] = 'libre';
+        console.log('Despues Bus', this.allServices[indexService]['my_Bus']);
+      }
+
+      // calculo la tarifa total
+      let total_general = 0;
+      this.comprasDetalles.forEach(element => {
+        total_general = total_general + element.valor;
+      });
+      this.tarifaTotal = total_general;
+
+      // siempre vá para eliminar en el server, es asincrono
+      this.mys.liberarAsientoDesdeHeader(eliminar);
+
+    })
+  }
 
   ngOnInit() {
     if (this.promoEtapa2 && this.promoEtapa2.contenido) {
@@ -431,6 +460,7 @@ export class TicketPage implements OnInit {
   } // fin presionado
 
 
+
   liberarAsiento(piso, y, x, asiento) {
     console.log('LIBERAR ASIENTOOOOOO', piso, y, x, asiento);
 
@@ -735,6 +765,9 @@ export class TicketPage implements OnInit {
       cssClass: 'popCart'
     });
     await popoverCart.present();
+
+    const { data } = await popoverCart.onDidDismiss();
+    console.log('data en padre desde popover', data);
 
   }
 

@@ -21,15 +21,16 @@ export class ContactFormPage implements OnInit {
   loading = false;
 
   myData = {
+    rut: '',
+    nombre: '',
+    email: '',
+    celular: '',
+    nota: '',
+    motivo: '',
+
     apellidoPaterno: '',
     apellidoMaterno: '',
     boleto: '',
-    celular: '',
-    email: '',
-    motivo: '',
-    nombre: '',
-    nota: '',
-    rut: '',
     telefono: '',
   };
   //  this.myData = {
@@ -50,7 +51,24 @@ export class ContactFormPage implements OnInit {
     private integrador: IntegradorService,
     private router: Router,
     private popoverCtrl: PopoverController
-  ) { }
+  ) {
+
+    this.mys.carritoEliminar.subscribe(eliminar => {
+      console.log('Eliminado desde dentro de tickets', eliminar);
+
+      // dejar cuando tien compra detalles
+      this.mys.temporalComprasCarrito = this.mys.temporalComprasCarrito.filter(x => !(x.idServicio === eliminar.idServicio && x.asiento === eliminar.asiento));
+
+      // // dejar cuando NOO tiene compraDetalles
+      // this.mys.ticket.comprasDetalles = this.mys.ticket.comprasDetalles.filter(x => !(x.idServicio === eliminar.idServicio && x.asiento === eliminar.asiento));
+
+      // this.mys.temporalComprasCarrito = this.comprasDetalles;
+      this.mys.liberarAsientoDesdeHeader(eliminar);
+    })
+
+
+
+  }
 
   ngOnInit() { }
 
@@ -79,16 +97,18 @@ export class ContactFormPage implements OnInit {
     console.log('forma', forma);
     // console.log('this.myData.fechaNacimiento', this.myData.fechaNacimiento);
 
-    if (this.myData.apellidoPaterno.length < 3) {
-      this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca un apellido paterno válido.');
-    } else if (this.myData.apellidoMaterno.length < 3) {
-      this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca un apellido materno válido.');
-    } else if (this.myData.boleto.length < 5) {
-      this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca un boleto válido');
-    } else if (this.myData.celular.length < 5) {
+    // if (this.myData.apellidoPaterno.length < 3) {
+    //   this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca un apellido paterno válido.');
+    // } else if (this.myData.apellidoMaterno.length < 3) {
+    //   this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca un apellido materno válido.');
+    // } else
+    // if (this.myData.boleto.length < 5) {
+    //   this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca un boleto válido');
+    // } else
+    if (this.myData.celular.length < 5) {
       this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca un teléfono móvil válido.');
-    } else if (this.myData.telefono.length < 5) {
-      this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca un telefono de casa válido ');
+      // } else if (this.myData.telefono.length < 5) {
+      //   this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca un telefono de casa válido ');
     } else if (this.myData.rut.length < 8) {
       this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca un rut válido');
     } else if (forma.form.controls.email.status === 'INVALID') {
@@ -97,6 +117,8 @@ export class ContactFormPage implements OnInit {
       this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca un nombre válido.');
     } else if (this.myData.nota.length < 10) {
       this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca mas detalles en la nota.');
+    } else if (this.myData.motivo.length < 10) {
+      this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca mas detalles en Motivo.');
     } else {
 
       let objetoAenviar = {

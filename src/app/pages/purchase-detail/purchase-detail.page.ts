@@ -18,7 +18,35 @@ export class PurchaseDetailPage implements OnInit {
     private mys: MyserviceService,
     private popoverCtrl: PopoverController,
     private integradorService: IntegradorService,
-  ) { }
+  ) {
+
+    this.mys.carritoEliminar.subscribe(eliminar => {
+      console.log('Eliminado desde dentro de tickets', eliminar);
+
+      // dejar cuando tien compra detalles
+      // this.comprasDetalles = this.comprasDetalles.filter(x => !(x.idServicio === eliminar.idServicio && x.asiento === eliminar.asiento));
+
+      // dejar cuando NOO tiene compraDetalles  
+      this.mys.ticket.comprasDetalles = this.mys.ticket.comprasDetalles.filter(x => !(x.idServicio === eliminar.idServicio && x.asiento === eliminar.asiento));
+      this.ticket.comprasDetalles = this.mys.ticket.comprasDetalles;
+
+      let total_general = 0;
+      this.ticket.comprasDetalles.forEach(element => {
+        total_general = total_general + element.valor;
+      });
+      this.tarifaTotal = total_general;
+
+      if (total_general === 0) {
+        this.next = '/home';
+      }
+
+
+      // this.mys.temporalComprasCarrito = this.comprasDetalles;
+      this.mys.liberarAsientoDesdeHeader(eliminar);
+    })
+
+
+  }
 
   ticket;
   way;
@@ -32,6 +60,8 @@ export class PurchaseDetailPage implements OnInit {
   ngOnInit() {
     this.ionViewWillEnter();
   }
+
+
 
   ionViewWillEnter() {
     console.log('this.mys.ticketWillEnter', this.mys.ticket);

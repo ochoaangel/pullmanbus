@@ -274,7 +274,7 @@
                               {{'Asientos en promoción'}} </span></div>
 
                           <div
-                            style="display: flex; flex-direction: row; margin-top: 1vh; height: 100%; max-width: 18rem; margin: 0 auto;">
+                            style="display: flex; flex-direction: row; margin-top: 1vh; height: 100%; max-width: 18rem; margin: 0 auto;justify-content: center;">
 
                             <!-- //* pisos y asientos -->
                             <div style="width: 100vw;">
@@ -291,6 +291,15 @@
                                     Piso 2
                                   </div>
                                 </div>
+                              </div>
+
+                              <div style="width: 100%; text-align: center;">
+                                <div *ngIf="piso1">
+                                  {{svc.servicioPrimerPiso | titlecase}} - ${{svc.tarifaPrimerPisoInternet}}
+                                  {{svc.idaVueltaPisoUno? '(Asientos con promoción)':null }}</div>
+                                <div *ngIf="!piso1 && tarifaPiso2">
+                                  {{svc.servicioSegundoPiso | titlecase}} - ${{svc.tarifaSegundoPisoInternet}}
+                                  {{svc.idaVueltaPisoDos? '(Asientos con promoción)':null }}</div>
                               </div>
 
                               <!-- //* piso1 -->

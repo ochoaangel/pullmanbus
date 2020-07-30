@@ -67,7 +67,22 @@ export class BuyYourTicketPage implements OnInit {
     private integradorService: IntegradorService,
     private popoverCtrl: PopoverController,
     private renderer: Renderer,
-  ) { this.loading = false; }
+  ) {
+    this.loading = false;
+
+    this.mys.carritoEliminar.subscribe(eliminar => {
+      console.log('Eliminado desde dentro de tickets', eliminar);
+
+      // dejar cuando tien compra detalles
+      this.comprasDetalles = this.comprasDetalles.filter(x => !(x.idServicio === eliminar.idServicio && x.asiento === eliminar.asiento));
+
+      // // dejar cuando NOO tiene compraDetalles
+      // this.mys.ticket.comprasDetalles = this.mys.ticket.comprasDetalles.filter(x => !(x.idServicio === eliminar.idServicio && x.asiento === eliminar.asiento));
+
+      this.mys.temporalComprasCarrito = this.comprasDetalles;
+      this.mys.liberarAsientoDesdeHeader(eliminar);
+    })
+  }
 
   ngOnInit() {
     this.mingoDate = moment().format();
@@ -76,7 +91,6 @@ export class BuyYourTicketPage implements OnInit {
     this.maxbackDate = moment().add(1, 'y').format();
     this.getCityOrigin();
     this.goDate = moment().format();
-
   }
 
   ionViewWillEnter() {

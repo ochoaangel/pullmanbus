@@ -45,6 +45,10 @@ export class PaymentMethodsPage implements OnInit {
         }
       });
     });
+
+
+
+
   }
 
   mostrarTarifaAtachada = false;

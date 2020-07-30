@@ -8,7 +8,8 @@ import { PopMenuComponent } from '../components/pop-menu/pop-menu.component';
 import { Router } from '@angular/router';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { Platform } from '@ionic/angular';
-import { Observable, Subscriber } from 'rxjs';
+import { Observable, Subscriber, Subject } from 'rxjs';
+import { IntegradorService } from './integrador.service';
 
 
 @Injectable({
@@ -25,6 +26,9 @@ export class MyserviceService {
   total = 0;
   temporalComprasCarrito;
 
+  public carritoAgregar = new Subject<any>();  // PARA SUBSCIBIRSE
+  public carritoEliminar = new Subject<any>();  // PARA SUBSCIBIRSE
+
 
   comprarMas = false;
 
@@ -36,9 +40,17 @@ export class MyserviceService {
     public popoverCtrl: PopoverController,
     public router: Router,
     private nativeStorage: NativeStorage,
-    public platform: Platform
+    public platform: Platform,
+    private integradorService: IntegradorService
   ) { }
 
+  // trabaja en conjunto con variable carrito Dinamico
+  actualizarCarritoAgregar(val) {
+    this.carritoAgregar.next(val);
+  }
+  actualizarCarritoEliminar(val) {
+    this.carritoEliminar.next(val);
+  }
 
 
 
@@ -389,5 +401,27 @@ export class MyserviceService {
 
 
 
+  // liberar asiento desde el header ("elimimar" es el objeto del asiento de compraDetalles del carrito que se elimina)
+  liberarAsientoDesdeHeader(eliminar) {
+    // preparo el asiento a eliminar
+    let asiento = {
+      'asiento': eliminar.asiento,
+      'servicio': eliminar.idServicio,
+      'fecha': eliminar.service.fechaSalida,
+      'origen': eliminar.service.idTerminalOrigen,
+      'destino': eliminar.service.idTerminalDestino,
+      'integrador': eliminar.service.integrador
+    };
+
+    this.integradorService.liberarAsiento(asiento).subscribe(resp => {
+      if (resp == 0) {
+        // this.mys.alertShow('¡Verifique!', 'alert', 'Error al liberar asiento.');
+        console.warn('Error al liberar asiento.');
+      } else {
+        console.log('Liberado Asiento Exitosamente');
+      }
+    });
+
+  }
 
 }

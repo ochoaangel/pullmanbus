@@ -1,23 +1,26 @@
-<section class="tableComplete" *ngIf="compras.length >0">
+<section class="tableComplete" *ngIf="compras.length >0" style="width: 100%;">
 
   <header class="headerRow">
-    <!-- <div class="headerCell">Boleto</div> -->
     <div class="headerCell">Fecha salida</div>
     <div class="headerCell">Hora salida</div>
     <div class="headerCell">Origen</div>
     <div class="headerCell">Destino</div>
     <div class="headerCell">Asiento</div>
     <div class="headerCell">Valor</div>
+    <div class="headerCell"></div>
   </header>
 
-  <div class="normalRow" *ngFor="let compra of compras;">
-    <!-- <div class="normalCell">{{compra.idServicio}}</div> -->
+  <div class="normalRow" *ngFor="let compra of compras;let i= index">
     <div class="normalCell">{{compra.service.fechaSalida}}</div>
     <div class="normalCell">{{compra.service.horaSalida}}</div>
     <div class="normalCell">{{compra.service.terminalSalida}}</div>
     <div class="normalCell">{{compra.service.terminaLlegada}}</div>
     <div class="normalCell">{{compra.asiento}}</div>
     <div class="normalCell">${{compra.valor.toLocaleString('de-DE')}}</div>
+    <div class="normalCell" (click)="eliminarBoleto(i)">
+      <ion-icon name="close-circle" style="font-size: 1rem; color: var(--ion-color-primary);margin: 3px -8px;">
+      </ion-icon>
+    </div>
   </div>
 
 </section>
