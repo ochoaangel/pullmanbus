@@ -264,6 +264,7 @@ export class MyserviceService {
     const alert = await this.alertController.create({
       header: titulo,
       message: `<ion-icon name="${icon}"></ion-icon><br>${mensajeHTML}`,
+      mode: 'ios',
       buttons: [
         {
           text: 'Ok',

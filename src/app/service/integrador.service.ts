@@ -292,10 +292,36 @@ export class IntegradorService {
         return this.http.get<any[]>(urlFinal);
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////////
 
+    enviarMailAnulacion(params: any): Observable<any[]> {
+        let urlFinal;
+        let dirProxy = '/srv-privado-web/rest/anular/enviarMailAnulacion';
+        this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy;
+        return this.http.post<any[]>(urlFinal, params);
+    }
+
+    confirmarBuscarBoleto(params: any): Observable<any[]> {
+        let urlFinal;
+        let dirProxy = '/srv-privado-web/rest/confirmacion/buscarBoleto';
+        this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy;
+        return this.http.post<any[]>(urlFinal, params);
+    }
+
+    confirmarBoleto(params: any): Observable<any[]> {
+        let urlFinal;
+        let dirProxy = '/srv-privado-web/rest/confirmacion/confirmarBoleto';
+        this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy;
+        return this.http.post<any[]>(urlFinal, params);
+    }
+
+    buscarItinerario(params: any): Observable<any[]> {
+        let urlFinal;
+        let dirProxy = `/srv-privado-web/rest/parametros/buscarItinerario?idServicio=${params.idServicio}`;
+        this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy;
+        return this.http.get<any[]>(urlFinal);
+    }
 
 
 
 }
-
-// http://pullmanapi.pasajeschile.cl/

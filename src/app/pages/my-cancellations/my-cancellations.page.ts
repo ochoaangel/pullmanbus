@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MyserviceService } from 'src/app/service/myservice.service';
 import { IntegradorService } from 'src/app/service/integrador.service';
 import { Router } from '@angular/router';
-import { PopoverController } from '@ionic/angular';
+import { PopoverController, AlertController } from '@ionic/angular';
 import { PopMenuComponent } from 'src/app/components/pop-menu/pop-menu.component';
 import { PopCartComponent } from 'src/app/components/pop-cart/pop-cart.component';
 import * as moment from 'moment';
@@ -27,12 +27,12 @@ export class MyCancellationsPage implements OnInit {
   myData = {
     tiposDeCuentas: [
       {
-        codigo: "CuentaCorriente",
-        nombre: "Cuenta Corriente"
+        codigo: 'CuentaCorriente',
+        nombre: 'Cuenta Corriente'
       },
       {
-        codigo: "CuentaVista",
-        nombre: "Cuenta Vista"
+        codigo: 'CuentaVista',
+        nombre: 'Cuenta Vista'
       }
     ],
     tipoDeCuenta: '',
@@ -40,88 +40,88 @@ export class MyCancellationsPage implements OnInit {
     numeroDeCuenta: '',
     bancos: [
       {
-        codigo: "Banco BICE",
-        nombre: "Banco BICE"
+        codigo: 'Banco BICE',
+        nombre: 'Banco BICE'
       },
       {
-        codigo: "BBVA",
-        nombre: "BBVA"
+        codigo: 'BBVA',
+        nombre: 'BBVA'
       },
       {
-        codigo: "Banco Btg Pactual Chile",
-        nombre: "Banco Btg Pactual Chile"
+        codigo: 'Banco Btg Pactual Chile',
+        nombre: 'Banco Btg Pactual Chile'
       },
       {
-        codigo: "Banco Consorcio",
-        nombre: "Banco Consorcio"
+        codigo: 'Banco Consorcio',
+        nombre: 'Banco Consorcio'
       },
       {
-        codigo: "Banco de Chile",
-        nombre: "Banco de Chile"
+        codigo: 'Banco de Chile',
+        nombre: 'Banco de Chile'
       },
       {
-        codigo: "BCI",
-        nombre: "BCI"
+        codigo: 'BCI',
+        nombre: 'BCI'
       },
       {
-        codigo: "Banco Estado",
-        nombre: "Banco Estado"
+        codigo: 'Banco Estado',
+        nombre: 'Banco Estado'
       },
       {
-        codigo: "Banco do Brasil S.A.",
-        nombre: "Banco do Brasil S.A."
+        codigo: 'Banco do Brasil S.A.',
+        nombre: 'Banco do Brasil S.A.'
       },
       {
-        codigo: "Banco Falabella",
-        nombre: "Banco Falabella"
+        codigo: 'Banco Falabella',
+        nombre: 'Banco Falabella'
       },
       {
-        codigo: "Banco Internacional",
-        nombre: "Banco Internacional"
+        codigo: 'Banco Internacional',
+        nombre: 'Banco Internacional'
       },
       {
-        codigo: "Banco Itaú Chile",
-        nombre: "Banco Itaú Chile"
+        codigo: 'Banco Itaú Chile',
+        nombre: 'Banco Itaú Chile'
       },
       {
-        codigo: "Banco Penta",
-        nombre: "Banco Penta"
+        codigo: 'Banco Penta',
+        nombre: 'Banco Penta'
       },
       {
-        codigo: "Banco Ripley",
-        nombre: "Banco Ripley"
+        codigo: 'Banco Ripley',
+        nombre: 'Banco Ripley'
       },
       {
-        codigo: "Banco Santander",
-        nombre: "Banco Santander"
+        codigo: 'Banco Santander',
+        nombre: 'Banco Santander'
       },
       {
-        codigo: "Banco Security",
-        nombre: "Banco Security"
+        codigo: 'Banco Security',
+        nombre: 'Banco Security'
       },
       {
-        codigo: "Corpbanca",
-        nombre: "Corpbanca"
+        codigo: 'Corpbanca',
+        nombre: 'Corpbanca'
       },
       {
-        codigo: "Deutsche Bank Chile",
-        nombre: "Deutsche Bank Chile"
+        codigo: 'Deutsche Bank Chile',
+        nombre: 'Deutsche Bank Chile'
       },
       {
-        codigo: "HSBC Bank Chile",
-        nombre: "HSBC Bank Chile"
+        codigo: 'HSBC Bank Chile',
+        nombre: 'HSBC Bank Chile'
       },
       {
-        codigo: "JP Morgan Chase Bank",
-        nombre: "JP Morgan Chase Bank"
+        codigo: 'JP Morgan Chase Bank',
+        nombre: 'JP Morgan Chase Bank'
       },
       {
-        codigo: "Rabobank Chile",
-        nombre: "Rabobank Chile"
+        codigo: 'Rabobank Chile',
+        nombre: 'Rabobank Chile'
       },
       {
-        codigo: "Scotiabank",
-        nombre: "Scotiabank"
+        codigo: 'Scotiabank',
+        nombre: 'Scotiabank'
       }
     ],
     rutTitular: '',
@@ -132,8 +132,7 @@ export class MyCancellationsPage implements OnInit {
     private integrador: IntegradorService,
     private router: Router,
     private popoverCtrl: PopoverController,
-
-
+    private alertController: AlertController
   ) { }
 
   ngOnInit() {
@@ -217,7 +216,7 @@ export class MyCancellationsPage implements OnInit {
       event,
       mode: 'ios',
       backdropDismiss: true,
-      cssClass: "popMenu"
+      cssClass: 'popMenu'
     });
     await popoverMenu.present();
 
@@ -241,7 +240,7 @@ export class MyCancellationsPage implements OnInit {
       event,
       mode: 'ios',
       backdropDismiss: true,
-      cssClass: "popCart"
+      cssClass: 'popCart'
     });
     await popoverCart.present();
 
@@ -265,45 +264,59 @@ export class MyCancellationsPage implements OnInit {
       this.mys.alertShow('Verifique', 'alert', 'Ingrese un numero de cuenta');
     } else {
 
-      //console.log('listooooooxxxxx');
-      // this.ionViewWillEnter()
-      let contador = 0;
-      this.boletosAll.forEach(boleto => {
-        // selecciona los seleccionado y activos
-        if (boleto.selected) {
-          contador++;
-          let data = {
-            boleto: boleto.boleto,
-            codigoTransaccion: boleto.codigo,
-            rutSolicitante: this.usuario.usuario.rut,
-            usuario: `${this.usuario.usuario.nombre} ${this.usuario.usuario.apellidoPaterno}`,
-            banco: this.myData.banco,
-            tipoCuenta: this.myData.tipoDeCuenta,
-            numeroCuenta: this.myData.numeroDeCuenta,
-            rutTitular: this.myData.rutTitular,
-            integrador: boleto.integrador
-          };
-          // alert(contador)
-          //console.log('dataEnviadoParaAnular', contador, data);
-          this.loading++;
-          this.integrador.anularBoleto(data).subscribe((resultado: any) => {
-            this.loading--;
-            //console.log('resultado', resultado);
-            if (resultado.exito) {
-              this.mys.alertShow('¡Éxito!', 'done-all', `Boleto ${data.boleto}  <br> Fecha:${boleto.imprimeVoucher.fechaSalida} <br> Hora:${boleto.imprimeVoucher.horaSalida} <br> Asiento:${boleto.imprimeVoucher.asiento} <br> Boleto devuelto Exitosamente`);
-              // alert(`Boleto ${data.boleto}  <br> Fecha:${boleto.imprimeVoucher.fechaSalida} <br> Hora:${boleto.imprimeVoucher.horaSalida} <br> Asiento:${boleto.imprimeVoucher.asiento} <br> Boleto devuelto Exitosamente`);
-            } else {
-              this.mys.alertShow('Verifique', 'alert', `Boleto ${data.boleto}  <br> Fecha: ${boleto.imprimeVoucher.fechaSalida} <br> Hora: ${boleto.imprimeVoucher.horaSalida} <br> Asiento: ${boleto.imprimeVoucher.asiento} <br> ${resultado.mensaje || 'Error al devolver el Boleto, Verifique los datos e intente nuevamente..'}`);
-              // alert(`Boleto ${data.boleto}  <br> Fecha:${boleto.imprimeVoucher.fechaSalida} <br> Hora:${boleto.imprimeVoucher.horaSalida} <br> Asiento:${boleto.imprimeVoucher.asiento} <br> ${resultado.mensaje || 'Error al devolver el Boleto, Verifique los datos e intente nuevamente..'}`);
-            }
-          });
+      // ver si hay boletos this.nBoletosSeleccionados.
+      let seleccionados = this.boletosAll.filter(x => x.selected);
+      if (seleccionados.length > 0) {
+        this.presentAlertConfirmAnulacion();
+      } else {
+        this.mys.alertShow('Verifique', 'alert', `Seleccione boletos para anular.<br> Intente nuevamente..'}`);
+      }
 
-          if (contador === this.nBoletosSeleccionados) {
-            this.nBoletosSeleccionados = 0;
-            this.ionViewWillEnter();
-          }
-        }
-      });
+
+      // //console.log('listooooooxxxxx');
+      // // this.ionViewWillEnter()
+      // let contador = 0;
+      // this.boletosAll.forEach(boleto => {
+      //   // selecciona los seleccionado y activos
+      //   if (boleto.selected) {
+      //     contador++;
+      //     let data = {
+      //       boleto: boleto.boleto,
+      //       codigoTransaccion: boleto.codigo,
+      //       rutSolicitante: this.usuario.usuario.rut,
+      //       usuario: `${this.usuario.usuario.nombre} ${this.usuario.usuario.apellidoPaterno}`,
+      //       banco: this.myData.banco,
+      //       tipoCuenta: this.myData.tipoDeCuenta,
+      //       numeroCuenta: this.myData.numeroDeCuenta,
+      //       rutTitular: this.myData.rutTitular,
+      //       integrador: boleto.integrador
+      //     };
+      //     // alert(contador)
+      //     //console.log('dataEnviadoParaAnular', contador, data);
+      //     this.loading++;
+      //     this.integrador.anularBoleto(data).subscribe((resultado: any) => {
+      //       this.loading--;
+      //       //console.log('resultado', resultado);
+      //       if (resultado.exito) {
+      //         this.mys.alertShow('¡Éxito!', 'done-all', `Boleto ${data.boleto}  <br> Fecha:${boleto.imprimeVoucher.fechaSalida} <br> Hora:${boleto.imprimeVoucher.horaSalida} <br> Asiento:${boleto.imprimeVoucher.asiento} <br> Boleto devuelto Exitosamente`);
+      //         // alert(`Boleto ${data.boleto}  <br> Fecha:${boleto.imprimeVoucher.fechaSalida} <br> Hora:${boleto.imprimeVoucher.horaSalida} <br> Asiento:${boleto.imprimeVoucher.asiento} <br> Boleto devuelto Exitosamente`);
+      //         console.log('enviando correo al email ', (this.usuario.usuario.email).toLowerCase());
+      //         this.integrador.enviarMailAnulacion({ email: (this.usuario.usuario.email).toLowerCase() }).subscribe(email => {
+      //           console.log('resp de enviarMailAnulacion: ', email);
+      //         })
+
+      //       } else {
+      //         this.mys.alertShow('Verifique', 'alert', `Boleto ${data.boleto}  <br> Fecha: ${boleto.imprimeVoucher.fechaSalida} <br> Hora: ${boleto.imprimeVoucher.horaSalida} <br> Asiento: ${boleto.imprimeVoucher.asiento} <br> ${resultado.mensaje || 'Error al devolver el Boleto, Verifique los datos e intente nuevamente..'}`);
+      //         // alert(`Boleto ${data.boleto}  <br> Fecha:${boleto.imprimeVoucher.fechaSalida} <br> Hora:${boleto.imprimeVoucher.horaSalida} <br> Asiento:${boleto.imprimeVoucher.asiento} <br> ${resultado.mensaje || 'Error al devolver el Boleto, Verifique los datos e intente nuevamente..'}`);
+      //       }
+      //     });
+
+      //     if (contador === this.nBoletosSeleccionados) {
+      //       this.nBoletosSeleccionados = 0;
+      //       this.ionViewWillEnter();
+      //     }
+      //   }
+      // });
     }
 
   }
@@ -326,5 +339,78 @@ export class MyCancellationsPage implements OnInit {
     this.ionViewWillEnter();
   }
 
-}
 
+  async presentAlertConfirmAnulacion() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Confirmar acción',
+      mode: 'ios',
+      message: ' <ion-icon  name="information-circle"></ion-icon> <br >¿Esta seguro de devolver boleto(s) seleccionado(s)?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Si, Continuar',
+          handler: () => {
+            console.log('Confirm Okay');
+
+            //console.log('listooooooxxxxx');
+            // this.ionViewWillEnter()
+            let contador = 0;
+            this.boletosAll.forEach(boleto => {
+              // selecciona los seleccionado y activos
+              if (boleto.selected) {
+                contador++;
+                let data = {
+                  boleto: boleto.boleto,
+                  codigoTransaccion: boleto.codigo,
+                  rutSolicitante: this.usuario.usuario.rut,
+                  usuario: `${this.usuario.usuario.nombre} ${this.usuario.usuario.apellidoPaterno}`,
+                  banco: this.myData.banco,
+                  tipoCuenta: this.myData.tipoDeCuenta,
+                  numeroCuenta: this.myData.numeroDeCuenta,
+                  rutTitular: this.myData.rutTitular,
+                  integrador: boleto.integrador
+                };
+                // alert(contador)
+                //console.log('dataEnviadoParaAnular', contador, data);
+                this.loading++;
+                this.integrador.anularBoleto(data).subscribe((resultado: any) => {
+                  this.loading--;
+                  //console.log('resultado', resultado);
+                  if (resultado.exito) {
+                    this.mys.alertShow('¡Éxito!', 'done-all', `Boleto ${data.boleto}  <br> Fecha:${boleto.imprimeVoucher.fechaSalida} <br> Hora:${boleto.imprimeVoucher.horaSalida} <br> Asiento:${boleto.imprimeVoucher.asiento} <br> Boleto devuelto Exitosamente`);
+                    // alert(`Boleto ${data.boleto}  <br> Fecha:${boleto.imprimeVoucher.fechaSalida} <br> Hora:${boleto.imprimeVoucher.horaSalida} <br> Asiento:${boleto.imprimeVoucher.asiento} <br> Boleto devuelto Exitosamente`);
+                    console.log('enviando correo al email ', (this.usuario.usuario.email).toLowerCase());
+                    this.integrador.enviarMailAnulacion({ email: (this.usuario.usuario.email).toLowerCase() }).subscribe(email => {
+                      console.log('resp de enviarMailAnulacion: ', email);
+                    });
+
+                  } else {
+                    this.mys.alertShow('Verifique', 'alert', `Boleto ${data.boleto}  <br> Fecha: ${boleto.imprimeVoucher.fechaSalida} <br> Hora: ${boleto.imprimeVoucher.horaSalida} <br> Asiento: ${boleto.imprimeVoucher.asiento} <br> ${resultado.mensaje || 'Error al devolver el Boleto, Verifique los datos e intente nuevamente..'}`);
+                    // alert(`Boleto ${data.boleto}  <br> Fecha:${boleto.imprimeVoucher.fechaSalida} <br> Hora:${boleto.imprimeVoucher.horaSalida} <br> Asiento:${boleto.imprimeVoucher.asiento} <br> ${resultado.mensaje || 'Error al devolver el Boleto, Verifique los datos e intente nuevamente..'}`);
+                  }
+                });
+
+                if (contador === this.nBoletosSeleccionados) {
+                  this.nBoletosSeleccionados = 0;
+                  this.ionViewWillEnter();
+                }
+              }
+            });
+
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+
+}

@@ -19,16 +19,16 @@
     </div>
 
     <div style="display: inline; width: 5%;"></div>
-    
+
   </div>
-  
-  
-  
+
+
+
   <div class="cabeceraTitulo">
     Finalizar Compra
   </div>
-  
-  <ion-progress-bar type="indeterminate" *ngIf="loading>0"  color="secondary"></ion-progress-bar>
+
+  <ion-progress-bar type="indeterminate" *ngIf="loading>0" color="secondary"></ion-progress-bar>
 </ion-header>
 <ion-content *ngIf="encabezado">
   <div style="width: 100%;height: 100%; background-color: var(--ion-color-primary);padding: 3vw;">
@@ -50,8 +50,8 @@
               </ion-col>
             </ion-row>
 
-            <div >
-              <ion-row style="background-color:#FF621D; font-size: 12px; color: white; margin-top: 10px;"> 
+            <div>
+              <ion-row style="background-color:#FF621D; font-size: 12px; color: white; margin-top: 10px;">
                 <ion-col size="6">Código transacción </ion-col>
                 <ion-col size="6">Código de autorización </ion-col>
               </ion-row>
@@ -61,46 +61,46 @@
               </ion-row>
             </div>
 
-            <div >
+            <div>
               <ion-row style="background-color:#FF621D; font-size: 12px; color: white; margin-top: 10px;">
-                <ion-col  size="6">Fecha transacción</ion-col>
-                <ion-col  size="6">País </ion-col>
+                <ion-col size="6">Fecha transacción</ion-col>
+                <ion-col size="6">País </ion-col>
               </ion-row>
               <ion-row style="font-size: 12px; margin-top: 10px;">
-                  <ion-col  size="6">{{encabezado.fechaCompra}}</ion-col>
-                  <ion-col  size="6">Chile </ion-col>
+                <ion-col size="6">{{encabezado.fechaCompra}}</ion-col>
+                <ion-col size="6">Chile </ion-col>
               </ion-row>
             </div>
-            <div >
+            <div>
               <ion-row style="background-color:#FF621D; font-size: 12px; color: white; margin-top: 10px;">
-                <ion-col  size="6">Comercio </ion-col>
-                <ion-col  size="6">Url comercio </ion-col>
+                <ion-col size="6">Comercio </ion-col>
+                <ion-col size="6">Url comercio </ion-col>
               </ion-row>
               <ion-row style="font-size: 12px; margin-top: 10px;">
-                  <ion-col  size="6">Pullman Bus </ion-col>
-                  <ion-col  size="6">www.pullmanbus.com </ion-col>
+                <ion-col size="6">Pullman Bus </ion-col>
+                <ion-col size="6">www.pullmanbus.com </ion-col>
               </ion-row>
             </div>
 
-            <div >
+            <div>
               <ion-row style="background-color:#FF621D; font-size: 12px; color: white; margin-top: 10px;">
                 <ion-col size="6">Tipo pago</ion-col>
                 <ion-col size="6">Nro Tarjeta</ion-col>
               </ion-row>
               <ion-row style="font-size: 12px; margin-top: 10px;">
-                  <ion-col size="6" >{{encabezado.tipoPagoFormateado}}</ion-col>
-                  <ion-col size="6" >XXXX-XXXX-XXXX-{{encabezado.numeroTarjeta}}</ion-col>
+                <ion-col size="6">{{encabezado.tipoPagoFormateado}}</ion-col>
+                <ion-col size="6">XXXX-XXXX-XXXX-{{encabezado.numeroTarjeta}}</ion-col>
               </ion-row>
             </div>
 
-            <div >
+            <div>
               <ion-row style="background-color:#FF621D; font-size: 12px; color: white; margin-top: 10px;">
                 <ion-col size="6">Nro Cuotas</ion-col>
                 <ion-col size="6">Monto(Pesos chilenos)</ion-col>
               </ion-row>
               <ion-row style="font-size: 12px; margin-top: 10px;">
-                  <ion-col size="6" >{{encabezado.numeroCuota}}</ion-col>
-                  <ion-col size="6" >{{encabezado.montoFormateado}}</ion-col>
+                <ion-col size="6">{{encabezado.numeroCuota}}</ion-col>
+                <ion-col size="6">{{encabezado.montoFormateado}}</ion-col>
               </ion-row>
             </div>
           </ion-col>
@@ -111,12 +111,12 @@
           <ion-col size="12" style="text-align: center;">
             <ion-row style="justify-content: center;">
               <ion-text color="primary">
-                <h6>¡A ocurrido un problema en el pago!</h6>
+                <h6>¡Ha ocurrido un error en el pago!</h6>
               </ion-text>
             </ion-row>
             <ion-row>
               <ion-col size="12" style=" font-size: 10px;">
-                <div>Desea volver a realizar pago</div>
+                <div>Por favor realice nuevamente la transacción</div>
                 <!--<ion-button fill="clear" style="width: 50%; outline: none;"  routerLink="/purchase-detail">
                   <ion-icon src="assets/icon/previous.svg"></ion-icon>
                   <div style="display: inline;  text-align: right;padding-right: 7px;  text-transform: none">Volver</div>
@@ -154,16 +154,16 @@
               <ion-col size="4">Descarga</ion-col>
             </ion-row>
             <ion-row *ngFor="let bol of encabezado.boletos">
-              <ion-col size="8"  style="font-size: 12px; margin-top: 10px;" >{{bol.boleto}}</ion-col>
+              <ion-col size="8" style="font-size: 12px; margin-top: 10px;">{{bol.boleto}}</ion-col>
               <ion-col size="4">
                 <!--input type="button" class="ingresar"
                   value="Descargar" (click)="btnDescargaPasaje(bol.boleto,bol.codigo)" /-->
-                  <button  (click)="btnDescargaPasaje(bol.boleto,bol.codigo)" block>
-                    <img src="assets/images/download.png" width="24">
-              </button>
+                <button (click)="btnDescargaPasaje(bol.boleto,bol.codigo)" block>
+                  <img src="assets/images/download.png" width="24">
+                </button>
               </ion-col>
             </ion-row>
-            </div>
+          </div>
         </ion-col>
 
       </ion-grid>
@@ -175,7 +175,8 @@
 
 
 <ion-footer>
-  <div style=" width: 100%; display: flex;align-items: center;justify-content: center; background-color: var(--ion-color-primary);">
+  <div
+    style=" width: 100%; display: flex;align-items: center;justify-content: center; background-color: var(--ion-color-primary);">
 
     <ion-button fill="clear" style="color: white;  width: 50%; outline: none;" routerLink="/home">
       <ion-icon src="assets/icon/previous.svg"></ion-icon>
