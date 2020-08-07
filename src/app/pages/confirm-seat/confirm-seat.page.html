@@ -1,48 +1,36 @@
 <ion-header no-border>
+
   <div class="cabeceraGeneral">
     <div style="display: inline; width: 5%;"></div>
 
-    <div (click)="pruebaBorrar()"
-      style="display: inline; width: 10%;border-color: white; border: solid 1px;margin: 5px;">
+    <div style="display: inline; width: 10%;border-color: white; border: solid
+      1px;margin: 5px;">
       Es
     </div>
 
-    <div style="width: 60%; height: 100%; display: flex; align-items: center; justify-content: center;"
-      (click)="prueba()">
-      <img src="assets/images/titulo.png" style="height: 90%;object-fit: scale-down;position: relative; z-index: 10; ">
+    <div style="width: 60%; height: 100%; display: flex; align-items: center;
+      justify-content: center;" routerLink="/home">
+      <img src="assets/images/titulo.png" style="height: 90%;object-fit:
+        scale-down;position: relative; z-index: 10;" />
     </div>
 
-    <div style="display: inline; width: 10%;" (click)="popCart($event)">
+    <div style="display: inline; width: 10%;">
       <ion-icon name="md-cart" style="font-size: 25px;padding-top: 5px;"></ion-icon>
-      <ion-badge color="dark" mode="ios" *ngIf="comprasDetalles && comprasDetalles.length>0"
-        style="position: absolute; left: 81%; top: 10%; font-size: 0.7rem;opacity: 0.7; background-color: #0247ac;">
-        {{comprasDetalles.length}}</ion-badge>
     </div>
 
-    <div style="display: inline; width: 10%" (click)="popMenu($event)">
+    <div style="display: inline; width: 10%">
       <ion-icon name="md-menu" style="font-size: 25px;padding-top: 5px;"></ion-icon>
     </div>
 
     <div style="display: inline; width: 5%;"></div>
   </div>
 
-  <div class="cabeceraTitulo" style="font-size: 4vh;" *ngIf="way==='go'">
-    Pasaje de ida
+  <div class="cabeceraTitulo">
+    Seleccione Asiento para confirmarlo.
   </div>
-  <div class="cabeceraTitulo" style="font-size: 0.8rem;" *ngIf="way==='go'">
-    {{this.ticket.origin.nombre  | titlecase }} a {{this.ticket.destiny.nombre  | titlecase }} {{goDate}}
-  </div>
-
-  <div class="cabeceraTitulo" style="font-size: 4vh;" *ngIf="way==='back'">
-    Pasaje de regreso
-  </div>
-  <div class="cabeceraTitulo" style="font-size: 0.8rem;" *ngIf="way==='back'">
-    {{this.ticket.destiny.nombre  | titlecase }} a {{this.ticket.origin.nombre  | titlecase }} {{backDate}}
-  </div>
-  <ion-progress-bar type="indeterminate" *ngIf="loadingBus || loadingSeat>0 || loadingService" color="secondary">
-  </ion-progress-bar>
 
 </ion-header>
+<ion-progress-bar type="indeterminate" *ngIf="loading>0" color="secondary"></ion-progress-bar>
 
 <ion-content>
   <div style="width: 100%;height: 100%; background-color: var(--ion-color-primary);padding: 0">
@@ -85,10 +73,17 @@
 
 
 
-            <ion-row *ngIf="!loadingService && allServices.length === 0">
+            <!-- <ion-row *ngIf="!loadingService && allServices.length === 0">
               <ion-col size="12">
                 <p> No disponemos de servicios con las características definidas.</p>
                 <p>Intente nuevamente con otras características..</p>
+              </ion-col>
+            </ion-row> -->
+            <ion-row *ngIf="!loadingService && allServices.length === 0">
+              <ion-col size="12">
+                <p>Buscando..</p>
+                <p> Estamos buscando servicios que cumplan las características deseadas..</p>
+                <p>Espere un momento..</p>
               </ion-col>
             </ion-row>
 
@@ -213,7 +208,7 @@
 
               <div style="display: flex; flex-direction: row; padding-top: 0.5rem;">
                 <!-- columna 0   -->
-                <div class="myServiceColumn" style="width: 20%;text-align: left;     padding-left: 1%;">
+                <div class="myServiceColumn" style="width: 15%;text-align: left;     padding-left: 1%;">
                   <!-- <div class="myServiceRow">
                     <div
                       style="border: 1px solid var(--ion-color-primary);color: var(--ion-color-primary);    width: fit-content; padding: 0 0.5rem; border-radius: 10px; font-size: 0.6rem; font-weight: bold; ">
@@ -226,43 +221,31 @@
                   </div> -->
                 </div>
                 <!-- columna 1   -->
-                <div class="myServiceColumn" style="width: 45%;text-align: left;     padding-left: 1%;">
+                <div class="myServiceColumn" style="width: 35%;text-align: left;     padding-left: 1%;">
                   <div class="myServiceRow">
                     <div
                       style="border: 1px solid var(--ion-color-primary);color: var(--ion-color-primary);    width: fit-content; padding: 0 0.5rem; border-radius: 10px; font-size: 0.6rem; font-weight: bold; ">
                       Piso 1</div>
                   </div>
                   <div class="myServiceRow">{{svc.servicioPrimerPiso | titlecase}}</div>
-                  <div class="myServiceRow">
+                  <!-- <div class="myServiceRow">
                     <div style="display: flex; align-items: center; justify-content: left;">Valor:
                       ${{svc.tarifaPrimerPisoInternet}}</div>
-                  </div>
+                  </div> -->
                 </div>
 
                 <!-- columna 2   -->
-                <div class="myServiceColumn" style="width: 35%;text-align: left;">
-                  <div *ngIf="svc.tarifaSegundoPiso" class="myServiceColumn">
-                    <div class="myServiceRow">
-                      <div
-                        style="background-color: var(--ion-color-primary); color: white;width: fit-content; padding: 0 0.5rem; border-radius: 10px; font-size: 0.6rem;">
-                        Piso 2</div>
-                    </div>
-                    <div class="myServiceRow">{{svc.servicioSegundoPiso | titlecase}}</div>
-                    <div class="myServiceRow">
-                      <div style="display: flex; align-items: center; justify-content: left;">Valor:
-                        ${{svc.tarifaSegundoPisoInternet}}</div>
-                    </div>
+                <div class="myServiceColumn" style="width: 45%;text-align: left;" *ngIf="svc.tarifaSegundoPiso">
+                  <div class="myServiceRow">
+                    <div
+                      style="background-color: var(--ion-color-primary); color: white;width: fit-content; padding: 0 0.5rem; border-radius: 10px; font-size: 0.6rem;">
+                      Piso 2</div>
                   </div>
-                </div>
-
-                <!-- columna 2   -->
-                <div class="myServiceColumn" style="width: 30%;text-align: left;">
-                  <div style="display: flex; justify-content: center; align-items: center; width: 100%;">
-                    <ion-button fill="clear" (click)="getItinerario(svc.idServicio)"
-                      style="color: white; outline: none;  --padding-start: 0;--padding-end: 0; color: var(--ion-color-primary); text-transform: none; font-size: 0.8rem;max-height: 2rem;">
-                      <ion-icon name="list"></ion-icon>Itinerario
-                    </ion-button>
-                  </div>
+                  <div class="myServiceRow">{{svc.servicioSegundoPiso | titlecase}}</div>
+                  <!-- <div class="myServiceRow">
+                    <div style="display: flex; align-items: center; justify-content: left;">Valor:
+                      ${{svc.tarifaSegundoPisoInternet}}</div>
+                  </div> -->
                 </div>
 
 
@@ -286,31 +269,33 @@
                               {{'Asientos en promoción'}} </span></div>
 
                           <div
-                            style="display: flex; flex-direction: row; margin-top: 1vh; margin-bottom: 3vh; height: 100%; max-width: 18rem; margin: 0 auto;justify-content: center;padding-bottom: 3vh;">
+                            style="display: flex; flex-direction: row; margin-top: 1vh; height: 100%; max-width: 18rem; margin: 0 auto;justify-content: center;">
 
                             <!-- //* pisos y asientos -->
                             <div style="width: 100vw;">
 
                               <!-- //* Botones seleccion para piso1 piso2 -->
-                              <div style="width: 100%; display: flex;margin-bottom: 0.6rem;">
-                                <div style="width: 50%; text-align: -webkit-center;">
+                              <div style="width: 100%; display: flex;margin-bottom: 0.6rem; justify-content: center;">
+                                <div style="width: 50%; text-align: -webkit-center;"
+                                  *ngIf="svc.idClaseBusPisoUno === clase">
                                   <div [ngClass]="piso1 ? 'pisoShow' : 'pisoHiden'" (click)="cambiarPiso(1)">
                                     Piso 1
                                   </div>
                                 </div>
-                                <div style="width: 50%; text-align: -webkit-center;" *ngIf="tarifaPiso2">
+                                <div style="width: 50%; text-align: -webkit-center;"
+                                  *ngIf="tarifaPiso2 && svc.idClaseBusPisoDos === clase">
                                   <div [ngClass]="!piso1 ? 'pisoShow' : 'pisoHiden'" (click)="cambiarPiso(2)">
                                     Piso 2
                                   </div>
                                 </div>
                               </div>
 
-                              <div style="width: 100%; text-align: center;font-size: 0.9rem;">
+                              <div style="width: 100%; text-align: center;">
                                 <div *ngIf="piso1">
-                                  {{svc.servicioPrimerPiso | titlecase}} - ${{svc.tarifaPrimerPisoInternet}}
+                                  {{svc.servicioPrimerPiso | titlecase}}
                                   {{svc.idaVueltaPisoUno? '(Asientos con promoción)':null }}</div>
                                 <div *ngIf="!piso1 && tarifaPiso2">
-                                  {{svc.servicioSegundoPiso | titlecase}} - ${{svc.tarifaSegundoPisoInternet}}
+                                  {{svc.servicioSegundoPiso | titlecase}}
                                   {{svc.idaVueltaPisoDos? '(Asientos con promoción)':null }}</div>
                               </div>
 
@@ -423,7 +408,7 @@
   <!-- 1ra fila menu -->
   <div style="width: 100%; display: flex;justify-content: space-around;">
 
-    <ion-button fill="clear" (click)="atras()"
+    <ion-button fill="clear" (click)="regresar()"
       style="color: var(--ion-color-primary); outline: none; width: 100%;   --padding-start: 0;--padding-end: 0;">
       <ion-icon src="assets/icon/previous.svg" style="color: var(--ion-color-primary);font-size: 2.5vw;padding: 3px;">
       </ion-icon>
@@ -478,7 +463,7 @@
 
     <ion-button fill="clear"
       style="color: var(--ion-color-primary); outline: none; width: 100%;   --padding-start: 0;--padding-end: 0;"
-      *ngIf="tarifaTotal == 0" (click)="continuar()">
+      *ngIf="comprasDetalles.length>0" (click)="continuar()">
 
       <div style="display: inline;  text-align: left; text-transform: none;font-size: 1rem;font-weight:bold">
         Continuar
@@ -492,7 +477,7 @@
 
 
   <!-- 2da Fila menu -->
-  <div
+  <!-- <div
     style=" width: 100%; display: flex;align-items: center;justify-content: center; background-color: var(--ion-color-primary);"
     *ngIf="(tarifaTotal &&  tarifaTotal !== 0)||comprasDetalles.length>0">
     <div
@@ -507,7 +492,7 @@
       </div>
       <ion-icon src="assets/icon/previous.svg" style="transform: rotate(180deg);font-size: 2.5vw;"></ion-icon>
     </ion-button>
-  </div>
+  </div> -->
 
 
 </ion-footer>

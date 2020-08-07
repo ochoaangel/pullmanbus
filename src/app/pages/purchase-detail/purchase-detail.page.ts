@@ -345,6 +345,16 @@ export class PurchaseDetailPage implements OnInit {
     this.router.navigateByUrl('/buy-your-ticket');
   }
 
+  getItinerario(idServicio) {
+    console.log('idServicio', idServicio);
+    this.loading = true;
+    setTimeout(() => {
+      this.loading = false;
+    }, 1000);
+    this.mys.showItinerario(idServicio);
+  }
+
+
 }
 
 

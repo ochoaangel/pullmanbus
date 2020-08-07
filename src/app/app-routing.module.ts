@@ -126,6 +126,14 @@ const routes: Routes = [
     path: 'contact-form',
     loadChildren: () => import('./pages/contact-form/contact-form.module').then( m => m.ContactFormPageModule)
   },
+  {
+    path: 'ticket-confirmation',
+    loadChildren: () => import('./pages/ticket-confirmation/ticket-confirmation.module').then( m => m.TicketConfirmationPageModule)
+  },
+  {
+    path: 'confirm-seat',
+    loadChildren: () => import('./pages/confirm-seat/confirm-seat.module').then( m => m.ConfirmSeatPageModule)
+  },
 
 
 

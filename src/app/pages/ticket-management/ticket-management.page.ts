@@ -300,11 +300,11 @@ export class TicketManagementPage implements OnInit {
     // this.router.navigateByUrl(data.destino);
   }
 
-  pruebaBorrar() {
-    this.mys.alertShow(
-      'En desarrollo..',
-      'timer',
-      'En desarrollo..',
-    );
-  }
+  // pruebaBorrar() {
+  //   this.mys.alertShow(
+  //     'En desarrollo..',
+  //     'timer',
+  //     'En desarrollo..',
+  //   );
+  // }
 }

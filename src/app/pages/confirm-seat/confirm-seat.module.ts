@@ -1,6 +1,3 @@
-import { TicketPageRoutingModule } from './ticket-routing.module';
-import { TicketPage } from './ticket.page';
-
 
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -15,6 +12,8 @@ import { PopMenuComponent } from 'src/app/components/pop-menu/pop-menu.component
 import { PopCartComponent } from 'src/app/components/pop-cart/pop-cart.component';
 import { PopLanguageComponent } from 'src/app/components/pop-language/pop-language.component';
 import { ComponentsModule } from 'src/app/components/components.module';
+import { ConfirmSeatPageRoutingModule } from './confirm-seat-routing.module';
+import { ConfirmSeatPage } from './confirm-seat.page';
 
 
 
@@ -26,11 +25,8 @@ import { ComponentsModule } from 'src/app/components/components.module';
     IonicModule,
     PipesModule,
     ComponentsModule,
-
-    TicketPageRoutingModule,
+    ConfirmSeatPageRoutingModule
   ],
-  declarations: [
-    TicketPage,
-  ]
+  declarations: [ConfirmSeatPage]
 })
-export class TicketPageModule { }
+export class ConfirmSeatPageModule { }

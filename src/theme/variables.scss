@@ -172,3 +172,19 @@ select:focus {
 input {
   background-color: transparent;
 }
+
+.alertItinerario {
+  .alert-wrapper {
+    max-width: 400px;
+  }
+  table {
+    font-size: 1rem;
+    text-transform: capitalize;
+    tr {
+      height: 2rem;
+    }
+    td {
+      padding: 0 3px;
+    }
+  }
+}

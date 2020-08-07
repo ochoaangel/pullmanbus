@@ -43,6 +43,7 @@
 
           <div style="width: 100%;height: 100%;display: flex;justify-content: center;align-items: center;">
             <div style="display: flex;flex-direction: column;max-width: 50rem;min-width: 350px;">
+
               <div routerLink='/ticket-change' style="width: 100%; margin: 1rem 0;font-size: 1.2rem; display: flex;flex-direction: row;
                 margin: 1rem 0;background-color: var(--ion-color-primary); padding: 2rem;justify-content: center;
                 color: white;align-items: center; border-radius: 1rem;  cursor: pointer;
@@ -50,6 +51,7 @@
                 <ion-icon name="git-merge" style="zoom: 2;padding: 0 1rem;"></ion-icon>
                 <div>Cambio de Boleto</div>
               </div>
+
               <div *ngIf="usuario" routerLink='/my-cancellations' style="width: 100%; margin: 1rem 0; font-size: 1.2rem;display: flex;flex-direction: row;
                 margin: 1rem 0;background-color: var(--ion-color-primary); padding: 2rem;justify-content: center;
                 color: white;align-items: center; border-radius: 1rem;  cursor: pointer;
@@ -58,14 +60,16 @@
                 </ion-icon>
                 <div>Devoluciones de Boletos</div>
               </div>
-              <div (click)="pruebaBorrar()" style="width: 100%; margin: 1rem 0; font-size: 1.2rem;display: flex;flex-direction: row;
+
+              <div routerLink='/ticket-confirmation' style="width: 100%; margin: 1rem 0; font-size: 1.2rem;display: flex;flex-direction: row;
                 margin: 1rem 0;background-color: var(--ion-color-primary); padding: 2rem;justify-content: center;
                 color: white;align-items: center; border-radius: 1rem;   cursor: pointer;
                 ">
                 <ion-icon name="done-all" style="zoom: 2;padding: 0 1rem;">
                 </ion-icon>
-                <div>Confirmación de Boletos</div>
+                <div>Confirmación de Boletos.</div>
               </div>
+
             </div>
           </div>
 

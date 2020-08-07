@@ -1,0 +1,215 @@
+<ion-header no-border>
+
+  <div class="cabeceraGeneral">
+    <div style="display: inline; width: 5%;"></div>
+
+    <div style="display: inline; width: 10%;border-color: white; border: solid
+      1px;margin: 5px;">
+      Es
+    </div>
+
+    <div style="width: 60%; height: 100%; display: flex; align-items: center;
+      justify-content: center;" routerLink="/home">
+      <img src="assets/images/titulo.png" style="height: 90%;object-fit:
+        scale-down;position: relative; z-index: 10;" />
+    </div>
+
+    <div style="display: inline; width: 10%;">
+      <ion-icon name="md-cart" style="font-size: 25px;padding-top: 5px;"></ion-icon>
+    </div>
+
+    <div style="display: inline; width: 10%">
+      <ion-icon name="md-menu" style="font-size: 25px;padding-top: 5px;"></ion-icon>
+    </div>
+
+    <div style="display: inline; width: 5%;"></div>
+  </div>
+
+  <div class="cabeceraTitulo">
+    Confirmar Boleto
+  </div>
+  <ion-progress-bar type="indeterminate" *ngIf="loading>0" color="secondary"></ion-progress-bar>
+
+</ion-header>
+
+<ion-content style="width: 100%;height: 100%;">
+  <div style=" height: 100%; background-color: white ; ">
+    <ion-grid class=" ion-no-padding ion-no-margin" style="height: 100%;">
+      <ion-row class=" ion-no-padding  ion-no-margin ion-justify-content-center" style="height: 100%">
+        <ion-col class=" ion-no-padding ion-no-margin" size="12" style="text-align: center;">
+
+          <!-- formulario -->
+          <div *ngIf="!confirmed && !exito" style="width: 100%; display: flex; justify-content: center;">
+
+            <form (ngSubmit)="validar(forma)" #forma="ngForm" novalidate=""
+              style="max-width: 25rem;align-items: center;">
+
+              <!-- titulo -->
+              <ion-row>
+                <ion-col size="12" style="text-align: center;">
+                  <div
+                    style="width: 100%; color:  white; background-color: var(--ion-color-primary); text-align: center;padding: 1rem 0;">
+                    INGRESA LOS DATOS PARA CONFIRMAR BOLETO
+                  </div>
+                </ion-col>
+              </ion-row>
+
+              <!-- 1 -->
+              <ion-row>
+                <ion-col size="12" style="">
+                  <div style="position: relative;" class="overIonInput">
+                    <!-- <ion-input placeholder="fecha" type="text" name="fecha" #fecha [(ngModel)]="myData.fecha" required
+                      clearOnEdit></ion-input> -->
+                    <ion-datetime displayFormat="DD/MM/YYYY" placeholder="Fecha de Boleto" cancelText="Cancelar"
+                      doneText="Listo" mode="ios" [(ngModel)]="myData.fecha" (ionChange)="cambioFecha()" name="fecha"
+                      [min]="this.minDate" [max]="this.maxDate">
+                    </ion-datetime>
+                  </div>
+                </ion-col>
+              </ion-row>
+
+              <!-- 1 -->
+              <ion-row>
+                <ion-col size="12" style="">
+                  <div style="position: relative;" class="overIonInput">
+                    <ion-input placeholder="boleto" type="text" name="boleto" #boleto [(ngModel)]="myData.boleto"
+                      required clearOnEdit></ion-input>
+                  </div>
+                </ion-col>
+              </ion-row>
+
+              <!-- 1 -->
+              <ion-row>
+                <ion-col size="12" style="">
+                  <div style="position: relative;" class="overIonInput">
+                    <ion-input placeholder="Correo" type="email" name="email" #email [(ngModel)]="myData.email" required
+                      clearOnEdit></ion-input>
+                  </div>
+                </ion-col>
+              </ion-row>
+
+              <!-- 1 -->
+              <ion-row>
+                <ion-col size="12" style="">
+                  <div style="position: relative;" class="overIonInput">
+                    <ion-input placeholder="Confirme correo" type="email" name="email2" #email2
+                      [(ngModel)]="myData.email2" required clearOnEdit></ion-input>
+                  </div>
+                </ion-col>
+              </ion-row>
+
+
+
+
+              <ion-row>
+                <!-- <ion-col size="12" style="" routerLink="/confirm-seat"> -->
+                <ion-col size="12" style="" (click)="consultarBoleto()">
+                  <input type="button" class="ingresar" value="Consultar" style="width: 10rem;" />
+                  <!-- <input type="button" class="ingresar" value="Consultar" type="submit" style="width: 10rem;" /> -->
+                </ion-col>
+              </ion-row>
+
+            </form>
+
+          </div>
+
+
+          <!-- felicitaciones -->
+          <div *ngIf="exito"
+            style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center;">
+
+            <div style="width: 25rem; height: 25rem; flex-direction: column;">
+
+              <div style="zoom: 2; color: var(--ion-color-secondary);">Felicidades</div>
+              <div style="margin: 1rem;padding: 0 2rem;">Su compra ha sido realizada con éxito, se ha enviado un mail a
+                su correo con el comprobante de compra.
+              </div>
+              <div>
+                <ion-icon name="done-all" style="color: var(--ion-color-secondary);zoom: 3;"></ion-icon>
+              </div>
+            </div>
+          </div>
+
+
+          <!-- Error -->
+          <div *ngIf="!exito && loading<1 && confirmed"
+            style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center;">
+
+            <div style="width: 25rem; height: 25rem; flex-direction: column;">
+
+              <!-- <div style="zoom: 1.5; color: var(--ion-color-secondary);">Felicidades</div> -->
+              <div style="margin: 1rem;padding: 0 2rem;">
+                Hemos tenido inconvenientes con su boleto<br>
+                Contáctenos o intente nuevamente..
+              </div>
+              <div>
+                <!-- <ion-icon name="done-all" style="color: var(--ion-color-secondary);zoom: 3;"></ion-icon> -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Espere un momento -->
+          <div *ngIf="loading>0"
+            style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center;">
+            <div style="width: 25rem; height: 25rem; flex-direction: column;">
+              <div style="zoom: 1.5; color: var(--ion-color-secondary);">Espere un momento..</div>
+            </div>
+          </div>
+
+
+
+          <!-- <div style="width: 100%;height: 100%;display: flex;justify-content: center;align-items: center;">
+            <div style="display: flex;flex-direction: column;max-width: 50rem;min-width: 350px;">
+              <div routerLink='/ticket-change' style="width: 100%; margin: 1rem 0;font-size: 1.2rem; display: flex;flex-direction: row;
+                margin: 1rem 0;background-color: var(--ion-color-primary); padding: 2rem;justify-content: center;
+                color: white;align-items: center; border-radius: 1rem;  cursor: pointer;
+                ">
+                <ion-icon name="git-merge" style="zoom: 2;padding: 0 1rem;"></ion-icon>
+                <div>Cambio de Boleto</div>
+              </div>
+              <div *ngIf="usuario" routerLink='/my-cancellations' style="width: 100%; margin: 1rem 0; font-size: 1.2rem;display: flex;flex-direction: row;
+                margin: 1rem 0;background-color: var(--ion-color-primary); padding: 2rem;justify-content: center;
+                color: white;align-items: center; border-radius: 1rem;  cursor: pointer;
+                ">
+                <ion-icon name="git-compare" style="zoom: 2;padding: 0 1rem;">
+                </ion-icon>
+                <div>Devoluciones de Boletos</div>
+              </div>
+              <div (click)="pruebaBorrar()" style="width: 100%; margin: 1rem 0; font-size: 1.2rem;display: flex;flex-direction: row;
+                margin: 1rem 0;background-color: var(--ion-color-primary); padding: 2rem;justify-content: center;
+                color: white;align-items: center; border-radius: 1rem;   cursor: pointer;
+                ">
+                <ion-icon name="done-all" style="zoom: 2;padding: 0 1rem;">
+                </ion-icon>
+                <div>Confirmación de Boletos</div>
+              </div>
+            </div>
+          </div> -->
+
+
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+</ion-content>
+
+
+<ion-footer no-border style=" width: 100vw;background-color: var(--ion-color-primary);color: white;">
+  <div style="width: 100%; display: flex;justify-content: center;">
+
+    <ion-button slot="start" fill="clear" style="color: white; width: 50%; outline: none;" routerLink="/home">
+      <ion-icon src="assets/icon/previous.svg"></ion-icon>
+      <div style="display: inline; text-align: left ;padding-left: 10px; text-transform: none;">Regresar</div>
+    </ion-button>
+
+    <ion-button *ngIf="confirmed" slot="start" fill="clear" style="color: white; width: 50%; outline: none;"
+      (click)="confirmarOtro()">
+      <!-- <ion-icon src="assets/icon/previous.svg"></ion-icon> -->
+      <div style="display: inline; text-align: left ;padding-left: 10px; text-transform: none;">Confirmar Otro Boleto
+      </div>
+    </ion-button>
+
+    <div style="width: 50%;" *ngIf="!confirmed"> </div>
+
+  </div>
+</ion-footer>

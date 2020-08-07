@@ -80,8 +80,20 @@
                   </div>
                   <div
                     style=" width: 33%;padding: 1vh 0px;margin: 0rem  1rem;display: flex; justify-content: center; align-items: center;flex-direction: column; color: black; font-weight: bold; ">
+                    <div>Piso</div>
+                    <div>{{pasaje.piso}}</div>
+                  </div>
+                  <div
+                    style=" width: 33%;padding: 1vh 0px;margin: 0rem  1rem;display: flex; justify-content: center; align-items: center;flex-direction: column; color: black; font-weight: bold; ">
                     <div>Asiento</div>
                     <div>{{pasaje.asiento}}</div>
+                  </div>
+                  <div
+                    style=" width: 33%;padding: 1vh 0px;margin: 0rem  1rem;display: flex; justify-content: center; align-items: center;flex-direction: column; color: black; font-weight: bold; ">
+                    <div>Tipo</div>
+                    <div>
+                      {{pasaje.piso ===1 ? pasaje.service.servicioPrimerPiso.toLowerCase():pasaje.service.servicioSegundoPiso.toLowerCase() | titlecase}}
+                    </div>
                   </div>
 
                   <div
@@ -146,7 +158,6 @@
                     <div style="font-size: 0.7rem;" *ngIf="pasaje.way==='back'">{{ticket.origin.nombre}}</div>
                     <div style="font-size: 0.7rem;font-weight: bold;">{{pasaje.service.terminaLlegada}}</div>
                   </div>
-
                 </div>
 
                 <!-- //* linea4 -->
@@ -160,7 +171,15 @@
                   </div>
 
                   <div
-                    style=" width: 66%; display: flex; justify-content: center; align-items: center;padding-top: 0.5rem; ">
+                    style=" width: 33%; display: flex; justify-content: center; align-items: center;padding-top: 0.5rem; ">
+                    <ion-button fill="clear" (click)="getItinerario(pasaje.idServicio)"
+                      style="color: white; outline: none;  --padding-start: 0;--padding-end: 0; color: var(--ion-color-primary); text-transform: none; font-size: 0.8rem;width: 9rem;max-height: 2rem;">
+                      <ion-icon name="list"></ion-icon>Itinerario
+                    </ion-button>
+                  </div>
+
+                  <div
+                    style=" width: 33%; display: flex; justify-content: center; align-items: center;padding-top: 0.5rem; ">
                     <ion-button fill="clear"
                       (click)="EliminarPasaje(pasaje.way, pasaje.idServicio, pasaje.asiento, pasaje.fila, pasaje.columna,pasaje.piso)"
                       style="color: white; outline: none;  --padding-start: 0;--padding-end: 0; --background: #0f69ec;text-transform: none; font-size: 0.8rem;width: 9rem;max-height: 2rem;">
@@ -172,6 +191,15 @@
 
               </div>
             </div>
+
+
+            <!-- X
+            <table><tr><th>Ciudad</th><th>Terminal</th><th>Hora Salida</th></tr>
+
+              <tr><td>Celda 4</td><td>Celda 5</td><td>Celda 6</td></tr>
+
+            </table>
+X -->
 
 
 
