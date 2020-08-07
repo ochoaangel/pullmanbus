@@ -7,10 +7,10 @@ import { Observable } from 'rxjs';
 })
 export class IntegradorService {
 
-    sinProxy = false;
-    // urlBase = 'https://pullmanapi.pasajeschile.cl';
+    sinProxy = true;
+    urlBase = 'https://pullmanapi.pasajeschile.cl';
     // urlBase = 'http://clamber.pullman.cl'    
-    urlBase = 'http://qa.pullman.cl'
+    // urlBase = 'http://qa.pullman.cl'
 
     // sinProxy= false 
     //urlBase = 'http://pullmanapi.pasajeschile.cl'
@@ -296,30 +296,34 @@ export class IntegradorService {
     ////////////////////////////////////////////////////////////////////////////////////////
 
     enviarMailAnulacion(params: any): Observable<any[]> {
-        let urlFinal;
-        let dirProxy = '/srv-privado-web/rest/anular/enviarMailAnulacion';
-        this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy;
+        // let urlFinal;
+        // let dirProxy = '/srv-privado-web/rest/anular/enviarMailAnulacion';
+        // this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy;
+        let urlFinal = '/srv-privado-web/rest/anular/enviarMailAnulacion';
         return this.http.post<any[]>(urlFinal, params);
     }
 
     confirmarBuscarBoleto(params: any): Observable<any[]> {
-        let urlFinal;
-        let dirProxy = '/srv-privado-web/rest/confirmacion/buscarBoleto';
-        this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy;
+        // let urlFinal;
+        // let dirProxy = '/srv-privado-web/rest/confirmacion/buscarBoleto';
+        // this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy;
+        let urlFinal = 'http://qa.pullman.cl/srv-privado-web/rest/confirmacion/buscarBoleto';
         return this.http.post<any[]>(urlFinal, params);
     }
 
     confirmarBoleto(params: any): Observable<any[]> {
-        let urlFinal;
-        let dirProxy = '/srv-privado-web/rest/confirmacion/confirmarBoleto';
-        this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy;
+        // let urlFinal;
+        // let dirProxy = '/srv-privado-web/rest/confirmacion/confirmarBoleto';
+        // this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy;
+        let urlFinal = 'http://qa.pullman.cl/srv-privado-web/rest/confirmacion/confirmarBoleto';
         return this.http.post<any[]>(urlFinal, params);
     }
 
     buscarItinerario(params: any): Observable<any[]> {
-        let urlFinal;
-        let dirProxy = `/srv-privado-web/rest/parametros/buscarItinerario?idServicio=${params.idServicio}`;
-        this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy;
+        // let urlFinal;
+        // let dirProxy = `/srv-privado-web/rest/parametros/buscarItinerario?idServicio=${params.idServicio}`;
+        // this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy;
+        let urlFinal = `http://qa.pullman.cl/srv-privado-web/rest/parametros/buscarItinerario?idServicio=${params.idServicio}`;
         return this.http.get<any[]>(urlFinal);
     }
 
