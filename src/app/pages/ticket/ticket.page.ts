@@ -275,6 +275,7 @@ export class TicketPage implements OnInit {
 
       setTimeout(() => {
         this.integradorService.getPlanillaVertical(servicio).subscribe(myBusFromApi => {
+          console.log('myBusFromApi', myBusFromApi);
           // agrego bus y sumo 20 a cada asiento de piso 2
 
           let estadoPrevio = this.allServices[nServiceSeleccion]['checked'];
@@ -283,7 +284,9 @@ export class TicketPage implements OnInit {
           });
           this.allServices[nServiceSeleccion]['checked'] = estadoPrevio;
 
-          this.allServices[nServiceSeleccion]['my_Bus'] = this.sumar20piso2(myBusFromApi);
+          // this.allServices[nServiceSeleccion]['my_Bus'] = this.sumar20piso2(myBusFromApi);
+          this.allServices[nServiceSeleccion]['my_Bus'] = myBusFromApi;
+
           this.allServices[nServiceSeleccion].checked = true;
           this.comprasByService = this.allServices[nServiceSeleccion]['my_comprasByService'];
           this.serviceSelectedNumber = nServiceSeleccion;

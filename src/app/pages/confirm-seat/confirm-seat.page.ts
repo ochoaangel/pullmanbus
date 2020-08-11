@@ -310,7 +310,8 @@ export class ConfirmSeatPage implements OnInit {
           });
           this.allServices[nServiceSeleccion]['checked'] = estadoPrevio;
 
-          this.allServices[nServiceSeleccion]['my_Bus'] = this.sumar20piso2(myBusFromApi);
+          // this.allServices[nServiceSeleccion]['my_Bus'] = this.sumar20piso2(myBusFromApi);
+          this.allServices[nServiceSeleccion]['my_Bus'] = myBusFromApi;
           this.allServices[nServiceSeleccion].checked = true;
           this.comprasByService = this.allServices[nServiceSeleccion]['my_comprasByService'];
           this.serviceSelectedNumber = nServiceSeleccion;
