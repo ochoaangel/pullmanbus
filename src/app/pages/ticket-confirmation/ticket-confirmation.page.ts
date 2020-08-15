@@ -54,7 +54,6 @@ export class TicketConfirmationPage implements OnInit {
 
   confirmed = null;
   exito = false;
-  // confirmed = 1;
 
   constructor(
     private mys: MyserviceService,
@@ -94,34 +93,33 @@ export class TicketConfirmationPage implements OnInit {
           this.confirmed.service.fechaServicio,
           'DD/MM/YYYY',
         ).format('YYYYMMDD'),
-        // fechaServicio: "20200720",
 
         fechaSalida: moment(
           `${this.confirmed.service.fechaSalida}-${this.confirmed.service.horaSalida}`,
           'DD/MM/YYYY-HH:mm',
         ).format('YYYYMMDDHHmm'),
-        // fechaSalida: "202007201730",
 
-        idOrigen: this.confirmed.init.obtenerServicio.origen,
-        idDestino: this.confirmed.init.obtenerServicio.destino,
+        idOrigen: this.confirmed.service.idTerminalOrigen,
+        idDestino: this.confirmed.service.idTerminalDestino,
         piso: this.confirmed.piso,
         email: this.confirmed.init.form.email
       }
 
       console.log('*****Paso Final envío a ConfirmarBoleto', dataToSend);
+      console.log('-----this.confirmed', this.confirmed);
 
       this.loading++;
       this.integrador.confirmarBoleto(dataToSend).subscribe((resp: any) => {
         this.loading--;
         console.log('resp de api definitiva ConfirmarBoleto', resp);
 
+        if (resp.resultado.exito) {
+          this.exito = true;
+        } else {
+          this.exito = false;
+        }
 
-
-      })
-
-
-
-
+      });
 
 
     } else {
@@ -159,7 +157,6 @@ export class TicketConfirmationPage implements OnInit {
   }
 
   consultar() {
-    // console.log('this.myData', this.myData);
 
     this.existeBoleto = null;
 
@@ -350,9 +347,6 @@ export class TicketConfirmationPage implements OnInit {
     );
   }
 
-  cambioFecha() {
-    // console.log('cambio de fecha', this.myData);
-  }
 
 
   confirmarOtro() {
@@ -400,7 +394,6 @@ export class TicketConfirmationPage implements OnInit {
     } else {
       console.log('Validado Formulario');
 
-      // '/confirm-seat'
       this.loading++
       this.integrador.confirmarBuscarBoleto({ boleto: this.myData.boleto }).subscribe((resp: any) => {
         this.loading--
