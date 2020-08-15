@@ -158,19 +158,9 @@ export class MyCancellationsPage implements OnInit {
             // buscando cada boleto de cada transaccion
             this.boletosAll = [];
             this.loading++;
-            // let myParams = { email: usuario.usuario.email, codigo: transaccion.codigo }
             let myParams = { codigo: transaccion.codigo };
-            //console.log('myParams', myParams);
             this.integrador.buscarBoletoPorCodigo(myParams).subscribe(boletos => {
               this.loading--;
-              //console.log('------------------boletos', boletos);
-
-              // boletos.forEach(boleto => {
-              //   if (boleto.estado === 'ACT') {
-              //     boleto['selected'] = false
-              //     this.boletosAll.push(boleto)
-              //   }
-              // });
               boletos.forEach(boleto => {
                 let estadoBoleto = '';
 
@@ -193,11 +183,8 @@ export class MyCancellationsPage implements OnInit {
                 }
                 boleto['selected'] = false;
                 boleto['myEstado'] = estadoBoleto;
-                // this.boletosAll.push(boleto)
-                // estadoBoleto === 'ACTIVO' ? this.boletosAll.push(boleto):this.boletosAll.push(boleto)
                 estadoBoleto === 'ACTIVO' ? this.boletosAll.push(boleto) : null;
               });
-              //console.log('this.boletosAll', this.boletosAll);
             });
           });
 
@@ -210,7 +197,6 @@ export class MyCancellationsPage implements OnInit {
 
 
   async popMenu(event) {
-    //console.log('event', event);
     const popoverMenu = await this.popoverCtrl.create({
       component: PopMenuComponent,
       event,
@@ -250,8 +236,6 @@ export class MyCancellationsPage implements OnInit {
   }
 
   anular() {
-    // //console.log('this.boletosAll', this.boletosAll);
-    // //console.log('',);
     if (!this.myData.rutTitular) {
       this.mys.alertShow('Verifique', 'alert', 'Ingrese rut del Titular');
     } else if (!/^[0-9]+[-|-]{1}[0-9kK]{1}$/.test(this.myData.rutTitular)) {
@@ -271,52 +255,6 @@ export class MyCancellationsPage implements OnInit {
       } else {
         this.mys.alertShow('Verifique', 'alert', `Seleccione boletos para anular.<br> Intente nuevamente..'}`);
       }
-
-
-      // //console.log('listooooooxxxxx');
-      // // this.ionViewWillEnter()
-      // let contador = 0;
-      // this.boletosAll.forEach(boleto => {
-      //   // selecciona los seleccionado y activos
-      //   if (boleto.selected) {
-      //     contador++;
-      //     let data = {
-      //       boleto: boleto.boleto,
-      //       codigoTransaccion: boleto.codigo,
-      //       rutSolicitante: this.usuario.usuario.rut,
-      //       usuario: `${this.usuario.usuario.nombre} ${this.usuario.usuario.apellidoPaterno}`,
-      //       banco: this.myData.banco,
-      //       tipoCuenta: this.myData.tipoDeCuenta,
-      //       numeroCuenta: this.myData.numeroDeCuenta,
-      //       rutTitular: this.myData.rutTitular,
-      //       integrador: boleto.integrador
-      //     };
-      //     // alert(contador)
-      //     //console.log('dataEnviadoParaAnular', contador, data);
-      //     this.loading++;
-      //     this.integrador.anularBoleto(data).subscribe((resultado: any) => {
-      //       this.loading--;
-      //       //console.log('resultado', resultado);
-      //       if (resultado.exito) {
-      //         this.mys.alertShow('¡Éxito!', 'done-all', `Boleto ${data.boleto}  <br> Fecha:${boleto.imprimeVoucher.fechaSalida} <br> Hora:${boleto.imprimeVoucher.horaSalida} <br> Asiento:${boleto.imprimeVoucher.asiento} <br> Boleto devuelto Exitosamente`);
-      //         // alert(`Boleto ${data.boleto}  <br> Fecha:${boleto.imprimeVoucher.fechaSalida} <br> Hora:${boleto.imprimeVoucher.horaSalida} <br> Asiento:${boleto.imprimeVoucher.asiento} <br> Boleto devuelto Exitosamente`);
-      //         console.log('enviando correo al email ', (this.usuario.usuario.email).toLowerCase());
-      //         this.integrador.enviarMailAnulacion({ email: (this.usuario.usuario.email).toLowerCase() }).subscribe(email => {
-      //           console.log('resp de enviarMailAnulacion: ', email);
-      //         })
-
-      //       } else {
-      //         this.mys.alertShow('Verifique', 'alert', `Boleto ${data.boleto}  <br> Fecha: ${boleto.imprimeVoucher.fechaSalida} <br> Hora: ${boleto.imprimeVoucher.horaSalida} <br> Asiento: ${boleto.imprimeVoucher.asiento} <br> ${resultado.mensaje || 'Error al devolver el Boleto, Verifique los datos e intente nuevamente..'}`);
-      //         // alert(`Boleto ${data.boleto}  <br> Fecha:${boleto.imprimeVoucher.fechaSalida} <br> Hora:${boleto.imprimeVoucher.horaSalida} <br> Asiento:${boleto.imprimeVoucher.asiento} <br> ${resultado.mensaje || 'Error al devolver el Boleto, Verifique los datos e intente nuevamente..'}`);
-      //       }
-      //     });
-
-      //     if (contador === this.nBoletosSeleccionados) {
-      //       this.nBoletosSeleccionados = 0;
-      //       this.ionViewWillEnter();
-      //     }
-      //   }
-      // });
     }
 
   }
@@ -358,9 +296,6 @@ export class MyCancellationsPage implements OnInit {
           text: 'Si, Continuar',
           handler: () => {
             console.log('Confirm Okay');
-
-            //console.log('listooooooxxxxx');
-            // this.ionViewWillEnter()
             let contador = 0;
             this.boletosAll.forEach(boleto => {
               // selecciona los seleccionado y activos
@@ -377,15 +312,11 @@ export class MyCancellationsPage implements OnInit {
                   rutTitular: this.myData.rutTitular,
                   integrador: boleto.integrador
                 };
-                // alert(contador)
-                //console.log('dataEnviadoParaAnular', contador, data);
                 this.loading++;
                 this.integrador.anularBoleto(data).subscribe((resultado: any) => {
                   this.loading--;
-                  //console.log('resultado', resultado);
                   if (resultado.exito) {
                     this.mys.alertShow('¡Éxito!', 'done-all', `Boleto ${data.boleto}  <br> Fecha:${boleto.imprimeVoucher.fechaSalida} <br> Hora:${boleto.imprimeVoucher.horaSalida} <br> Asiento:${boleto.imprimeVoucher.asiento} <br> Boleto devuelto Exitosamente`);
-                    // alert(`Boleto ${data.boleto}  <br> Fecha:${boleto.imprimeVoucher.fechaSalida} <br> Hora:${boleto.imprimeVoucher.horaSalida} <br> Asiento:${boleto.imprimeVoucher.asiento} <br> Boleto devuelto Exitosamente`);
                     console.log('enviando correo al email ', (this.usuario.usuario.email).toLowerCase());
                     this.integrador.enviarMailAnulacion({ email: (this.usuario.usuario.email).toLowerCase() }).subscribe(email => {
                       console.log('resp de enviarMailAnulacion: ', email);
@@ -393,7 +324,6 @@ export class MyCancellationsPage implements OnInit {
 
                   } else {
                     this.mys.alertShow('Verifique', 'alert', `Boleto ${data.boleto}  <br> Fecha: ${boleto.imprimeVoucher.fechaSalida} <br> Hora: ${boleto.imprimeVoucher.horaSalida} <br> Asiento: ${boleto.imprimeVoucher.asiento} <br> ${resultado.mensaje || 'Error al devolver el Boleto, Verifique los datos e intente nuevamente..'}`);
-                    // alert(`Boleto ${data.boleto}  <br> Fecha:${boleto.imprimeVoucher.fechaSalida} <br> Hora:${boleto.imprimeVoucher.horaSalida} <br> Asiento:${boleto.imprimeVoucher.asiento} <br> ${resultado.mensaje || 'Error al devolver el Boleto, Verifique los datos e intente nuevamente..'}`);
                   }
                 });
 
@@ -411,6 +341,5 @@ export class MyCancellationsPage implements OnInit {
 
     await alert.present();
   }
-
 
 }

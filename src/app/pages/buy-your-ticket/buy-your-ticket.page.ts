@@ -76,9 +76,6 @@ export class BuyYourTicketPage implements OnInit {
       // dejar cuando tien compra detalles
       this.comprasDetalles = this.comprasDetalles.filter(x => !(x.idServicio === eliminar.idServicio && x.asiento === eliminar.asiento));
 
-      // // dejar cuando NOO tiene compraDetalles
-      // this.mys.ticket.comprasDetalles = this.mys.ticket.comprasDetalles.filter(x => !(x.idServicio === eliminar.idServicio && x.asiento === eliminar.asiento));
-
       this.mys.temporalComprasCarrito = this.comprasDetalles;
       this.mys.liberarAsientoDesdeHeader(eliminar);
     })
@@ -142,11 +139,6 @@ export class BuyYourTicketPage implements OnInit {
 
   btnSearch() {
 
-
-    // this.promociones = null;
-    // PREPARO VARIABLES para guardarlas en el service
-
-    // this.ticket = {};
     this.ticket = this.mys.ticket ? {
       comprasDetalles: this.mys.ticket.comprasDetalles,
       comprasDetallesPosicion: this.mys.ticket.comprasDetallesPosicion,

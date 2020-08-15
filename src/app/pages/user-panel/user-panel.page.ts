@@ -23,28 +23,22 @@ export class UserPanelPage implements OnInit {
     private router: Router,
     private popoverCtrl: PopoverController,
     private navCtrl: NavController,
-    private location: Location ,
+    private location: Location,
 
 
   ) { }
 
-  ngOnInit() {
-    //console.log('this.mys.ticket__1',this.mys.ticket); 
-  }
-  
+  ngOnInit() { }
+
   ionViewWillEnter() {
-    //console.log('this.mys.ticket__2',this.mys.ticket); 
-    
+
     this.mys.checkIfExistUsuario().subscribe(exist => {
       exist ? null : this.router.navigateByUrl('/login');
     })
 
     this.loading = true
     this.mys.getUser().subscribe(usuario => {
-      //console.log('usuario', usuario);
-
       usuario ? null : this.router.navigateByUrl('/login')
-
       this.loading = false
       if (usuario.usuario.nombre && usuario.usuario.apellidoPaterno) {
         this.nombre = usuario.usuario.nombre + ' ' + usuario.usuario.apellidoPaterno
@@ -56,7 +50,6 @@ export class UserPanelPage implements OnInit {
   }
 
   async popMenu(event) {
-    //console.log('event', event);
     const popoverMenu = await this.popoverCtrl.create({
       component: PopMenuComponent,
       event,
@@ -97,32 +90,10 @@ export class UserPanelPage implements OnInit {
 
   cerrarSesion() {
     this.mys.closeSessionUser().subscribe(data => {
-      //console.log('ejetutada closeSessionUser ');
       this.mys.alertShow('Éxito!!', 'checkmark-circle', 'Sesión cerrada exitosamente..')
       this.router.navigateByUrl('/login')
     })
   }
 
 
-  regresar(){
-    // this.navCtrl.
-    // // //console.log('this.router.getCurrentNavigation()',this.router.getCurrentNavigation());
-    // //console.log('this.router.getCurrentNavigation()',this.navCtrl.);
-    // //console.log('kljhuyb');
-    // //console.log('kljhuyb');
-    // //console.log('jgfjhsjgdhfsd',this.location.getState());
-    // //console.log(this.navCtrl.back());
-    
-    // //console.log(this.location.back());
-    // //console.log(this.location.back());
-    // //console.log(this.location.back());
-    // //console.log(this.location.back());
-    //console.log('fanksjfsdf',window.history.state());
-    // //console.log('--1',this.router.getCurrentNavigation());
-    // //console.log('XXX2',this.router.url);
-    // //console.log('--3',this.router.navigated);
-
-    
-
-  }
 }

@@ -90,10 +90,8 @@
                 <ion-slides mode="ios">
                   <ion-slide *ngFor="let promo of promociones">
                     <div style="width: 100%; display: flex; flex-direction: row;max-height: 150px;">
-                      <!-- <div style="width: 50%;border-radius: 0.5rem 0 0 0.5rem;"> -->
                       <img src="{{promo.urlImagen}}" alt=""
                         style="object-fit: cover;width: 50vw;border-radius: 1rem 0 0 1rem;border: 1px solid var(--ion-color-light);">
-                      <!-- </div> -->
                       <div
                         style="width: 50vw; align-items: center; justify-content: center; background-color: var(--ion-color-light);border-radius: 0 1rem  1rem 0;color: var(--ion-color-dark);display: flex; flex-direction: column;border: 1px solid var(--ion-color-light);">
                         <div style="font-weight: bold;">{{promo.titulo}}</div>

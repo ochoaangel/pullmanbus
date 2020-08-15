@@ -58,8 +58,6 @@ export class CurrentAccountPage implements OnInit {
   genero($event) { }
 
   validar(forma) {
-    // console.log('forma', forma);
-    // console.log('this.myData.fechaNacimiento', this.myData.fechaNacimiento);
 
     if (this.myData.documentoC && (this.myData.rut.length > 12 || this.myData.rut.length < 11)) {
       this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca un RUT válido');
@@ -88,13 +86,9 @@ export class CurrentAccountPage implements OnInit {
         email: this.myData.email,
         descripcion: this.myData.descripcion,
         estado: '1',
-        // fechaSolicitud: '2020-04-01T03:00:00.000+0000',
         fechaSolicitud: moment().format('YYYY-MM-DDTHH:mm:00.000+0000'),
         responsable: 'null'
       }
-
-
-      // console.log('objetoAenviar', objetoAenviar);
 
       this.integrador.guardarSolicitud(objetoAenviar).subscribe((x: any) => {
         if (x.exito) {
@@ -112,7 +106,6 @@ export class CurrentAccountPage implements OnInit {
   } // fin validar
 
   async popMenu(event) {
-    // console.log('event', event);
     const popoverMenu = await this.popoverCtrl.create({
       component: PopMenuComponent,
       event,
@@ -146,10 +139,6 @@ export class CurrentAccountPage implements OnInit {
       cssClass: 'popCart',
     });
     await popoverCart.present();
-
-    // recibo la variable desde el popover y la guardo en data
-    // const { data } = await popoverCart.onWillDismiss();
-    // this.router.navigateByUrl(data.destino);
   }
 
 

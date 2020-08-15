@@ -11,7 +11,6 @@
     </div>
 
     <div style="display: inline; width: 10%;">
-      <!-- <div style="display: inline; width: 10%;" (click)="popCart($event)"> -->
       <ion-icon name="md-cart" style="font-size: 25px;padding-top: 5px;"></ion-icon>
       <ion-badge color="dark" mode="ios" *ngIf="ticket.comprasDetalles && ticket.comprasDetalles.length>0"
         style="position: absolute; left: 81%; top: 10%; font-size: 0.7rem;opacity: 0.7; background-color: #0247ac;">
@@ -81,25 +80,6 @@
                 Datos Convenio</div>
             </div>
 
-
-            <!-- /////////////////////////////////////////////////////////////////////////////////////////////////////
-            /////////////////////////////////////// INICIO CHEKEAR INPUT RUT  ///////////////////////////////////////////
-            ///////////////////////////////////////////////////////////////////////////////////////////////////// -->
-
-            <!-- input con Sencosud 
-            <div style="text-align: center; display: flex;"
-              *ngIf="(!listaDetalleConvenio || listaDetalleConvenio.length ===0) ">
-
-              <div style="width: 100%; display: flex; justify-content: center; align-items: center;">
-                <input type="text" [textMask]={mask:rutFunction,guide:false} [(ngModel)]="DatosFormulario.rut"
-                  name="rutConvenio" #input_rut (keypress)="tecleado($event)" placeholder="RUT">
-              </div>
-
-            </div>
-            -->
-
-
-
             <div class="animated fadeIn" *ngIf="listaDetalleConvenio.length > 0 ">
 
               <!-- input con convenio -->
@@ -110,17 +90,6 @@
 
                   <input type="text" [textMask]="{mask:rutFunction,guide:false}" [(ngModel)]="DatosFormulario.rut"
                     name="input.Valor" #input_rut placeholder="{{input.Valor}}" style="text-align: center;">
-
-                  <!-- <ion-input type="text" [textMask]="{mask:rutFunction,guide:false}" [(ngModel)]="DatosFormulario.rut"
-                    name="input.Valor" #input_rut (keypress)="tecleado($event)" placeholder="{{input.Valor}}"
-                    clearInput="true">
-                  </ion-input> -->
-
-
-
-
-                  <!-- <input type="text" [textMask]={mask:rutFunction,guide:false} [(ngModel)]="input.Valor"
-                    name="input.Valor" #input_rut (keypress)="tecleado($event)" placeholder="{{input.Valor}}"> -->
 
                 </div>
               </div>
@@ -137,15 +106,6 @@
 
             </div>
 
-            <!-- cual será el ngmodel común para cualquier caso? -->
-            <!-- el input debe aparecer al seleccionar un convenio de arriba en pantalla como abajo en sencosud  y no entiendo bien las condiciones de cada caso-->
-
-
-
-            <!-- /////////////////////////////////////////////////////////////////////////////////////////////////////
-        /////////////////////////////////////// FIN CHEKEAR INPUT RUT  ///////////////////////////////////////////
-        ///////////////////////////////////////////////////////////////////////////////////////////////////// -->
-
             <!-- 4ta fila -->
             <div style="text-align: center; margin-top: 2vh;">
               <div
@@ -153,31 +113,12 @@
                 Informacion de Contacto</div>
             </div>
 
-            <!-- 6ta fila -->
-            <!-- <div
-              style="text-align: center;display: flex; flex-direction: row; align-items: center;align-items: center;">
-              <div style=" width: 35%;">
-                <input style="text-align: center; margin: 0.8vh 0vw 0.8vh 3vw; font-size: 0.8rem;"
-                  [textMask]="maskCodigo" type="text" placeholder="Código País" [(ngModel)]="DatosFormulario.codigo"
-                  name="codigo" #input_codigo (keypress)="tecleado($event)" (keyup.enter)="setFocus('telefono')"
-                  [disabled]="registrado">
-              </div>
-              <div style=" width: 65%;">
-                <input type="text" placeholder="Teléfono" [(ngModel)]="DatosFormulario.telefono" name="telefono"
-                  (keypress)="tecleado($event)" (keyup.enter)="setFocus('email')" [disabled]="registrado"
-                  #input_telefono>
-              </div>
-            </div> -->
-
             <!-- 7ma fila -->
             <div style="text-align: center;padding: 0.5rem 15vw;">
 
               <ion-input type="email" placeholder="E-mail" [(ngModel)]="DatosFormulario.email" name="email" #input_email
                 (keyup.enter)="setFocus('email2')" clearOnEdit="true" clearInput="true">
               </ion-input>
-
-              <!-- <input type="email" placeholder="E-mail" [(ngModel)]="DatosFormulario.email" name="email" #input_email
-                 (keyup.enter)="setFocus('email2')"> -->
             </div>
 
             <!-- 8va fila -->

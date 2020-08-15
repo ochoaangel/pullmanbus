@@ -94,13 +94,11 @@
                 </ion-col>
 
                 <ion-col size="6">
-                  <!-- <ion-col size="12"> -->
 
                   <div class="overIonInput">
                     <ion-input type="text" placeholder="RUT del titular de la cuenta" [(ngModel)]="myData.rutTitular"
                       #rutTitular name='rutTitular'></ion-input>
                   </div>
-                  <!-- </ion-col> -->
                 </ion-col>
               </ion-row>
 
@@ -170,25 +168,6 @@
               </ion-row>
 
             </ion-row>
-
-
-            <!-- botones -->
-            <!-- <ion-row style="padding-top: 10px;" *ngIf="boletosAll.length>0">
-                <ion-col size="6" style="padding:0px 3vw">
-                  <ion-button style="width: 100%; text-transform: none;" (click)="anular()"> Anular </ion-button>
-                </ion-col>
-                <ion-col size="6" style="padding:0px 3vw">
-                  <ion-button style="width: 100%; text-transform: none;">
-                    Volver a Agendar
-                  </ion-button>
-                </ion-col>
-                
-              </ion-row> -->
-            <!-- <ion-icon  name="info"></ion-icon> -->
-
-
-
-
           </ion-col>
         </ion-row>
       </ion-grid>
@@ -202,15 +181,8 @@
 
     <ion-button fill="clear" style="color: white;  width: 50%; outline: none;" routerLink="/ticket-management">
       <ion-icon src="assets/icon/previous.svg"></ion-icon>
-      <!-- <ion-icon src="assets/icon/asiento.svg" style="color: white;"></ion-icon> -->
       <div style="display: inline; text-align: left ;padding-left: 10px; text-transform: none;">Regresar</div>
     </ion-button>
-
-    <!-- <div style="width: 50%;"></div> -->
-    <!-- <ion-button fill="clear" style="color: white;  width: 50%; outline: none;" routerLink="/payment-methods">
-        <div style="display: inline;  text-align: right;padding-right: 7px;  text-transform: none">Continuar</div>
-        <ion-icon src="assets/icon/previous.svg" style="transform: rotate(180deg);"></ion-icon>
-      </ion-button> -->
 
   </div>
 </ion-footer>

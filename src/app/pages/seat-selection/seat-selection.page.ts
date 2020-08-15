@@ -79,13 +79,6 @@ export class SeatSelectionPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    // if (this.mys.way==='go') {
-    //   this.nowService = this.mys.ticket['serviceGo']; 
-    // } else {
-    //   this.nowService = this.mys.ticket['serviceBack']; 
-    // }
-    // this.ticket = this.mys.ticket;
-
     // preparando tarifas
     this.tarifaPiso1 = parseInt(this.nowService.tarifaPrimerPiso.replace('.', ''));
     this.tarifaPiso2 = parseInt(this.nowService.tarifaSegundoPiso.replace('.', ''));

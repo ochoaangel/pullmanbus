@@ -51,28 +51,12 @@ export class TicketManagementPage implements OnInit {
         this.mys.getUser().subscribe((usuario) => {
           console.log('usuario Logueado');
           this.usuario = usuario;
-          // console.log('usuario', usuario);
-
-          // this.myData.rut = this.usuario.usuario.rut;
-          // this.myData.ruti = this.usuario.usuario.rut
-          // this.myData.email = this.usuario.usuario.email;
-          // this.myData.emaili = this.usuario.usuario.email
         });
       }
-      // else {
-      //   console.warn('no hay  usuario registrado');
-      //   this.router.navigateByUrl('/home');
-      //   this.mys.alertShow(
-      //     'Error!!',
-      //     'alert',
-      //     'El usuario debe haber Iniciado Sesión'
-      //   );
-      // }
     });
   }
 
   consultar() {
-    // console.log('this.myData', this.myData);
 
     this.existeBoleto = null;
 
@@ -82,7 +66,6 @@ export class TicketManagementPage implements OnInit {
         .canjeValidar({ boleto: this.myData.boleto + '' })
         .subscribe((validado: any) => {
           this.loading--;
-          // console.log('validado', validado);
 
           if (validado.exito) {
             this.loading++;
@@ -95,8 +78,6 @@ export class TicketManagementPage implements OnInit {
                 console.log('infoBoleto', infoBoleto);
 
                 if (estado === 'IDA' || estado === 'ENTREGADO') {
-                  // console.log('es IDA o entregado');
-
                   /////////////////////////////////////
                   // let actual = moment.utc()
                   let embarcacionFecha = `${infoBoleto.fechaEmbarcacion} ${infoBoleto.horaEmbarcacion}`;
@@ -160,8 +141,6 @@ export class TicketManagementPage implements OnInit {
 
   cambiar(forma) {
     let ventanilla = this.compra === 'ventanilla' ? true : false;
-    // console.log('forma', forma);
-    // console.log('this.myData', this.myData);
 
     if (
       !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.myData.email)
@@ -203,13 +182,10 @@ export class TicketManagementPage implements OnInit {
         let inAllingresado = `${inFecha} ${inHora}`;
 
         let embarcacion = `${this.existeBoleto.fechaEmbarcacion} ${this.existeBoleto.horaEmbarcacion}`;
-        // console.log('embarcacion,inAllingresado', embarcacion, inAllingresado);
 
         if (inAllingresado === embarcacion) {
-          // console.log('SII iguales');
           validadaFecha = true;
         } else {
-          // console.log('NOO iguales');
           this.mys.alertShow(
             'Error!!',
             'alert',
@@ -229,10 +205,6 @@ export class TicketManagementPage implements OnInit {
           usuario: this.myData.email,
           rut: this.myData.rut,
         };
-        // console.log('existeBoleto', this.existeBoleto);
-        // console.log('dataPost', dataPost);
-
-        // console.log("consiltandooooo api");
         this.integrador.canjeBoleto(dataPost).subscribe((res: any) => {
           console.log('res', res);
           if (res.exito) {
@@ -256,7 +228,6 @@ export class TicketManagementPage implements OnInit {
       }
     }
 
-    // this.mys.alertShow('Error!!', 'alert', 'En desarrollo.. ')
   }
 
   async popMenu(event) {
@@ -300,11 +271,4 @@ export class TicketManagementPage implements OnInit {
     // this.router.navigateByUrl(data.destino);
   }
 
-  // pruebaBorrar() {
-  //   this.mys.alertShow(
-  //     'En desarrollo..',
-  //     'timer',
-  //     'En desarrollo..',
-  //   );
-  // }
 }

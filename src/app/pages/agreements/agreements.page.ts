@@ -18,11 +18,7 @@ export class AgreementsPage implements OnInit {
   ngOnInit() {
     this.integrador.getListConvenio().subscribe(resp => {
       this.all = resp;
-
-      // console.log('this.all', this.all);
-
       this.all = this.all.map(x => {
-
         let end = {};
         end['img'] = x.imagenCarrusel;
         end['title'] = x.convenio.descripcion;
@@ -30,8 +26,6 @@ export class AgreementsPage implements OnInit {
 
         return end;
       });
-
-      // console.log('this.all', this.all);
     })
   }
 

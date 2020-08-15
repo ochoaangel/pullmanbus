@@ -6,7 +6,6 @@ import * as moment from 'moment';
 import { PopoverController } from '@ionic/angular';
 import { PopMenuComponent } from 'src/app/components/pop-menu/pop-menu.component';
 import { PopCartComponent } from 'src/app/components/pop-cart/pop-cart.component';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-ticket-confirmation',
@@ -34,9 +33,9 @@ export class TicketConfirmationPage implements OnInit {
 
   myData = {
     fecha: '',
-    boleto: 'INT00075079',
-    email: 'ochoaangel@gmail.com',
-    email2: 'ochoaangel@gmail.com',
+    boleto: '',
+    email: '',
+    email2: '',
   };
 
   confirmed = null;
@@ -109,31 +108,7 @@ export class TicketConfirmationPage implements OnInit {
     }
   }
 
-  ngOnInit() {
-    // this.mys.checkIfExistUsuario().subscribe((res1) => {
-    //   if (res1) {
-    //     this.mys.getUser().subscribe((usuario) => {
-    //       console.log('usuario Logueado');
-    //       this.usuario = usuario;
-    //       // console.log('usuario', usuario);
-
-    //       // this.myData.rut = this.usuario.usuario.rut;
-    //       // this.myData.ruti = this.usuario.usuario.rut
-    //       // this.myData.email = this.usuario.usuario.email;
-    //       // this.myData.emaili = this.usuario.usuario.email
-    //     });
-    //   }
-    //   // else {
-    //   //   console.warn('no hay  usuario registrado');
-    //   //   this.router.navigateByUrl('/home');
-    //   //   this.mys.alertShow(
-    //   //     'Error!!',
-    //   //     'alert',
-    //   //     'El usuario debe haber Iniciado Sesión'
-    //   //   );
-    //   // }
-    // });
-  }
+  ngOnInit() { }
 
   consultar() {
 
@@ -158,8 +133,6 @@ export class TicketConfirmationPage implements OnInit {
                 console.log('infoBoleto', infoBoleto);
 
                 if (estado === 'IDA' || estado === 'ENTREGADO') {
-                  // console.log('es IDA o entregado');
-
                   /////////////////////////////////////
                   // let actual = moment.utc()
                   let embarcacionFecha = `${infoBoleto.fechaEmbarcacion} ${infoBoleto.horaEmbarcacion}`;
@@ -222,63 +195,19 @@ export class TicketConfirmationPage implements OnInit {
   }
 
   validar(forma) {
-    // console.log('forma', forma);
-    // console.log('this.myData.fechaNacimiento', this.myData.fechaNacimiento);
-
-    // if ((this.myData.rut.length > 12 || this.myData.rut.length < 11)) {
-    // this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca un RUT válido');
-    // } else if (this.myData.documentoO && (this.myData.rut.length > 15 || this.myData.rut.length < 7)) {
-    //   this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca un RUT válido');
-    // } else
     if (forma.controls.nombre.errors) {
       this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca un nombre válido');
     } else if (forma.controls.email.errors) {
       this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca un email válido');
-      // } else if (forma.controls.celular.errors && this.myData.celular !== '+56') {
-      //   this.mys.alertShow('Verifique!! ', 'alert', 'Verifique el celular e intente nuevamente..<br> ingrese de 6 a 10 caracteres sin código de país');
-      // } else if ((this.myData.documentoC && this.myData.documentoO) || (!this.myData.documentoC && !this.myData.documentoO)) {
-      //   this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca el tipo de documento adecuado.');
     } else if (forma.controls.descripcion.errors) {
       this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca una ciudad válida para continuar.');
     } else {
-
-
       console.log('this.myData', this.myData);
-
-      // let objetoAenviar = {
-      //   tipoSolicitud: 1,
-      //   solicitante: this.myData.nombre,
-      //   rut: this.myData.rut.replace(/\./g, ''),
-      //   telefono: this.myData.celular,
-      //   email: this.myData.email,
-      //   descripcion: this.myData.descripcion,
-      //   estado: '1',
-      //   // fechaSolicitud: '2020-04-01T03:00:00.000+0000',
-      //   fechaSolicitud: moment().format('YYYY-MM-DDTHH:mm:00.000+0000'),
-      //   responsable: 'null'
-      // }
-
-
-      // // console.log('objetoAenviar', objetoAenviar);
-
-      // this.integrador.guardarSolicitud(objetoAenviar).subscribe((x: any) => {
-      //   if (x.exito) {
-      //     this.mys.alertShow('Éxito!! ', 'alert', 'Solicitud enviada exitosamente');
-      //     this.router.navigateByUrl('/home');
-
-      //   } else {
-      //     this.mys.alertShow('Verifique!! ', 'alert', 'Intente nuevamente..');
-
-      //   }
-      // });
-
-
     }
   } // fin validar
 
 
   async popMenu(event) {
-    // console.log('event', event);
     const popoverMenu = await this.popoverCtrl.create({
       component: PopMenuComponent,
       event,
@@ -312,10 +241,6 @@ export class TicketConfirmationPage implements OnInit {
       cssClass: 'popCart',
     });
     await popoverCart.present();
-
-    // recibo la variable desde el popover y la guardo en data
-    // const { data } = await popoverCart.onWillDismiss();
-    // this.router.navigateByUrl(data.destino);
   }
 
   pruebaBorrar() {
@@ -336,8 +261,6 @@ export class TicketConfirmationPage implements OnInit {
   }
 
   consultarBoleto() {
-
-
 
     if (!moment(this.myData.fecha).isValid()) {
       console.log('fecha válida');
@@ -424,10 +347,9 @@ export class TicketConfirmationPage implements OnInit {
     const linkSource = 'data:application/pdf;base64,' + this.confirmed.pdf.archivo.archivo;
     const downloadLink = document.createElement("a");
     const fileName = this.confirmed.pdf.archivo.nombre;
-
     downloadLink.href = linkSource;
     downloadLink.download = fileName;
     downloadLink.click();
-
   }
+
 }

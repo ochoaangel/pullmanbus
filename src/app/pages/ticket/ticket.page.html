@@ -278,7 +278,6 @@
 
 
                         <div class="box" style="width: 100%;">
-                          <!-- <div class="ribbon"><span> {{' '+svc.textoPromocion}} </span></div> -->
                           <div *ngIf="(svc.idaVueltaPisoUno && piso1) || (svc.idaVueltaPisoDos && !piso1)"
                             style="top: 30px;" class="ribbon"><span>
                               {{'Asientos en promoción'}} </span></div>
@@ -373,25 +372,6 @@
 
                             </div>
 
-                            <!-- //* leyenda -->
-                            <!--   <div style="width: 40vw; display: flex;justify-content:
-                            center;align-items: center;border-left: 2px solid #f2f2f2;">
-                            <div>
-                              <div style="display: flex;align-items: center;">
-                                <img style="height: 2rem;" src="assets/icon/png/Asiento-disponible.png" />
-                                <ion-text style="font-size: 0.8rem;">Disponible</ion-text>
-                              </div>
-                              <div style="display: flex;align-items: center;">
-                                <img style="height: 2rem;" src="assets/icon/png/Asiento-ocupado.png" />
-                                <ion-text style="font-size: 0.8rem;">Ocupado</ion-text>
-                              </div>
-                              <div style="display: flex;align-items: center;">
-                                <img style="height: 2rem;" src="assets/icon/png/Asiento-seleccionado.png" />
-                                <ion-text style="font-size: 0.8rem;">Seleccionado</ion-text>
-                              </div>
-                            </div>
-                          </div> -->
-
                           </div>
 
 
@@ -458,21 +438,6 @@
         <ion-select-option value="promociones">Promociones</ion-select-option>
       </ion-select>
     </div>
-
-    <!-- <ion-button fill="clear" style="color: var(--ion-color-primary); outline: none; width: 100%;   --padding-start: 0;--padding-end: 0;">
-      <ion-icon name="md-repeat" style="transform: rotate(90deg); color: var(--ion-color-primary);font-size: 5vw;"></ion-icon>
-      <div style="display: inline;  text-align: right; text-transform: none;font-size: 1rem;font-weight:bold">
-        Ordenar
-      </div>
-    </ion-button>
-
-    <ion-button fill="clear" style="color: var(--ion-color-primary); outline: none; width: 100%;   --padding-start: 0;--padding-end: 0;"
-      (click)="prueba()">
-      <ion-icon name="md-code-download" style="color: var(--ion-color-primary);font-size: 5vw;padding: 1px;"></ion-icon>
-      <div style="display: inline;  text-align: right; text-transform: none;font-size: 1rem;font-weight:bold">
-        Filtros
-      </div>
-    </ion-button> -->
 
     <ion-button fill="clear"
       style="color: var(--ion-color-primary); outline: none; width: 100%;   --padding-start: 0;--padding-end: 0;"

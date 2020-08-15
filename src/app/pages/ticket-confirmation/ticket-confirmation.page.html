@@ -58,8 +58,6 @@
               <ion-row>
                 <ion-col size="12" style="">
                   <div style="position: relative;" class="overIonInput">
-                    <!-- <ion-input placeholder="fecha" type="text" name="fecha" #fecha [(ngModel)]="myData.fecha" required
-                      clearOnEdit></ion-input> -->
                     <ion-datetime displayFormat="DD/MM/YYYY" placeholder="Fecha de Boleto" cancelText="Cancelar"
                       doneText="Listo" mode="ios" [(ngModel)]="myData.fecha" name="fecha" [min]="this.minDate"
                       [max]="this.maxDate">
@@ -98,14 +96,9 @@
                 </ion-col>
               </ion-row>
 
-
-
-
               <ion-row>
-                <!-- <ion-col size="12" style="" routerLink="/confirm-seat"> -->
                 <ion-col size="12" style="" (click)="consultarBoleto()">
                   <input type="button" class="ingresar" value="Consultar" style="width: 10rem;" />
-                  <!-- <input type="button" class="ingresar" value="Consultar" type="submit" style="width: 10rem;" /> -->
                 </ion-col>
               </ion-row>
 
@@ -117,9 +110,7 @@
           <!-- felicitaciones -->
           <div *ngIf="exito"
             style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center;">
-
             <div style="width: 25rem; height: 25rem; flex-direction: column;">
-
               <div style="zoom: 2; color: var(--ion-color-secondary);">Felicidades</div>
               <div style="margin: 1rem;padding: 0 2rem;">Su compra ha sido realizada con éxito, se ha enviado un mail a
                 su correo con el comprobante de compra.
@@ -137,16 +128,12 @@
           <!-- Error -->
           <div *ngIf="!exito && loading<1 && confirmed"
             style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center;">
-
             <div style="width: 25rem; height: 25rem; flex-direction: column;">
-
-              <!-- <div style="zoom: 1.5; color: var(--ion-color-secondary);">Felicidades</div> -->
               <div style="margin: 1rem;padding: 0 2rem;">
                 Hemos tenido inconvenientes con su boleto<br>
                 Contáctenos o intente nuevamente..
               </div>
               <div>
-                <!-- <ion-icon name="done-all" style="color: var(--ion-color-secondary);zoom: 3;"></ion-icon> -->
               </div>
             </div>
           </div>
@@ -158,37 +145,6 @@
               <div style="zoom: 1.5; color: var(--ion-color-secondary);">Espere un momento..</div>
             </div>
           </div>
-
-
-
-          <!-- <div style="width: 100%;height: 100%;display: flex;justify-content: center;align-items: center;">
-            <div style="display: flex;flex-direction: column;max-width: 50rem;min-width: 350px;">
-              <div routerLink='/ticket-change' style="width: 100%; margin: 1rem 0;font-size: 1.2rem; display: flex;flex-direction: row;
-                margin: 1rem 0;background-color: var(--ion-color-primary); padding: 2rem;justify-content: center;
-                color: white;align-items: center; border-radius: 1rem;  cursor: pointer;
-                ">
-                <ion-icon name="git-merge" style="zoom: 2;padding: 0 1rem;"></ion-icon>
-                <div>Cambio de Boleto</div>
-              </div>
-              <div *ngIf="usuario" routerLink='/my-cancellations' style="width: 100%; margin: 1rem 0; font-size: 1.2rem;display: flex;flex-direction: row;
-                margin: 1rem 0;background-color: var(--ion-color-primary); padding: 2rem;justify-content: center;
-                color: white;align-items: center; border-radius: 1rem;  cursor: pointer;
-                ">
-                <ion-icon name="git-compare" style="zoom: 2;padding: 0 1rem;">
-                </ion-icon>
-                <div>Devoluciones de Boletos</div>
-              </div>
-              <div (click)="pruebaBorrar()" style="width: 100%; margin: 1rem 0; font-size: 1.2rem;display: flex;flex-direction: row;
-                margin: 1rem 0;background-color: var(--ion-color-primary); padding: 2rem;justify-content: center;
-                color: white;align-items: center; border-radius: 1rem;   cursor: pointer;
-                ">
-                <ion-icon name="done-all" style="zoom: 2;padding: 0 1rem;">
-                </ion-icon>
-                <div>Confirmación de Boletos</div>
-              </div>
-            </div>
-          </div> -->
-
 
         </ion-col>
       </ion-row>

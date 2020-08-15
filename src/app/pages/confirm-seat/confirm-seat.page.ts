@@ -40,7 +40,6 @@ export class ConfirmSeatPage implements OnInit {
   tarifaTotal: number = 0;
 
   nItemsCart = 7;
-  // todas ida o  todas vueltaf
   compras = [];
   total;
 
@@ -60,35 +59,9 @@ export class ConfirmSeatPage implements OnInit {
   bus;
 
   tomarAsientoPromocion;
-  // tomarAsientoPromocion = {
-  //   piso: '',
-  //   y: 0,
-  //   x: 0,
-  //   promocionTarifaTotal: 0
-  // }
-
 
   promoEtapa2;
-  // promoEtapa2 = {
-  //   fechaInicio: '11/05/2020',
-  //   fechaTermino: '31/12/2020',
-  //   titulo: 'PROMOCION',
-  //   colorTitulo: '#c3c3c3',
-  //   sizeTitulo: 24,
-  //   fondo: null,
-  //   contenido: 'AGREGA TU BOLETO DE REGRESO POR ${1}, QUIERES AGREGARLO?',
-  //   colorContenido: '#c3c3c3',
-  //   sizeContenido: 14,
-  //   tarifas: '13.500',
-  //   colorTarifa: '#ffffff',
-  //   sizeTarifa: 14,
-  //   fondoTarifa: '#FF621D',
-  //   urlImagen: 'http://pullman.cl/imagenes/Caluga_etapa_2.jpg',
-  //   tipoServicio: 'SALON CAMA'
-  // }
 
-
-  // caso confirm
   empresa;
   clase;
 
@@ -114,12 +87,7 @@ export class ConfirmSeatPage implements OnInit {
   ) {
   }
 
-  ngOnInit() {
-    // if (this.promoEtapa2 && this.promoEtapa2.contenido) {
-    //   this.promoEtapa2.contenido = this.promoEtapa2.contenido.replace('{1}', this.promoEtapa2.tarifas);
-    // }
-
-  }
+  ngOnInit() { }
 
   ionViewWillEnter() {
 
@@ -149,85 +117,16 @@ export class ConfirmSeatPage implements OnInit {
           )
         );
 
-
-        // this.allServices.forEach(e => {
-        //   console.log({ emp: e.empresa, p1: e.idClaseBusPisoUno, p2: e.idClaseBusPisoDos });
-        // });
-
-        console.log('confirm', confirm);
-        console.log('dataOriginal', data);
-        console.log('this.allServices', this.allServices);
-
       });
 
 
 
     } else {
-      console.log('iniciando "confirmSeat" pero como no hay info, redirecciono a ticketConfirmation');
       this.router.navigateByUrl('/ticket-confirmation');
       this.mys.confirm = null;
       this.mys.confirmSelected = null;
     }
 
-
-
-    //   if (this.mys.ticket) {
-    //     this.ticket = this.mys.ticket;
-    //     this.way = this.mys.way;
-
-    //     if (this.way === 'go') {
-
-    //       if (this.mys.comprarMas) {
-    //         this.compras = [];
-    //         this.getServicesAndBus('go');
-    //         this.mys.comprarMas = false;
-    //       } else {
-    //         this.compras = this.ticket.goCompras || [];
-    //         this.allServices = this.ticket.goAllService || this.getServicesAndBus('go');
-    //       }
-
-    //       console.log('this.mys.ticket en GO', this.mys.ticket);
-
-    //     } else {
-    //       if (this.mys.comprarMas) {
-    //         this.compras = [];
-    //         this.getServicesAndBus('back')
-    //         this.mys.comprarMas = false;
-    //       } else {
-    //         this.compras = this.ticket.backCompras || [];
-    //         this.allServices = this.ticket.backAllService || this.getServicesAndBus('back');
-    //       }
-    //       console.log('this.mys.ticket en BACK', this.mys.ticket);
-    //     }
-
-    //     this.comprasDetalles = this.ticket.comprasDetalles || [];
-    //     this.comprasDetallesPosicion = this.ticket.comprasDetallesPosicion || [];
-
-    //     let total_general = 0;
-    //     this.comprasDetalles.forEach(element => {
-    //       total_general = total_general + element.valor;
-    //     });
-    //     this.tarifaTotal = total_general;
-
-    //     console.log('this.comprasDetalles leave WillEnter', this.comprasDetalles);
-
-    //   } else {
-    //     this.getServicesAndBus('go');
-    //     this.ticket = {
-    //       origin: { nombre: 'ALTO HOSPICIO', codigo: '01101002', region: null },
-    //       destiny: { nombre: 'CABRERO', codigo: '08303194', region: null },
-    //       tripType: 'goBack',
-    //       goDate: '2019-12-28T22:34:20.295-04:00',
-    //       backDate: '2019-12-29T22:36:28.833-04:00'
-    //     };
-    //     this.way = 'go';
-
-    //   }
-
-
-    //   console.log('this.comprasDetallesIniciooo', this.comprasDetalles);
-    //   this.goDate = moment(this.ticket.goDate).format('DD/MM/YYYY');
-    //   this.backDate = moment(this.ticket.backDate).format('DD/MM/YYYY');
   }
 
 
@@ -263,12 +162,9 @@ export class ConfirmSeatPage implements OnInit {
         this.comprasDetalles.forEach(compra => {
           if (servicio.idServicio === compra.idServicio) {
             servicio['my_comprasByService'] = compra['my_comprasByService'];
-            // servicio['my_comprasByServiceData'] = compra['my_comprasByServiceData']
           }
         });
       });
-
-
     });
 
   }
@@ -278,7 +174,6 @@ export class ConfirmSeatPage implements OnInit {
 
   myServiceSelection(nServiceSeleccion: number) {
 
-    // setTimeout(() => {
     let estadoPrevio = this.allServices[nServiceSeleccion]['checked'];
     this.allServices.forEach(element => {
       element['checked'] = false;
@@ -324,21 +219,9 @@ export class ConfirmSeatPage implements OnInit {
           // verificar si se ha comprado en este servicio
           let nowIdService = this.allServices[nServiceSeleccion]['idServicio'];
 
-          // this.comprasDetalles.forEach(element => {
-          //   if (element.idServicio === nowIdService) {
-          //     this.bus = element.bus;
-          //   }
-          // });
-
-
-
           // preparando tarifas
           this.allServices[nServiceSeleccion].tarifaPrimerPisoInternet ? this.tarifaPiso1 = parseInt(this.allServices[nServiceSeleccion].tarifaPrimerPisoInternet.replace('.', '')) : this.tarifaPiso1 = null;
           this.allServices[nServiceSeleccion].tarifaSegundoPisoInternet ? this.tarifaPiso2 = parseInt(this.allServices[nServiceSeleccion].tarifaSegundoPisoInternet.replace('.', '')) : this.tarifaPiso2 = null;
-
-          // this.tarifaPiso1 ? this.piso1 = true : this.piso1 = false;
-          // this.tarifaPiso1 ? this.piso1 = true : this.piso1 = false;
-
 
 
           this.nowService = this.allServices[nServiceSeleccion];
@@ -411,63 +294,7 @@ export class ConfirmSeatPage implements OnInit {
                 if (resp === 0) {
                   this.mys.alertShow('¡Verifique!', 'alert', 'Error al tomar asiento.');
                 } else {
-
                   this.tomarAsiento(piso, y, x);
-                  //   // verificando si el asiento tiene promociòn o no
-                  //   if (
-                  //     this.serviceSelected.promocion &&
-                  //     (
-                  //       (this.serviceSelected.idaVueltaPisoDos && !this.piso1)
-                  //       ||
-                  //       (this.serviceSelected.idaVueltaPisoUno && this.piso1)
-                  //     )
-                  //   ) {
-                  //     //////////////////////////////////  Asiento CON promoción  //////////////////////////////////////
-
-                  //     // variable para la api buscaCaluga
-                  //     let myData = {
-                  //       origen: this.mys.ticket.origin.codigo,
-                  //       destino: this.mys.ticket.destiny.codigo,
-                  //       fechaSalida: moment(this.mys.ticket.goDate).format("YYYYMMDD"),
-                  //       etapa: 2
-                  //     };
-                  //     console.log('myData', myData);
-
-                  //     this.integradorService.buscaCaluga(myData).subscribe(respuestaBuscaCaluga => {
-
-                  //       // definiendo variables de tarifas
-                  //       let tarifaTotalNumero;
-                  //       let tarifaNormalNumero;
-                  //       let tarifaDiferencia;
-
-                  //       if (this.piso1) {
-                  //         tarifaTotalNumero = parseInt(this.serviceSelected.idaVueltaPisoUno.tarifaTotal.replace('.', ''))
-                  //         tarifaNormalNumero = this.serviceSelected.tarifaPrimerPisoInternet.replace('.', '')
-                  //       } else {
-                  //         tarifaTotalNumero = parseInt(this.serviceSelected.idaVueltaPisoDos.tarifaTotal.replace('.', ''))
-                  //         tarifaNormalNumero = this.serviceSelected.tarifaSegundoPisoInternet.replace('.', '')
-                  //       }
-
-                  //       // calculando diferencia
-                  //       tarifaDiferencia = tarifaTotalNumero - tarifaNormalNumero;
-
-
-                  //       // Mostrando el mensaje para seleccionar si está de acuerdo o no al darle valor a promocionEtapa2
-                  //       this.promoEtapa2 = respuestaBuscaCaluga[0];
-                  //       // console.log('this.promoEtapa2', this.promoEtapa2);
-                  //       this.promoEtapa2['contenido'] = this.promoEtapa2['contenido'].replace('{1}', tarifaDiferencia.toLocaleString('de-DE'));
-                  //       console.log('this.promoEtapa2', this.promoEtapa2);
-
-
-                  //       // almaceno variables para cuanso el el modal presione SI , ya tener los datos necesarios almacenados
-                  //       this.tomarAsientoPromocion = { piso, y, x, promocionTarifaTotal: tarifaTotalNumero };
-                  //     });
-
-
-                  //   } else {
-                  //     //////////////////////////////////  Asiento SIN promoción  //////////////////////////////////////
-                  //     this.tomarAsiento(piso, y, x);
-                  //   }
                 }
               });
               ////////////////////////////////////////////////////////////////////////////////////
@@ -626,16 +453,6 @@ export class ConfirmSeatPage implements OnInit {
 
 
   continuar() {
-    // if (this.compras.length === 0 && this.way === 'go' && this.comprasDetalles.length < 4) {
-    //   this.mys.alertShow('¡Verifique!', 'alert', 'Debe seleccionar al menos un asiento de un servicio para continuar..');
-    // } else if (this.compras.length === 0 && this.way === 'go' && this.comprasDetalles.length > 3) {
-    //   this.router.navigateByUrl('/purchase-detail');
-    // } else if (this.compras.length > 4 && this.way === 'go') {
-    //   this.mys.alertShow('¡Verifique!', 'alert', 'Máximo número de asientos permitidos de ida son 4');
-    // } else if (this.compras.length > 4 && this.way === 'back') {
-    //   this.mys.alertShow('¡Verifique!', 'alert', 'Máximo número de asientos permitidos de Regreso son 4');
-    // } else {
-
     if (this.comprasDetalles.length > 0) {
 
       this.mys.confirmSelected = this.comprasDetalles[0];
@@ -651,41 +468,6 @@ export class ConfirmSeatPage implements OnInit {
     console.log(this.mys.confirmSelected);
 
     this.router.navigateByUrl('/ticket-confirmation');
-
-    // // ocultar asientos      
-    // this.allServices.forEach(element => {
-    //   element['checked'] = false;
-    // });
-
-    // // Guardo todos los cambios en local
-    // if (this.way === 'go') {
-    //   this.ticket['goCompras'] = this.compras;
-    //   this.ticket['goTotal'] = this.tarifaTotal;
-    //   this.ticket['goService'] = this.nowService;
-    //   this.ticket['goAllService'] = this.allServices;
-    // } else {
-    //   this.ticket['backCompras'] = this.compras;
-    //   this.ticket['backTotal'] = this.tarifaTotal;
-    //   this.ticket['backService'] = this.nowService;
-    //   this.ticket['backAllService'] = this.allServices;
-    // }
-    // this.ticket['comprasDetalles'] = this.comprasDetalles;
-    // this.ticket['comprasDetallesPosicion'] = this.comprasDetallesPosicion;
-    // // this.bus=null;
-    // this.serviceSelectedNumber = null;
-
-    // // Guardo todos los cambios locales al service
-    // this.mys.ticket = this.ticket;
-    // this.mys.way = this.way;
-
-    // if (this.mys.way === 'go' && this.ticket.tripType === 'goBack') {
-    //   this.mys.way = 'back';
-    //   this.ticket = null;
-    //   this.ionViewWillEnter();
-
-    // } else {
-    //   this.router.navigateByUrl('/purchase-detail');
-    // }
 
   }
 
@@ -790,7 +572,6 @@ export class ConfirmSeatPage implements OnInit {
 
 
   async popMenu(event) {
-    //console.log('event', event);
     const popoverMenu = await this.popoverCtrl.create({
       component: PopMenuComponent,
       event,
@@ -837,7 +618,6 @@ export class ConfirmSeatPage implements OnInit {
   }
 
   ionViewWillLeave() {
-    // this.comprasDetalles = [];
     if (this.comprasDetalles.length > 0) {
       // liberar asiento
       this.mys.liberarAsientoDesdeHeader(this.comprasDetalles[0]);

@@ -93,11 +93,9 @@ export class MyDataPage implements OnInit {
 
     this.mys.checkIfExistUsuario().subscribe((existe) => {
       if (existe) {
-        // console.log('Usuario Registrado, Entonces Modifica');
         this.pageMyDataAsRegister = false;
         this.loading = true;
         this.mys.getUser().subscribe((usuario) => {
-          // console.log('usuario', usuario);
           this.loading = false;
           this.usuario = usuario;
 
@@ -112,12 +110,9 @@ export class MyDataPage implements OnInit {
           this.myData.estado = usuario.usuario.estado;
           this.myData.rut = usuario.usuario.rut;
 
-          // console.log('888888888888888888', usuario.usuario.fechaNacimiento);
-
           this.myData.dia = moment
             .utc(usuario.usuario.fechaNacimiento)
             .format('D');
-          // this.myData.dia = parseInt(moment.utc(usuario.usuario.fechaNacimiento).format('D')) + 1 + ''
           this.myData.mes = moment
             .utc(usuario.usuario.fechaNacimiento)
             .format('M');
@@ -141,37 +136,26 @@ export class MyDataPage implements OnInit {
           this.myData.ciudad = usuario.usuario.ciudadCodigo || '';
           this.myData.region = usuario.usuario.regionCodigo || '';
 
-          // console.log('myData',this.myData);
           this.cambioDeRegion();
 
           if (usuario.usuario.nombre && usuario.usuario.apellidoPaterno) {
             this.nombreUsuario =
               usuario.usuario.nombre + ' ' + usuario.usuario.apellidoPaterno;
-            // console.log('this.nombre', this.nombreUsuario);
           } else {
             this.nombreUsuario = 'Usuario';
-            // console.log('this.nombre2', this.nombreUsuario);
           }
-          // console.log('this.myData', this.myData)
         });
       } else {
-        // console.log('Usuario NO Registrado, Entonces Registra');
         this.pageMyDataAsRegister = true;
-        // console.log('this.nombreUsuario', this.nombreUsuario);
       }
     });
   }
 
-  // myKeyUp(elemento) {
-  //   // //console.log('presionado elemento: ', elemento);
-  // }
 
   genero($event) { }
 
   validar(forma) {
-    // console.log('forma', forma);
     this.myData.fechaNacimiento = `${this.myData.dia}-${this.myData.mes}-${this.myData.anio}`;
-    // console.log('this.myData.fechaNacimiento', this.myData.fechaNacimiento);
 
     if (forma.controls.rut.errors) {
       this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca un RUT válido'); // } else if (rut valido) {//console.log('rut valido');
@@ -207,12 +191,6 @@ export class MyDataPage implements OnInit {
       );
     } else if (forma.controls.email.errors) {
       this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca un email válido');
-      // } else if (forma.controls.clave && forma.controls.clave.errors && this.pageMyDataAsRegister) {
-      //   this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca una clave para inicio de sesión válida y mayor o igual a 8 caracteres')
-      // } else if (forma.controls.ocupacion.errors) {
-      //   this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca ocupacion válida')
-      // } else if (forma.controls.telefono.errors && this.myData.telefono !== '+56') {
-      //   this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca un teléfono válido')
     } else if (forma.controls.celular.errors && this.myData.celular !== '+56') {
       this.mys.alertShow(
         'Verifique!! ',
@@ -232,37 +210,6 @@ export class MyDataPage implements OnInit {
         'Introduzca una ciudad válida para continuar.'
       );
     } else {
-      // console.log('fiiiiiiiiinnnnnnnnnnnnnnnn');
-
-      //   {
-      //     "rut":"1-9",
-      //     "email":"ochoaangel@gmail.com",
-      //     "nombre":"angel",
-      //     "apellidoMaterno":"ochoa",
-      //     "apellidoPaterno":"perez",
-      //     "fechaNacimiento":"1980-01-01T03:00:00.000+0000",
-      //     "genero":"M",
-      //     "telefono":"45533681"
-      //   }
-
-      //   {
-      //     "rut": "1-9",
-      //     "email": "OCHOAANGEL@GMAIL.COM",
-      //     "nombre": "angel",
-      //     "apellidoMaterno": "ochoa",
-      //     "apellidoPaterno": "perez",
-      //     "fechaNacimiento": "1980-01-01T03:00:00.000+0000",
-      //     "genero": "M",
-      //     "telefono": "45533682",
-
-      //     "direccion": "Sininfo",
-      //     "ciudadCodigo": "00000000",
-      //     "estado": "ACT",
-      //     "fechaCreacion": "2020-04-03T03:00:00.000+0000",
-      //     "fechaActivacion": "2020-04-03T03:00:00.000+0000",
-      //     "password": "",
-      //     "nombreCompleto": "angel perez ochoa"
-      // }
 
       let objetoAenviar = {
         rut: this.myData.rut,
@@ -297,8 +244,6 @@ export class MyDataPage implements OnInit {
         ] = `${this.myData.nombre} ${this.myData.apellidoPaterno} ${this.myData.apellidoMaterno}`;
       }
 
-      // console.log('guardado usuario:', objetoAenviar);
-
       if (this.pageMyDataAsRegister) {
         this.loading = true;
         this.integrador
@@ -308,10 +253,6 @@ export class MyDataPage implements OnInit {
 
             if (respuesta.exito) {
               this.mys.closeSessionUser().subscribe((cerrado) => {
-                // console.log('sssssssssssssss');
-                // this.mys.saveUsuario(this.usuario).subscribe(guardado => {
-                // if (guardado) {
-                //   //console.log('guardadooooooo');
 
                 this.mys.alertShow(
                   'Éxito!!',
@@ -319,22 +260,7 @@ export class MyDataPage implements OnInit {
                   'Usuario Registrado Exitosamente..'
                 );
                 this.router.navigateByUrl('/home');
-                // this.mys.alertShow(
-                //   'Éxito!!',
-                //   'checkmark-circle',
-                //   'Usuario Registrado Exitosamente,\nfué enviado por correo el password para iniciar sesión..'
-                // );
-                // this.router.navigateByUrl('/login');
-
-                // } else {
-                //   this.mys.alertShow('Éxito!!', 'alert', 'Hubo inconvenientes al actualizar los datos..')
-                //   //console.log('NOOO guardadooooooo');
-                // }
               });
-
-              // })
-
-              // //console.log('this.usuario', this.usuario);
             } else {
               this.mys.alertShow(
                 'Error ',
@@ -343,8 +269,6 @@ export class MyDataPage implements OnInit {
                 'Hubo un error al guardar los datos del usuario..'
               );
             }
-
-            // console.log('respuesta', respuesta);
           });
       } else {
         this.loading = true;
@@ -387,12 +311,10 @@ export class MyDataPage implements OnInit {
                       'alert',
                       'Hubo inconvenientes al actualizar los datos..'
                     );
-                    // console.log('NOOO guardadooooooo');
                   }
                 });
               });
 
-              // console.log('this.usuario', this.usuario);
             } else {
               this.mys.alertShow(
                 'Error ',
@@ -401,15 +323,12 @@ export class MyDataPage implements OnInit {
                 'Hubo un error al guardar los datos del usuario..'
               );
             }
-
-            // console.log('respuesta', respuesta);
           });
       }
     }
   } // fin validar
 
   async popMenu(event) {
-    // console.log('event', event);
     const popoverMenu = await this.popoverCtrl.create({
       component: PopMenuComponent,
       event,
@@ -459,7 +378,6 @@ export class MyDataPage implements OnInit {
 
   cambioDeRegion() {
     this.loading = true;
-    // console.log('cambiooooo', this.myData.region);
     this.integrador
       .buscarCiudadPorRegionesRegistroDeUsuario({ codigo: this.myData.region })
       .subscribe((ciudades) => {

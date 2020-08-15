@@ -18,28 +18,18 @@ export class AgenciesPage implements OnInit {
 
   ngOnInit() {
     this.integrador.buscarRegionesRegistroDeUsuario().subscribe(resp => {
-
-      // console.log('resp', resp);
       this.all = resp;
-
       this.all.forEach(x => {
         x.ncodigo = parseInt(x.codigo);
       });
 
       this.all = _.sortBy(this.all, 'ncodigo');
-
-
       this.all.forEach(element => {
         element['show'] = false;
-
         this.integrador.buscarCiudadPorRegionesRegistroDeUsuario({ codigo: element.codigo }).subscribe(ciudades => {
           element['ciudades'] = ciudades;
         })
-
       });
-
-
-      // console.log('this.all', this.all);
     });
 
 

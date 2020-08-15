@@ -30,13 +30,11 @@ export class PaymentMethodsPage implements OnInit {
 
     this.integradorService.getListConvenio().subscribe(convenio => {
       this.listaConvenio = convenio;
-      // console.log('----convenio----', convenio);
       this.loading -= 1;
     });
 
     this.datosConvenio = null;
     this.integradorService.getListMedioPago().subscribe(medioPago => {
-      // console.log('----medioPago----', medioPago);
       this.loading -= 1;
       medioPago.Convenio.forEach(pago => {
         if (pago.BotonPago == 'SI') {
@@ -85,7 +83,6 @@ export class PaymentMethodsPage implements OnInit {
 
   };
 
-  // ngOnInit() { }
   ngOnInit() {
     this.ionViewWillEnter();
   }
@@ -93,27 +90,19 @@ export class PaymentMethodsPage implements OnInit {
   ionViewWillEnter() {
 
     this.mys.getUser().subscribe(usuario => {
-      //console.log('usuario', usuario);
       if (usuario) {
-        //console.log('usuario Registrado');
         this.usuario = usuario;
         this.registrado = true;
 
         this.DatosFormulario.rut = this.usuario.usuario.rut;
         this.DatosFormulario.telefono = this.usuario.usuario.telefono;
         this.DatosFormulario.email = this.usuario.usuario.email;
-        // this.DatosFormulario.email2 = this.usuario.usuario.email;
         this.DatosFormulario.email2 = '';
 
-
-
-
       } else {
-        //console.log('usuario NO registrado');
         this.usuario = null;
         this.registrado = false;
       }
-      //console.log('registrado', this.registrado);
     });
 
 
@@ -125,22 +114,12 @@ export class PaymentMethodsPage implements OnInit {
       this.ticket = JSON.parse(localStorage.getItem('ticket'));
       this.mys.total = this.totalFinal;
       this.mys.ticket = this.ticket;
-      //console.log('Leido del Storage');
     } else {
       this.totalFinal = this.mys.total;
       this.ticket = this.mys.ticket;
       localStorage.setItem('totalFinal', JSON.stringify(this.totalFinal));
       localStorage.setItem('ticket', JSON.stringify(this.ticket));
-      //console.log('Guardado en el localStorage');
     }
-
-
-    // this.totalFinal = this.mys.total;
-    // this.ticket = this.mys.ticket;
-    // console.log('this.totalFinal', this.totalFinal);
-    // console.log('this.mys.total', this.mys.total);
-    // console.log('this.mys.ticket', this.mys.ticket);
-
   }
 
   seleccionadoConvenioUp(convenio) {
@@ -235,8 +214,6 @@ export class PaymentMethodsPage implements OnInit {
         if (boleto.promocion) {
           end['idaVuelta'] = true;
         }
-        // console.log('end', end);
-
         guardarTransaccion.listaCarrito.push(end);
 
       });
@@ -328,10 +305,8 @@ export class PaymentMethodsPage implements OnInit {
     };
     let re = /\./gi;
     this.listaDetalleConvenio.forEach(item => {
-      // validarConvenio.listaAtributo.push({ 'idCampo': item.Placeholder.trim(), 'valor': item.Valor.replace(re, '') });
       validarConvenio.listaAtributo.push({ 'idCampo': item.Placeholder.trim(), 'valor': this.DatosFormulario.rut.replace(re, '') });
     });
-    // console.log('listaDetalleConvenio', this.listaDetalleConvenio);
 
     this.mys.ticket.comprasDetalles.forEach(boleto => {
       let fecha = boleto.service.fechaSalida.split('/');
@@ -353,11 +328,7 @@ export class PaymentMethodsPage implements OnInit {
     validarConvenio.montoTotal = validarConvenio.totalApagar;
     this.loading += 1;
 
-    // console.log('data para getDescuentoConvenio', validarConvenio);
     this.integradorService.getDescuentoConvenio(validarConvenio).subscribe(data => {
-
-      // console.log('data de getDescuentoConvenio', data);
-      // console.log('Mensaje Comvenio', data.mensaje);
 
       this.loading -= 1;
       this.datosConvenio = data;
@@ -386,7 +357,6 @@ export class PaymentMethodsPage implements OnInit {
   }
 
   async popMenu(event) {
-    //console.log('event', event);
     const popoverMenu = await this.popoverCtrl.create({
       component: PopMenuComponent,
       event,
@@ -430,15 +400,4 @@ export class PaymentMethodsPage implements OnInit {
     this.router.navigateByUrl('/terms-conditions');
   }
 
-
 }
-
-
-
-
-
-
-
-
-
-

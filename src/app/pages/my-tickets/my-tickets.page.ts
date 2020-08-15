@@ -18,14 +18,14 @@ import * as _ from 'underscore';
 })
 export class MyTicketsPage implements OnInit {
 
-  boletosAll = []
-  transaccionesAll = []
-  usuario
-  loading = 0
-  nBoletosSeleccionados = 0
+  boletosAll = [];
+  transaccionesAll = [];
+  usuario;
+  loading = 0;
+  nBoletosSeleccionados = 0;
 
-  tipoDeCuentaOptions = { header: 'Tipo de Cuenta' }
-  bancoOptions = { header: 'Banco' }
+  tipoDeCuentaOptions = { header: 'Tipo de Cuenta' };
+  bancoOptions = { header: 'Banco' };
 
   myData = {
     tiposDeCuentas: [
@@ -129,7 +129,7 @@ export class MyTicketsPage implements OnInit {
     ],
     rutTitular: '',
     banco: ''
-  }
+  };
   constructor(
     private mys: MyserviceService,
     private integrador: IntegradorService,
@@ -144,62 +144,59 @@ export class MyTicketsPage implements OnInit {
 
   ionViewWillEnter() {
     this.mys.getUser().subscribe(usuario => {
-      this.usuario = usuario
-      this.loading++
-      let data = { email: (usuario.usuario.email).toLowerCase() }
+      this.usuario = usuario;
+      this.loading++;
+      let data = { email: (usuario.usuario.email).toLowerCase() };
       this.integrador.buscarTransaccionPorEmail(data).subscribe(transacciones => {
-        this.loading--
-        this.transaccionesAll = transacciones
+        this.loading--;
+        this.transaccionesAll = transacciones;
 
         if (transacciones.length < 1) {
-          this.mys.alertShow('Sin Transacciones', 'alert', 'no hay transacciones registradas para mostrar')
-          this.router.navigateByUrl('/my-cancellations')
+          this.mys.alertShow('Sin Transacciones', 'alert', 'no hay transacciones registradas para mostrar');
+          this.router.navigateByUrl('/my-cancellations');
         } else {
-          let actualDate = moment()
+          let actualDate = moment();
           this.transaccionesAll.forEach(transaccion => {
             // buscando cada boleto de cada transaccion
-            this.boletosAll = []
-            this.loading++
+            this.boletosAll = [];
+            this.loading++;
             this.integrador.buscarBoletoPorCodigo({ codigo: transaccion.codigo }).subscribe(boletos => {
-              this.loading--
+              this.loading--;
 
               boletos.forEach(boleto => {
-                let estadoBoleto = ''
+                let estadoBoleto = '';
 
                 if (boleto.estado === 'NUL') {
-                  estadoBoleto = 'ANULADO'
+                  estadoBoleto = 'ANULADO';
                 } else if (boleto.estado === 'CAN') {
-                  estadoBoleto = 'DEVUELTO'
+                  estadoBoleto = 'DEVUELTO';
                 } else {
                   // posibles casos activos
-                  let fechaSalida = moment(`${boleto.imprimeVoucher.fechaSalida} ${boleto.imprimeVoucher.horaSalida}`, 'DD/MM/YYYY HH:mm')
-                  let fechaSalidaPlus4H = fechaSalida.add(4, 'hours').add(1, 'minute')
+                  let fechaSalida = moment(`${boleto.imprimeVoucher.fechaSalida} ${boleto.imprimeVoucher.horaSalida}`, 'DD/MM/YYYY HH:mm');
+                  let fechaSalidaPlus4H = fechaSalida.add(4, 'hours').add(1, 'minute');
                   if (fechaSalida.isBefore(actualDate)) {
-                    estadoBoleto = 'INACTIVO'
+                    estadoBoleto = 'INACTIVO';
                   } else {
                     // caso de 4horas para anular 
-                    fechaSalida.isBefore(fechaSalidaPlus4H) ? estadoBoleto = 'INACTIVO' : estadoBoleto = 'ACTIVO'
+                    fechaSalida.isBefore(fechaSalidaPlus4H) ? estadoBoleto = 'INACTIVO' : estadoBoleto = 'ACTIVO';
                   }
                 }
-                boleto['selected'] = false
-                boleto['myEstado'] = estadoBoleto
-                this.boletosAll.push(boleto)
+                boleto['selected'] = false;
+                boleto['myEstado'] = estadoBoleto;
+                this.boletosAll.push(boleto);
               });
-              this.boletosAll = _.sortBy(this.boletosAll, 'myEstado')
-              //console.log('this.boletosAll',this.boletosAll,);
-            })
+              this.boletosAll = _.sortBy(this.boletosAll, 'myEstado');
+            });
           });
 
         }
 
-
-      })
-    })
+      });
+    });
   }
 
 
   async popMenu(event) {
-    //console.log('event', event);
     const popoverMenu = await this.popoverCtrl.create({
       component: PopMenuComponent,
       event,
@@ -215,7 +212,7 @@ export class MyTicketsPage implements OnInit {
       if (data.destino === '/login') {
         this.mys.checkIfExistUsuario().subscribe(exist => {
           exist ? this.router.navigateByUrl('/user-panel') : this.router.navigateByUrl('/login');
-        })
+        });
       } else {
         this.router.navigateByUrl(data.destino);
       }
@@ -239,27 +236,23 @@ export class MyTicketsPage implements OnInit {
   }
 
   anular() {
-    // //console.log('this.boletosAll', this.boletosAll);
-    // //console.log('',);
     if (!this.myData.rutTitular) {
-      this.mys.alertShow('Verifique', 'alert', 'Ingrese rut del Titular')
+      this.mys.alertShow('Verifique', 'alert', 'Ingrese rut del Titular');
     } else if (!/^[0-9]+[-|-]{1}[0-9kK]{1}$/.test(this.myData.rutTitular)) {
-      this.mys.alertShow('Verifique', 'alert', 'Ingrese rut del Titular v�lido, sin puntos ni espacios')
+      this.mys.alertShow('Verifique', 'alert', 'Ingrese rut del Titular v�lido, sin puntos ni espacios');
     } else if (!this.myData.banco) {
-      this.mys.alertShow('Verifique', 'alert', 'Seleccione un Banco')
+      this.mys.alertShow('Verifique', 'alert', 'Seleccione un Banco');
     } else if (!this.myData.tipoDeCuenta) {
-      this.mys.alertShow('Verifique', 'alert', 'Seleccione tipo de cuenta')
+      this.mys.alertShow('Verifique', 'alert', 'Seleccione tipo de cuenta');
     } else if (!this.myData.numeroDeCuenta) {
-      this.mys.alertShow('Verifique', 'alert', 'Ingrese un numero de cuenta')
+      this.mys.alertShow('Verifique', 'alert', 'Ingrese un numero de cuenta');
     } else {
 
-      //console.log('listooooooxxxxx');
-      // this.ionViewWillEnter()
-      let contador = 0
+      let contador = 0;
       this.boletosAll.forEach(boleto => {
         // selecciona los seleccionado y activos
         if (boleto.selected) {
-          contador++
+          contador++;
           let data = {
             boleto: boleto.boleto,
             codigoTransaccion: boleto.codigo,
@@ -270,23 +263,20 @@ export class MyTicketsPage implements OnInit {
             numeroCuenta: this.myData.numeroDeCuenta,
             rutTitular: this.myData.rutTitular,
             integrador: boleto.integrador
-          }
-          // alert(contador)
-          // //console.log('data', contador, data);
-          this.loading++
+          };
+          this.loading++;
           this.integrador.anularBoleto(data).subscribe((resultado: any) => {
-            this.loading--
-            //console.log('resultado', resultado);
+            this.loading--;
             if (resultado.exito) {
-              alert(`Boleto ${data.boleto} \nFecha:${boleto.imprimeVoucher.fechaSalida}\nHora:${boleto.imprimeVoucher.horaSalida}\nAsiento:${boleto.imprimeVoucher.horaSalida}\n${resultado.mensaje}`)
+              alert(`Boleto ${data.boleto} \nFecha:${boleto.imprimeVoucher.fechaSalida}\nHora:${boleto.imprimeVoucher.horaSalida}\nAsiento:${boleto.imprimeVoucher.horaSalida}\n${resultado.mensaje}`);
             } else {
-              alert(`Boleto ${data.boleto} \nFecha:${boleto.imprimeVoucher.fechaSalida}\nHora:${boleto.imprimeVoucher.horaSalida}\nAsiento:${boleto.imprimeVoucher.horaSalida}\n${resultado.mensaje}`)
+              alert(`Boleto ${data.boleto} \nFecha:${boleto.imprimeVoucher.fechaSalida}\nHora:${boleto.imprimeVoucher.horaSalida}\nAsiento:${boleto.imprimeVoucher.horaSalida}\n${resultado.mensaje}`);
             }
-          })
+          });
 
           if (contador === this.nBoletosSeleccionados) {
-            this.nBoletosSeleccionados = 0
-            this.ionViewWillEnter()
+            this.nBoletosSeleccionados = 0;
+            this.ionViewWillEnter();
           }
         }
       });
@@ -295,21 +285,19 @@ export class MyTicketsPage implements OnInit {
   }
 
   ionViewWillLeave() {
-    this.boletosAll = []
+    this.boletosAll = [];
   }
 
   checkboxChanged() {
-    //console.log('CHANGED_this.boletosAll', this.boletosAll);
-    let nSelected = 0
+    let nSelected = 0;
     this.boletosAll.forEach(element => {
-      element.selected ? nSelected++ : null
+      element.selected ? nSelected++ : null;
     });
-    this.nBoletosSeleccionados = nSelected
-    //console.log('nSelected', nSelected);
+    this.nBoletosSeleccionados = nSelected;
   }
 
   actualizar() {
-    this.ionViewWillEnter()
+    this.ionViewWillEnter();
   }
 
 }

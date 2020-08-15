@@ -21,9 +21,6 @@ export class QuestionsPage implements OnInit {
       this.all.forEach(element => {
         element['show'] = false;
       });
-
-
-      // console.log('this.all', this.all);
     });
 
 
@@ -34,11 +31,6 @@ export class QuestionsPage implements OnInit {
       element['show'] = false;
     });
   }
-
-  // mostrar(n) {
-  //   this.ocultarTodo();
-  //   this.all[n]['show'] = true;
-  // }
 
   clickItem(n) {
 

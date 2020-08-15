@@ -46,10 +46,12 @@
 
               <ion-row>
                 <ion-text color="primary">
-                  <p>Debe seleccionar el o los boletos que desea devolver. La devolución debe ser realizada por lo menos 4
+                  <p>Debe seleccionar el o los boletos que desea devolver. La devolución debe ser realizada por lo menos
+                    4
                     hrs antes de la salida del servicio</p>
                   <p style="padding: 0 1rem;">* Si la compra se Realizó con tarjeta de crédito, se generará una reversa
-                    en su cuenta, si se realizó con tarjeta de débito, se realizará una transferencia a la cuenta que entregue para este fin. La
+                    en su cuenta, si se realizó con tarjeta de débito, se realizará una transferencia a la cuenta que
+                    entregue para este fin. La
                     devolución o reversa se hará en un plazo máximo de 6 días hábiles.</p>
                 </ion-text>
               </ion-row>
@@ -133,9 +135,12 @@
             <ion-row class=" ion-no-padding ion-no-margin" class="ticket"
               *ngFor="let boleto of boletosAll;  let i=index">
               <ion-row class=" ion-no-padding ion-no-margin" style="width: 100%; display: flex; align-items: center;">
-                <ion-col size="3" class=" ion-no-padding ion-no-margin" class="cabeceraCadaTicket">Origen/Terminal </ion-col>
-                <ion-col size="3" class=" ion-no-padding ion-no-margin" class="cabeceraCadaTicket">Destino/Terminal </ion-col>
-                <ion-col size="3" class=" ion-no-padding ion-no-margin" class="cabeceraCadaTicket">Fecha<br>Hora Salida </ion-col>
+                <ion-col size="3" class=" ion-no-padding ion-no-margin" class="cabeceraCadaTicket">Origen/Terminal
+                </ion-col>
+                <ion-col size="3" class=" ion-no-padding ion-no-margin" class="cabeceraCadaTicket">Destino/Terminal
+                </ion-col>
+                <ion-col size="3" class=" ion-no-padding ion-no-margin" class="cabeceraCadaTicket">Fecha<br>Hora Salida
+                </ion-col>
                 <ion-col size="1" class=" ion-no-padding ion-no-margin" class="cabeceraCadaTicket">Asiento</ion-col>
                 <ion-col size="2" class=" ion-no-padding ion-no-margin" class="cabeceraCadaTicket">Estado</ion-col>
               </ion-row>
@@ -149,28 +154,20 @@
                   {{boleto.imprimeVoucher.fechaSalida}}<br>{{boleto.imprimeVoucher.horaSalida}} </ion-col>
                 <ion-col size="1" class=" ion-no-padding ion-no-margin" class="infoCadaTicket">
                   {{boleto.imprimeVoucher.asiento}}</ion-col>
-                  <ion-col size="2" class=" ion-no-padding ion-no-margin" class="infoCadaTicket">
-                    <div class="textoVertical" *ngIf="boleto.myEstado === 'INACTIVO'" style="font-weight:normal ;"> INACTIVO</div>
-                    <div class="textoVertical" *ngIf="boleto.myEstado === 'DEVUELTO'" style="font-weight:normal ;"> INACTIVO</div>
-                    <div class="textoVertical" *ngIf="boleto.myEstado === 'ANULADO'" style="color: var(--ion-color-danger);">DEVUELTO</div>
-                    <div class="textoVertical" *ngIf="boleto.myEstado === 'ACTIVO'" style="color: var(--ion-color-secondary);"> ACTIVO</div>
-                  </ion-col>
+                <ion-col size="2" class=" ion-no-padding ion-no-margin" class="infoCadaTicket">
+                  <div class="textoVertical" *ngIf="boleto.myEstado === 'INACTIVO'" style="font-weight:normal ;">
+                    INACTIVO</div>
+                  <div class="textoVertical" *ngIf="boleto.myEstado === 'DEVUELTO'" style="font-weight:normal ;">
+                    INACTIVO</div>
+                  <div class="textoVertical" *ngIf="boleto.myEstado === 'ANULADO'"
+                    style="color: var(--ion-color-danger);">DEVUELTO</div>
+                  <div class="textoVertical" *ngIf="boleto.myEstado === 'ACTIVO'"
+                    style="color: var(--ion-color-secondary);"> ACTIVO</div>
+                </ion-col>
               </ion-row>
 
             </ion-row>
 
-
-            <!-- botones -->
-            <!-- <ion-row style="padding-top: 10px;" *ngIf="boletosAll.length>0">
-              <ion-col size="6" style="padding:0px 3vw">
-                <ion-button style="width: 100%; text-transform: none;" (click)="anular()"> Anular </ion-button>
-              </ion-col>
-              <ion-col size="6" style="padding:0px 3vw">
-                <ion-button style="width: 100%; text-transform: none;">
-                  Volver a Agendar
-                </ion-button>
-              </ion-col>
-            </ion-row> -->
 
             <!-- mensajes -->
             <ion-row style="padding-top: 10px;" *ngIf="boletosAll.length<1">
@@ -200,12 +197,6 @@
       <!-- <ion-icon src="assets/icon/asiento.svg" style="color: white;"></ion-icon> -->
       <div style="display: inline; text-align: left ;padding-left: 10px; text-transform: none;">Regresar</div>
     </ion-button>
-
-    <!-- <div style="width: 50%;"></div> -->
-    <!-- <ion-button fill="clear" style="color: white;  width: 50%; outline: none;" routerLink="/payment-methods">
-      <div style="display: inline;  text-align: right;padding-right: 7px;  text-transform: none">Continuar</div>
-      <ion-icon src="assets/icon/previous.svg" style="transform: rotate(180deg);"></ion-icon>
-    </ion-button> -->
 
   </div>
 </ion-footer>

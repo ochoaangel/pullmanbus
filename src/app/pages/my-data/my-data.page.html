@@ -77,32 +77,13 @@
 
                 <ion-row>
                   <ion-col size="6" class="columnaDoble">
-                    <!-- <div class="overIonInput">
-                    <ion-input placeholder="RUT" type="text" name="rut" pattern="^[0-9]+[-|‐]{1}[0-9kK]{1}$"
-                      [(ngModel)]="myData.rut" required #rut clearOnEdit></ion-input>
-                  </div> -->
-
                     <div class="overIonInput">
-
 
                       <input placeholder="RUT" type="text" name="rut" [textMask]={mask:rutFunction,guide:false}
                         [(ngModel)]="myData.rut" #rut required clearOnEdit>
 
-
-
                     </div>
 
-                    <!-- <div style="width: 100%; display: flex; justify-content: center; align-items: center;">
-                <input 
-                placeholder="RUT"
-                type="text" 
-                name="rutConvenio" 
-                [textMask]={mask:rutFunction,guide:false} 
-                [(ngModel)]="DatosFormulario.rut"
-                #input_rut 
-                (keypress)="tecleado($event)" 
-                >
-              </div> -->
                   </ion-col>
 
                   <ion-col size="6" class="columnaDoble">
@@ -203,32 +184,9 @@
                     </div>
                   </ion-col>
                 </ion-row>
-                <!-- 
-              <ion-row>
-                <ion-col size="6" class="columnaDoble">
-                  <div  style="color: var(--ion-color-primary); font-size: 0.6rem;">Teléfono</div >
-                  <div class="overIonInput">
-                    <ion-input  placeholder="Teléfono" type="phone" name="telefono"
-                    pattern="^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$" #telefono
-                    [(ngModel)]="myData.telefono" required></ion-input>
-                  </div>
-                </ion-col>
-                <ion-col size="6" class="columnaDoble">
-                  <div style="color: var(--ion-color-primary); font-size: 0.6rem;">Celular</div>
-                  <div class="overIonInput">
-                    <ion-input  placeholder="Celular" type="phone" name="celular"
-                      pattern="^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$" #celular
-                      [(ngModel)]="myData.celular" required></ion-input>
-                  </div>
-                </ion-col>
-              </ion-row> -->
 
                 <ion-row>
                   <ion-col size="6" class="columnaDoble">
-                    <!-- <div class="overIonInput">
-                    <ion-input  placeholder="Región" type="text" name="region" minlength="3"
-                      #region [(ngModel)]="myData.region" required></ion-input>
-                  </div> -->
 
                     <div style="color: var(--ion-color-primary); font-size: 0.6rem;">
                       Región
@@ -244,53 +202,10 @@
                     </ion-select>
 
 
-                    <!-- div opciones -->
-                    <!-- <div style="
-                                        position: absolute;
-                                        width: 100%;
-                                        height: 5rem;
-                                        left: 0;
-                                        top: 100%; 
-                                        z-index: 10;
-                                        overflow: auto;
-                                        border-radius: 0.5rem;
-                                        background-color: aquamarine; 
-                                        
-                                        ">
-
-                    texto1 <br>
-                    texto1 <br>
-                    texto1 <br>
-                    texto1 <br>
-                    texto1 <br>
-                    texto1 <br>
-                    texto1 <br>
-                    texto1 <br>
-                    texto1 <br>
-                    texto1 <br>
-                    texto1 <br>
-                    texto1 <br>
-                    texto1 <br>
-                    texto1 <br>
-                    texto1 <br>
-                    texto1 <br>
-                  </div> -->
-
-
-
-
-
-
-
-
 
 
                   </ion-col>
                   <ion-col size="6" class="columnaDoble">
-                    <!-- <div class="overIonInput">
-                  <ion-input  placeholder="Ciudad" type="text" name="ciudad" minlength="3"
-                  #ciudad [(ngModel)]="myData.ciudad" required></ion-input>
-                </div> -->
                     <div style="color: var(--ion-color-primary); font-size: 0.6rem;">
                       Ciudad / Comuna
                     </div>
@@ -360,10 +275,5 @@
         Regresar
       </div>
     </ion-button>
-
-    <!-- <ion-button fill="clear" style="color: white;  width: 50%; outline: none;" routerLink="/user-panel">
-      <div style="display: inline;  text-align: right;padding-right: 7px;  text-transform: none">Continuar</div>
-      <ion-icon src="assets/icon/previous.svg" style="transform: rotate(180deg);"></ion-icon>
-    </ion-button> -->
   </div>
 </ion-footer>

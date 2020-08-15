@@ -33,18 +33,6 @@ export class ContactFormPage implements OnInit {
     boleto: '',
     telefono: '',
   };
-  //  this.myData = {
-  //      apellidoPaterno: 'Corona',
-  //      apellidoMaterno: 'Gamarra',
-  //      boleto: 'INT000741',
-  //      celular: '+569444444444',
-  //      email: 'romulocg25@gmail.com',
-  //      motivo: 'Devolución de boleto',
-  //      nombre: 'Rómulo Gabriel',
-  //      nota: 'PRUEBA',
-  //      rut: '17322605-5',
-  //      telefono: '245765881'
-  //    };
 
   constructor(
     private mys: MyserviceService,
@@ -59,10 +47,6 @@ export class ContactFormPage implements OnInit {
       // dejar cuando tien compra detalles
       this.mys.temporalComprasCarrito = this.mys.temporalComprasCarrito.filter(x => !(x.idServicio === eliminar.idServicio && x.asiento === eliminar.asiento));
 
-      // // dejar cuando NOO tiene compraDetalles
-      // this.mys.ticket.comprasDetalles = this.mys.ticket.comprasDetalles.filter(x => !(x.idServicio === eliminar.idServicio && x.asiento === eliminar.asiento));
-
-      // this.mys.temporalComprasCarrito = this.comprasDetalles;
       this.mys.liberarAsientoDesdeHeader(eliminar);
     })
 
@@ -95,20 +79,8 @@ export class ContactFormPage implements OnInit {
 
   validar(forma) {
     console.log('forma', forma);
-    // console.log('this.myData.fechaNacimiento', this.myData.fechaNacimiento);
-
-    // if (this.myData.apellidoPaterno.length < 3) {
-    //   this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca un apellido paterno válido.');
-    // } else if (this.myData.apellidoMaterno.length < 3) {
-    //   this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca un apellido materno válido.');
-    // } else
-    // if (this.myData.boleto.length < 5) {
-    //   this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca un boleto válido');
-    // } else
     if (this.myData.celular.length < 5) {
       this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca un teléfono móvil válido.');
-      // } else if (this.myData.telefono.length < 5) {
-      //   this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca un telefono de casa válido ');
     } else if (this.myData.rut.length < 8) {
       this.mys.alertShow('Verifique!! ', 'alert', 'Introduzca un rut válido');
     } else if (forma.form.controls.email.status === 'INVALID') {
@@ -145,12 +117,9 @@ export class ContactFormPage implements OnInit {
       });
 
     }
-
-    // }
   } // fin validar
 
   async popMenu(event) {
-    // console.log('event', event);
     const popoverMenu = await this.popoverCtrl.create({
       component: PopMenuComponent,
       event,
@@ -184,10 +153,6 @@ export class ContactFormPage implements OnInit {
       cssClass: 'popCart',
     });
     await popoverCart.present();
-
-    // recibo la variable desde el popover y la guardo en data
-    // const { data } = await popoverCart.onWillDismiss();
-    // this.router.navigateByUrl(data.destino);
   }
 
 

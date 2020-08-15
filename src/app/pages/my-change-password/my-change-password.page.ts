@@ -15,15 +15,15 @@ import { PopCartComponent } from 'src/app/components/pop-cart/pop-cart.component
 })
 export class MyChangePasswordPage implements OnInit {
 
-  loading = false
+  loading = false;
   myData = {
     email: "",
     password: "",
     nuevaPassword: "",
     nuevaPasswordReperida: ''
-  }
-  nombre = ''
-  respuestaApi = ''
+  };
+  nombre = '';
+  respuestaApi = '';
 
   constructor(
     public mys: MyserviceService,
@@ -35,20 +35,19 @@ export class MyChangePasswordPage implements OnInit {
   ngOnInit() { }
 
   ionViewWillEnter() {
-    this.loading = true
+    this.loading = true;
     this.mys.getUser().subscribe(usuario => {
-      this.loading = false
+      this.loading = false;
       if (usuario.usuario.nombre && usuario.usuario.apellidoPaterno) {
-        this.nombre = usuario.usuario.nombre + ' ' + usuario.usuario.apellidoPaterno
+        this.nombre = usuario.usuario.nombre + ' ' + usuario.usuario.apellidoPaterno;
       } else {
-        this.nombre = 'Usuario'
+        this.nombre = 'Usuario';
       }
-      this.myData.email = usuario.usuario.email
-    })
+      this.myData.email = usuario.usuario.email;
+    });
   }
 
   async popMenu(event) {
-    //console.log('event', event);
     const popoverMenu = await this.popoverCtrl.create({
       component: PopMenuComponent,
       event,
@@ -64,7 +63,7 @@ export class MyChangePasswordPage implements OnInit {
       if (data.destino === '/login') {
         this.mys.checkIfExistUsuario().subscribe(exist => {
           exist ? this.router.navigateByUrl('/user-panel') : this.router.navigateByUrl('/login');
-        })
+        });
       } else {
         this.router.navigateByUrl(data.destino);
       }
@@ -89,41 +88,28 @@ export class MyChangePasswordPage implements OnInit {
 
 
   validar(forma) {
-    if (forma.invalid) { this.mys.alertShow('Verifique!! ', 'alert', 'Complete todos los campos y deben ser mínimo 8 caracteres') }
-    else if (this.myData.nuevaPassword !== this.myData.nuevaPasswordReperida) { this.mys.alertShow('Verifique!! ', 'alert', 'Las nuevas password deben coincidir..') }
+    if (forma.invalid) { this.mys.alertShow('Verifique!! ', 'alert', 'Complete todos los campos y deben ser mínimo 8 caracteres'); }
+    else if (this.myData.nuevaPassword !== this.myData.nuevaPasswordReperida) { this.mys.alertShow('Verifique!! ', 'alert', 'Las nuevas password deben coincidir..'); }
     else {
 
-      //console.log('Listoo, pasó las validaciones..');
-      let dataFiltrada = this.myData
-      delete dataFiltrada.nuevaPasswordReperida
-      //console.log('dataFiltrada', dataFiltrada);
-      this.loading = true
+      let dataFiltrada = this.myData;
+      delete dataFiltrada.nuevaPasswordReperida;
+      this.loading = true;
       this.integradorService.usuarioCambiarPassword(dataFiltrada).subscribe((resultado: any) => {
-        this.loading = false
-        //console.log('resultado', resultado)
+        this.loading = false;
         if (resultado.exito) {
-          this.myData.nuevaPassword = ''
-          this.myData.nuevaPasswordReperida = ''
-          this.myData.password = ''
-          this.mys.alertShow('Éxito!! ', 'checkmark-circle', resultado.mensaje)
+          this.myData.nuevaPassword = '';
+          this.myData.nuevaPasswordReperida = '';
+          this.myData.password = '';
+          this.mys.alertShow('Éxito!! ', 'checkmark-circle', resultado.mensaje);
         } else {
-          this.myData.nuevaPassword = ''
-          this.myData.nuevaPasswordReperida = ''
-          this.myData.password = ''
-          this.mys.alertShow('Verifique!! ', 'alert', resultado.mensaje || 'Verifique los datos ingresados e<br>Intente nuevamente..')
+          this.myData.nuevaPassword = '';
+          this.myData.nuevaPasswordReperida = '';
+          this.myData.password = '';
+          this.mys.alertShow('Verifique!! ', 'alert', resultado.mensaje || 'Verifique los datos ingresados e<br>Intente nuevamente..');
 
         }
-      })
-
-
-
-
-      //   respuesta:
-      //   {
-      //     "exito": true,
-      //     "mensaje": "Password modificada exitosamente!",
-      //     "id": null
-      // }
+      });
 
     }
   }
