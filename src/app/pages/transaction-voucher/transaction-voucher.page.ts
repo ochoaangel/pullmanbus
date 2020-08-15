@@ -46,8 +46,8 @@ export class TransactionVoucherPage implements OnInit {
       this.loading -= 1
       this.encabezado = resp;
       //console.log(this.encabezado);
-      if(this.encabezado.estado=='ACTI'){
-        this.encabezado.fechaCompra = new Date(this.encabezado.fechaCompra).toLocaleString(); 
+      if (this.encabezado.estado == 'ACTI') {
+        this.encabezado.fechaCompra = new Date(this.encabezado.fechaCompra).toLocaleString();
       }
     })
   }
@@ -60,79 +60,33 @@ export class TransactionVoucherPage implements OnInit {
     } else {
       this.isApp = true
     }
-    
-// android	a device running Android
-// capacitor	a device running Capacitor
-// cordova	a device running Cordova
-// desktop	a desktop device
-// electron	a desktop device running Electron
-// hybrid	a device running Capacitor or Cordova
-// ios	a device running iOS
-// ipad	an iPad device
-// iphone	an iPhone device
-// mobile	a mobile device
-// phablet	a phablet device
-// pwa	a PWA app
-// tablet	a tablet device
-
 
 
 
   }
+
   // http://localhost:8100/#/transaction-voucher/LQN64693497
-  downloadPDF(){
+  downloadPDF() {
     //if (!this.isApp) {
 
-      const linkSource = 'data:application/pdf;base64,' + this.respPDF.archivo
-      const downloadLink = document.createElement("a");
-      const fileName = this.respPDF.nombre
+    const linkSource = 'data:application/pdf;base64,' + this.respPDF.archivo
+    const downloadLink = document.createElement("a");
+    const fileName = this.respPDF.nombre
 
-      downloadLink.href = linkSource;
-      downloadLink.download = fileName;
-      downloadLink.click();
-      // this.mys.alertShow('Listo!', 'md-archive', 'Boleto descargado..')
-      
-/*     } else {
-      
-      this.platform.ready().then(() => {
+    downloadLink.href = linkSource;
+    downloadLink.download = fileName;
+    downloadLink.click();
 
-
-
-        if (this.postComprobante && this.respPDF) {
-
-          this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.READ_EXTERNAL_STORAGE)
-            .then(status => {
-              if (status.hasPermission) {
-                // this.guardarAbrirPdf(this.crearPdf())        //caso Crear PDF desde cero
-                this.saveAndOpenPdf(this.respPDF.archivo, this.respPDF.nombre)
-              } else {
-                alert('SOLICITUD DE PERMISO:  \n\nEs necesario dar permisos de Almacenamiento...  \n\n Acepte y presione "permitir" para continuar');
-                this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.READ_EXTERNAL_STORAGE)
-                  .then(status2 => {
-                    if (status2.hasPermission) {
-                      // this.guardarAbrirPdf(this.crearPdf())         //caso Crear PDF desde cero
-                      this.saveAndOpenPdf(this.respPDF.archivo, this.respPDF.nombre)
-                    } else {
-                      this.mys.alertShow('Error!', 'alert', 'Debe aceptar los permisos solicitados para continuar, intente nueamente..');
-                    }
-                  });
-              }
-            });
-
-        } else {
-          this.mys.alertShow('Error!', 'alert', 'error al adquirir datos..')
-        }
-      })
-     }*/
   }
-  btnDescargaPasaje(boleto:string,codigo:string) {
-      this.postComprobante = { boleto: boleto, codigo: codigo }                
-      this.loading += 1
-      this.integradorService.generarComprobante(this.postComprobante).subscribe(resp => {
-        this.respPDF = resp
-        this.loading -= 1
-        this.downloadPDF();
-      }) 
+
+  btnDescargaPasaje(boleto: string, codigo: string) {
+    this.postComprobante = { boleto: boleto, codigo: codigo }
+    this.loading += 1
+    this.integradorService.generarComprobante(this.postComprobante).subscribe(resp => {
+      this.respPDF = resp
+      this.loading -= 1
+      this.downloadPDF();
+    })
   }
 
   saveAndOpenPdf(pdf: string, fileName: string) {
@@ -343,12 +297,3 @@ export class TransactionVoucherPage implements OnInit {
 
 }
 
-
-
-// SI desde Localhost sale http://pullmanapi.pasajeschile.cl   
-// NO desde Localhost sale http://pullmanapi.pasajeschile.cl/serviciosVenta/rest/Servicios/GetConvenio   
-
-
-
-// NO desde Localhost sale http://www.pullman.cl/    y obtiene todo slos puestos llenos
-// http://www.pullman.cl/serviciosVenta/rest/Servicios/GetConvenio

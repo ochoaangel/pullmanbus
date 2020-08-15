@@ -127,6 +127,9 @@
               <div>
                 <ion-icon name="done-all" style="color: var(--ion-color-secondary);zoom: 3;"></ion-icon>
               </div>
+              <ion-button (click)="downloadPDF()" fill="clear" shape="round">
+                Descargar PDF
+              </ion-button>
             </div>
           </div>
 
@@ -204,7 +207,6 @@
 
     <ion-button *ngIf="confirmed" slot="start" fill="clear" style="color: white; width: 50%; outline: none;"
       (click)="confirmarOtro()">
-      <!-- <ion-icon src="assets/icon/previous.svg"></ion-icon> -->
       <div style="display: inline; text-align: left ;padding-left: 10px; text-transform: none;">Confirmar Otro Boleto
       </div>
     </ion-button>

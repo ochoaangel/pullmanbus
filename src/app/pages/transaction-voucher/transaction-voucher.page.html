@@ -148,6 +148,7 @@
               <h6>Descarga tus boletos!</h6>
             </ion-text>
           </ion-row>
+
           <div *ngIf="encabezado.boletos">
             <ion-row style="background-color:#FF621D; font-size: 12px; color: white; margin-top: 10px;">
               <ion-col size="8">Boleto</ion-col>
@@ -156,14 +157,13 @@
             <ion-row *ngFor="let bol of encabezado.boletos">
               <ion-col size="8" style="font-size: 12px; margin-top: 10px;">{{bol.boleto}}</ion-col>
               <ion-col size="4">
-                <!--input type="button" class="ingresar"
-                  value="Descargar" (click)="btnDescargaPasaje(bol.boleto,bol.codigo)" /-->
                 <button (click)="btnDescargaPasaje(bol.boleto,bol.codigo)" block>
                   <img src="assets/images/download.png" width="24">
                 </button>
               </ion-col>
             </ion-row>
           </div>
+
         </ion-col>
 
       </ion-grid>
@@ -184,10 +184,6 @@
     </ion-button>
 
     <div style="width: 50%;"></div>
-    <!-- <ion-button fill="clear" style="color: white;  width: 50%; outline: none;"  routerLink="/transaction-voucher">
-          <div style="display: inline;  text-align: right;padding-right: 7px;  text-transform: none">Continuar</div>
-          <ion-icon src="assets/icon/previous.svg" style="transform: rotate(180deg);"></ion-icon>
-        </ion-button> -->
 
   </div>
 </ion-footer>

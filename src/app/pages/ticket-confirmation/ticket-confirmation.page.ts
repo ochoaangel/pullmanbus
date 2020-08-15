@@ -6,6 +6,7 @@ import * as moment from 'moment';
 import { PopoverController } from '@ionic/angular';
 import { PopMenuComponent } from 'src/app/components/pop-menu/pop-menu.component';
 import { PopCartComponent } from 'src/app/components/pop-cart/pop-cart.component';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-ticket-confirmation',
@@ -33,24 +34,10 @@ export class TicketConfirmationPage implements OnInit {
 
   myData = {
     fecha: '',
-    boleto: '',
-    email: '',
-    email2: '',
+    boleto: 'INT00075079',
+    email: 'ochoaangel@gmail.com',
+    email2: 'ochoaangel@gmail.com',
   };
-
-
-  respBuscarBoleto = {
-    resultado: {
-      exito: true,
-      mensaje: 'Boleto puede ser confirmado',
-      id: null
-    },
-    ciudadOrigen: '04101037',
-    ciudadDestino: '13101420',
-    clase: 'SAL09',
-    empresa: '01',
-    boleto: 'INT00074911'
-  }
 
   confirmed = null;
   exito = false;
@@ -71,15 +58,10 @@ export class TicketConfirmationPage implements OnInit {
     this.minDate = currentDate.toISOString();
     this.maxDate = currentDate.add('1', 'years').toISOString();
 
-
     if (this.mys.confirmSelected) {
       console.log('Caso de Seguimiento de boleto por confirmar');
       this.confirmed = this.mys.confirmSelected;
       this.mys.confirmSelected = null;
-      console.log('Ingresando a ticket-confirm CON asiento seleccionado');
-      console.log('Asiento seleccionado :this.confirmed ', this.confirmed);
-      console.log('fser', this.confirmed.service.fechaServicio);
-      console.log('fsal', `${this.confirmed.service.fechaSalida}-${this.confirmed.service.horaSalida}`);
 
       // preparo el dato a enviar a la api
       let dataToSend = {
@@ -105,13 +87,12 @@ export class TicketConfirmationPage implements OnInit {
         email: this.confirmed.init.form.email
       }
 
-      console.log('*****Paso Final envío a ConfirmarBoleto', dataToSend);
-      console.log('-----this.confirmed', this.confirmed);
-
       this.loading++;
       this.integrador.confirmarBoleto(dataToSend).subscribe((resp: any) => {
         this.loading--;
-        console.log('resp de api definitiva ConfirmarBoleto', resp);
+        console.log('resp de api ConfirmarBoleto', resp);
+        this.confirmed['pdf'] = resp;
+        console.log('this.confirmed', this.confirmed);
 
         if (resp.resultado.exito) {
           this.exito = true;
@@ -127,8 +108,6 @@ export class TicketConfirmationPage implements OnInit {
       this.confirmed = null;
     }
   }
-
-
 
   ngOnInit() {
     // this.mys.checkIfExistUsuario().subscribe((res1) => {
@@ -353,6 +332,7 @@ export class TicketConfirmationPage implements OnInit {
     this.confirmed = null;
     this.mys.confirm = null;
     this.mys.confirmSelected = null;
+    this.exito = false;
   }
 
   consultarBoleto() {
@@ -437,6 +417,17 @@ export class TicketConfirmationPage implements OnInit {
         }
       })
     }
+
+  }
+
+  downloadPDF() {
+    const linkSource = 'data:application/pdf;base64,' + this.confirmed.pdf.archivo.archivo;
+    const downloadLink = document.createElement("a");
+    const fileName = this.confirmed.pdf.archivo.nombre;
+
+    downloadLink.href = linkSource;
+    downloadLink.download = fileName;
+    downloadLink.click();
 
   }
 }
