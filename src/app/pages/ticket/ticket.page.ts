@@ -534,13 +534,22 @@ export class TicketPage implements OnInit {
       tarifa = this.tarifaPiso2;
     }
 
+    let tarifaNormal;
+    if (piso === '1') {
+      tarifaNormal = this.serviceSelected.tarifaPrimerPiso;
+    } else {
+      tarifaNormal = this.serviceSelected.tarifaSegundoPiso;
+    }
 
+    console.log("Servicio" , this.serviceSelected)
+    console.log("tarifaNormal" , tarifaNormal)
     let resumen = {
       nService: this.serviceSelectedNumber,
       idServicio: this.serviceSelected.idServicio,
       asiento: this.bus[piso][y][x]['asiento'],
       piso: parseInt(piso),
       valor: parseInt(tarifa),
+      valorNormal: parseInt(tarifaNormal.replace(".","")),
       fila: y,
       columna: x,
       way: this.way,

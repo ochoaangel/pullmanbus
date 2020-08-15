@@ -232,7 +232,9 @@
                   </div>
                   <div class="myServiceRow">{{svc.servicioPrimerPiso | titlecase}}</div>
                   <div class="myServiceRow">
-                    <div style="display: flex; align-items: center; justify-content: left;">Valor:
+                    <div style="display: flex; align-items: center; justify-content: left;text-decoration: line-through;">Valor:
+                      ${{svc.tarifaPrimerPiso}}</div>
+                    <div style="display: flex; align-items: center; justify-content: left;">Internet:
                       ${{svc.tarifaPrimerPisoInternet}}</div>
                   </div>
                 </div>
@@ -247,7 +249,9 @@
                     </div>
                     <div class="myServiceRow">{{svc.servicioSegundoPiso | titlecase}}</div>
                     <div class="myServiceRow">
-                      <div style="display: flex; align-items: center; justify-content: left;">Valor:
+                      <div style="display: flex; align-items: center; justify-content: left;text-decoration: line-through;">Valor:
+                        ${{svc.tarifaSegundoPiso}}</div>
+                      <div style="display: flex; align-items: center; justify-content: left;">Internet:
                         ${{svc.tarifaSegundoPisoInternet}}</div>
                     </div>
                   </div>

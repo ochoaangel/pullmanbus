@@ -307,7 +307,7 @@ export class PaymentMethodsPage implements OnInit {
     this.listaDetalleConvenio.forEach(item => {
       validarConvenio.listaAtributo.push({ 'idCampo': item.Placeholder.trim(), 'valor': this.DatosFormulario.rut.replace(re, '') });
     });
-
+    console.log("Carro de compras : ",this.mys.ticket.comprasDetalles);
     this.mys.ticket.comprasDetalles.forEach(boleto => {
       let fecha = boleto.service.fechaSalida.split('/');
       validarConvenio.listaBoleto.push({
@@ -317,9 +317,9 @@ export class PaymentMethodsPage implements OnInit {
         , 'fechaSalida': fecha[2] + fecha[1] + fecha[0]
         , 'idServicio': boleto.idServicio
         , 'origen': boleto.service.idTerminalOrigen
-        , 'pago': boleto.valor
+        , 'pago': boleto.valorNormal
         , 'piso': boleto.piso
-        , 'valor': boleto.valor
+        , 'valor': boleto.valorNormal
         , 'asiento': boleto.asiento
         , 'promocion': '0'
       });
