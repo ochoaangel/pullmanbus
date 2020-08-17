@@ -306,35 +306,40 @@ export class PaymentMethodsPage implements OnInit {
     this.listaDetalleConvenio.forEach(item => {
       validarConvenio.listaAtributo.push({ 'idCampo': item.Placeholder.trim(), 'valor': this.DatosFormulario.rut.replace(re, '') });
     });
-    console.log("Carro de compras : ", this.mys.ticket.comprasDetalles);
+    console.log("Carro de compras : ",this.mys.ticket.comprasDetalles);  
     this.mys.ticket.comprasDetalles.forEach(boleto => {
       let fecha = boleto.service.fechaSalida.split('/');
-      validarConvenio.listaBoleto.push({
-        'clase': boleto.piso == 1 ? boleto.service.idClaseBusPisoUno : boleto.service.idClaseBusPisoDos
-        , 'descuento': ''
-        , 'destino': boleto.service.idTerminalDestino
-        , 'fechaSalida': fecha[2] + fecha[1] + fecha[0]
-        , 'idServicio': boleto.idServicio
-        , 'origen': boleto.service.idTerminalOrigen
-        , 'pago': boleto.valorNormal
-        , 'piso': boleto.piso
-        , 'valor': boleto.valorNormal
-        , 'asiento': boleto.asiento
-        , 'promocion': '0'
-      });
-      validarConvenio.totalApagar = Number(validarConvenio.totalApagar) + Number(boleto.valor) + '';
+      
+        validarConvenio.listaBoleto.push({
+          'clase': boleto.piso == 1 ? boleto.service.idClaseBusPisoUno : boleto.service.idClaseBusPisoDos
+          , 'descuento': ''
+          , 'destino': boleto.service.idTerminalDestino
+          , 'fechaSalida': fecha[2] + fecha[1] + fecha[0]
+          , 'idServicio': boleto.idServicio
+          , 'origen': boleto.service.idTerminalOrigen
+          , 'pago': boleto.valor
+          , 'piso': boleto.piso
+          , 'valor': boleto.valorNormal
+          , 'asiento': boleto.asiento
+          , 'promocion': boleto.promocion ? '1' : '0'
+        });   
+        //validarConvenio.totalApagar = Number(validarConvenio.totalApagar) + Number(boleto.valor) + '';
     });
-    validarConvenio.montoTotal = validarConvenio.totalApagar;
+    //validarConvenio.montoTotal = validarConvenio.totalApagar;
     this.loading += 1;
-
+    console.log("Validacion : ",validarConvenio);
     this.integradorService.getDescuentoConvenio(validarConvenio).subscribe(data => {
 
       this.loading -= 1;
       this.datosConvenio = data;
-
+      console.log(this.datosConvenio);
       if (this.datosConvenio.mensaje && this.datosConvenio.mensaje === 'OK') {
-        this.mys.alertShow('¡Confirmado!', 'done-all', 'RUT con descuento para el convenio seleccionado.');
-
+        const withPromo = this.mys.ticket.comprasDetalles.filter(item => item.promocion) 
+        if(withPromo.length > 0){          
+          this.mys.alertShow('¡Confirmado!', 'done-all', 'RUT con descuento para el convenio seleccionado. Los descuentos por convenios estarán desactivados para los asientos con promoción de boleto de regreso.');
+        }else{
+          this.mys.alertShow('¡Confirmado!', 'done-all', 'RUT con descuento para el convenio seleccionado.');
+        }
         this.totalSinDscto = this.mys.total;
         this.totalFinal = Number(this.datosConvenio.totalApagar);
         this.mostrarTarifaAtachada = true;
