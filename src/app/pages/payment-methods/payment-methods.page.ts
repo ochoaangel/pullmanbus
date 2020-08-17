@@ -267,15 +267,15 @@ export class PaymentMethodsPage implements OnInit {
   }
 
   rutFunction(rawValue) {
-    let numbers = rawValue.match(/\d/g);
+    let numbers = rawValue.match(/[0-9kKeE]/g);
     let numberLength = 0;
     if (numbers) {
       numberLength = numbers.join('').length;
     }
     if (numberLength > 8) {
-      return [/[1-9]/, /[0-9]/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/];
+      return [/[1-9]/, /[0-9]/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /[0-9KkEe]/];
     } else {
-      return [/[1-9]/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/];
+      return [/[1-9]/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /[0-9KkEe]/];
     }
   }
 
@@ -307,7 +307,7 @@ export class PaymentMethodsPage implements OnInit {
     this.listaDetalleConvenio.forEach(item => {
       validarConvenio.listaAtributo.push({ 'idCampo': item.Placeholder.trim(), 'valor': this.DatosFormulario.rut.replace(re, '') });
     });
-    console.log("Carro de compras : ",this.mys.ticket.comprasDetalles);
+    console.log("Carro de compras : ", this.mys.ticket.comprasDetalles);
     this.mys.ticket.comprasDetalles.forEach(boleto => {
       let fecha = boleto.service.fechaSalida.split('/');
       validarConvenio.listaBoleto.push({
