@@ -166,7 +166,7 @@
                   <div style=" width: 33%;text-align: -webkit-center; font-weight: bold;">
                     <div style="font-size: 0.7rem;">Duración</div>
                     <div style="font-size: 0.8rem;font-weight: bold;">
-                      {{'X'| duration: pasaje.service.fechaSalida : pasaje.service.horaSalida : pasaje.service.fechaLlegada : pasaje.service.horaLlegada}}
+                      {{'X'| duration: pasaje.way ==='go'? pasaje.goDate:pasaje.backDate : pasaje.service.horaSalida : pasaje.service.fechaLlegada : pasaje.service.horaLlegada}}
                     </div>
                   </div>
 

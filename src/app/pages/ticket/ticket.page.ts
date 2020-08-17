@@ -541,15 +541,15 @@ export class TicketPage implements OnInit {
       tarifaNormal = this.serviceSelected.tarifaSegundoPiso;
     }
 
-    console.log("Servicio" , this.serviceSelected)
-    console.log("tarifaNormal" , tarifaNormal)
+    console.log("Servicio", this.serviceSelected)
+    console.log("tarifaNormal", tarifaNormal)
     let resumen = {
       nService: this.serviceSelectedNumber,
       idServicio: this.serviceSelected.idServicio,
       asiento: this.bus[piso][y][x]['asiento'],
       piso: parseInt(piso),
       valor: parseInt(tarifa),
-      valorNormal: parseInt(tarifaNormal.replace(".","")),
+      valorNormal: parseInt(tarifaNormal.replace(".", "")),
       fila: y,
       columna: x,
       way: this.way,
@@ -558,6 +558,9 @@ export class TicketPage implements OnInit {
       promocion: promocionTarifaTotal ? true : false,
       piso1: this.bus['1'] || null,
       piso2: this.bus['2'] || null,
+      goDate: this.goDate,
+      backDate: this.backDate,
+
     };
 
     this.comprasDetalles.push(resumen);
