@@ -62,9 +62,9 @@
         <ion-row class="ion-justify-content-center " style="height: 100%;">
           <ion-col size="12" style="align-items: center;" class="ion-justify-content-center">
             <div style="width: 100%; align-items: center;text-align: center; display: flex;justify-content: center;">
-              <form (ngSubmit)="validar(forma)" #forma="ngForm" novalidate=""
-                style="max-width: 30rem;align-items: center;">
-
+              <!-- <form (ngSubmit)="validar(forma)" #forma="ngForm" novalidate=""
+              style="max-width: 30rem;align-items: center;"> -->
+              <div style="max-width: 30rem;align-items: center;">
                 <!-- titulo -->
                 <ion-row>
                   <ion-col size="12" style="text-align: center;">
@@ -99,8 +99,13 @@
 
                   <ion-col size="6" class="columnaDoble" style="">
                     <div style="position: relative;" class="overIonInput">
-                      <ion-input placeholder="Nº Documento" type="text" name="rut" #rut [(ngModel)]="myData.rut"
-                        required clearOnEdit></ion-input>
+
+                      <input [textMask]="{mask:rutFunctionFinal,guide:false}" placeholder="N° Documento" type="text"
+                        style="text-align: center;" name="rut" #rut>
+                      <!-- </input> -->
+                      <!-- <input type="text" [textMask]="{mask:rutFunction,guide:false}" [(ngModel)]="DatosFormulario.rut"
+                        name="input.Valor" #input_rut placeholder="{{input.Valor}}" style="text-align: center;"> -->
+
                     </div>
                   </ion-col>
 
@@ -146,7 +151,7 @@
                 <ion-row>
                   <ion-col size="6" class="columnaDoble">
                     <div class="overIonInput">
-                      <ion-input placeholder="TELÉFONO DE CASA" type="phone" name="boleto" pattern="^[0-9]{9,10}$"
+                      <ion-input placeholder="TELÉFONO DE CASA" type="phone" name="telefono" pattern="^[0-9]{9,10}$"
                         #telefono [(ngModel)]="myData.telefono" required clearOnEdit></ion-input>
                     </div>
                   </ion-col>
@@ -191,7 +196,8 @@
                   </ion-col>
                 </ion-row>
 
-              </form>
+              </div>
+              <!-- </form> -->
             </div>
           </ion-col>
         </ion-row>

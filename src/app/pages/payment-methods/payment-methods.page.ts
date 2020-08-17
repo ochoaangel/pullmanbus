@@ -19,14 +19,14 @@ export class PaymentMethodsPage implements OnInit {
   loading;
   // rutShow = false
 
-  constructor(private router: Router,
+  constructor(
+    private mys: MyserviceService,
+    private router: Router,
     private integradorService: IntegradorService,
     private popoverCtrl: PopoverController,
-    private mys: MyserviceService
 
   ) {
     this.loading = 2;
-
 
     this.integradorService.getListConvenio().subscribe(convenio => {
       this.listaConvenio = convenio;
@@ -169,11 +169,10 @@ export class PaymentMethodsPage implements OnInit {
       // this.mys.alertShow('¡Verifique!', 'alert', 'Todo correcto');
       let guardarTransaccion = {
         email: this.DatosFormulario.email,
-        rut: this.DatosFormulario.rut.replace(/\./g, ''),
+        rut: this.usuario ? this.usuario.rut : '',
         medioDePago: this.DatosFormulario.convenioDown,
         puntoVenta: 'PUL',
         montoTotal: this.totalFinal,
-
         idSistema: 5,
         listaCarrito: []
       };

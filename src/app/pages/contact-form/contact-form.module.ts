@@ -7,14 +7,19 @@ import { IonicModule } from '@ionic/angular';
 import { ContactFormPageRoutingModule } from './contact-form-routing.module';
 
 import { ContactFormPage } from './contact-form.page';
+import { TextMaskModule } from 'angular2-text-mask';
+import { ComponentsModule } from 'src/app/components/components.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ContactFormPageRoutingModule
+    TextMaskModule,
+    ContactFormPageRoutingModule,
+    ComponentsModule
+
   ],
   declarations: [ContactFormPage]
 })
-export class ContactFormPageModule {}
+export class ContactFormPageModule { }

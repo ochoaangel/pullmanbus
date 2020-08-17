@@ -36,8 +36,8 @@ export class ContactFormPage implements OnInit {
 
   constructor(
     private mys: MyserviceService,
-    private integrador: IntegradorService,
     private router: Router,
+    private integrador: IntegradorService,
     private popoverCtrl: PopoverController
   ) {
 
@@ -161,18 +161,17 @@ export class ContactFormPage implements OnInit {
     console.log('pruebaaaaxx', event);
   }
 
-  rutFunction(rawValue) {
-    let numbers = rawValue.match(/\d|k|K/g);
+  rutFunctionFinal(rawValue: string) {
+    // console.log('rawValue', rawValue);
+    let numbers = rawValue.match(/[0-9kKeE]/g);
     let numberLength = 0;
     if (numbers) {
       numberLength = numbers.join('').length;
     }
     if (numberLength > 8) {
-      return [/[1-9]/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /[0-9|k|K]/,
-      ];
+      return [/[1-9]/, /[0-9]/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /[0-9KkEe]/];
     } else {
-      return [/[1-9]/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /[0-9|k|K]/,
-      ];
+      return [/[1-9]/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /[0-9KkEe]/];
     }
   }
 
