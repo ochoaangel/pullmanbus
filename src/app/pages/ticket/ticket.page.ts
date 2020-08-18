@@ -253,7 +253,7 @@ export class TicketPage implements OnInit {
 
 
   myServiceSelection(nServiceSeleccion: number) {
-
+    console.log("desplega sevicio", nServiceSeleccion)
     // setTimeout(() => {
     let estadoPrevio = this.allServices[nServiceSeleccion]['checked'];
     this.allServices.forEach(element => {
@@ -298,9 +298,10 @@ export class TicketPage implements OnInit {
 
           // verificar si se ha comprado en este servicio
           let nowIdService = this.allServices[nServiceSeleccion]['idServicio'];
+          let nowDateService = this.allServices[nServiceSeleccion]['fechaServicio'];
 
           this.comprasDetalles.forEach(element => {
-            if (element.idServicio === nowIdService) {
+            if (element.idServicio === nowIdService && element.service.fechaServicio === nowDateService) {
               this.bus = element.bus;
             }
           });
