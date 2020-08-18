@@ -22,13 +22,20 @@ export class PopCartComponent implements OnInit {
     this.compras.forEach(element => {
       this.total = this.total + element.valor;
     });
-    //console.log('compras desde popCart', this.compras);
   }
 
 
   eliminarBoleto(i) {
     this.mys.actualizarCarritoEliminar(this.compras[i]);  //informo el elemento eliminado
     this.compras.splice(i, 1);
+    this.actualizarTotal();
+  }
+
+  actualizarTotal() {
+    this.total = 0;
+    this.compras.forEach(element => {
+      this.total = this.total + element.valor;
+    });
   }
 
 }

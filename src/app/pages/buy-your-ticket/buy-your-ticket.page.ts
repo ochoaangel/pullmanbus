@@ -261,19 +261,21 @@ export class BuyYourTicketPage implements OnInit {
 
   }
 
+
   async popCart(event) {
+    this.mys.temporalComprasCarrito = this.comprasDetalles;
     const popoverCart = await this.popoverCtrl.create({
       component: PopCartComponent,
       event,
       mode: 'ios',
       backdropDismiss: true,
-      cssClass: "popCart"
+      cssClass: 'popCart'
     });
     await popoverCart.present();
 
-    // recibo la variable desde el popover y la guardo en data
-    // const { data } = await popoverCart.onWillDismiss();
-    // this.router.navigateByUrl(data.destino);
+    const { data } = await popoverCart.onDidDismiss();
+    console.log('data en padre desde popover', data);
+
   }
 
 
