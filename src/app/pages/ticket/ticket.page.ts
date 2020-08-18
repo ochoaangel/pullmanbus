@@ -560,8 +560,7 @@ export class TicketPage implements OnInit {
       piso1: this.bus['1'] || null,
       piso2: this.bus['2'] || null,
       goDate: this.goDate,
-      backDate: this.backDate,
-
+      backDate: this.backDate
     };
 
     this.comprasDetalles.push(resumen);

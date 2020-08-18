@@ -20,7 +20,7 @@ export class PurchaseDetailPage implements OnInit {
     private popoverCtrl: PopoverController,
     private integradorService: IntegradorService,
   ) {
-
+    console.log(mys.ticket.comprasDetalles);
     this.mys.carritoEliminar.subscribe(eliminar => {
       // dejar cuando NOO tiene compraDetalles  
       this.mys.ticket.comprasDetalles = this.mys.ticket.comprasDetalles.filter(x => !(x.idServicio === eliminar.idServicio && x.asiento === eliminar.asiento));
