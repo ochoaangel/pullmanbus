@@ -141,8 +141,8 @@
                   <div
                     style=" width: 28%;margin: 0vw  0vw  0vw  0vw;  color: black;display: flex;justify-content: center;align-items: center;flex-direction: column; ">
                     <div style="font-size: 1.2rem;">{{pasaje.service.horaSalida | hh2ampm}}</div>
-                    <div style="font-size: 0.7rem;" *ngIf="pasaje.way==='go'">{{ticket.origin.nombre}}</div>
-                    <div style="font-size: 0.7rem;" *ngIf="pasaje.way==='back'">{{ticket.destiny.nombre}}</div>
+                    <div style="font-size: 0.7rem;" *ngIf="pasaje.way==='go'">{{pasaje.service.terminalOrigen}}</div>
+                    <div style="font-size: 0.7rem;" *ngIf="pasaje.way==='back'">{{pasaje.service.terminalOrigen}}</div>
                     <div style="font-size: 0.7rem;font-weight: bold;">{{pasaje.service.terminalSalida}}</div>
                   </div>
 
@@ -154,8 +154,8 @@
                   <div
                     style=" width: 28%;margin: 0vw  0vw  0vw  0vw;  color: black;display: flex;justify-content: center;align-items: center;flex-direction: column; ">
                     <div style="font-size: 1.2rem;">{{pasaje.service.horaLlegada | hh2ampm}}</div>
-                    <div style="font-size: 0.7rem;" *ngIf="pasaje.way==='go'">{{ticket.destiny.nombre}}</div>
-                    <div style="font-size: 0.7rem;" *ngIf="pasaje.way==='back'">{{ticket.origin.nombre}}</div>
+                    <div style="font-size: 0.7rem;" *ngIf="pasaje.way==='go'">{{pasaje.service.terminalDestino}}</div>
+                    <div style="font-size: 0.7rem;" *ngIf="pasaje.way==='back'">{{pasaje.service.terminalDestino}}</div>
                     <div style="font-size: 0.7rem;font-weight: bold;">{{pasaje.service.terminaLlegada}}</div>
                   </div>
                 </div>
