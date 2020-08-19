@@ -87,6 +87,12 @@
               </ion-col>
             </ion-row>
 
+            <ion-row *ngIf="sinServicios && ">
+              <ion-col size="12">
+                <p><b>No existen servicios que cumplan las características deseadas..</b></p>              
+              </ion-col>
+            </ion-row>
+
 
             <!-- Bucle serviciosss -->
             <div style=" font-size: 2vw;padding: 5px 0;margin: 3px 0px;" [ngClass]="(i % 2 == 0) ? 'odd' : 'even'"

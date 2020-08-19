@@ -12,6 +12,7 @@ import { CompileMetadataResolver } from '@angular/compiler';
 import { PopMenuComponent } from 'src/app/components/pop-menu/pop-menu.component';
 import { PopCartComponent } from 'src/app/components/pop-cart/pop-cart.component';
 import { SIGABRT } from 'constants';
+import { timeStamp } from 'console';
 
 @Component({
   selector: 'app-confirm-seat',
@@ -76,7 +77,7 @@ export class ConfirmSeatPage implements OnInit {
 
   confirmFromticketConfirmation;
 
-
+  sinServicios = false;
   constructor(
     private httpClient: HttpClient,
     private router: Router,
@@ -84,7 +85,7 @@ export class ConfirmSeatPage implements OnInit {
     private integradorService: IntegradorService,
     private popoverCtrl: PopoverController,
 
-  ) {
+  ) {    
   }
 
   ngOnInit() { }
@@ -102,6 +103,7 @@ export class ConfirmSeatPage implements OnInit {
       this.comprasDetalles = [];
       this.loading++;
       this.integradorService.getService(confirm.obtenerServicio).subscribe(data => {
+        console.log("RESPUESTA ", data)
         this.loading--;
 
 
@@ -109,14 +111,18 @@ export class ConfirmSeatPage implements OnInit {
         this.clase = confirm.filtros.clase;
         this.empresa = confirm.filtros.empresa;
 
+        console.log("clase",this.clase);
+        console.log("empresa",this.empresa);
+
         this.allServices = data.filter(x =>
-          (x.empresa === this.empresa) &&
           (
             (x.idClaseBusPisoUno === this.clase) ||
             (x.idClaseBusPisoDos === this.clase)
           )
         );
-
+        if(this.allServices.length === 0){
+          this.sinServicios = true;
+        }
       });
 
 
