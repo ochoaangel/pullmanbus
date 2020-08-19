@@ -70,6 +70,8 @@ export class TicketChangePage implements OnInit {
         .subscribe((validado: any) => {
           this.loading--;
 
+          console.log('res_canjeValidar', validado);
+
           if (validado.exito) {
             this.loading++;
             this.integrador
@@ -80,103 +82,56 @@ export class TicketChangePage implements OnInit {
                 let estado = infoBoleto.estadoActualDescripcion;
                 console.log('infoBoleto', infoBoleto);
 
-                if (estado === 'IDA' || estado === 'ENTREGADO') {
+                if (estado === 'IDA' || estado === 'ENTREGADO' || estado === 'CONFIRMADO') {
                   /////////////////////////////////////
                   // let actual = moment.utc()
                   let embarcacionFecha = `${infoBoleto.fechaEmbarcacion} ${infoBoleto.horaEmbarcacion}`;
 
-                  let today = moment.utc().format('DD/MM/YYYY'); // para quitar las horas y munutos..
+                  let today = moment().format('DD/MM/YYYY'); // para quitar las horas y munutos..
 
                   // fecha embarque
-                  let filtroEmbarque = moment
-                    .utc(embarcacionFecha, 'DD/MM/YYYY HH:mm')
-                    .format('DD/MM/YYYY');
-                  let unixEmbarque = moment
-                    .utc(filtroEmbarque, 'DD/MM/YYYY')
-                    .unix();
+                  let filtroEmbarque = moment(embarcacionFecha, 'DD/MM/YYYY HH:mm').format('DD/MM/YYYY');
+                  let unixEmbarque = moment(filtroEmbarque, 'DD/MM/YYYY').unix();
 
                   // referencia a hoy menos 3 dias
-                  let unixTope = moment
-                    .utc(today, 'DD/MM/YYYY')
-                    .subtract(3, 'days')
-                    .unix();
+                  let unixTope = moment(today, 'DD/MM/YYYY').subtract(3, 'days').unix();
 
                   if (unixEmbarque > unixTope) {
-                    /////// final
                     this.existeBoleto = infoBoleto;
                     this.valor = parseInt(infoBoleto.valor);
-                    this.compra =
-                      infoBoleto.tipoCompra === 'INT'
-                        ? 'internet'
-                        : 'ventanilla';
+                    this.compra = infoBoleto.tipoCompra === 'INT' ? 'internet' : 'ventanilla';
                   } else {
-                    this.mys.alertShow(
-                      'Error!!',
-                      'alert',
-                      'El boleto, no puede ser cambiado, superó el límite de fecha..'
-                    );
+                    this.mys.alertShow('Error!!', 'alert', 'El boleto, no puede ser cambiado, superó el límite de fecha..');
                   }
+
+
                 } else {
-                  this.mys.alertShow(
-                    'Error!!',
-                    'alert',
-                    validado.mensaje ||
-                    'El boleto no es de ida o no se ha entregado..'
-                  );
+                  this.mys.alertShow('Error!!', 'alert', validado.mensaje || 'El boleto no es de ida o no se ha entregado..');
                 }
               });
+
           } else {
-            this.mys.alertShow(
-              'Error!!',
-              'alert',
-              'Este Boleto No puede ser cambiado..'
-            );
+            this.mys.alertShow('Error!!', 'alert', 'Este Boleto No puede ser cambiado..');
           }
         });
     } else {
-      this.mys.alertShow(
-        'Error!!',
-        'alert',
-        'Ingrese in boleto válido para consultar..'
-      );
+      this.mys.alertShow('Error!!', 'alert', 'Ingrese in boleto válido para consultar..');
     }
   }
 
   cambiar(forma) {
     let ventanilla = this.compra === 'ventanilla' ? true : false;
 
-    if (
-      !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.myData.email)
-    ) {
-      this.mys.alertShow(
-        'Error!!',
-        'alert',
-        'Verifique el correo e intente nuevamente.'
-      );
+    if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.myData.email)) {
+      this.mys.alertShow('Error!!', 'alert', 'Verifique el correo e intente nuevamente.');
     } else if (!/^[0-9]+[-|-]{1}[0-9kK]{1}$/.test(this.myData.rut)) {
-      this.mys.alertShow(
-        'Error!!',
-        'alert',
-        'Verifique el rut e intente nuevamente.'
-      );
+      this.mys.alertShow('Error!!', 'alert', 'Verifique el rut e intente nuevamente.');
     } else if (!this.myData.fecha && ventanilla) {
-      this.mys.alertShow(
-        'Error!!',
-        'alert',
-        'Debe ingresar una fecha válida.. intente de nuevo..'
-      );
+      this.mys.alertShow('Error!!', 'alert', 'Debe ingresar una fecha válida.. intente de nuevo..');
     } else if (!this.myData.hora && ventanilla) {
-      this.mys.alertShow(
-        'Error!!',
-        'alert',
-        'Debe ingresar una hora válida.. Intente de nuevo..'
-      );
+      this.mys.alertShow('Error!!', 'alert', 'Debe ingresar una hora válida.. Intente de nuevo..');
     } else if (!this.myData.acuerdo) {
-      this.mys.alertShow(
-        'Error!!',
-        'alert',
-        'Debe aceptar los términos y condiciones de compras para continuar..'
-      );
+      this.mys.alertShow('Error!!', 'alert', 'Debe aceptar los términos y condiciones de compras para continuar..');
     } else {
       let validadaFecha = false;
       if (ventanilla) {
@@ -189,11 +144,7 @@ export class TicketChangePage implements OnInit {
         if (inAllingresado === embarcacion) {
           validadaFecha = true;
         } else {
-          this.mys.alertShow(
-            'Error!!',
-            'alert',
-            'No se puede cambiar el boleto,<br> la fecha u hora ingresada no coincide con la del boleto..'
-          );
+          this.mys.alertShow('Error!!', 'alert', 'No se puede cambiar el boleto,<br> la fecha u hora ingresada no coincide con la del boleto..');
           let validadaFecha = false;
         }
       } else {
@@ -209,23 +160,14 @@ export class TicketChangePage implements OnInit {
           rut: this.myData.rut,
         };
         this.integrador.canjeBoleto(dataPost).subscribe((res: any) => {
-          console.log('res', res);
+          console.log('res_canjeBoleto', res);
           if (res.exito) {
             let codigo = res.mensaje ? `<br>Nuevo código: ${res.mensaje}` : ``;
-
-            this.mys.alertShow(
-              'Éxito!!',
-              'checkmark-circle',
-              'Su boleto ha sido cambiado..' + codigo
-            );
+            this.mys.alertShow('Éxito!!', 'checkmark-circle', 'Su boleto ha sido cambiado..' + codigo);
             this.existeBoleto = null;
             this.myData.boleto = '';
           } else {
-            this.mys.alertShow(
-              'Error!!',
-              'alert',
-              'No se pudo cambiar el boleto.. intente de nuevo..'
-            );
+            this.mys.alertShow('Error!!', 'alert', 'No se pudo cambiar el boleto.. intente de nuevo..');
           }
         });
       }
@@ -248,9 +190,7 @@ export class TicketChangePage implements OnInit {
     if (data && data.destino) {
       if (data.destino === '/login') {
         this.mys.checkIfExistUsuario().subscribe((exist) => {
-          exist
-            ? this.router.navigateByUrl('/user-panel')
-            : this.router.navigateByUrl('/login');
+          exist ? this.router.navigateByUrl('/user-panel') : this.router.navigateByUrl('/login');
         });
       } else {
         this.router.navigateByUrl(data.destino);

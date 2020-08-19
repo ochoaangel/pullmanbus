@@ -172,7 +172,7 @@
                         <div class="overIonInput">
                           <ion-input placeholder="Email" type="email" name="emaili"
                             pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" #emaili [(ngModel)]="myData.email"
-                            [disabled]="usuario" required></ion-input>
+                            required></ion-input>
                         </div>
                       </ion-col>
                     </ion-row>
@@ -181,7 +181,7 @@
                       <ion-col size="6" class="columnaDoble">
                         <div class="overIonInput">
                           <ion-input placeholder="RUT" type="text" name="ruti" pattern="^[0-9]+[-|‐]{1}[0-9kK]{1}$"
-                            [disabled]="usuario" [(ngModel)]="myData.rut" required #ruti></ion-input>
+                            [(ngModel)]="myData.rut" required #ruti></ion-input>
                         </div>
                       </ion-col>
                     </ion-row>
