@@ -10,7 +10,7 @@
       <img src="assets/images/titulo.png" style="height: 90%;object-fit: scale-down;position: relative; z-index: 10; ">
     </div>
 
-    <div style="display: inline; width: 10%;">
+    <div style="display: inline; width: 10%;" (click)="popCart($event)">
       <ion-icon name="md-cart" style="font-size: 25px;padding-top: 5px;"></ion-icon>
       <ion-badge color="dark" mode="ios" *ngIf="ticket.comprasDetalles && ticket.comprasDetalles.length>0"
         style="position: absolute; left: 81%; top: 10%; font-size: 0.7rem;opacity: 0.7; background-color: #0247ac;">
@@ -131,8 +131,9 @@
             </div>
 
             <!-- 9na fila -->
-            <div style=" text-align: center;">
-              <h2 *ngIf="mostrarTarifaAtachada" style="text-decoration:line-through;color: red;">
+            <div class="animated fadeIn" style=" text-align: center;">
+              <h2 class="animated fadeIn slower" *ngIf="mostrarTarifaAtachada"
+                style="text-decoration:line-through;color: red;">
                 Total: ${{totalSinDscto.toLocaleString('de-DE') }}</h2>
               <h2>Total: ${{totalFinal.toLocaleString('de-DE') }}</h2>
             </div>

@@ -17,6 +17,8 @@ export class PaymentMethodsPage implements OnInit {
   listaDetalleConvenio = [];
   datosConvenio: any;
   loading;
+  leaveOnExit;
+  showPopCart;
   // rutShow = false
 
   constructor(
@@ -46,7 +48,6 @@ export class PaymentMethodsPage implements OnInit {
 
 
 
-
   }
 
   mostrarTarifaAtachada = false;
@@ -58,6 +59,8 @@ export class PaymentMethodsPage implements OnInit {
   ticket;
   usuario;
   registrado: boolean;
+
+  compraDetalles;
 
   DatosFormulario = {
     convenioUp: null,
@@ -83,11 +86,44 @@ export class PaymentMethodsPage implements OnInit {
 
   };
 
+
   ngOnInit() {
     this.ionViewWillEnter();
+    this.mys.carritoEliminar.subscribe(x => {
+      console.log('xxxxxxxxxxxxxxxxx', x);
+      this.compraDetalles = this.compraDetalles.filter(compras => !(x.asiento === compras.asiento && x.idServicio === compras.idServicio))
+      console.log('this.compraDetalles', this.compraDetalles);
+      if (this.compraDetalles.length < 1) {
+        this.showPopCart.dismiss();
+        this.router.navigateByUrl('/buy-your-ticket');
+        // this.mys.alertShow('¡Verifique!', 'alert', 'No hay Boletos para pagar, inicie el proceso de compra..');
+      } else {
+        // caso cuando hay que calcular totales
+        let total = 0;
+        this.compraDetalles.forEach(element => {
+          total = total + element.valor;
+        });
+        console.log('totalCalculado', total);
+        this.mys.ticket.comprasDetalles = this.compraDetalles;
+        this.mys.total = total;
+        // caso cuando hay descuentos
+        if (this.mostrarTarifaAtachada) {
+          this.validarDatosConvenio();
+
+        } else {
+          this.totalFinal = total;
+        }
+
+      }
+    });
+
+
   }
 
   ionViewWillEnter() {
+
+    this.compraDetalles = this.mys.ticket.comprasDetalles;
+    console.log('this.compraDetalles', this.compraDetalles);
 
     this.mys.getUser().subscribe(usuario => {
       if (usuario) {
@@ -121,6 +157,7 @@ export class PaymentMethodsPage implements OnInit {
       localStorage.setItem('ticket', JSON.stringify(this.ticket));
     }
   }
+
 
   seleccionadoConvenioUp(convenio) {
     this.totalFinal = this.mys.total;
@@ -306,38 +343,38 @@ export class PaymentMethodsPage implements OnInit {
     this.listaDetalleConvenio.forEach(item => {
       validarConvenio.listaAtributo.push({ 'idCampo': item.Placeholder.trim(), 'valor': this.DatosFormulario.rut.replace(re, '') });
     });
-    console.log("Carro de compras : ",this.mys.ticket.comprasDetalles);  
+    console.log("Carro de compras : ", this.mys.ticket.comprasDetalles);
     this.mys.ticket.comprasDetalles.forEach(boleto => {
       let fecha = boleto.service.fechaSalida.split('/');
-      
-        validarConvenio.listaBoleto.push({
-          'clase': boleto.piso == 1 ? boleto.service.idClaseBusPisoUno : boleto.service.idClaseBusPisoDos
-          , 'descuento': ''
-          , 'destino': boleto.service.idTerminalDestino
-          , 'fechaSalida': fecha[2] + fecha[1] + fecha[0]
-          , 'idServicio': boleto.idServicio
-          , 'origen': boleto.service.idTerminalOrigen
-          , 'pago': boleto.valor
-          , 'piso': boleto.piso
-          , 'valor': boleto.valorNormal
-          , 'asiento': boleto.asiento
-          , 'promocion': boleto.promocion ? '1' : '0'
-        });   
-        //validarConvenio.totalApagar = Number(validarConvenio.totalApagar) + Number(boleto.valor) + '';
+
+      validarConvenio.listaBoleto.push({
+        'clase': boleto.piso == 1 ? boleto.service.idClaseBusPisoUno : boleto.service.idClaseBusPisoDos
+        , 'descuento': ''
+        , 'destino': boleto.service.idTerminalDestino
+        , 'fechaSalida': fecha[2] + fecha[1] + fecha[0]
+        , 'idServicio': boleto.idServicio
+        , 'origen': boleto.service.idTerminalOrigen
+        , 'pago': boleto.valor
+        , 'piso': boleto.piso
+        , 'valor': boleto.valorNormal
+        , 'asiento': boleto.asiento
+        , 'promocion': boleto.promocion ? '1' : '0'
+      });
+      //validarConvenio.totalApagar = Number(validarConvenio.totalApagar) + Number(boleto.valor) + '';
     });
     //validarConvenio.montoTotal = validarConvenio.totalApagar;
     this.loading += 1;
-    console.log("Validacion : ",validarConvenio);
+    console.log("Validacion : ", validarConvenio);
     this.integradorService.getDescuentoConvenio(validarConvenio).subscribe(data => {
 
       this.loading -= 1;
       this.datosConvenio = data;
       console.log(this.datosConvenio);
       if (this.datosConvenio.mensaje && this.datosConvenio.mensaje === 'OK') {
-        const withPromo = this.mys.ticket.comprasDetalles.filter(item => item.promocion) 
-        if(withPromo.length > 0){          
+        const withPromo = this.mys.ticket.comprasDetalles.filter(item => item.promocion)
+        if (withPromo.length > 0) {
           this.mys.alertShow('¡Confirmado!', 'done-all', 'RUT con descuento para el convenio seleccionado. Los descuentos por convenios estarán desactivados para los asientos con promoción de boleto de regreso.');
-        }else{
+        } else {
           this.mys.alertShow('¡Confirmado!', 'done-all', 'RUT con descuento para el convenio seleccionado.');
         }
         this.totalSinDscto = this.mys.total;
@@ -385,19 +422,16 @@ export class PaymentMethodsPage implements OnInit {
   }
 
   async popCart(event) {
+    console.log('event DsPayM', event);
     this.mys.temporalComprasCarrito = this.mys.ticket.comprasDetalles;
-    const popoverCart = await this.popoverCtrl.create({
+    this.showPopCart = await this.popoverCtrl.create({
       component: PopCartComponent,
       event,
       mode: 'ios',
       backdropDismiss: true,
       cssClass: 'popCart'
     });
-    await popoverCart.present();
-
-    // recibo la variable desde el popover y la guardo en data
-    // const { data } = await popoverCart.onWillDismiss();
-    // this.router.navigateByUrl(data.destino);
+    await this.showPopCart.present();
   }
 
   irAterminos() {

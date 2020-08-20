@@ -24,6 +24,10 @@ export class PopCartComponent implements OnInit {
     });
   }
 
+  ionViewWillLeave() {
+    this.popoverCtrl.dismiss({ id: 'valores' });
+
+  }
 
   eliminarBoleto(i) {
     this.mys.actualizarCarritoEliminar(this.compras[i]);  //informo el elemento eliminado
@@ -36,6 +40,8 @@ export class PopCartComponent implements OnInit {
     this.compras.forEach(element => {
       this.total = this.total + element.valor;
     });
+
+
   }
 
 }
