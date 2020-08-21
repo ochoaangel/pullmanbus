@@ -135,7 +135,7 @@ export class TicketPage implements OnInit {
       // siempre vá para eliminar en el server, es asincrono
       this.mys.liberarAsientoDesdeHeader(eliminar);
 
-    })
+    });
   }
 
   ngOnInit() {
@@ -167,7 +167,7 @@ export class TicketPage implements OnInit {
       } else {
         if (this.mys.comprarMas) {
           this.compras = [];
-          this.getServicesAndBus('back')
+          this.getServicesAndBus('back');
           this.mys.comprarMas = false;
         } else {
           this.compras = this.ticket.backCompras || [];
@@ -226,7 +226,6 @@ export class TicketPage implements OnInit {
         'hora': '0000',
         'idSistema': 1
       };
-
     }
 
     this.integradorService.getService(findService).subscribe(data => {
@@ -236,12 +235,23 @@ export class TicketPage implements OnInit {
 
       this.loadingService = false;
       this.allServices.forEach(servicio => {
+
+
         this.comprasDetalles.forEach(compra => {
           if (servicio.idServicio === compra.idServicio) {
             servicio['my_comprasByService'] = compra['my_comprasByService'];
             // servicio['my_comprasByServiceData'] = compra['my_comprasByServiceData']
           }
         });
+
+        if (servicio.promocion) {
+          servicio.idaVueltaPisoUno ? servicio['aviablePromocionP1'] = true : servicio['aviablePromocionP1'] = false;
+          servicio.idaVueltaPisoDos ? servicio['aviablePromocionP2'] = true : servicio['aviablePromocionP2'] = false;
+        } else {
+          servicio['aviablePromocionP1'] = false;
+          servicio['aviablePromocionP2'] = false;
+        }
+
       });
 
 
@@ -253,7 +263,7 @@ export class TicketPage implements OnInit {
 
 
   myServiceSelection(nServiceSeleccion: number) {
-    console.log("desplega sevicio", nServiceSeleccion)
+    console.log("desplega sevicio", nServiceSeleccion);
     // setTimeout(() => {
     let estadoPrevio = this.allServices[nServiceSeleccion]['checked'];
     this.allServices.forEach(element => {
@@ -404,11 +414,11 @@ export class TicketPage implements OnInit {
                       let tarifaDiferencia;
 
                       if (this.piso1) {
-                        tarifaTotalNumero = parseInt(this.serviceSelected.idaVueltaPisoUno.tarifaTotal.replace('.', ''))
-                        tarifaNormalNumero = this.serviceSelected.tarifaPrimerPisoInternet.replace('.', '')
+                        tarifaTotalNumero = parseInt(this.serviceSelected.idaVueltaPisoUno.tarifaTotal.replace('.', ''));
+                        tarifaNormalNumero = this.serviceSelected.tarifaPrimerPisoInternet.replace('.', '');
                       } else {
-                        tarifaTotalNumero = parseInt(this.serviceSelected.idaVueltaPisoDos.tarifaTotal.replace('.', ''))
-                        tarifaNormalNumero = this.serviceSelected.tarifaSegundoPisoInternet.replace('.', '')
+                        tarifaTotalNumero = parseInt(this.serviceSelected.idaVueltaPisoDos.tarifaTotal.replace('.', ''));
+                        tarifaNormalNumero = this.serviceSelected.tarifaSegundoPisoInternet.replace('.', '');
                       }
 
                       // calculando diferencia
@@ -479,7 +489,7 @@ export class TicketPage implements OnInit {
 
     // elimino el asiento de this.comprasDetalles
     if (this.comprasDetalles.length > 0) {
-      this.comprasDetalles = this.comprasDetalles.filter(x => !(x.idServicio === asiento.servicio && x.asiento === asiento.asiento))
+      this.comprasDetalles = this.comprasDetalles.filter(x => !(x.idServicio === asiento.servicio && x.asiento === asiento.asiento));
     }
 
     // variables totales
@@ -525,7 +535,7 @@ export class TicketPage implements OnInit {
     // cambio de estado, caso asiento No seleccionado
     this.bus[piso][y][x]['estado'] = 'seleccionado';
 
-    // verifico si tiene promoci{on pongo la tarifa recibida, sino, pongo las normales}
+    // verifico si tiene promoción pongo la tarifa recibida, sino, pongo las normales}
     let tarifa;
     if (promocionTarifaTotal) {
       tarifa = promocionTarifaTotal;
@@ -542,8 +552,8 @@ export class TicketPage implements OnInit {
       tarifaNormal = this.serviceSelected.tarifaSegundoPiso;
     }
 
-    console.log("Servicio", this.serviceSelected)
-    console.log("tarifaNormal", tarifaNormal)
+    console.log("Servicio", this.serviceSelected);
+    console.log("tarifaNormal", tarifaNormal);
     let resumen = {
       nService: this.serviceSelectedNumber,
       idServicio: this.serviceSelected.idServicio,
@@ -560,7 +570,9 @@ export class TicketPage implements OnInit {
       piso1: this.bus['1'] || null,
       piso2: this.bus['2'] || null,
       goDate: this.goDate,
-      backDate: this.backDate
+      backDate: this.backDate,
+      aviablePromocionP1: this.serviceSelected.aviablePromocionP1,
+      aviablePromocionP2: this.serviceSelected.aviablePromocionP2,
     };
 
     this.comprasDetalles.push(resumen);
@@ -595,17 +607,6 @@ export class TicketPage implements OnInit {
 
 
   continuar() {
-    // if (this.compras.length === 0 && this.way === 'go' && this.comprasDetalles.length < 4) {
-    //   this.mys.alertShow('¡Verifique!', 'alert', 'Debe seleccionar al menos un asiento de un servicio para continuar..');
-    // } else if (this.compras.length === 0 && this.way === 'go' && this.comprasDetalles.length > 3) {
-    //   this.router.navigateByUrl('/purchase-detail');
-    // } else if (this.compras.length > 4 && this.way === 'go') {
-    //   this.mys.alertShow('¡Verifique!', 'alert', 'Máximo número de asientos permitidos de ida son 4');
-    // } else if (this.compras.length > 4 && this.way === 'back') {
-    //   this.mys.alertShow('¡Verifique!', 'alert', 'Máximo número de asientos permitidos de Regreso son 4');
-    // } else {
-
-
 
     // ocultar asientos      
     this.allServices.forEach(element => {
@@ -725,7 +726,7 @@ export class TicketPage implements OnInit {
       this.tomarAsientoPromocion.y,
       this.tomarAsientoPromocion.x,
       this.tomarAsientoPromocion.promocionTarifaTotal
-    )
+    );
   }
 
   btnEtapa2No() {
@@ -734,7 +735,7 @@ export class TicketPage implements OnInit {
       this.tomarAsientoPromocion.piso,
       this.tomarAsientoPromocion.y,
       this.tomarAsientoPromocion.x,
-    )
+    );
   }
 
 

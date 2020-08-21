@@ -6,6 +6,8 @@ import { PopoverController } from '@ionic/angular';
 import { PopCartComponent } from 'src/app/components/pop-cart/pop-cart.component';
 import { IntegradorService } from 'src/app/service/integrador.service';
 import * as _ from 'underscore';
+import * as moment from 'moment';
+
 
 
 @Component({
@@ -37,7 +39,7 @@ export class PurchaseDetailPage implements OnInit {
       }
 
       this.mys.liberarAsientoDesdeHeader(eliminar);
-    })
+    });
 
 
   }
@@ -50,6 +52,15 @@ export class PurchaseDetailPage implements OnInit {
 
   next;
 
+  showPromocionModal = false;
+  modalInfo = {
+    image: '',
+    titulo: '',
+    contenido: '',
+    tarifaTotal: '',
+    pasaje: {},
+  };
+
 
   ngOnInit() {
     this.ionViewWillEnter();
@@ -59,7 +70,6 @@ export class PurchaseDetailPage implements OnInit {
 
   ionViewWillEnter() {
     console.log('this.mys.ticketWillEnter', this.mys.ticket);
-    console.log('this.mys.totalWillEnter', this.mys.total);
     if (this.mys.ticket) {
       this.ticket = this.mys.ticket;
       this.way = this.mys.way;
@@ -80,11 +90,6 @@ export class PurchaseDetailPage implements OnInit {
     } else if (this.ticket.tripType === 'goBack' && this.way === 'go') {
       this.next = '/ticket';
     }
-
-
-
-
-
 
   }
 
@@ -232,9 +237,6 @@ export class PurchaseDetailPage implements OnInit {
       cssClass: "popCart"
     });
     await popoverCart.present();
-    // recibo la variable desde el popover y la guardo en data
-    // const { data } = await popoverCart.onWillDismiss();
-    // this.router.navigateByUrl(data.destino);
   }
 
   comprarMasPasajes() {
@@ -250,6 +252,80 @@ export class PurchaseDetailPage implements OnInit {
     }, 1000);
     this.mys.showItinerario(idServicio);
   }
+
+  agregarPromo(pasaje) {
+    console.log('pasaje', pasaje);
+
+    // variable para la api buscaCaluga
+    let myData = {
+      origen: this.mys.ticket.origin.codigo,
+      destino: this.mys.ticket.destiny.codigo,
+      fechaSalida: moment(this.mys.ticket.goDate).format("YYYYMMDD"),
+      etapa: 2
+    };
+    console.log('myData', myData);
+
+    this.loading = true;
+    this.integradorService.buscaCaluga(myData).subscribe(respuestaBuscaCaluga => {
+
+      // definiendo variables de tarifas
+      let tarifaTotalNumero;
+      let tarifaNormalNumero;
+      let tarifaDiferencia;
+
+      if (pasaje.piso === 1) {
+        tarifaTotalNumero = parseInt(pasaje.service.idaVueltaPisoUno.tarifaTotal.replace('.', ''));
+        tarifaNormalNumero = pasaje.service.tarifaPrimerPisoInternet.replace('.', '');
+      } else {
+        tarifaTotalNumero = parseInt(pasaje.service.idaVueltaPisoDos.tarifaTotal.replace('.', ''));
+        tarifaNormalNumero = pasaje.service.tarifaSegundoPisoInternet.replace('.', '');
+      }
+
+      // calculando diferencia
+      tarifaDiferencia = tarifaTotalNumero - tarifaNormalNumero;
+
+      // Mostrando el mensaje para seleccionar si está de acuerdo o no al darle valor a promocionEtapa2
+      let promoEtapa2 = respuestaBuscaCaluga[0];
+
+
+      this.modalInfo.contenido = promoEtapa2['contenido'].replace('{1}', tarifaDiferencia.toLocaleString('de-DE'));
+      this.modalInfo.image = promoEtapa2.urlImagen;
+      this.modalInfo.titulo = promoEtapa2.titulo;
+      this.modalInfo.pasaje = pasaje;
+      this.modalInfo.tarifaTotal = tarifaTotalNumero;
+      this.showPromocionModal = true;
+
+      this.loading = false;
+      console.log('modalInfo', this.modalInfo);
+    });
+  }
+
+
+  btnEtapa2Si() {
+    console.log('btn SI');
+    this.showPromocionModal = false;
+
+    this.mys.ticket.comprasDetalles.forEach(element => {
+      if (element.idServicio === this.modalInfo.pasaje['idServicio'] && element.asiento === this.modalInfo.pasaje['asiento']) {
+        element['valor'] = this.modalInfo.tarifaTotal;
+        element['promocion'] = true;
+      }
+    });
+    this.ionViewWillEnter();
+  }
+
+  btnEtapa2No() {
+    console.log('btn NO');
+    this.showPromocionModal = false;
+    this.modalInfo = {
+      image: '',
+      titulo: '',
+      contenido: '',
+      tarifaTotal: '',
+      pasaje: {},
+    };
+  }
+
 
 
 }

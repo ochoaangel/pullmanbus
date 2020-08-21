@@ -74,11 +74,13 @@ export class BuyYourTicketPage implements OnInit {
       console.log('Eliminado desde dentro de tickets', eliminar);
 
       // dejar cuando tien compra detalles
-      this.comprasDetalles = this.comprasDetalles.filter(x => !(x.idServicio === eliminar.idServicio && x.asiento === eliminar.asiento));
-
+      if (this.comprasDetalles.length < 2) {
+        this.comprasDetalles = [];
+      } else {
+        this.comprasDetalles = this.comprasDetalles.filter(x => !(x.idServicio === eliminar.idServicio && x.asiento === eliminar.asiento));
+      }
       this.mys.temporalComprasCarrito = this.comprasDetalles;
-      this.mys.liberarAsientoDesdeHeader(eliminar);
-    })
+    });
   }
 
   ngOnInit() {
