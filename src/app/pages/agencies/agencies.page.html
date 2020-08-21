@@ -17,6 +17,7 @@
   <div class="cabeceraTitulo">
     Agencias
   </div>
+  <ion-progress-bar type="indeterminate" *ngIf="loading>0" color="secondary"></ion-progress-bar>
 </ion-header>
 <ion-content style="width: 100%;height: 100%;">
   <div style=" height: 100%; background-color: white ; ">
@@ -37,25 +38,62 @@
               <!-- detalles -->
               <div class="animated fadeIn" *ngIf="item.show"
                 style="background-color: white; margin: 0 1rem; padding: 1rem;border-radius: 0 0 2rem 2rem;">
-                <div (click)="clickItemDetail(item,ciudad)" *ngFor="let ciudad of item.ciudades"
-                  style="width: 100%; padding: 0 0 5px 0; display: flex; flex-direction: row; align-items: center;">
-                  
-                  <ion-icon slot="start" name="add"></ion-icon>
-                  <div style="margin-left: 1rem; color: var(--ion-color-secondary);flex-direction: row;">
-                    {{ciudad.nombre}}
-                  </div>                  
-                  
-                  <div class="animated fadeIn" *ngIf="ciudad.show">
-                    <div *ngFor="let info of ciudad.agencies"
+
+                <div (click)="clickItemDetail(item,ciudad)" *ngFor="let ciudad of item.ciudades">
+                  <div
                     style="width: 100%; padding: 0 0 5px 0; display: flex; flex-direction: row; align-items: center;">
-                      <div style="color: #0078db !important;caret-color: #0078db !important;">{{info.Descripcion}}</div>
-                      Dirección : {{info.Direccion}}
-                      Telefono  : {{info.Fono}}
-                      Agente    : {{info.Agente}}
+                    <ion-icon slot="start" name="add"></ion-icon>
+                    <div style="margin-left: 1rem; color: var(--ion-color-secondary);flex-direction: row;">
+                      {{ciudad.nombre}}
                     </div>
                   </div>
 
+                  <div class="animated fadeIn" *ngIf="ciudad.show"
+                    style="width: 100%; display: flex;justify-content: center;">
+                    <div style="max-width: 400px;">
+                      <div *ngFor="let info of ciudad.agencies"
+                        style="width: 100%; padding: 0 0 5px 0; display: flex; flex-direction: column; align-items: center;border-bottom: 1px solid var(--ion-color-secondary);">
+
+                        <div *ngIf="info.Descripcion!='0' && info.Descripcion!='SIN DESCRIPCION'"
+                          style="color: #0078db !important;caret-color: #0078db !important;">
+                          {{info.Descripcion}}
+                        </div>
+
+                        <div *ngIf="info.Direccion!='0' && info.Direccion!='SIN DESCRIPCION'"
+                          style="width: 100%; display: flex; display: flex; align-items: center; ">
+                          <div style="font-size: 0.8rem; font-weight: bold; width: 4rem;">
+                            Dirección:
+                          </div>
+                          <div style="margin-left: 0.2rem;font-size: 0.9rem;">
+                            {{info.Direccion}}
+                          </div>
+                        </div>
+
+                        <div *ngIf="info.Fono!='0' && info.Fono!='SIN DESCRIPCION'"
+                          style="width: 100%; display: flex; display: flex; align-items: center; ">
+                          <div style="font-size: 0.8rem; font-weight: bold; width: 4rem;">
+                            Teléfono:
+                          </div>
+                          <div style="margin-left: 0.2rem;font-size: 0.9rem;">
+                            {{info.Fono}}
+                          </div>
+                        </div>
+
+                        <div *ngIf="info.Agente!='0' && info.Agente!='SIN DESCRIPCION'"
+                          style="width: 100%; display: flex; display: flex; align-items: center; ">
+                          <div style="font-size: 0.8rem; font-weight: bold; width: 4rem;">
+                            Agente:
+                          </div>
+                          <div style="margin-left: 0.2rem;font-size: 0.9rem;">
+                            {{info.Agente}}
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
                 </div>
+
               </div>
             </div>
           </div>
