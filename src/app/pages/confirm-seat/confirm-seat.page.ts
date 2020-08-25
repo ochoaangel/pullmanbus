@@ -102,19 +102,12 @@ export class ConfirmSeatPage implements OnInit {
     if (confirm) {
 
       this.info = confirm;
-      this.info.form.fecha2 = moment.utc(this.info.fecha).format('DD/MM/YYYY');
-      console.log('this.info.form.fecha', this.info.form.fecha);
-      console.log('this.info.form.fecha2', this.info.form.fecha2);
-      console.log('ingresando a Confirm-Seat con:', confirm);
       this.confirmFromticketConfirmation = this.mys.confirm;
-
-
       this.comprasDetalles = [];
       this.loading++;
       this.integradorService.getService(confirm.obtenerServicio).subscribe(data => {
         console.log("RESPUESTA ", data)
         this.loading--;
-
 
         // filtro los servicios con las caracteristicas deseadas
         this.clase = confirm.filtros.clase;
@@ -133,8 +126,6 @@ export class ConfirmSeatPage implements OnInit {
           this.sinServicios = true;
         }
       });
-
-
 
     } else {
       this.router.navigateByUrl('/ticket-confirmation');
@@ -220,7 +211,6 @@ export class ConfirmSeatPage implements OnInit {
           });
           this.allServices[nServiceSeleccion]['checked'] = estadoPrevio;
 
-          // this.allServices[nServiceSeleccion]['my_Bus'] = this.sumar20piso2(myBusFromApi);
           this.allServices[nServiceSeleccion]['my_Bus'] = myBusFromApi;
           this.allServices[nServiceSeleccion].checked = true;
           this.comprasByService = this.allServices[nServiceSeleccion]['my_comprasByService'];

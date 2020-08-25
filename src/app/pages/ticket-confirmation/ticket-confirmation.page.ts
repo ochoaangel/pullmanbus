@@ -33,9 +33,10 @@ export class TicketConfirmationPage implements OnInit {
 
   myData = {
     fecha: '',
-    boleto: 'INT00075653',
-    email: 'ochoaangel@gmail.com',
-    email2: 'ochoaangel@gmail.com',
+    fecha2: '',
+    boleto: '',
+    email: '',
+    email2: '',
   };
 
   confirmed = null;
@@ -54,13 +55,14 @@ export class TicketConfirmationPage implements OnInit {
   ionViewWillEnter() {
 
     let currentDate = moment();
-    this.minDate = currentDate.toISOString();
-    this.maxDate = currentDate.add('1', 'years').toISOString();
+    this.minDate = currentDate.format();
+    this.maxDate = currentDate.add('1', 'years').format();
 
     if (this.mys.confirmSelected) {
       console.log('Caso de Seguimiento de boleto por confirmar');
       this.confirmed = this.mys.confirmSelected;
       this.mys.confirmSelected = null;
+      console.log('this.confirmed', this.confirmed);
 
       // preparo el dato a enviar a la api
       let dataToSend = {
@@ -76,7 +78,7 @@ export class TicketConfirmationPage implements OnInit {
         ).format('YYYYMMDD'),
 
         fechaSalida: moment(
-          `${this.confirmed.service.fechaSalida}-${this.confirmed.service.horaSalida}`,
+          `${this.confirmed.init.form.fecha2}-${this.confirmed.service.horaSalida}`,
           'DD/MM/YYYY-HH:mm',
         ).format('YYYYMMDDHHmm'),
 
@@ -84,8 +86,9 @@ export class TicketConfirmationPage implements OnInit {
         idDestino: this.confirmed.service.idTerminalDestino,
         piso: this.confirmed.piso,
         email: this.confirmed.init.form.email
-      }
+      };
 
+      console.log('dataToSend', dataToSend);
       this.loading++;
       this.integrador.confirmarBoleto(dataToSend).subscribe((resp: any) => {
         this.loading--;
@@ -296,10 +299,13 @@ export class TicketConfirmationPage implements OnInit {
       );
     } else {
       console.log('Validado Formulario');
+      this.myData.fecha2 = moment(this.myData.fecha).format('DD/MM/YYYY');
+      // console.log('fecha2', fecha2);
+      // console.log('fecha', this.myData.fecha);
 
-      this.loading++
+      this.loading++;
       this.integrador.confirmarBuscarBoleto({ boleto: this.myData.boleto }).subscribe((resp: any) => {
-        this.loading--
+        this.loading--;
         console.log('resp', resp);
 
         if (resp.resultado.exito) {
@@ -320,7 +326,7 @@ export class TicketConfirmationPage implements OnInit {
               // clase: 'EJE40',
               empresa: resp.empresa,
             }
-          }
+          };
 
           console.log('paraConfirmarBoleto desdeticketConfirmation', paraConfirmarBoleto);
 
@@ -338,7 +344,7 @@ export class TicketConfirmationPage implements OnInit {
             resp.resultado.mensaje + '<br>Intente nuevamente..'
           );
         }
-      })
+      });
     }
 
   }
