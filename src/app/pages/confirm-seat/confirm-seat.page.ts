@@ -78,6 +78,10 @@ export class ConfirmSeatPage implements OnInit {
   confirmFromticketConfirmation;
 
   sinServicios = false;
+
+  info;
+
+
   constructor(
     private httpClient: HttpClient,
     private router: Router,
@@ -85,7 +89,7 @@ export class ConfirmSeatPage implements OnInit {
     private integradorService: IntegradorService,
     private popoverCtrl: PopoverController,
 
-  ) {    
+  ) {
   }
 
   ngOnInit() { }
@@ -96,6 +100,11 @@ export class ConfirmSeatPage implements OnInit {
     let confirm = this.mys.confirm;
 
     if (confirm) {
+
+      this.info = confirm;
+      this.info.form.fecha2 = moment.utc(this.info.fecha).format('DD/MM/YYYY');
+      console.log('this.info.form.fecha', this.info.form.fecha);
+      console.log('this.info.form.fecha2', this.info.form.fecha2);
       console.log('ingresando a Confirm-Seat con:', confirm);
       this.confirmFromticketConfirmation = this.mys.confirm;
 
@@ -111,8 +120,8 @@ export class ConfirmSeatPage implements OnInit {
         this.clase = confirm.filtros.clase;
         this.empresa = confirm.filtros.empresa;
 
-        console.log("clase",this.clase);
-        console.log("empresa",this.empresa);
+        console.log("clase", this.clase);
+        console.log("empresa", this.empresa);
 
         this.allServices = data.filter(x =>
           (
@@ -120,7 +129,7 @@ export class ConfirmSeatPage implements OnInit {
             (x.idClaseBusPisoDos === this.clase)
           )
         );
-        if(this.allServices.length === 0){
+        if (this.allServices.length === 0) {
           this.sinServicios = true;
         }
       });

@@ -33,9 +33,9 @@ export class TicketConfirmationPage implements OnInit {
 
   myData = {
     fecha: '',
-    boleto: '',
-    email: '',
-    email2: '',
+    boleto: 'INT00075653',
+    email: 'ochoaangel@gmail.com',
+    email2: 'ochoaangel@gmail.com',
   };
 
   confirmed = null;

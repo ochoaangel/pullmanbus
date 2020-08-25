@@ -121,12 +121,12 @@
 
                   <!-- columna 3   -->
                   <div class="myServiceColumn" style="width: 30%;text-align: left; ">
-                    <div class="myServiceRow" style="font-weight: bold;">Sal. {{way==='go'? goDate:backDate}}</div>
+                    <div class="myServiceRow" style="font-weight: bold;">Sal. {{info ? info.form.fecha2:''}}</div>
                     <div class="myServiceRow" style="font-weight: bold;margin-left: 1.5rem;">{{svc.horaSalida}}</div>
                     <div class="myServiceRow">Lle. {{svc.fechaLlegada}}</div>
                     <div class="myServiceRow" style="margin-left: 1.5rem;">{{svc.horaLlegada}}</div>
                     <div class="myServiceRow">Dur.
-                      {{'X'| duration: way==='go'? goDate:backDate : svc.horaSalida : svc.fechaLlegada : svc.horaLlegada}}
+                      {{'X'| duration: info ? info.form.fecha2:'' : svc.horaSalida : svc.fechaLlegada : svc.horaLlegada}}
                     </div>
                     <!-- <div class="myServiceRow" style="margin-top: 0.2rem;">{{svc.servicioPrimerPiso | titlecase }}</div>
                   <div class="myServiceRow" *ngIf="svc.tarifaSegundoPiso">{{svc.servicioSegundoPiso | titlecase }}</div> -->
