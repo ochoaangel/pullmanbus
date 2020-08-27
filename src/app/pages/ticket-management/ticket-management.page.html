@@ -45,7 +45,7 @@
             <div style="display: flex;flex-direction: column;max-width: 50rem;min-width: 350px;">
 
               <div routerLink='/ticket-change' style="width: 100%; margin: 1rem 0;font-size: 1.2rem; display: flex;flex-direction: row;
-                margin: 1rem 0;background-color: var(--ion-color-primary); padding: 2rem;justify-content: center;
+                margin: 1rem 0;background-color: var(--ion-color-primary); padding: 1rem;justify-content: center;
                 color: white;align-items: center; border-radius: 1rem;  cursor: pointer;
                 ">
                 <ion-icon name="git-merge" style="zoom: 2;padding: 0 1rem;"></ion-icon>
@@ -53,7 +53,7 @@
               </div>
 
               <div *ngIf="usuario" routerLink='/my-cancellations' style="width: 100%; margin: 1rem 0; font-size: 1.2rem;display: flex;flex-direction: row;
-                margin: 1rem 0;background-color: var(--ion-color-primary); padding: 2rem;justify-content: center;
+                margin: 1rem 0;background-color: var(--ion-color-primary); padding: 1rem;justify-content: center;
                 color: white;align-items: center; border-radius: 1rem;  cursor: pointer;
                 ">
                 <ion-icon name="git-compare" style="zoom: 2;padding: 0 1rem;">
@@ -61,8 +61,17 @@
                 <div>Devoluciones de Boletos</div>
               </div>
 
+              <div *ngIf="usuario" style="width: 100%; margin: 1rem 0; font-size: 1.2rem;display: flex;flex-direction: row;
+                margin: 1rem 0;background-color: var(--ion-color-primary); padding: 1rem;justify-content: center;
+                color: white;align-items: center; border-radius: 1rem;  cursor: pointer;
+                ">
+                <ion-icon name="pricetags" style="zoom: 2;padding: 0 1rem;">
+                </ion-icon>
+                <div>Cupos electrónicos</div>
+              </div>
+
               <div routerLink='/ticket-confirmation' style="width: 100%; margin: 1rem 0; font-size: 1.2rem;display: flex;flex-direction: row;
-                margin: 1rem 0;background-color: var(--ion-color-primary); padding: 2rem;justify-content: center;
+                margin: 1rem 0;background-color: var(--ion-color-primary); padding: 1rem;justify-content: center;
                 color: white;align-items: center; border-radius: 1rem;   cursor: pointer;
                 ">
                 <ion-icon name="done-all" style="zoom: 2;padding: 0 1rem;">

@@ -66,19 +66,12 @@
             </div>
           </div>
 
-          <!-- [ngStyle]="{'color':employee.country === 'India' ? 'orange' : 'red' }" -->
           <ion-col size="12" style="text-align: center;" [ngStyle]="{'opacity': promoEtapa2 ? '0.2' : '1' }"
             class="ion-no-margin ion-no-padding">
 
 
 
 
-            <!-- <ion-row *ngIf="!loadingService && allServices.length === 0">
-              <ion-col size="12">
-                <p> No disponemos de servicios con las características definidas.</p>
-                <p>Intente nuevamente con otras características..</p>
-              </ion-col>
-            </ion-row> -->
             <ion-row *ngIf="!loadingService && allServices.length === 0">
               <ion-col size="12">
                 <p>Buscando..</p>
@@ -128,8 +121,6 @@
                     <div class="myServiceRow">Dur.
                       {{'X'| duration: info ? info.form.fecha2:'' : svc.horaSalida : svc.fechaLlegada : svc.horaLlegada}}
                     </div>
-                    <!-- <div class="myServiceRow" style="margin-top: 0.2rem;">{{svc.servicioPrimerPiso | titlecase }}</div>
-                  <div class="myServiceRow" *ngIf="svc.tarifaSegundoPiso">{{svc.servicioSegundoPiso | titlecase }}</div> -->
                   </div>
 
                   <!-- columna 4   -->
@@ -156,22 +147,6 @@
                   <div class="myServiceColumn"
                     style="width: 15%;text-align: left; position: absolute; right: 0; margin-top: 1.5rem; ">
 
-                    <!-- <div *ngIf="svc.my_comprasByService && svc.my_comprasByService.length>0"
-                      style=" width: 25%;display: flex;justify-content: flex-end;align-items: center; flex-direction: row; position: absolute; margin-top: -2rem; right: 1rem; font-size: 0.9rem;">
-
-                      <div style="margin-left: -2px;">
-                        <img style="height: 1.5rem;margin-top: 4px;" src="assets/icon/png/Asiento-seleccionado.png" />
-                      </div>
-                      <div>
-                        <ion-icon *ngIf="svc.my_comprasByService.length <5"
-                          style="color: blue; margin-top: 2px; margin-left: -1.2rem; font-size: 1.3rem;"
-                          name="checkmark"></ion-icon>
-                        <ion-icon *ngIf="svc.my_comprasByService.length >4"
-                          style="color: red; margin-top: 2px; margin-left: -1.2rem; font-size: 1.3rem;"
-                          name="close-circle-outline"></ion-icon>
-                      </div>
-                    </div> -->
-
 
                     <div class="myServiceRow" style="align-items: center; justify-content: center; ">
                       <ion-button fill="clear" (click)="myServiceSelection(i)" [disabled]="loadingBus"
@@ -190,24 +165,9 @@
                         <ion-icon style="color:  white;zoom: 5;" name="md-arrow-dropup">
                         </ion-icon>
                       </ion-button>
-                      <!-- <ion-button fill="clear" (click)="myServiceSelection(i)" [disabled]="loadingBus"
-                        *ngIf="(!svc.checked && !svc.my_comprasByService) ||  (  !svc.checked &&  svc.my_comprasByService && svc.my_comprasByService.length===0)"
-                        style="color: white; outline: none;  --padding-start: 0;--padding-end: 0; --background: #0247ac;text-transform: none; font-size: 0.8rem;width: 90%;">
-                        Comprar
-                      </ion-button> -->
-                      <!-- <ion-button fill="clear" (click)="myServiceSelection(i)" [disabled]="loadingBus"
-                        *ngIf="!svc.checked && svc.my_comprasByService && svc.my_comprasByService.length>0"
-                        style="color: white; outline: none;  --padding-start: 0;--padding-end: 0; --background: #0247ac;text-transform: none; font-size: 0.8rem;width: 90%;">
-                        Editar
-                      </ion-button> -->
-                      <!-- <ion-button fill="clear" (click)="myServiceSelection(i)" *ngIf="svc.checked" [disabled]="loadingBus"
-                        style="color: white; outline: none;  --padding-start: 0;--padding-end: 0; --background: #0247ac;text-transform: none; font-size: 0.8rem;width: 90%;">
-                        Ocultar
-                      </ion-button> -->
                     </div>
 
                   </div>
-                  <!-- </div> -->
                 </div>
 
               </div>
@@ -216,16 +176,6 @@
               <div style="display: flex; flex-direction: row; padding-top: 0.5rem;">
                 <!-- columna 0   -->
                 <div class="myServiceColumn" style="width: 15%;text-align: left;     padding-left: 1%;">
-                  <!-- <div class="myServiceRow">
-                    <div
-                      style="border: 1px solid var(--ion-color-primary);color: var(--ion-color-primary);    width: fit-content; padding: 0 0.5rem; border-radius: 10px; font-size: 0.6rem; font-weight: bold; ">
-                      Piso 1</div>
-                  </div>
-                  <div class="myServiceRow">{{svc.servicioPrimerPiso | titlecase}}</div>
-                  <div class="myServiceRow">
-                    <div style="display: flex; align-items: center; justify-content: left;">Valor:
-                      ${{svc.tarifaPrimerPisoInternet}}</div>
-                  </div> -->
                 </div>
                 <!-- columna 1   -->
                 <div class="myServiceColumn" style="width: 35%;text-align: left;     padding-left: 1%;">
@@ -235,10 +185,6 @@
                       Piso 1</div>
                   </div>
                   <div class="myServiceRow">{{svc.servicioPrimerPiso | titlecase}}</div>
-                  <!-- <div class="myServiceRow">
-                    <div style="display: flex; align-items: center; justify-content: left;">Valor:
-                      ${{svc.tarifaPrimerPisoInternet}}</div>
-                  </div> -->
                 </div>
 
                 <!-- columna 2   -->
@@ -249,10 +195,6 @@
                       Piso 2</div>
                   </div>
                   <div class="myServiceRow">{{svc.servicioSegundoPiso | titlecase}}</div>
-                  <!-- <div class="myServiceRow">
-                    <div style="display: flex; align-items: center; justify-content: left;">Valor:
-                      ${{svc.tarifaSegundoPisoInternet}}</div>
-                  </div> -->
                 </div>
 
 
@@ -367,24 +309,6 @@
 
                             </div>
 
-                            <!-- //* leyenda -->
-                            <!--   <div style="width: 40vw; display: flex;justify-content:
-                            center;align-items: center;border-left: 2px solid #f2f2f2;">
-                            <div>
-                              <div style="display: flex;align-items: center;">
-                                <img style="height: 2rem;" src="assets/icon/png/Asiento-disponible.png" />
-                                <ion-text style="font-size: 0.8rem;">Disponible</ion-text>
-                              </div>
-                              <div style="display: flex;align-items: center;">
-                                <img style="height: 2rem;" src="assets/icon/png/Asiento-ocupado.png" />
-                                <ion-text style="font-size: 0.8rem;">Ocupado</ion-text>
-                              </div>
-                              <div style="display: flex;align-items: center;">
-                                <img style="height: 2rem;" src="assets/icon/png/Asiento-seleccionado.png" />
-                                <ion-text style="font-size: 0.8rem;">Seleccionado</ion-text>
-                              </div>
-                            </div>
-                          </div> -->
 
                           </div>
 
@@ -453,20 +377,6 @@
       </ion-select>
     </div>
 
-    <!-- <ion-button fill="clear" style="color: var(--ion-color-primary); outline: none; width: 100%;   --padding-start: 0;--padding-end: 0;">
-      <ion-icon name="md-repeat" style="transform: rotate(90deg); color: var(--ion-color-primary);font-size: 5vw;"></ion-icon>
-      <div style="display: inline;  text-align: right; text-transform: none;font-size: 1rem;font-weight:bold">
-        Ordenar
-      </div>
-    </ion-button>
-
-    <ion-button fill="clear" style="color: var(--ion-color-primary); outline: none; width: 100%;   --padding-start: 0;--padding-end: 0;"
-      (click)="prueba()">
-      <ion-icon name="md-code-download" style="color: var(--ion-color-primary);font-size: 5vw;padding: 1px;"></ion-icon>
-      <div style="display: inline;  text-align: right; text-transform: none;font-size: 1rem;font-weight:bold">
-        Filtros
-      </div>
-    </ion-button> -->
 
     <ion-button fill="clear"
       style="color: var(--ion-color-primary); outline: none; width: 100%;   --padding-start: 0;--padding-end: 0;"
@@ -481,25 +391,5 @@
     </ion-button>
 
   </div>
-
-
-  <!-- 2da Fila menu -->
-  <!-- <div
-    style=" width: 100%; display: flex;align-items: center;justify-content: center; background-color: var(--ion-color-primary);"
-    *ngIf="(tarifaTotal &&  tarifaTotal !== 0)||comprasDetalles.length>0">
-    <div
-      style="width: 50%;display: inline;  text-align: left;padding-right: 7px;  text-transform: none;padding-left: 20px;font-size: 1.3rem;color: white;font-weight: bold; ">
-      Total: ${{tarifaTotal.toLocaleString('de-DE') }}
-    </div>
-
-    <ion-button fill="clear" style="color: white;  width: 50%; outline: none;" (click)="continuar()">
-      <div
-        style="display: inline;  text-align: right;padding-right: 7px;  text-transform: none;font-size: 1rem; font-weight: bold;">
-        Continuar
-      </div>
-      <ion-icon src="assets/icon/previous.svg" style="transform: rotate(180deg);font-size: 2.5vw;"></ion-icon>
-    </ion-button>
-  </div> -->
-
 
 </ion-footer>
