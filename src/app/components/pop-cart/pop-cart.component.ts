@@ -9,7 +9,7 @@ import { PopoverController } from '@ionic/angular';
 })
 export class PopCartComponent implements OnInit {
 
-  compras: [any];
+  compras: [];
   total;
   constructor(
     private mys: MyserviceService,
@@ -19,7 +19,7 @@ export class PopCartComponent implements OnInit {
   ngOnInit() {
     this.compras = this.mys.temporalComprasCarrito || [];
     this.total = 0;
-    this.compras.forEach(element => {
+    this.compras.forEach((element:any) => {
       this.total = this.total + element.valor;
     });
   }
@@ -37,8 +37,8 @@ export class PopCartComponent implements OnInit {
 
   actualizarTotal() {
     this.total = 0;
-    this.compras.forEach(element => {
-      this.total = this.total + element.valor;
+    this.compras.forEach((element:any) => {
+        this.total = this.total + element.valor;
     });
 
 
