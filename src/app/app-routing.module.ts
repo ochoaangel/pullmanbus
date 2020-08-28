@@ -134,6 +134,10 @@ const routes: Routes = [
     path: 'confirm-seat',
     loadChildren: () => import('./pages/confirm-seat/confirm-seat.module').then( m => m.ConfirmSeatPageModule)
   },
+  {
+    path: 'electronic-coupon',
+    loadChildren: () => import('./pages/electronic-coupon/electronic-coupon.module').then( m => m.ElectronicCouponPageModule)
+  },
 
 
 

@@ -12,11 +12,10 @@ import { ComponentsModule } from 'src/app/components/components.module';
 import { PopCartComponent } from 'src/app/components/pop-cart/pop-cart.component';
 import { PopLanguageComponent } from 'src/app/components/pop-language/pop-language.component';
 
-import { BuyYourTicketPageRoutingModule } from './buy-your-ticket-routing.module';
-import { BuyYourTicketPage } from './buy-your-ticket.page';
 
 
-
+import { ElectronicCouponPageRoutingModule } from './electronic-coupon-routing.module';
+import { ElectronicCouponPage } from './electronic-coupon.page';
 
 @NgModule({
   entryComponents: [PopMenuComponent, PopCartComponent, PopLanguageComponent],
@@ -24,10 +23,11 @@ import { BuyYourTicketPage } from './buy-your-ticket.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    BuyYourTicketPageRoutingModule,
+    ElectronicCouponPageRoutingModule,
     PipesModule,
     ComponentsModule
+
   ],
-  declarations: [BuyYourTicketPage]
+  declarations: [ElectronicCouponPage]
 })
-export class BuyYourTicketPageModule { }
+export class ElectronicCouponPageModule { }
