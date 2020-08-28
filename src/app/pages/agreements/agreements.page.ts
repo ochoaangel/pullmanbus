@@ -22,7 +22,7 @@ export class AgreementsPage implements OnInit {
         let end = {};
         end['img'] = x.imagenCarrusel;
         end['title'] = x.convenio.descripcion;
-        end['description'] = x.portalConvInformacionI18ns.filter(y => y.i18n === 'es')[0]['descripcion'] || null;
+        //end['description'] = x.portalConvInformacionI18ns.filter(y => y.i18n === 'es')[0]['descripcion'] || null;
 
         return end;
       });
