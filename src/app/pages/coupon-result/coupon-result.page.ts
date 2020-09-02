@@ -25,7 +25,6 @@ export class CouponResultPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    // this.mys.initCouponResult = { origen: "13101420", destino: "05108100", idSistema: 1 };
     if (!this.mys.initCouponResult) {
       this.router.navigateByUrl('/electronic-coupon');
     } else {

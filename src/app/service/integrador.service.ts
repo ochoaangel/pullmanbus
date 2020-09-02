@@ -310,7 +310,6 @@ export class IntegradorService {
         let urlFinal;
         let dirProxy = '/srv-privado-web/rest/confirmacion/buscarBoleto';
         this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy;
-        // let urlFinal = 'http://qa.pullman.cl/srv-privado-web/rest/confirmacion/buscarBoleto';
         return this.http.post<any[]>(urlFinal, params);
     }
 
@@ -318,7 +317,6 @@ export class IntegradorService {
         let urlFinal;
         let dirProxy = '/srv-privado-web/rest/confirmacion/confirmarBoleto';
         this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy;
-        // let urlFinal = 'http://qa.pullman.cl/srv-privado-web/rest/confirmacion/confirmarBoleto';
         return this.http.post<any[]>(urlFinal, params);
     }
 
@@ -326,15 +324,13 @@ export class IntegradorService {
         let urlFinal;
         let dirProxy = `/srv-privado-web/rest/parametros/buscarItinerario?idServicio=${params.idServicio}`;
         this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy;
-        // let urlFinal = `http://qa.pullman.cl/srv-privado-web/rest/parametros/buscarItinerario?idServicio=${params.idServicio}`;
         return this.http.get<any[]>(urlFinal);
     }
 
     buscarCupones(params: any): Observable<any[]> {
-        // let urlFinal;
-        const urlFinal = `http://qa.pullman.cl/integrador-web/rest/cuponera/buscarCuponera`;
-        // this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy;
-        // let urlFinal = `http://qa.pullman.cl/srv-privado-web/rest/parametros/buscarItinerario?idServicio=${params.idServicio}`;
+        let urlFinal;
+        let dirProxy = `/integrador-web/rest/cuponera/buscarCuponera`;
+        this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy;
         return this.http.post<any[]>(urlFinal, params);
     }
 
