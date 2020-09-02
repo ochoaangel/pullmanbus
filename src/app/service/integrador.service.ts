@@ -289,9 +289,9 @@ export class IntegradorService {
         return this.http.post<any>(urlFinal, params);
     }
 
-    getAgenciesPorCiudad(ciudad:string): Observable<any[]> {
+    getAgenciesPorCiudad(ciudad: string): Observable<any[]> {
         let urlFinal;
-        let dirProxy = '/srv-privado-web/rest/parametros/datosAgencia?ciudad='+ciudad;
+        let dirProxy = '/srv-privado-web/rest/parametros/datosAgencia?ciudad=' + ciudad;
         this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy;
         return this.http.get<any[]>(urlFinal);
     }
@@ -328,6 +328,14 @@ export class IntegradorService {
         this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy;
         // let urlFinal = `http://qa.pullman.cl/srv-privado-web/rest/parametros/buscarItinerario?idServicio=${params.idServicio}`;
         return this.http.get<any[]>(urlFinal);
+    }
+
+    buscarCupones(params: any): Observable<any[]> {
+        // let urlFinal;
+        const urlFinal = `http://qa.pullman.cl/integrador-web/rest/cuponera/buscarCuponera`;
+        // this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy;
+        // let urlFinal = `http://qa.pullman.cl/srv-privado-web/rest/parametros/buscarItinerario?idServicio=${params.idServicio}`;
+        return this.http.post<any[]>(urlFinal, params);
     }
 
 

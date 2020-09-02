@@ -1,0 +1,134 @@
+<ion-header no-border>
+
+  <div class="cabeceraGeneral">
+    <div style="display: inline; width: 5%;"></div>
+
+    <div style="display: inline; width: 10%;margin: 5px;">
+      <!-- Es -->
+    </div>
+
+    <div style="width: 60%; height: 100%; display: flex; align-items: center;
+      justify-content: center;" routerLink="/home">
+      <img src="assets/images/titulo.png" style="height: 90%;object-fit:
+        scale-down;position: relative; z-index: 10;" />
+    </div>
+
+    <div style="display: inline; width: 10%;">
+      <!-- <ion-icon name="md-cart" style="font-size: 25px;padding-top: 5px;"></ion-icon> -->
+    </div>
+
+    <div style="display: inline; width: 10%">
+      <!-- <ion-icon name="md-menu" style="font-size: 25px;padding-top: 5px;"></ion-icon> -->
+    </div>
+
+    <div style="display: inline; width: 5%;"></div>
+  </div>
+
+
+
+  <div class="cabeceraTitulo">
+    Cupones disponibles
+  </div>
+  <ion-progress-bar type="indeterminate" *ngIf="loading>0" color="secondary"></ion-progress-bar>
+
+</ion-header>
+
+<ion-content style="width: 100%;height: 100%;">
+  <div style=" height: 100%; background-color: white ; ">
+    <ion-grid class=" ion-no-padding ion-no-margin" style="height: 100%;">
+      <ion-row class=" ion-no-padding  ion-no-margin ion-justify-content-center" style="height: 100%">
+        <ion-col class=" ion-no-padding ion-no-margin" size="12" style="text-align: center;">
+
+
+          <div *ngIf="cupones && cupones.length>0">
+            <div
+              style="display: flex; flex-direction: row;align-items: center; justify-content: space-between;padding: 0.7rem 0;"
+              *ngFor="let cupon of cupones; let i = index" [ngClass]="(i % 2 == 0) ? 'odd' : 'even'">
+
+              <div style="display: flex; flex-direction: row;">
+                <ion-img [src]="'data:image/jpeg;base64,'+cupon.empresaLogo" style="width: 5rem;"></ion-img>
+              </div>
+
+              <div style="display: flex; flex-direction: row; flex-wrap: wrap; align-items: center; flex-grow: 1;">
+                <div style="display: flex; flex-direction: row; justify-content: space-evenly;flex-grow: 1;">
+                  <div style="display: flex;flex-direction: column;">
+                    <div style="font-size: 0.6rem;font-weight: bold;padding: 0.2rem;">Programa:</div>
+                    <div style="font-size: 0.8rem;padding: 0.2rem;">{{cupon.programa}}</div>
+                  </div>
+                  <div style="display: flex;flex-direction: column;">
+                    <div style="font-size: 0.6rem;font-weight: bold;padding: 0.2rem;">Servicio:</div>
+                    <div style="font-size: 0.8rem;padding: 0.2rem;">{{cupon.claseDescripcion}}</div>
+                  </div>
+                  <div style="display: flex;flex-direction: column;">
+                    <div style="font-size: 0.6rem;font-weight: bold;padding: 0.2rem;">Ruta:</div>
+                    <div style="font-size: 0.8rem;padding: 0.2rem;">{{cupon.rutaDescripcion}}</div>
+                  </div>
+                </div>
+
+                <div
+                  style="display: flex; flex-direction: row;  justify-content: space-evenly;flex-grow: 1;margin-top: 0.7rem;">
+                  <div style="display: flex;flex-direction: column;">
+                    <div style="font-size: 0.6rem;font-weight: bold;padding: 0.2rem;">Boletos:</div>
+                    <div style="font-size: 0.8rem;padding: 0.2rem;">{{cupon.boletos}}</div>
+                  </div>
+                  <div style="display: flex;flex-direction: column;">
+                    <div style="font-size: 0.6rem;font-weight: bold;padding: 0.2rem;">Distribución:</div>
+                    <div style="font-size: 0.8rem;padding: 0.2rem;">{{cupon.distribucion}}</div>
+                  </div>
+                  <div style="display: flex;flex-direction: column;">
+                    <div style="font-size: 0.6rem;font-weight: bold;padding: 0.2rem;">valor:</div>
+                    <div style="font-size: 0.8rem;padding: 0.2rem;">${{cupon.total}}</div>
+                  </div>
+                </div>
+              </div>
+
+              <ion-button color="secondary"
+                style="display: flex; flex-direction: row; font-size: 0.7rem; text-transform: none;" size="small">
+                Comprar
+              </ion-button>
+
+            </div>
+          </div>
+
+          <div *ngIf="loading>0"
+            style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center;">
+            <div style="display: flex; justify-content: center;">
+              Espere un momento.
+              <br>
+              Buscando Cupones..
+            </div>
+          </div>
+
+          <div *ngIf="loading<1 && (!cupones || cupones.length<1)"
+            style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center;">
+            <div style="display: flex; justify-content: center;">
+              No Disponemos de cupones con las catracterísticas seleccionadas
+              <br>
+              Intente nuevamente..
+            </div>
+          </div>
+
+
+
+
+
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+</ion-content>
+
+
+<ion-footer no-border style=" width: 100vw;background-color: var(--ion-color-primary);color: white;">
+  <div style="width: 100%; display: flex;justify-content: center;">
+
+    <ion-button slot="start" fill="clear" style="color: white; width: 50%; outline: none;"
+      routerLink="/electronic-coupon">
+      <ion-icon src="assets/icon/previous.svg"></ion-icon>
+      <div style="display: inline; text-align: left ;padding-left: 10px; text-transform: none;">Regresar</div>
+    </ion-button>
+
+    <div style="width: 50%;"> </div>
+
+  </div>
+</ion-footer>

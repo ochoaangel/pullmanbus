@@ -30,6 +30,9 @@ export class MyserviceService {
   public carritoAgregar = new Subject<any>();  // PARA SUBSCIBIRSE
   public carritoEliminar = new Subject<any>();  // PARA SUBSCIBIRSE
 
+  // variables par ainicio de pàginas
+  initCouponResult;
+  initCouponBuy;
 
   /////////////////////////////////////////////////
   // caso para acceder a confirmar un boleto que esta en promoción

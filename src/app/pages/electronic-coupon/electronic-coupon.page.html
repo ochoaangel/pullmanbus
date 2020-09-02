@@ -85,28 +85,6 @@
             <!-- Spinner -->
             <div *ngIf="!showSelection" style="display: flex; flex-direction: column;">
 
-              <!-- Slider Etapa 1 Banner -->
-              <!-- <div *ngIf="promociones && promociones.length>0" style="background-color: transparent;">
-                <ion-slides mode="ios">
-                  <ion-slide *ngFor="let promo of promociones">
-                    <div style="width: 100%; display: flex; flex-direction: row;max-height: 150px;">
-                      <img src="{{promo.urlImagen}}" alt=""
-                        style="object-fit: cover;width: 50vw;border-radius: 1rem 0 0 1rem;border: 1px solid var(--ion-color-light);">
-                      <div
-                        style="width: 50vw; align-items: center; justify-content: center; background-color: var(--ion-color-light);border-radius: 0 1rem  1rem 0;color: var(--ion-color-dark);display: flex; flex-direction: column;border: 1px solid var(--ion-color-light);">
-                        <div style="font-weight: bold;">{{promo.titulo}}</div>
-                        <div style="">{{promo.contenido}}</div>
-                        <div style="display: flex; justify-content: center;">
-                          <div
-                            style="background-color: var(--ion-color-primary); color:var(--ion-color-light) ; border-radius: 0.5rem; padding: 5px 20px;">
-                            ${{promo.tarifas}}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </ion-slide>
-                </ion-slides>
-              </div> -->
 
               <div>
 
@@ -190,79 +168,12 @@
                   </ion-col>
                 </ion-row>
 
-                <!-- Fecha de Ida -->
-                <!-- <ion-row style="padding-top: 1vh; background-color: var(--ion-color-primary);" class="ion-no-margin
-                ion-no-padding ion-justify-content-center">
-                  <ion-col size="12" class="ion-justify-content-center
-                  ion-no-margin
-                  ion-no-padding ion-align-items-center" style="display:
-                  contents">
-
-                    <div style="width: 100%; display: flex; padding: 0.4rem 1.5rem; align-items: center;">
-                      <ion-icon style="margin: 0; font-size: 1.5rem; padding-right: 0.7rem; color: white;"
-                        name="calendar"> </ion-icon>
-                      <ion-label style="color: white;"> Fecha ida</ion-label>
-                    </div>
-
-                    <div
-                      style="text-align: center; width: 97%; border: 1px solid var(--ion-color-primary); border-radius: 5px;">
-                      <ion-item style="width: 100%;/*height: 8vh*/;border-radius: 5px; height: 2.8rem;">
-                        <ion-datetime displayFormat="DD/MM/YYYY" placeholder="Seleccione.." cancelText="Cancelar"
-                          doneText="Listo" mode="ios" [(ngModel)]="goDate" [min]="mingoDate" [max]="maxgoDate"
-                          style="color: var(--ion-color-primary);font-size: 1.1rem;" (ionChange)="cambioFechaIda()">
-                        </ion-datetime>
-                        <ion-icon style="margin:0; color: var(--ion-color-primary);;" slot="end" name="arrow-dropdown">
-                        </ion-icon>
-                      </ion-item>
-
-                      <div
-                        style="width: 100%;background-color: coral; border-radius: 5px 5px;padding: 0.1rem;padding-top: 0.1rem;"
-                        *ngIf="goDate">
-                        <ion-text style="color: white;font-size: 1rem;">{{ goDate | date2line}}</ion-text>
-                      </div>
-                    </div>
-                  </ion-col>
-                </ion-row> -->
-
-                <!-- Fecha Retorno -->
-                <!-- <ion-row style="padding-top: 1vh;background-color: var(--ion-color-primary);"
-                  class="ion-no-margin ion-no-padding ion-justify-content-center">
-                  <ion-col size="12"
-                    class="ion-justify-content-center ion-no-margin ion-no-padding ion-align-items-center"
-                    style="display: contents">
-
-                    <div style="width: 100%; display: flex; padding: 0.4rem 1.5rem; align-items: center;">
-                      <ion-icon style="margin: 0; font-size: 1.5rem; padding-right: 0.7rem; color: white;"
-                        name="calendar">
-                      </ion-icon>
-                      <ion-label style="color: white;"> Fecha regreso</ion-label>
-                    </div>
-
-                    <div
-                      style="text-align: center; width: 97%; border: 1px solid var(--ion-color-primary); border-radius: 5px;">
-                      <ion-item style="width: 100%;/*height: 8vh*/;border-radius: 5px; height: 2.8rem;">
-                        <ion-datetime displayFormat="DD/MM/YYYY" placeholder="Seleccione.." cancelText="Sin regreso"
-                          (ionCancel)="noBack()" doneText="Listo" mode="ios" [(ngModel)]="backDate" [min]="minbackDate"
-                          [max]="maxbackDate" style="color: var(--ion-color-primary);font-size: 1.1rem;"></ion-datetime>
-                        <ion-icon style="margin:0; color: var(--ion-color-primary);;" slot="end" name="arrow-dropdown">
-                        </ion-icon>
-
-                      </ion-item>
-
-                      <div
-                        style="width: 100%;background-color: coral; border-radius: 5px 5px;padding: 0.1rem;padding-top: 0.1rem;"
-                        *ngIf="backDate">
-                        <ion-text style="color: white;font-size: 1rem;">{{ backDate | date2line}}</ion-text>
-                      </div>
-
-                    </div>
-                  </ion-col>
-                </ion-row> -->
 
                 <!-- boton buscar pasajes -->
                 <ion-row style="padding-top: 1vh;background-color: var(--ion-color-primary);"
                   class="ion-no-margin ion-no-padding ion-justify-content-center">
-                  <ion-button [disabled]='loading' *ngIf="!showSelection" style="margin-top: 2rem;" color="secondary">
+                  <ion-button [disabled]='loading' *ngIf="!showSelection" style="margin-top: 2rem;" color="secondary"
+                    (click)="btnSearch()">
                     <ion-icon name="md-search"></ion-icon>
                     <div style="display: inline; text-align: left ;padding-left: 10px;
                     text-transform: none;">

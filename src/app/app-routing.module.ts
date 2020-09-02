@@ -138,6 +138,14 @@ const routes: Routes = [
     path: 'electronic-coupon',
     loadChildren: () => import('./pages/electronic-coupon/electronic-coupon.module').then( m => m.ElectronicCouponPageModule)
   },
+  {
+    path: 'coupon-result',
+    loadChildren: () => import('./pages/coupon-result/coupon-result.module').then( m => m.CouponResultPageModule)
+  },
+  {
+    path: 'coupon-buy',
+    loadChildren: () => import('./pages/coupon-buy/coupon-buy.module').then( m => m.CouponBuyPageModule)
+  },
 
 
 

@@ -67,17 +67,17 @@ export class ElectronicCouponPage implements OnInit {
   ) {
     this.loading = false;
 
-    this.mys.carritoEliminar.subscribe(eliminar => {
-      console.log('Eliminado desde dentro de tickets', eliminar);
+    // this.mys.carritoEliminar.subscribe(eliminar => {
+    //   console.log('Eliminado desde dentro de tickets', eliminar);
 
-      // dejar cuando tien compra detalles
-      if (this.comprasDetalles.length < 2) {
-        this.comprasDetalles = [];
-      } else {
-        this.comprasDetalles = this.comprasDetalles.filter(x => !(x.idServicio === eliminar.idServicio && x.asiento === eliminar.asiento));
-      }
-      this.mys.temporalComprasCarrito = this.comprasDetalles;
-    });
+    //   // dejar cuando tien compra detalles
+    //   if (this.comprasDetalles.length < 2) {
+    //     this.comprasDetalles = [];
+    //   } else {
+    //     this.comprasDetalles = this.comprasDetalles.filter(x => !(x.idServicio === eliminar.idServicio && x.asiento === eliminar.asiento));
+    //   }
+    //   this.mys.temporalComprasCarrito = this.comprasDetalles;
+    // });
   }
 
   ngOnInit() {
@@ -90,7 +90,7 @@ export class ElectronicCouponPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    this.comprasDetalles = this.mys.ticket && this.mys.ticket.comprasDetalles ? this.mys.ticket.comprasDetalles : null;
+    // this.comprasDetalles = this.mys.ticket && this.mys.ticket.comprasDetalles ? this.mys.ticket.comprasDetalles : null;
     this.myOrigin = null;
     this.myDestiny = null;
     this.promociones = null;
@@ -125,55 +125,36 @@ export class ElectronicCouponPage implements OnInit {
   }
 
 
-  checkChangeGoOnly() {
-    this.goOnly ? this.goBack = false : this.goBack = true;
-  }
+  // checkChangeGoOnly() {
+  //   this.goOnly ? this.goBack = false : this.goBack = true;
+  // }
 
-  checkChangeGoBack() {
-    this.goBack ? this.goOnly = false : this.goOnly = true;
-  }
+  // checkChangeGoBack() {
+  //   this.goBack ? this.goOnly = false : this.goOnly = true;
+  // }
 
-  noBack() { this.backDate = null; }
+  // noBack() { this.backDate = null; }
 
 
   btnSearch() {
 
-    this.ticket = this.mys.ticket ? {
-      comprasDetalles: this.mys.ticket.comprasDetalles,
-      comprasDetallesPosicion: this.mys.ticket.comprasDetallesPosicion,
-      goCompras: this.mys.ticket.comprasDetalles,
-      backCompras: this.mys.ticket.comprasDetalles,
-    } : {};
-
-    this.ticket['origin'] = this.myOrigin;
-    this.ticket['destiny'] = this.myDestiny;
-
-    // guardo el tipo de viaje
-    if (this.backDate) {
-      this.ticket['tripType'] = 'goBack';
-      this.ticket['goDate'] = this.goDate;
-      this.ticket['backDate'] = this.backDate;
-    } else {
-      this.ticket['tripType'] = 'goOnly';
-      this.ticket['goDate'] = this.goDate;
-    }
-
-    // iniciando la compra
-    this.mys.way = 'go';
 
     // Verifico datos requeridos y redirijo a "pasaje ida"
     if (!this.myOrigin) {
       this.mys.alertShow('Verifique', 'alert', 'Seleccione un origen<br> Intente nuevamente..');
     } else if (!this.myDestiny) {
       this.mys.alertShow('Verifique', 'alert', 'Seleccione un destino<br> Intente nuevamente..');
-    } else if (!this.goDate) {
-      this.mys.alertShow('Verifique', 'alert', 'Seleccione una Fecha de Ida<br> Intente nuevamente..');
-    } else if (this.backDate && (moment(this.backDate).isSameOrBefore(moment(this.goDate)))) {
-      this.mys.alertShow('Verifique', 'alert', 'Fecha de ida debe ser <br> antes que <br>fecha de regreso<br> Intente nuevamente..');
     } else {
+      this.ticket = {};
 
-      this.mys.ticket = this.ticket;
-      this.router.navigateByUrl('/ticket');
+      this.ticket['origen'] = this.myOrigin.codigo;
+      this.ticket['destino'] = this.myDestiny.codigo;
+      this.ticket['idSistema'] = 1;
+      console.log('this.ticket', this.ticket);
+
+      // guardo variable de inicio y redirijo
+      this.mys.initCouponResult = this.ticket;
+      this.router.navigateByUrl('/coupon-result');
     }
 
   }
@@ -222,8 +203,6 @@ export class ElectronicCouponPage implements OnInit {
   }
 
   atras() {
-    // console.log('this.inputFuente', this.inputFuente);
-    // console.log('this.inputFiltrado', this.inputFiltrado);
 
     if (this.showSelection) {
       this.showSelection = false;
@@ -236,46 +215,6 @@ export class ElectronicCouponPage implements OnInit {
     }
   }
 
-  async popMenu(event) {
-    const popoverMenu = await this.popoverCtrl.create({
-      component: PopMenuComponent,
-      event,
-      mode: 'ios',
-      backdropDismiss: true,
-      cssClass: "popMenu"
-    });
-    await popoverMenu.present();
-
-    // recibo la variable desde el popover y la guardo en data
-    const { data } = await popoverMenu.onWillDismiss();
-    if (data && data.destino) {
-      if (data.destino === '/login') {
-        this.mys.checkIfExistUsuario().subscribe(exist => {
-          exist ? this.router.navigateByUrl('/user-panel') : this.router.navigateByUrl('/login');
-        });
-      } else {
-        this.router.navigateByUrl(data.destino);
-      }
-    }
-
-  }
-
-
-  async popCart(event) {
-    this.mys.temporalComprasCarrito = this.comprasDetalles;
-    const popoverCart = await this.popoverCtrl.create({
-      component: PopCartComponent,
-      event,
-      mode: 'ios',
-      backdropDismiss: true,
-      cssClass: 'popCart'
-    });
-    await popoverCart.present();
-
-    const { data } = await popoverCart.onDidDismiss();
-    console.log('data en padre desde popover', data);
-
-  }
 
 
   cambioFechaIda() {
