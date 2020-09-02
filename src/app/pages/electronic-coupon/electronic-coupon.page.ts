@@ -66,18 +66,6 @@ export class ElectronicCouponPage implements OnInit {
     private renderer: Renderer,
   ) {
     this.loading = false;
-
-    // this.mys.carritoEliminar.subscribe(eliminar => {
-    //   console.log('Eliminado desde dentro de tickets', eliminar);
-
-    //   // dejar cuando tien compra detalles
-    //   if (this.comprasDetalles.length < 2) {
-    //     this.comprasDetalles = [];
-    //   } else {
-    //     this.comprasDetalles = this.comprasDetalles.filter(x => !(x.idServicio === eliminar.idServicio && x.asiento === eliminar.asiento));
-    //   }
-    //   this.mys.temporalComprasCarrito = this.comprasDetalles;
-    // });
   }
 
   ngOnInit() {
@@ -90,7 +78,6 @@ export class ElectronicCouponPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    // this.comprasDetalles = this.mys.ticket && this.mys.ticket.comprasDetalles ? this.mys.ticket.comprasDetalles : null;
     this.myOrigin = null;
     this.myDestiny = null;
     this.promociones = null;
@@ -235,18 +222,13 @@ export class ElectronicCouponPage implements OnInit {
 
 
   cambioOrigenDestinoIda() {
-    if (this.myOrigin && this.myDestiny && this.goDate) {
+    if (this.myOrigin && this.myDestiny) {
       let params = {
         origen: this.myOrigin.codigo,
         destino: this.myDestiny.codigo,
         fechaSalida: moment(this.goDate).format('YYYYMMDD'),
         etapa: 1,
       };
-      this.loading = true;
-      this.integradorService.buscaCaluga(params).subscribe(resp => {
-        this.loading = false;
-        this.promociones = resp;
-      });
     }
   }
 
