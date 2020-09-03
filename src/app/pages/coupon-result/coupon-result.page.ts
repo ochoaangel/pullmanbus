@@ -45,4 +45,8 @@ export class CouponResultPage implements OnInit {
 
   }
 
+  comprar(data) {
+    this.mys.initCouponBuy = data;
+    this.router.navigateByUrl('/coupon-buy');
+  }
 }

@@ -334,6 +334,13 @@ export class IntegradorService {
         return this.http.post<any[]>(urlFinal, params);
     }
 
+    autotizarCuponAUsuario(params: any): Observable<any[]> {
+        let urlFinal;
+        let dirProxy = `/integrador-web/rest/cuponera/validarUsuario`;
+        this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy;
+        return this.http.post<any[]>(urlFinal, params);
+    }
+
 
 
 }

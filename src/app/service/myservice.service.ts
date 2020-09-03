@@ -33,7 +33,6 @@ export class MyserviceService {
   // variables par ainicio de pàginas
   initCouponResult;
   initCouponBuy;
-
   /////////////////////////////////////////////////
   // caso para acceder a confirmar un boleto que esta en promoción
   confirm = null;
