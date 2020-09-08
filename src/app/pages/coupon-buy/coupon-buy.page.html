@@ -115,6 +115,41 @@
           </div>
 
 
+          <!-- formulario para Métodos d pago -->
+          <div style="width: 100%; display: flex; justify-content: center; margin-top: 0.5rem;">
+            <div style="width: 300px; display: flex; flex-direction: column;background-color: #f2f2f2;
+                                padding: 0 0.5rem 0.5rem 0.5rem;border-radius: 6px;margin-top: 0.3rem; ">
+
+              <div
+                style="background-color: var(--ion-color-secondary); color: white; margin: 0 -0.5rem; border-radius: 5px 5px 0 0;padding: 0.3rem 0;">
+                Medio de Pago</div>
+              <div>
+                <input type="email" [(ngModel)]="payData.email1" name="email1" #input_email1 placeholder="EMAIL"
+                  style="text-align: center;">
+              </div>
+              <div>
+                <input type="email" [(ngModel)]="payData.email2" name="email2" #input_email2
+                  placeholder="RE-INGRESAR EMAIL" style="text-align: center;">
+              </div>
+
+              <div>
+                <img src="assets/images/MediosDePago/WebPay.png" style="width: 120px;margin: 0.5rem;" alt="">
+              </div>
+
+              <div style="display: flex;flex-direction: row; align-items: center;">
+                <div>
+                  <ion-checkbox style="margin: 0 0.2rem;" color="secondary" [(value)]="payData.terminos"></ion-checkbox>
+                </div>
+                <div style="font-size: 0.6rem;">He leído los <strong>términos</strong> de la compra </div>
+              </div>
+
+              <div style="display: flex; justify-content: flex-end;margin-top: 0.5rem;">
+                <ion-button (click)="continuar()" color="secondary" size="small" style="text-transform: none;">
+                  Continuar
+                </ion-button>
+              </div>
+            </div>
+          </div>
 
 
 
