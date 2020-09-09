@@ -16,7 +16,8 @@ export class CouponBuyPage implements OnInit {
   cupon;
 
   cuponPrograma;
-  requiereAutenticacion;
+  autorizacionRequerida = false;
+  autorizadoUsuario;
 
   myData = {
     integrador: 1001,
@@ -41,14 +42,17 @@ export class CouponBuyPage implements OnInit {
   }
 
   ionViewWillEnter() {
+
+    // inicializo variables
+    this.autorizacionRequerida = false;
     this.cupon = null;
+
     if (!this.mys.initCouponBuy && !this.mys.initCouponResult) {
       this.router.navigateByUrl('/electronic-coupon');
     } else if (!this.mys.initCouponBuy && this.mys.initCouponResult) {
       this.router.navigateByUrl('/coupon-result');
     } else {
       this.cupon = this.mys.initCouponBuy;
-      // console.log('this.cupon', this.cupon);
     }
   }
 
@@ -61,28 +65,25 @@ export class CouponBuyPage implements OnInit {
     } else if (this.myData.clave.length > 8 || this.myData.clave.length < 4) {
       this.mys.alertShow('Verifique', 'alert', 'Recuede que la clave debe ser entre 4 y 8 caracteres,<br> Intente nuevamente..');
     } else {
-      let end = this.myData;
+      const end = this.myData;
       end.rut = end.rut.replace(/\./gi, '');
-      console.log('validado->', end);
 
       this.loading++;
       this.integradorService.autotizarCuponAUsuario(end).subscribe((resp: any) => {
         this.loading--;
-        console.log('resp', resp);
-
 
         if (resp.programa === this.cupon.programa) {
           this.autorizadoUsuario = resp;
           this.mys.alertShow('¡Éxito!', 'done-all', 'Autorizad@ para la compra de esta cuponera');
+          this.autorizacionRequerida = true;
 
         } else {
           this.mys.alertShow('Verifique', 'alert', 'No está autorizado para compra esta Cuponera..');
-
-
+          this.autorizacionRequerida = false;
         }
 
 
-      })
+      });
     }
 
   }
@@ -90,7 +91,7 @@ export class CouponBuyPage implements OnInit {
 
 
   rutFunction(rawValue) {
-    let numbers = rawValue.match(/[0-9kKeE]/g);
+    const numbers = rawValue.match(/[0-9kKeE]/g);
     let numberLength = 0;
     if (numbers) {
       numberLength = numbers.join('').length;
@@ -105,7 +106,6 @@ export class CouponBuyPage implements OnInit {
 
 
   continuar() {
-    console.log('this.payData', this.payData);
     if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.payData.email1)) {
       this.mys.alertShow('Verifique', 'alert', 'Debe ingresar correo válido,<br> Intente nuevamente..');
     } else if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.payData.email2)) {
@@ -113,8 +113,21 @@ export class CouponBuyPage implements OnInit {
     } else if (this.payData.email1 !== this.payData.email2) {
       this.mys.alertShow('Verifique', 'alert', 'Los correo deben  ser iguales para continuar,<br> Intente nuevamente..');
     } else {
-      console.log('validadooooooooooooooooooo');
+      // caso cuando se valida los correos, 
+      // falta la validación cuando se aceptan los terminos(payData.terminos) y cuando requiere autorización(this.autorizacionRequerida)
+
+      this.mys.alertShow('Verifique', 'alert', 'Correos validados,<br> En desarrollo pago con webpay..');
+
+
+
+      // Variables importantes
+      // en this.cupon => está el objeto cupon con todos los detalles para su futuro uso
+      // en this.myData => estan los datos del usuario cuando es requerido
+      // en this.payData => estan los datos del correo y ultimas validaciones para el pago
+      // en this.autorizacionRequerida => en true es cuando el cupon reguiere autorizacion y ya está validado el usuario
     }
+
+
   }
 
 
