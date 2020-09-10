@@ -86,7 +86,8 @@ const routes: Routes = [
   {
     path: 'recover-password',
     loadChildren: () => import('./pages/recover-password/recover-password.module').then(m => m.RecoverPasswordPageModule)
-  },  {
+  },
+  {
     path: 'ticket-change',
     loadChildren: () => import('./pages/ticket-change/ticket-change.module').then( m => m.TicketChangePageModule)
   },
@@ -146,7 +147,10 @@ const routes: Routes = [
     path: 'coupon-buy',
     loadChildren: () => import('./pages/coupon-buy/coupon-buy.module').then( m => m.CouponBuyPageModule)
   },
-
+  {
+    path: 'transaction-voucher-coupon/:codigo',
+    loadChildren: () => import('./pages/transaction-voucher-coupon/transaction-voucher-coupon.module').then(m => m.TransactionCouponVoucherPageModule)
+  },
 
 
 ];
