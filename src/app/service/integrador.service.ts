@@ -346,6 +346,22 @@ export class IntegradorService {
         return this.http.post<any[]>(urlFinal, params);
     }
 
-
-
+    guardarTransaccionCuponera(guardar: any): Observable<any[]> {
+        let urlFinal;
+        let dirProxy = '/integrador-web/rest/pago/guardarTransaccionCuponera';
+        this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy;
+        return this.http.post<any[]>(urlFinal, guardar);
+    }
+    buscarEncabezadoCuponera(buscar: any): Observable<any[]> {
+        let urlFinal;
+        let dirProxy = '/integrador-web/rest/private/venta/buscarEncabezadoCuponera';
+        this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy;
+        return this.http.post<any[]>(urlFinal, buscar);
+    }
+    generarComprobanteCuponera(params: any): Observable<any[]> {
+        let urlFinal;
+        let dirProxy = '/integrador-web/rest/private/venta/generarComprobanteCuponera';
+        this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy;
+        return this.http.post<any[]>(urlFinal, params);
+    }
 }

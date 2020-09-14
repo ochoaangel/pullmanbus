@@ -1,33 +1,22 @@
 <ion-header no-border>
-
   <div class="cabeceraGeneral">
     <div style="display: inline; width: 5%;"></div>
-
-    <div style="display: inline; width: 10%;margin: 5px;">
-    </div>
-
+    <div style="display: inline; width: 10%;margin: 5px;"></div>
     <div style="width: 60%; height: 100%; display: flex; align-items: center;
       justify-content: center;" routerLink="/home">
       <img src="assets/images/titulo.png" style="height: 90%;object-fit:
         scale-down;position: relative; z-index: 10;" />
     </div>
-
     <div style="display: inline; width: 10%;">
     </div>
-
     <div style="display: inline; width: 10%">
     </div>
-
     <div style="display: inline; width: 5%;"></div>
   </div>
-
-
-
   <div class="cabeceraTitulo">
     Cuponera Seleccionada
   </div>
   <ion-progress-bar type="indeterminate" *ngIf="loading>0" color="secondary"></ion-progress-bar>
-
 </ion-header>
 
 <ion-content style="width: 100%;height: 100%;">
@@ -35,15 +24,10 @@
     <ion-grid class=" ion-no-padding ion-no-margin" style="height: 100%;">
       <ion-row class=" ion-no-padding  ion-no-margin ion-justify-content-center" style="height: 100%">
         <ion-col class=" ion-no-padding ion-no-margin" size="12" style="text-align: center;">
-
-
-
           <!-- formulario para la autenticacion para validar en caso de ser necesario -->
-          <div *ngIf="cupon && cupon.requiereAutenticacion"
-            style="width: 100%; display: flex; justify-content: center;">
+          <div *ngIf="requiereAutenticacion" style="width: 100%; display: flex; justify-content: center;">
             <div style="width: 300px; display: flex; flex-direction: column;background-color: #f2f2f2;
                       padding: 0 0.5rem 0.5rem 0.5rem;border-radius: 6px;margin-top: 0.3rem; ">
-
               <div
                 style="background-color: var(--ion-color-secondary); color: white; margin: 0 -0.5rem; border-radius: 5px 5px 0 0;padding: 0.3rem 0;">
                 Autenticación Requerida</div>
@@ -62,22 +46,17 @@
               </div>
             </div>
           </div>
-
-
           <!-- datos del cupon -->
           <div *ngIf="cupon" style="margin-top: 0.5rem;" class="odd">
             <div
               style="background-color: var(--ion-color-secondary); color: white; margin: 0 -0.5rem; border-radius: 20px 20px 0 0;padding: 0.3rem 0;">
               Detalle
             </div>
-
             <div
               style="display: flex; flex-direction: row;align-items: center; justify-content: space-between;padding: 0.7rem 0;">
-
               <div style="display: flex; flex-direction: row;">
                 <ion-img [src]="'data:image/jpeg;base64,'+cupon.empresaLogo" style="width: 5rem;"></ion-img>
               </div>
-
               <div style="display: flex; flex-direction: row; flex-wrap: wrap; align-items: center; flex-grow: 1;">
                 <div style="display: flex; flex-direction: row; justify-content: space-evenly;flex-grow: 1;">
                   <div style="display: flex;flex-direction: column;">
@@ -93,7 +72,6 @@
                     <div style="font-size: 0.8rem;padding: 0.2rem;">{{cupon.rutaDescripcion}}</div>
                   </div>
                 </div>
-
                 <div
                   style="display: flex; flex-direction: row;  justify-content: space-evenly;flex-grow: 1;margin-top: 0.7rem;">
                   <div style="display: flex;flex-direction: column;">
@@ -110,67 +88,54 @@
                   </div>
                 </div>
               </div>
-
             </div>
           </div>
-
-
           <!-- formulario para Métodos d pago -->
-          <div style="width: 100%; display: flex; justify-content: center; margin-top: 0.5rem;">
+          <div style="width: 100%; display: flex; justify-content: center; margin-top: 0.5rem;"
+            *ngIf="showPaymentPanel">
             <div style="width: 300px; display: flex; flex-direction: column;background-color: #f2f2f2;
                                 padding: 0 0.5rem 0.5rem 0.5rem;border-radius: 6px;margin-top: 0.3rem; ">
-
               <div
                 style="background-color: var(--ion-color-secondary); color: white; margin: 0 -0.5rem; border-radius: 5px 5px 0 0;padding: 0.3rem 0;">
                 Medio de Pago</div>
               <div>
                 <input type="email" [(ngModel)]="payData.email1" name="email1" #input_email1 placeholder="EMAIL"
-                  style="text-align: center;">
+                  style="text-align: center;"
+                  onkeyup="this.value = this.value.toUpperCase();">
               </div>
               <div>
                 <input type="email" [(ngModel)]="payData.email2" name="email2" #input_email2
-                  placeholder="RE-INGRESAR EMAIL" style="text-align: center;">
+                  placeholder="RE-INGRESAR EMAIL" style="text-align: center;"
+                  onkeyup="this.value = this.value.toUpperCase();">
               </div>
-
               <div>
                 <img src="assets/images/MediosDePago/WebPay.png" style="width: 120px;margin: 0.5rem;" alt="">
               </div>
-
               <div style="display: flex;flex-direction: row; align-items: center;">
                 <div>
                   <ion-checkbox style="margin: 0 0.2rem;" color="secondary" [(value)]="payData.terminos"></ion-checkbox>
                 </div>
                 <div style="font-size: 0.6rem;">He leído los <strong>términos</strong> de la compra </div>
               </div>
-
               <div style="display: flex; justify-content: flex-end;margin-top: 0.5rem;">
-                <ion-button (click)="continuar()" color="secondary" size="small" style="text-transform: none;">
-                  Continuar
+                <ion-button (click)="pagar()" color="secondary" size="small" style="text-transform: none;">
+                  Pagar
                 </ion-button>
               </div>
             </div>
           </div>
-
-
-
-
         </ion-col>
       </ion-row>
     </ion-grid>
   </div>
 </ion-content>
-
-
 <ion-footer no-border style=" width: 100vw;background-color: var(--ion-color-primary);color: white;">
   <div style="width: 100%; display: flex;justify-content: center;">
-
     <ion-button slot="start" fill="clear" style="color: white; width: 50%; outline: none;"
       routerLink="/electronic-coupon">
       <ion-icon src="assets/icon/previous.svg"></ion-icon>
       <div style="display: inline; text-align: left ;padding-left: 10px; text-transform: none;">Regresar</div>
     </ion-button>
-
     <div style="width: 50%;"> </div>
-
   </div>
 </ion-footer>

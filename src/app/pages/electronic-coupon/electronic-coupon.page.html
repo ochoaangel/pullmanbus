@@ -28,13 +28,13 @@
   </div>
 
   <div class="cabeceraTitulo" *ngIf="!mySelection">
-    Busca tus cupones
+    Cuponera
   </div>
   <div class="cabeceraTitulo" *ngIf="mySelection==='origin'">
-    Busque y Seleccione el Origen del Cupón
+    Busque y Seleccione el Origen
   </div>
   <div class="cabeceraTitulo" *ngIf="mySelection==='destiny'">
-    Busque y Seleccione el Destino del Cupón
+    Busque y Seleccione el Destino
   </div>
 
   <ion-progress-bar type="indeterminate" *ngIf="loading" color="secondary"></ion-progress-bar>
@@ -177,7 +177,7 @@
                     <ion-icon name="md-search"></ion-icon>
                     <div style="display: inline; text-align: left ;padding-left: 10px;
                     text-transform: none;">
-                      Buscar Servicios para Cupones
+                      Buscar
                     </div>
                   </ion-button>
 
