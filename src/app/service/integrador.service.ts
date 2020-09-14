@@ -306,18 +306,23 @@ export class IntegradorService {
         return this.http.post<any[]>(urlFinal, params);
     }
 
-    confirmarBuscarBoleto(params: any): Observable<any[]> {
+    confirmarBuscarBoleto(params: any): Observable<any> {
         let urlFinal;
-        let dirProxy = '/srv-privado-web/rest/confirmacion/buscarBoleto';
+        let dirProxy = '/integrador-web/rest/operacion/buscarBoleto';
+        this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy;
+        return this.http.post<any>(urlFinal, params);
+    }
+    confirmarBuscarOrigen(params: any): Observable<any[]> {
+        let urlFinal;
+        let dirProxy = '/integrador-web/rest/operacion/buscarOrigen';
         this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy;
         return this.http.post<any[]>(urlFinal, params);
     }
-
-    confirmarBoleto(params: any): Observable<any[]> {
+    confirmarBoleto(params: any): Observable<any> {
         let urlFinal;
-        let dirProxy = '/srv-privado-web/rest/confirmacion/confirmarBoleto';
+        let dirProxy = '/integrador-web/rest/operacion/confirmarBoleto';
         this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy;
-        return this.http.post<any[]>(urlFinal, params);
+        return this.http.post<any>(urlFinal, params);
     }
 
     buscarItinerario(params: any): Observable<any[]> {
