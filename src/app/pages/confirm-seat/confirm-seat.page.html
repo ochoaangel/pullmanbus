@@ -226,13 +226,13 @@
                               <!-- //* Botones seleccion para piso1 piso2 -->
                               <div style="width: 100%; display: flex;margin-bottom: 0.6rem; justify-content: center;">
                                 <div style="width: 50%; text-align: -webkit-center;"
-                                  *ngIf="svc.idClaseBusPisoUno === clase">
+                                  *ngIf="muestraPiso(svc.idClaseBusPisoUno)">
                                   <div [ngClass]="piso1 ? 'pisoShow' : 'pisoHiden'" (click)="cambiarPiso(1)">
                                     Piso 1
                                   </div>
                                 </div>
                                 <div style="width: 50%; text-align: -webkit-center;"
-                                  *ngIf="tarifaPiso2 && svc.idClaseBusPisoDos === clase">
+                                  *ngIf="tarifaPiso2 && muestraPiso(svc.idClaseBusPisoDos)">
                                   <div [ngClass]="!piso1 ? 'pisoShow' : 'pisoHiden'" (click)="cambiarPiso(2)">
                                     Piso 2
                                   </div>

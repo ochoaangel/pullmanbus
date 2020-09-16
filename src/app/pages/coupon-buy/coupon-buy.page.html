@@ -113,9 +113,9 @@
               </div>
               <div style="display: flex;flex-direction: row; align-items: center;">
                 <div>
-                  <ion-checkbox style="margin: 0 0.2rem;" color="secondary" [(value)]="payData.terminos"></ion-checkbox>
+                  <ion-checkbox style="margin: 0 0.2rem;" color="secondary" [(ngModel)]="payData.terminos"></ion-checkbox>
                 </div>
-                <div style="font-size: 0.6rem;">He leído los <strong>términos</strong> de la compra </div>
+                <div style="font-size: 0.6rem;">He leído los <strong style="color: #0247ac;cursor: pointer;" (click)="irAterminos()">términos</strong> de la compra </div>
               </div>
               <div style="display: flex; justify-content: flex-end;margin-top: 0.5rem;">
                 <ion-button (click)="pagar()" color="secondary" size="small" style="text-transform: none;">

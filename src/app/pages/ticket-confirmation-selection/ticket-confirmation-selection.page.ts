@@ -11,17 +11,15 @@ import { PopMenuComponent } from 'src/app/components/pop-menu/pop-menu.component
 import { PopCartComponent } from 'src/app/components/pop-cart/pop-cart.component';
 
 @Component({
-  selector: 'app-electronic-coupon',
-  templateUrl: './electronic-coupon.page.html',
-  styleUrls: ['./electronic-coupon.page.scss'],
+  selector: 'app-ticket-confirmation-selection',
+  templateUrl: './ticket-confirmation-selection.page.html',
+  styleUrls: ['./ticket-confirmation-selection.page.scss'],
 })
-export class ElectronicCouponPage implements OnInit {
+export class TicketConfirmationSelectionPage implements OnInit {
 
   ticket;
-
   showSelection = false;
   mySelection = '';
-
   allOrigin = [];
   allDestiny = [];
 
@@ -31,31 +29,10 @@ export class ElectronicCouponPage implements OnInit {
   selectOrigin;
   selectDestiny;
 
-
-  loading = false;
-
-  goDate;
-  backDate;
-
-  mingoDate;
-  maxgoDate;
-  minbackDate;
-  maxbackDate;
-
-  stringgoDate;
-  stringbackDate;
-
-  // condiciones iniciales
-  goOnly = true;
-  goBack = false;
-
   inputFiltrado;
   inputFuente;
 
-  promociones;  // recibe colecciones
-
-  comprasDetalles = [];
-
+  loading = false;
 
   constructor(
     private httpClient: HttpClient,
@@ -67,92 +44,85 @@ export class ElectronicCouponPage implements OnInit {
   ) {
     this.loading = false;
   }
-
   ngOnInit() {
-    this.mingoDate = moment().format();
-    this.maxgoDate = moment().add(1, 'y').format();
-    this.minbackDate = moment().format();
-    this.maxbackDate = moment().add(1, 'y').format();
-    this.getCityOrigin();
-    this.goDate = moment().format();
+    console.log(this.mys.confirmSelection)
+    if(this.mys.confirmSelection != null){
+      this.getCityOrigin();
+    }else{
+      this.router.navigateByUrl('/ticket-management');
+    }
   }
-
   ionViewWillEnter() {
     this.myOrigin = null;
     this.myDestiny = null;
-    this.promociones = null;
-
   }
-
   getCityOrigin() {
     this.loading = true;
-    this.integradorService.getCityOrigin().subscribe(data => {
+    let search = {     
+      "origen": this.mys.confirmSelection.origen,
+      "destino": this.mys.confirmSelection.destino,
+      "idIntegrador": this.mys.confirmSelection.idIntegrador
+    }
+    console.log("Busca Origen" + search)
+    this.integradorService.getCityOriginConfirmation(search).subscribe(data => {
       this.loading = false;
       this.allOrigin = data;
       this.inputFuente = data;
       this.inputFiltrado = data;
     });
   }
-
   getCityDestination(value: string) {
     this.loading = true;
-    this.integradorService.getCityDestination(value).subscribe(data => {
+    let search = {     
+      "origen": this.mys.confirmSelection.origen,
+      "destino": this.mys.confirmSelection.destino,
+      "idIntegrador": this.mys.confirmSelection.idIntegrador,
+    }
+    this.integradorService.getCityOriginConfirmation(search).subscribe(data => {
       this.loading = false;
       this.allDestiny = data;
       this.inputFuente = data;
       this.inputFiltrado = data;
     });
   }
-
   changeOrigin(value: string) {
-    console.log("changeOrigin", this.myDestiny);
-    this.myDestiny = null;
     this.allDestiny = [];
     this.getCityDestination(value);
     this.selectDestiny = null;
   }
-
-
-  // checkChangeGoOnly() {
-  //   this.goOnly ? this.goBack = false : this.goBack = true;
-  // }
-
-  // checkChangeGoBack() {
-  //   this.goBack ? this.goOnly = false : this.goOnly = true;
-  // }
-
-  // noBack() { this.backDate = null; }
-
-
   btnSearch() {
-
-
     // Verifico datos requeridos y redirijo a "pasaje ida"
     if (!this.myOrigin) {
       this.mys.alertShow('Verifique', 'alert', 'Seleccione un origen<br> Intente nuevamente..');
     } else if (!this.myDestiny) {
       this.mys.alertShow('Verifique', 'alert', 'Seleccione un destino<br> Intente nuevamente..');
     } else {
-      this.ticket = {};
-
-      this.ticket['origen'] = this.myOrigin.codigo;
-      this.ticket['destino'] = this.myDestiny.codigo;
-      this.ticket['idSistema'] = 1;
-      console.log('this.ticket', this.ticket);
-
-      // guardo variable de inicio y redirijo
-      this.mys.initCouponResult = this.ticket;
-      this.router.navigateByUrl('/coupon-result');
+      let paraConfirmarBoleto = {
+        form: this.mys.confirmSelection.form,
+        obtenerServicio: {
+          destino: this.myDestiny.codigo,
+          fecha: this.mys.confirmSelection.fecha,
+          hora: '0000',
+          idSistema: 1,
+          origen: this.myOrigin.codigo,
+        },
+        filtros: {
+          claseFiltro : this.mys.confirmSelection.claseFiltro,
+          clase: this.mys.confirmSelection.clase,
+          empresa: this.mys.confirmSelection.empresa
+        }
+      };
+      console.log('paraConfirmarBoleto desdeticketConfirmation', paraConfirmarBoleto);
+      this.mys.confirm = paraConfirmarBoleto;
+      this.mys.confirmSelected = null;
+      this.router.navigateByUrl('/confirm-seat');
     }
-
   }
-
 
   teclaInput($event) {
     if ($event.target.value.length === 0) {
       this.inputFiltrado = this.inputFuente;
     } else {
-
       let filtradox = [];
       let minuscula1 = $event.target.value.toLowerCase().trim();
       this.inputFuente.forEach(element => {
@@ -161,22 +131,17 @@ export class ElectronicCouponPage implements OnInit {
       });
       this.inputFiltrado = filtradox;
     }
-
   }
-
   btnSelecccionarOrigen() {
-    this.myDestiny = null;
     this.inputFuente = this.allOrigin;
     this.inputFiltrado = this.allOrigin;
     this.mySelection = 'origin';
     this.showSelection = true;
   }
-
   btnSelecccionarDestino() {
     this.showSelection = true;
     this.mySelection = 'destiny';
   }
-
   seleccion(item) {
     if (this.mySelection === 'origin') {
       this.showSelection = false;
@@ -190,49 +155,22 @@ export class ElectronicCouponPage implements OnInit {
     }
     this.cambioOrigenDestinoIda();
   }
-
   atras() {
-
     if (this.showSelection) {
       this.showSelection = false;
       this.mySelection = '';
-      this.promociones = null;
     } else {
       this.showSelection = false;
       this.mySelection = '';
       this.router.navigateByUrl('/ticket-management');
     }
   }
-
-
-
-  cambioFechaIda() {
-    if (!this.backDate) {
-      // caso que NO exista fecha de regreso definida
-      // se define fecha minima y maxima de fecha de regreso
-      this.minbackDate = this.goDate;
-      this.maxbackDate = moment(this.goDate).add(1, 'y').format();
-    } else if (moment(this.goDate).isAfter(this.backDate)) {
-      // caso que SI exista fecha de regreso definida
-      // se define fecha minima y maxima de fecha de regreso
-      this.backDate = null;
-      this.minbackDate = this.goDate;
-      this.maxbackDate = moment(this.goDate).add(1, 'y').format();
-    }
-    this.cambioOrigenDestinoIda();
-  }
-
-
   cambioOrigenDestinoIda() {
     if (this.myOrigin && this.myDestiny) {
       let params = {
         origen: this.myOrigin.codigo,
-        destino: this.myDestiny.codigo,
-        fechaSalida: moment(this.goDate).format('YYYYMMDD'),
-        etapa: 1,
+        destino: this.myDestiny.codigo
       };
     }
   }
-
-
 }

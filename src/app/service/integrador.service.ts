@@ -218,14 +218,14 @@ export class IntegradorService {
 
     canjeValidar(params: any): Observable<any[]> {
         let urlFinal;
-        let dirProxy = '/srv-privado-web/rest/compra/validarBoletoCanje';
+        let dirProxy = '/integrador-web/rest/operacion/validarBoletoCambio';
         this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy;
         return this.http.post<any[]>(urlFinal, params);
     }
 
     canjeBoleto(params): Observable<any[]> {
         let urlFinal;
-        let dirProxy = '/srv-privado-web/rest/compra/canjearBoletoCanje';
+        let dirProxy = '/integrador-web/rest/operacion/cambiarBoleto';
         this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy;
         return this.http.post<any[]>(urlFinal, params);
     }
@@ -361,6 +361,12 @@ export class IntegradorService {
     generarComprobanteCuponera(params: any): Observable<any[]> {
         let urlFinal;
         let dirProxy = '/integrador-web/rest/private/venta/generarComprobanteCuponera';
+        this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy;
+        return this.http.post<any[]>(urlFinal, params);
+    }
+    getCityOriginConfirmation(params:any): Observable<any[]> {
+        let urlFinal;
+        let dirProxy = '/integrador-web/rest/operacion/buscarOrigen';
         this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy;
         return this.http.post<any[]>(urlFinal, params);
     }

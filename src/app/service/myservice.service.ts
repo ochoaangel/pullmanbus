@@ -36,6 +36,7 @@ export class MyserviceService {
   /////////////////////////////////////////////////
   // caso para acceder a confirmar un boleto que esta en promoción
   confirm = null;
+  confirmSelection = null;
   // confirm = {
   //   obtenerServicio: {
   //     destino: '02103424',
@@ -53,7 +54,7 @@ export class MyserviceService {
   // };
 
   confirmSelected = null;
-
+  termConditionCoupon = null;
 
 
 

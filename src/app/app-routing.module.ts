@@ -151,8 +151,14 @@ const routes: Routes = [
     path: 'transaction-voucher-coupon/:codigo',
     loadChildren: () => import('./pages/transaction-voucher-coupon/transaction-voucher-coupon.module').then(m => m.TransactionCouponVoucherPageModule)
   },
-
-
+  {
+    path: 'ticket-confirmation-selection',
+    loadChildren: () => import('./pages/ticket-confirmation-selection/ticket-confirmation-selection.module').then(m => m.TicketConfirmationSelectionPageModule)
+  },
+  {
+    path: 'terms-conditions-coupon',
+    loadChildren: () => import('./pages/terms-conditions-coupon/terms-conditions-coupon.module').then(m => m.TermsConditionsCouponPageModule)
+  }
 ];
 
 @NgModule({

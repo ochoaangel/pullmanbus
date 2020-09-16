@@ -50,6 +50,9 @@ export class CouponBuyPage implements OnInit {
         this.showPaymentPanel = true;
       };
     }
+    if (this.myData.rut || this.myData.clave) {
+      this.validar();
+    }
   }
   validar() {
     this.showPaymentPanel = false;
@@ -98,7 +101,9 @@ export class CouponBuyPage implements OnInit {
       this.mys.alertShow('Verifique', 'alert', 'Debe re-ingresar un correo válido,<br> Intente nuevamente..');
     } else if (this.payData.email1.toUpperCase() !== this.payData.email2.toUpperCase()) {
       this.mys.alertShow('Verifique', 'alert', 'Los correo deben  ser iguales para continuar,<br> Intente nuevamente..');
-    } else {
+    } else if(!this.payData.terminos){
+      this.mys.alertShow('Verifique', 'alert', 'Debe aceptar terminos y condiciones,<br> Intente nuevamente..');
+    }else{
       // caso cuando se valida los correos, 
       // falta la validación cuando se aceptan los terminos(payData.terminos) y cuando requiere autorización(this.autorizacionRequerida)
       //this.mys.alertShow('Verifique', 'alert', 'Correos validados,<br> En desarrollo pago con webpay..');
@@ -154,5 +159,10 @@ export class CouponBuyPage implements OnInit {
     document.body.appendChild(f);
     f.submit();
     document.body.removeChild(f);
+  }
+
+  irAterminos() {
+    this.mys.termConditionCoupon = this.cupon.condiciones
+    this.router.navigateByUrl('/terms-conditions-coupon');
   }
 }

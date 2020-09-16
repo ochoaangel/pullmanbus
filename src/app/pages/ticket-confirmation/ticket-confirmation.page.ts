@@ -66,6 +66,7 @@ export class TicketConfirmationPage implements OnInit {
 
       // preparo el dato a enviar a la api
       let dataToSend = {
+        idIntegrador: 1001,
         boleto: this.confirmed.init.form.boleto,
         clase: this.confirmed.init.filtros.clase,
         empresa: this.confirmed.init.filtros.empresa,
@@ -307,35 +308,44 @@ export class TicketConfirmationPage implements OnInit {
       this.integrador.confirmarBuscarBoleto({ boleto: this.myData.boleto }).subscribe((resp: any) => {
         this.loading--;
         console.log('resp', resp);
-
         if (resp.resultado.exito) {
-          // caso que el boleto si sea válido
-
-          let paraConfirmarBoleto = {
-            form: this.myData,
-            obtenerServicio: {
-              destino: resp.ciudadDestino,
-              fecha: moment(this.myData.fecha).format('YYYYMMDD'),
-              hora: '0000',
-              idSistema: 1,
-              origen: resp.ciudadOrigen,
-            },
-            filtros: {
-              // clase: 'SAL09',
-              clase: resp.clase,
-              // clase: 'EJE40',
-              empresa: resp.empresa,
+          if(resp.pideOrigenDestino){            
+            let confirmSelection = {
+              "origen": resp.idOrigen,
+              "destino": resp.idDestino,
+              "idIntegrador": resp.idIntegrador,
+              "clase": resp.clase,
+              "empresa": resp.empresa,
+              "fecha": moment(this.myData.fecha).format('YYYYMMDD'),
+              "form": this.myData,
+              "claseFiltro": resp.claseFiltro
             }
-          };
-
-          console.log('paraConfirmarBoleto desdeticketConfirmation', paraConfirmarBoleto);
-
-          this.mys.confirm = paraConfirmarBoleto;
-          this.mys.confirmSelected = null;
-          this.router.navigateByUrl('/confirm-seat');
-
-
-
+            this.mys.confirm = null;
+            this.mys.confirmSelected = null;
+            this.mys.confirmSelection = confirmSelection;
+            this.router.navigateByUrl('/ticket-confirmation-selection');
+          }else{
+            console.log(resp.clase.s)
+            let paraConfirmarBoleto = {
+              form: this.myData,
+              obtenerServicio: {
+                destino: resp.ciudadDestino,
+                fecha: moment(this.myData.fecha).format('YYYYMMDD'),
+                hora: '0000',
+                idSistema: 1,
+                origen: resp.ciudadOrigen
+              },
+              filtros: {
+                clase: resp.clase,
+                claseFiltro: resp.claseFiltro,
+                empresa: resp.empresa
+              }
+            };
+            console.log('paraConfirmarBoleto desdeticketConfirmation', paraConfirmarBoleto);
+            this.mys.confirm = paraConfirmarBoleto;
+            this.mys.confirmSelected = null;
+            this.router.navigateByUrl('/confirm-seat');
+          }
         } else {
           // Caso que el boleto no sea válido
           this.mys.alertShow(

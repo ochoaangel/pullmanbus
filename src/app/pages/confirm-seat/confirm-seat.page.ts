@@ -80,7 +80,7 @@ export class ConfirmSeatPage implements OnInit {
   sinServicios = false;
 
   info;
-
+  claseFiltro : string[]
 
   constructor(
     private httpClient: HttpClient,
@@ -115,13 +115,20 @@ export class ConfirmSeatPage implements OnInit {
 
         console.log("clase", this.clase);
         console.log("empresa", this.empresa);
-
-        this.allServices = data.filter(x =>
-          (
-            (x.idClaseBusPisoUno === this.clase) ||
-            (x.idClaseBusPisoDos === this.clase)
-          )
-        );
+        console.log(confirm.filtros.claseFiltro);
+        this.claseFiltro = confirm.filtros.claseFiltro
+        let allServicesTemp = []
+        confirm.filtros.claseFiltro.forEach(clase => {
+          clase = clase.substring(0,3)
+          allServicesTemp = []
+          allServicesTemp= data.filter(x =>
+            (
+              (x.idClaseBusPisoUno != undefined ? x.idClaseBusPisoUno.substring(0,3) === clase : false) ||
+              (x.idClaseBusPisoDos != undefined ? x.idClaseBusPisoDos.substring(0,3) === clase : false)
+            )
+          );
+          this.allServices.push.apply(this.allServices, allServicesTemp)
+        })
         if (this.allServices.length === 0) {
           this.sinServicios = true;
         }
@@ -185,7 +192,7 @@ export class ConfirmSeatPage implements OnInit {
       element['checked'] = false;
     });
     this.allServices[nServiceSeleccion]['checked'] = estadoPrevio;
-    this.allServices[nServiceSeleccion]['idClaseBusPisoUno'] === this.clase ? this.piso1 = true : this.piso1 = false;
+    this.muestraPiso(this.allServices[nServiceSeleccion]['idClaseBusPisoUno']) ? this.piso1 = true : this.piso1 = false;
     this.loadingBus = true;
     // });
     if (this.serviceSelectedNumber !== nServiceSeleccion) {
@@ -210,7 +217,7 @@ export class ConfirmSeatPage implements OnInit {
             element['checked'] = false;
           });
           this.allServices[nServiceSeleccion]['checked'] = estadoPrevio;
-
+          console.log("myBusFromApi",myBusFromApi)
           this.allServices[nServiceSeleccion]['my_Bus'] = myBusFromApi;
           this.allServices[nServiceSeleccion].checked = true;
           this.comprasByService = this.allServices[nServiceSeleccion]['my_comprasByService'];
@@ -456,6 +463,17 @@ export class ConfirmSeatPage implements OnInit {
     return bus;
   }
 
+  muestraPiso(clasePiso){
+    let respuesta = false;
+    if(clasePiso != undefined){
+      this.claseFiltro.forEach(clase => {
+        if(clasePiso.substring(0,3) === clase.substring(0,3) ){
+          respuesta = true;
+        }
+      })
+    }
+    return respuesta;
+  }
 
   continuar() {
     if (this.comprasDetalles.length > 0) {

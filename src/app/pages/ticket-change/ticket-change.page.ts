@@ -72,44 +72,34 @@ export class TicketChangePage implements OnInit {
 
           console.log('res_canjeValidar', validado);
 
-          if (validado.exito) {
-            this.loading++;
-            this.integrador
-              .canjeBuscarInfoBoleto({ boleto: this.myData.boleto + '' })
-              .subscribe((infoBoleto: any) => {
-                this.loading--;
+          if (validado.resultado.exito) {
+            let infoBoleto = validado.boleto;
+            console.log('infoBoleto', infoBoleto);
 
-                let estado = infoBoleto.estadoActualDescripcion;
-                console.log('infoBoleto', infoBoleto);
+            if (infoBoleto.estadoActual === 'IDA' || infoBoleto.estadoActual === 'ENT' || infoBoleto.estadoActual === 'CON') {
+              /////////////////////////////////////
+              // let actual = moment.utc()
+              let embarcacionFecha = `${infoBoleto.fechaEmbarcacion} ${infoBoleto.horaEmbarcacion}`;
 
-                if (estado === 'IDA' || estado === 'ENTREGADO' || estado === 'CONFIRMADO') {
-                  /////////////////////////////////////
-                  // let actual = moment.utc()
-                  let embarcacionFecha = `${infoBoleto.fechaEmbarcacion} ${infoBoleto.horaEmbarcacion}`;
+              let today = moment().format('DD/MM/YYYY'); // para quitar las horas y munutos..
 
-                  let today = moment().format('DD/MM/YYYY'); // para quitar las horas y munutos..
+              // fecha embarque
+              let filtroEmbarque = moment(embarcacionFecha, 'DD/MM/YYYY HH:mm').format('DD/MM/YYYY');
+              let unixEmbarque = moment(filtroEmbarque, 'DD/MM/YYYY').unix();
 
-                  // fecha embarque
-                  let filtroEmbarque = moment(embarcacionFecha, 'DD/MM/YYYY HH:mm').format('DD/MM/YYYY');
-                  let unixEmbarque = moment(filtroEmbarque, 'DD/MM/YYYY').unix();
+              // referencia a hoy menos 3 dias
+              let unixTope = moment(today, 'DD/MM/YYYY').subtract(3, 'days').unix();
 
-                  // referencia a hoy menos 3 dias
-                  let unixTope = moment(today, 'DD/MM/YYYY').subtract(3, 'days').unix();
-
-                  if (unixEmbarque > unixTope) {
-                    this.existeBoleto = infoBoleto;
-                    this.valor = parseInt(infoBoleto.valor);
-                    this.compra = infoBoleto.tipoCompra === 'INT' ? 'internet' : 'ventanilla';
-                  } else {
-                    this.mys.alertShow('Error!!', 'alert', 'El boleto, no puede ser cambiado, superó el límite de fecha..');
-                  }
-
-
-                } else {
-                  this.mys.alertShow('Error!!', 'alert', validado.mensaje || 'El boleto no es de ida o no se ha entregado..');
-                }
-              });
-
+              if (unixEmbarque > unixTope) {
+                this.existeBoleto = infoBoleto;
+                this.valor = parseInt(infoBoleto.valor);
+                this.compra = infoBoleto.tipoCompra === 'INT' ? 'internet' : 'ventanilla';
+              } else {
+                this.mys.alertShow('Error!!', 'alert', 'El boleto, no puede ser cambiado, superó el límite de fecha..');
+              }
+            } else {
+              this.mys.alertShow('Error!!', 'alert', validado.mensaje || 'El boleto no es de ida o no se ha entregado..');
+            }
           } else {
             this.mys.alertShow('Error!!', 'alert', 'Este Boleto No puede ser cambiado..');
           }
@@ -158,11 +148,12 @@ export class TicketChangePage implements OnInit {
           email: this.myData.email,
           usuario: this.myData.email,
           rut: this.myData.rut,
+          idIntegrador:1001
         };
         this.integrador.canjeBoleto(dataPost).subscribe((res: any) => {
           console.log('res_canjeBoleto', res);
-          if (res.exito) {
-            let codigo = res.mensaje ? `<br>Nuevo código: ${res.mensaje}` : ``;
+          if (res.resultado.exito) {
+            let codigo = res.mensaje ? `<br>Nuevo código: ${res.voucher.boleto}` : ``;
             this.mys.alertShow('Éxito!!', 'checkmark-circle', 'Su boleto ha sido cambiado..' + codigo);
             this.existeBoleto = null;
             this.myData.boleto = '';
