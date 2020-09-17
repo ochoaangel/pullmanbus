@@ -70,6 +70,7 @@ ion-header {
   font-size: 2vh;
 }
 
+
 input,
 ion-input,
 ion-datetime {
@@ -139,4 +140,10 @@ ion-checkbox {
   margin: 0.2rem;
   // margin: 0 10vw;
   // margin-bottom: 1rem;
+}
+
+.input-rut{
+  border: 0px !important;
+  border-radius: 0px !important;
+  width: 60vw !important;
 }

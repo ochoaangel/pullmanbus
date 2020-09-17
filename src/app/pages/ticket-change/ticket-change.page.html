@@ -133,8 +133,11 @@
 
                       <ion-col size="6" class="columnaDoble">
                         <div class="overIonInput">
-                          <ion-input placeholder="RUT" type="text" name="rut" pattern="^[0-9]+[-|‐]{1}[0-9kK]{1}$"
-                            [disabled]="usuario" [(ngModel)]="myData.rut" required #rut></ion-input>
+                          <!--ion-input placeholder="RUT" type="text" name="rut" pattern="^[0-9]+[-|‐]{1}[0-9kK]{1}$"
+                            [disabled]="usuario" [(ngModel)]="myData.rut" required #rut></ion-input-->
+
+                          <input type="text" [textMask]="{mask:rutFunction,guide:false}" [(ngModel)]="myData.rut" name="rut"
+                            #input_rut placeholder="RUT" style="text-align: center;">
                         </div>
                       </ion-col>
                     </ion-row>
@@ -180,8 +183,11 @@
                     <ion-row>
                       <ion-col size="6" class="columnaDoble">
                         <div class="overIonInput">
-                          <ion-input placeholder="RUT" type="text" name="ruti" pattern="^[0-9]+[-|‐]{1}[0-9kK]{1}$"
-                            [(ngModel)]="myData.rut" required #ruti></ion-input>
+                          <!--ion-input placeholder="RUT" type="text" name="ruti" pattern="^[0-9]+[-|‐]{1}[0-9kK]{1}$"
+                            [(ngModel)]="myData.rut" required #ruti></ion-input-->
+
+                          <input class="input-rut" type="text" [textMask]="{mask:rutFunction,guide:false}" [(ngModel)]="myData.rut" name="ruti"
+                            #input_rut placeholder="RUT" style="text-align: center;">
                         </div>
                       </ion-col>
                     </ion-row>

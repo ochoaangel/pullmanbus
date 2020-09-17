@@ -13,6 +13,7 @@ import { PopMenuComponent } from 'src/app/components/pop-menu/pop-menu.component
 import { ComponentsModule } from 'src/app/components/components.module';
 import { PopCartComponent } from 'src/app/components/pop-cart/pop-cart.component';
 import { PopLanguageComponent } from 'src/app/components/pop-language/pop-language.component';
+import { TextMaskModule } from 'angular2-text-mask';
 
 @NgModule({
   entryComponents: [PopMenuComponent, PopCartComponent, PopLanguageComponent],
@@ -22,6 +23,7 @@ import { PopLanguageComponent } from 'src/app/components/pop-language/pop-langua
     IonicModule,
     TicketChangePageRoutingModule,
     PipesModule,
+    TextMaskModule,
     ComponentsModule
   ],
   declarations: [TicketChangePage]

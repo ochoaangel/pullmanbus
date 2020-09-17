@@ -114,7 +114,7 @@ export class TicketChangePage implements OnInit {
 
     if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.myData.email)) {
       this.mys.alertShow('Error!!', 'alert', 'Verifique el correo e intente nuevamente.');
-    } else if (!/^[0-9]+[-|-]{1}[0-9kK]{1}$/.test(this.myData.rut)) {
+    } else if (!/^[0-9]+[-|-]{1}[0-9kK]{1}$/.test(this.myData.rut.replace(/\./gi, ''))) {
       this.mys.alertShow('Error!!', 'alert', 'Verifique el rut e intente nuevamente.');
     } else if (!this.myData.fecha && ventanilla) {
       this.mys.alertShow('Error!!', 'alert', 'Debe ingresar una fecha válida.. intente de nuevo..');
@@ -198,5 +198,18 @@ export class TicketChangePage implements OnInit {
       cssClass: 'popCart',
     });
     await popoverCart.present();
+  }
+
+  rutFunction(rawValue) {
+    const numbers = rawValue.match(/[0-9kKeE]/g);
+    let numberLength = 0;
+    if (numbers) {
+      numberLength = numbers.join('').length;
+    }
+    if (numberLength > 8) {
+      return [/[1-9]/, /[0-9]/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /[0-9KkEe]/];
+    } else {
+      return [/[1-9]/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /[0-9KkEe]/];
+    }
   }
 }
