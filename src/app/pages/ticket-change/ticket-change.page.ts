@@ -6,6 +6,7 @@ import * as moment from 'moment';
 import { PopoverController } from '@ionic/angular';
 import { PopMenuComponent } from 'src/app/components/pop-menu/pop-menu.component';
 import { PopCartComponent } from 'src/app/components/pop-cart/pop-cart.component';
+import { info } from 'console';
 
 @Component({
   selector: 'app-ticket-change',
@@ -34,7 +35,6 @@ export class TicketChangePage implements OnInit {
     boleto: '',
     acuerdo: false,
   };
-
   constructor(
     private mys: MyserviceService,
     private integrador: IntegradorService,
@@ -75,7 +75,7 @@ export class TicketChangePage implements OnInit {
           if (validado.resultado.exito) {
             let infoBoleto = validado.boleto;
             console.log('infoBoleto', infoBoleto);
-
+            this.mys.termConditionChange = infoBoleto.condiciones;
             if (infoBoleto.estadoActual === 'IDA' || infoBoleto.estadoActual === 'ENT' || infoBoleto.estadoActual === 'CON') {
               /////////////////////////////////////
               // let actual = moment.utc()
@@ -211,5 +211,9 @@ export class TicketChangePage implements OnInit {
     } else {
       return [/[1-9]/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /[0-9KkEe]/];
     }
+  }
+
+  irAterminos() {
+    this.router.navigateByUrl('/terms-conditions-change');
   }
 }

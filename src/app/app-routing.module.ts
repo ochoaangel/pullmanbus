@@ -158,6 +158,10 @@ const routes: Routes = [
   {
     path: 'terms-conditions-coupon',
     loadChildren: () => import('./pages/terms-conditions-coupon/terms-conditions-coupon.module').then(m => m.TermsConditionsCouponPageModule)
+  },
+  {
+    path: 'terms-conditions-change',
+    loadChildren: () => import('./pages/terms-conditions-change/terms-conditions-change.module').then(m => m.TermsConditionsChangePageModule)
   }
 ];
 

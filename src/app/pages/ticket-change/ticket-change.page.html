@@ -207,11 +207,7 @@
                     <ion-checkbox [(ngModel)]="myData.acuerdo" #acuerdo name="acuerdo"
                       style="min-height: 1rem;min-width: 1rem;margin: 0 2vw;">
                     </ion-checkbox>
-                    <ion-text style="font-size: 0.8rem; text-align: justify;">
-                      He leído y estoy de acuerdo con
-                      <strong style="color: #0247ac;">los términos y condiciones de la
-                        compra</strong>
-                    </ion-text>
+                    <div style="font-size: 1.0rem;">He leído los <strong style="color: #0247ac;cursor: pointer;" (click)="irAterminos()">términos y condiciones</strong> del cambio de boleto. </div>
                   </div>
                 </ion-col>
               </ion-row>
