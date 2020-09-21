@@ -1,0 +1,117 @@
+<ion-header no-border>
+
+  <div class="cabeceraGeneral">
+
+    <div style="display: inline; width: 5%;"></div>
+
+    <div style="display: inline; width: 10%;border-color: white; border: solid 1px;margin: 5px;">Es</div>
+
+    <div style="width: 60%; height: 100%; display: flex; align-items: center; justify-content: center;">
+      <img src="assets/images/titulo.png" style="height: 90%;object-fit: scale-down;position: relative; z-index: 10; ">
+    </div>
+
+    <div style="display: inline; width: 10%;">
+      <ion-icon name="md-cart" style="font-size: 25px;padding-top: 5px;"></ion-icon>
+    </div>
+
+    <div style="display: inline; width: 10%">
+      <ion-icon name="md-menu" style="font-size: 25px;padding-top: 5px;"></ion-icon>
+    </div>
+
+    <div style="display: inline; width: 5%;"></div>
+
+  </div>
+
+
+
+  <div class="cabeceraTitulo">
+    Finalizar Cambio
+  </div>
+
+  <ion-progress-bar type="indeterminate" *ngIf="loading>0" color="secondary"></ion-progress-bar>
+</ion-header>
+<ion-content>
+  <div style="width: 100%;height: 100%; background-color: var(--ion-color-primary);padding: 3vw;">
+    <div style=" height: 75vh; background-color: white ;margin: 0px 0px 0px 0px;">
+      <ion-grid style="height: 100%;">
+        <ion-row class=" ion-justify-content-center  ion-align-items-center" style="height: 100%">
+          <ion-col size="12" style="text-align: center;">
+
+
+            <ion-row style="justify-content: center;">
+              <ion-text color="primary">
+                <h6>¡Felicidades!</h6>
+              </ion-text>
+            </ion-row>
+
+            <ion-row>
+              <ion-col size="12" style=" font-size: 10px;">
+                <div>Su cambio ha sido realizado con éxito</div>
+              </ion-col>
+            </ion-row>
+
+            <div>
+              <ion-row style="background-color:#FF621D; font-size: 12px; color: white; margin-top: 10px;">
+                <ion-col size="12">Boleto</ion-col>
+              </ion-row>
+              <ion-row style="font-size: 12px; margin-top: 10px;">
+                <ion-col size="12"> {{ticketChange.voucher.boleto}}</ion-col>
+              </ion-row>
+            </div>
+
+            <div>
+              <ion-row style="background-color:#FF621D; font-size: 12px; color: white; margin-top: 10px;">
+                <ion-col size="6">Origen</ion-col>
+                <ion-col size="6">Destino</ion-col>
+              </ion-row>
+              <ion-row style="font-size: 12px; margin-top: 10px;">
+                <ion-col size="6">{{ticketChange.voucher.nombreTerminalOrigen}}</ion-col>
+                <ion-col size="6">{{ticketChange.voucher.nombreTerminalDestino}}</ion-col>
+              </ion-row>
+            </div>
+            <div>
+              <ion-row style="background-color:#FF621D; font-size: 12px; color: white; margin-top: 10px;">
+                <ion-col size="6">Clase </ion-col>
+                <ion-col size="6">Valor </ion-col>
+              </ion-row>
+              <ion-row style="font-size: 12px; margin-top: 10px;">
+                <ion-col size="6">{{ticketChange.voucher.nombreClase}}</ion-col>
+                <ion-col size="6">{{ticketChange.voucher.total}}</ion-col>
+              </ion-row>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </div>
+  <div style="width: 100%;background-color: #fe5200;padding: 3vw;">
+    <div style="background-color: white ;margin: 0px 0px 0px 0px;">
+      <ion-grid>
+        <ion-col size="10">
+          <ion-row style="justify-content: center;">
+            <ion-text color="primary">
+              <h6>Descarga tu boleto!</h6>              
+            </ion-text>
+          </ion-row>
+          <ion-row style="justify-content: center;">
+            <ion-text color="primary">
+              <button (click)="downloadPDF()" block>
+                <img src="assets/images/download.png" width="24">
+              </button>
+            </ion-text>
+          </ion-row>
+        </ion-col>
+      </ion-grid>
+    </div>
+  </div>
+</ion-content>
+<ion-footer>
+  <div
+    style=" width: 100%; display: flex;align-items: center;justify-content: center; background-color: var(--ion-color-primary);">
+    <ion-button fill="clear" style="color: white;  width: 50%; outline: none;" routerLink="/home">
+      <ion-icon src="assets/icon/previous.svg"></ion-icon>
+      <div style="display: inline; text-align: left ;padding-left: 10px; text-transform: none;">Home</div>
+    </ion-button>
+    <div style="width: 50%;"></div>
+  </div>
+</ion-footer>

@@ -153,17 +153,16 @@ export class TicketChangePage implements OnInit {
         this.integrador.canjeBoleto(dataPost).subscribe((res: any) => {
           console.log('res_canjeBoleto', res);
           if (res.resultado.exito) {
-            let codigo = res.mensaje ? `<br>Nuevo código: ${res.voucher.boleto}` : ``;
-            this.mys.alertShow('Éxito!!', 'checkmark-circle', 'Su boleto ha sido cambiado..' + codigo);
             this.existeBoleto = null;
             this.myData.boleto = '';
+            this.mys.ticketChange = res;
+            this.router.navigateByUrl('/voucher-change');          
           } else {
             this.mys.alertShow('Error!!', 'alert', 'No se pudo cambiar el boleto.. intente de nuevo..');
           }
         });
       }
     }
-
   }
 
   async popMenu(event) {

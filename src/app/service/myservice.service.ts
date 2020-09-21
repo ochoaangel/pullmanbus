@@ -56,7 +56,7 @@ export class MyserviceService {
   confirmSelected = null;
   termConditionCoupon = null;
   termConditionChange = null;
-
+  ticketChange = null
 
 
   // pageMyDataAsRegister = true

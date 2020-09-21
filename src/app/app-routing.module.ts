@@ -162,6 +162,10 @@ const routes: Routes = [
   {
     path: 'terms-conditions-change',
     loadChildren: () => import('./pages/terms-conditions-change/terms-conditions-change.module').then(m => m.TermsConditionsChangePageModule)
+  },
+  {
+    path: 'voucher-change',
+    loadChildren: () => import('./pages/voucher-change/voucher-change.module').then(m => m.VoucherChangePageModule)
   }
 ];
 
