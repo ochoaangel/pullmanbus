@@ -313,15 +313,17 @@ export class MyCancellationsPage implements OnInit {
                   integrador: boleto.integrador
                 };
                 this.loading++;
+                console.clear()
+                console.log(JSON.stringify(data))
                 this.integrador.anularBoleto(data).subscribe((resultado: any) => {
                   this.loading--;
+                  console.log(JSON.stringify(resultado))
                   if (resultado.exito) {
                     this.mys.alertShow('¡Éxito!', 'done-all', `Boleto ${data.boleto}  <br> Fecha:${boleto.imprimeVoucher.fechaSalida} <br> Hora:${boleto.imprimeVoucher.horaSalida} <br> Asiento:${boleto.imprimeVoucher.asiento} <br> Boleto devuelto Exitosamente`);
                     console.log('enviando correo al email ', (this.usuario.usuario.email).toLowerCase());
                     this.integrador.enviarMailAnulacion({ email: (this.usuario.usuario.email).toLowerCase() }).subscribe(email => {
                       console.log('resp de enviarMailAnulacion: ', email);
                     });
-
                   } else {
                     this.mys.alertShow('Verifique', 'alert', `Boleto ${data.boleto}  <br> Fecha: ${boleto.imprimeVoucher.fechaSalida} <br> Hora: ${boleto.imprimeVoucher.horaSalida} <br> Asiento: ${boleto.imprimeVoucher.asiento} <br> ${resultado.mensaje || 'Error al devolver el Boleto, Verifique los datos e intente nuevamente..'}`);
                   }

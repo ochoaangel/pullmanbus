@@ -98,6 +98,8 @@ export class MyDataPage implements OnInit {
         this.mys.getUser().subscribe((usuario) => {
           this.loading = false;
           this.usuario = usuario;
+          console.log(this.usuario)
+          this.myData.email = usuario.usuario.email;
 
           this.myData.nombre = this.titleCase(usuario.usuario.nombre);
           this.myData.apellidoPaterno = this.titleCase(
@@ -105,11 +107,9 @@ export class MyDataPage implements OnInit {
           );
           this.myData.apellidoMaterno = this.titleCase(
             usuario.usuario.apellidoMaterno
-          );
-          this.myData.email = usuario.usuario.email;
+          );          
           this.myData.estado = usuario.usuario.estado;
           this.myData.rut = usuario.usuario.rut;
-
           this.myData.dia = moment
             .utc(usuario.usuario.fechaNacimiento)
             .format('D');
@@ -119,7 +119,6 @@ export class MyDataPage implements OnInit {
           this.myData.anio = moment
             .utc(usuario.usuario.fechaNacimiento)
             .format('YYYY');
-
           this.myData.fechaNacimiento = moment
             .utc(usuario.usuario.fechaNacimiento)
             .toISOString();
@@ -129,7 +128,6 @@ export class MyDataPage implements OnInit {
           this.myData.fechaActivacion = moment
             .utc(usuario.usuario.fechaActivacion)
             .format('DD-MM-YYYY');
-
           this.myData.genero = usuario.usuario.genero;
           this.myData.telefono = usuario.usuario.telefono || '';
           this.myData.celular = usuario.usuario.telefono || '';
@@ -276,7 +274,7 @@ export class MyDataPage implements OnInit {
           .usuarioGuardar(objetoAenviar)
           .subscribe((respuesta: any) => {
             this.loading = false;
-
+            console.log(respuesta)
             if (respuesta.exito) {
               this.usuario.usuario.rut = objetoAenviar.rut;
               this.usuario.usuario.nombre = objetoAenviar.nombre;
@@ -285,7 +283,7 @@ export class MyDataPage implements OnInit {
               this.usuario.usuario.apellidoMaterno =
                 objetoAenviar.apellidoMaterno;
               this.usuario.usuario.email = objetoAenviar.email;
-              // this.usuario.usuario.estado = objetoAenviar.estado
+              this.usuario.usuario.estado = 'ACT'
               this.usuario.usuario.genero = objetoAenviar.genero;
               this.usuario.usuario.telefono = objetoAenviar.telefono;
               // this.usuario.usuario.celular = objetoAenviar.celular
@@ -373,7 +371,11 @@ export class MyDataPage implements OnInit {
    * @param str
    */
   titleCase(str) {
-    return str.toLowerCase().replace(/\b(\w)/g, (s) => s.toUpperCase());
+    if(str != undefined){
+      return str.toLowerCase().replace(/\b(\w)/g, (s) => s.toUpperCase());
+    }else{
+      return "";
+    }    
   }
 
   cambioDeRegion() {

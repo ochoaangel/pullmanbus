@@ -71,21 +71,26 @@ export class TicketConfirmationSelectionPage implements OnInit {
       this.inputFiltrado = data;
     });
   }
-  getCityDestination(value: string) {
+  getCityDestination(value: string) { 
+    this.selectDestiny = null; 
+    this.myDestiny = null;  
     this.loading = true;
     let search = {     
       "origen": this.mys.confirmSelection.origen,
       "destino": this.mys.confirmSelection.destino,
+      "seleccion" : value,
       "idIntegrador": this.mys.confirmSelection.idIntegrador,
     }
-    this.integradorService.getCityOriginConfirmation(search).subscribe(data => {
+    console.log("Busca Destino " + search)
+    this.integradorService.getCityDestinyConfirmation(search).subscribe(data => {
       this.loading = false;
       this.allDestiny = data;
       this.inputFuente = data;
       this.inputFiltrado = data;
     });
   }
-  changeOrigin(value: string) {
+  changeOrigin(value: string) {    
+    console.log("cambio origen")
     this.allDestiny = [];
     this.getCityDestination(value);
     this.selectDestiny = null;

@@ -1,12 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { IntegradorService } from 'src/app/service/integrador.service';
-import * as jsPDF from 'jspdf';
-import { File, IWriteOptions } from "@ionic-native/file/ngx";
-import { FileTransfer, FileTransferObject } from "@ionic-native/file-transfer/ngx";
-import { FileOpener } from "@ionic-native/file-opener/ngx";
+import { Router } from '@angular/router';
 import { Platform } from '@ionic/angular';
-import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 import { MyserviceService } from 'src/app/service/myservice.service';
 
 @Component({

@@ -49,12 +49,19 @@ export class LoginPage implements OnInit {
         .autenticarLogin(this.mydata)
         .subscribe((data: any) => {
           this.loading = false;
-
           if (data.exito) {
             this.mys.saveUsuario(data).subscribe((result) => {
-              result
-                ? this.router.navigateByUrl('/home')
-                : console.log('Error al guardar el usiario');
+              if(result){                
+                this.mys.getUser().subscribe(usuario => {                  
+                  if(usuario.usuario.estado === 'NEW'){
+                    this.router.navigateByUrl('/my-data')
+                  }else if(usuario.usuario.estado === 'ACT'){
+                    this.router.navigateByUrl('/home')
+                  }
+                })                
+              }else{
+                console.log('Error al guardar el usiario');
+              }
             });
           } else {
             this.showNoLoginError = data.mensaje;

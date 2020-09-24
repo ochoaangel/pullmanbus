@@ -18,6 +18,7 @@ export class TicketManagementPage implements OnInit {
   loading = 0;
 
   usuario = null;
+  estadoUsuario = null;
 
   valor = 0;
 
@@ -46,12 +47,21 @@ export class TicketManagementPage implements OnInit {
   }
 
   ngOnInit() {
+
+  }
+  ionViewWillEnter(){
     this.mys.checkIfExistUsuario().subscribe((res1) => {
       if (res1) {
         this.mys.getUser().subscribe((usuario) => {
           console.log('usuario Logueado');
-          this.usuario = usuario;
+          this.usuario = usuario;                    
+          this.estadoUsuario = usuario.usuario.estado;
+          console.log(this.estadoUsuario)
         });
+      }
+      else{
+        this.estadoUsuario = null;
+        console.log('sin usuario Logueado');
       }
     });
   }

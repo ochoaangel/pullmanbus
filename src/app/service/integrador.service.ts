@@ -370,4 +370,10 @@ export class IntegradorService {
         this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy;
         return this.http.post<any[]>(urlFinal, params);
     }
+    getCityDestinyConfirmation(params:any): Observable<any[]> {
+        let urlFinal;
+        let dirProxy = '/integrador-web/rest/operacion/buscarDestino';
+        this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy;
+        return this.http.post<any[]>(urlFinal, params);
+    }
 }
