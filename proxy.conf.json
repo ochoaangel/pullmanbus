@@ -1,18 +1,18 @@
 {
   "/integrador-web/*": {
-    "target": "http://qa.pullman.cl",
+    "target": "http://localhost:8080",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
   },
   "/administracion-web/*": {
-    "target": "http://qa.pullman.cl",
+    "target": "http://localhost:8080",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
   },
   "/srv-privado-web/*": {
-    "target": "http://qa.pullman.cl",
+    "target": "http://localhost:8080",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
