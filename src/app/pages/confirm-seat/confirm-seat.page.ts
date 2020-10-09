@@ -416,10 +416,11 @@ export class ConfirmSeatPage implements OnInit {
       tarifa = this.tarifaPiso2;
     }
 
-
+    console.log(this.mys.confirm);
     let resumen = {
       nService: this.serviceSelectedNumber,
       idServicio: this.serviceSelected.idServicio,
+      idIntegrador:this.mys.confirm.idIntegrador,
       asiento: this.bus[piso][y][x]['asiento'],
       piso: parseInt(piso),
       valor: parseInt(tarifa),

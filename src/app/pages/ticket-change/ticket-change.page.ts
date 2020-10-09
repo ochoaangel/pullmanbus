@@ -34,6 +34,7 @@ export class TicketChangePage implements OnInit {
     hora: '',
     boleto: '',
     acuerdo: false,
+    integrador:undefined
   };
   constructor(
     private mys: MyserviceService,
@@ -62,7 +63,9 @@ export class TicketChangePage implements OnInit {
   consultar() {
 
     this.existeBoleto = null;
-
+    this.myData.integrador=undefined;
+    this.myData.email='';
+    this.myData.rut='';
     if (this.myData.boleto) {
       this.loading++;
       this.integrador
@@ -74,6 +77,7 @@ export class TicketChangePage implements OnInit {
 
           if (validado.resultado.exito) {
             let infoBoleto = validado.boleto;
+            this.myData.integrador=validado.idIntegrador;
             console.log('infoBoleto', infoBoleto);
             this.mys.termConditionChange = infoBoleto.condiciones;
             if (infoBoleto.estadoActual === 'IDA' || infoBoleto.estadoActual === 'ENT' || infoBoleto.estadoActual === 'CON') {
@@ -101,7 +105,7 @@ export class TicketChangePage implements OnInit {
               this.mys.alertShow('Error!!', 'alert', validado.mensaje || 'El boleto no es de ida o no se ha entregado..');
             }
           } else {
-            this.mys.alertShow('Error!!', 'alert', 'Este Boleto No puede ser cambiado..');
+            this.mys.alertShow('Error!!', 'alert', validado.resultado.mensaje);
           }
         });
     } else {
@@ -148,7 +152,7 @@ export class TicketChangePage implements OnInit {
           email: this.myData.email,
           usuario: this.myData.email,
           rut: this.myData.rut,
-          idIntegrador:1001
+          idIntegrador:this.myData.integrador
         };
         this.integrador.canjeBoleto(dataPost).subscribe((res: any) => {
           console.log('res_canjeBoleto', res);
