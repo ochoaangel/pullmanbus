@@ -166,6 +166,10 @@ const routes: Routes = [
   {
     path: 'voucher-change',
     loadChildren: () => import('./pages/voucher-change/voucher-change.module').then(m => m.VoucherChangePageModule)
+  },
+  {
+    path: 'passenger-data',
+    loadChildren: () => import('./pages/passenger-data/passenger-data.module').then( m => m.PassengerDataModule)
   }
 ];
 

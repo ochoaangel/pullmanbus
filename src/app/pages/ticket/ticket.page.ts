@@ -573,6 +573,22 @@ export class TicketPage implements OnInit {
       backDate: this.backDate,
       aviablePromocionP1: this.serviceSelected.aviablePromocionP1,
       aviablePromocionP2: this.serviceSelected.aviablePromocionP2,
+      pasajero:{ 
+        "validForm" : false ,
+        "tipoDocumento" : "R",
+        "documento": "",
+        "comuna": "",
+        "direccion": "",
+        "email": "",
+        "materno": "",
+        "nacionalidad": "",
+        "nombres": "",
+        "paterno": "",
+        "telefono": "",
+        "telefonoEmergencia":"",
+        "terms":false,
+        "dialog":false 
+      }
     };
 
     this.comprasDetalles.push(resumen);

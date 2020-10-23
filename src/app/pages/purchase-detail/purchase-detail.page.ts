@@ -16,6 +16,9 @@ import * as moment from 'moment';
   styleUrls: ["./purchase-detail.page.scss"]
 })
 export class PurchaseDetailPage implements OnInit {
+  listaTipoDocumento = [];
+  listaNacionalidad = [];
+  listaComuna = [];
   constructor(
     private router: Router,
     private mys: MyserviceService,
@@ -41,7 +44,27 @@ export class PurchaseDetailPage implements OnInit {
       this.mys.liberarAsientoDesdeHeader(eliminar);
     });
 
-
+    this.integradorService.buscarListaTipoDocumento().subscribe(
+      resp => this.listaTipoDocumento = resp,
+      error => console.log(error),
+      ()=>{
+        console.log(this.listaTipoDocumento)
+      }
+    )
+    this.integradorService.buscarListaNacionalidad().subscribe(
+      resp => this.listaNacionalidad = resp,
+      error => console.log(error),
+      ()=>{
+        console.log(this.listaNacionalidad)
+      }
+    )
+    this.integradorService.obtenerListaCiudad().subscribe(
+      resp => this.listaComuna = resp,
+      error => console.log(error),
+      ()=>{
+        console.log(this.listaComuna)
+      }
+    )
   }
 
   ticket;
@@ -326,6 +349,190 @@ export class PurchaseDetailPage implements OnInit {
     };
   }
 
+  datosPasajero(pasaje){
+    pasaje.checked = !pasaje.checked;
+  }
+  buscarDatosPasajero(pasajero){
+    let datoPasajero:any;
+    let passenger = {
+      tipoDocumento: pasajero.tipoDocumento,
+      documento: pasajero.documento.replace(/\./gi, '')
+    }
+    console.log("buscarDatosPasajero ", passenger)
+    this.integradorService.buscarPasajero(passenger).subscribe(
+      resp => datoPasajero = resp,
+      error => console.log(error),
+      ()=>{
+        console.log(datoPasajero);
+        if (datoPasajero.documento != null) {
+          pasajero.numeroDocumento = datoPasajero.documento
+          pasajero.nombre = datoPasajero.nombres
+          pasajero.apellido = datoPasajero.paterno + ' ' + datoPasajero.materno
+          pasajero.nacionalidad = datoPasajero.nacionalidad
+          pasajero.email = datoPasajero.email
+          pasajero.comunaOrigen = datoPasajero.comuna
+          this.listaComuna.forEach(comuna => {
+            if(comuna.codigo === datoPasajero.comuna){
+              pasajero.comunaOrigenDescripcion = comuna.nombre;
+            }
+          })
+          pasajero.telefono = datoPasajero.telefono
+          pasajero.comunaDestino = undefined
+          pasajero.direccion = datoPasajero.direccion
+          pasajero.terms = false;
+          pasajero.telefonoEmergencia = undefined
+        }
+      }
+    )
+  }
+  guardarDatosPasajero(pasajero){
+    let mensaje : any;
+    console.log(pasajero)
+    this.integradorService.guardarRelacionPasajero(pasajero).subscribe(
+      resp => mensaje = resp,
+      error => console.log(error),
+      ()=>{
+        if(mensaje.exito){
+          this.mys.alertShow(
+            'Éxito!!',
+            'checkmark-circle',
+            mensaje.mensaje
+          );
+        }else{
+          this.mys.alertShow(
+            'Error!!',
+            'alert',
+            mensaje.mensaje
+          );
+        }
+      }
+    )
+  }
 
+  limpiarDatosPasajero(pasajero, option) {
+    console.log("limpiar", pasajero)
+    if (option === 'ALL') {
+      pasajero.tipoDocumento = 'R'
+      pasajero.numeroDocumento = ''
+      pasajero.documento = ''
+    }
+    pasajero.nombre = ''
+    pasajero.apellido = ''
+    pasajero.nacionalidad = ''
+    pasajero.email = ''
+    pasajero.comunaOrigen = ''
+    pasajero.comunaOrigenDescripcion = ''
+    pasajero.telefono = ''
+    pasajero.telefonoEmergencia = ''
+    pasajero.comunaDestino = ''
+    pasajero.comunaDestinoDescripcion = ''
+    pasajero.terms = false;
+  }
 
+  rutFunction(rawValue) {
+    let numbers = rawValue.match(/\d|k|K/g);
+    let numberLength = 0;
+    if (numbers) {
+      numberLength = numbers.join('').length;
+    }
+    if (numberLength > 8) {
+      return [
+        /[1-9]/,
+        /\d/,
+        '.',
+        /\d/,
+        /\d/,
+        /\d/,
+        '.',
+        /\d/,
+        /\d/,
+        /\d/,
+        '-',
+        /[0-9|k|K]/,
+      ];
+    } else {
+      return [
+        /[1-9]/,
+        '.',
+        /\d/,
+        /\d/,
+        /\d/,
+        '.',
+        /\d/,
+        /\d/,
+        /\d/,
+        '-',
+        /[0-9|k|K]/,
+      ];
+    }
+  }
+  validar(tecla, tipo) {
+    let patron
+    switch (tipo) {
+      case 'rut':
+        patron = /[\dKk-]/
+        break //Solo acepta n�meros, K y guion
+      case 'telefono':
+        patron = /[\d+]/
+        break //Solo acepta números y punto
+    }
+    var charCode = tecla.which ? tecla.which : tecla.keyCode
+    if (charCode != 8) {
+      let aux = String.fromCharCode(charCode)
+      console.log(patron.test(aux))
+      if (patron.test(aux)) {
+        return true
+      } else {
+        tecla.preventDefault()
+      }
+    } else {
+      return true
+    }
+  }
+
+  showSelection = false;
+  listaComunaFiltrada;
+  pasajeroEdit:any;
+  type=''
+
+  teclaInput($event) {
+    if ($event.target.value.length === 0) {
+      this.listaComunaFiltrada = this.listaComuna;
+    } else {
+      let filtradox = [];
+      let minuscula1 = $event.target.value.toLowerCase().trim();
+      this.listaComuna.forEach(element => {
+        let minuscula2 = element.nombre.toLowerCase().trim();
+        minuscula2.includes(minuscula1) ? filtradox.push(element) : null;
+      });
+      this.listaComunaFiltrada = filtradox;
+    }
+  }
+
+  seleccion(item) {
+    if (this.type  === 'origen') {
+      this.showSelection = false;      
+      this.pasajeroEdit.comunaOrigen = item.codigo;
+      this.pasajeroEdit.comunaOrigenDescripcion = item.nombre;
+      console.log('Origen : ' + item)
+    } else if(this.type  === 'destino') {
+      this.showSelection = false;      
+      console.log('Destino : ' + item)
+      this.pasajeroEdit.comunaDestino = item.codigo;
+      this.pasajeroEdit.comunaDestinoDescripcion = item.nombre;
+    }  
+  }
+
+  btnSelecccionar(type,pasajero) {  
+    this.type = type
+    this.pasajeroEdit = pasajero;  
+    this.listaComunaFiltrada = this.listaComuna
+    this.showSelection = true;
+  }
+
+  atras() {
+    if (this.showSelection) {
+      this.showSelection = false;
+    }
+  }
 }

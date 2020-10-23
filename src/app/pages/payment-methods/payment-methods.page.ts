@@ -244,7 +244,19 @@ export class PaymentMethodsPage implements OnInit {
           datoConvenio: this.datosConvenio != null ? this.datosConvenio.listaAtributo[0].valor : '',
           bus: boleto.piso == '1' ? boleto.service.busPiso1 : boleto.service.busPiso2,
           piso: boleto.piso,
-          integrador: boleto.service.integrador
+          integrador: boleto.service.integrador,
+          pasajero : {
+            comunaDestino : boleto.pasajero.comunaDestino,
+            comunaOrigen : boleto.pasajero.comunaOrigen,
+            documento : boleto.pasajero.numeroDocumento,
+            email : boleto.pasajero.email,
+            nacionalidad : boleto.pasajero.nacionalidad,
+            nombre : boleto.pasajero.nombre,
+            apellido : boleto.pasajero.apellido,
+            telefono : boleto.pasajero.telefono,
+            telefonoEmergencia : boleto.pasajero.telefonoEmergencia,
+            tipoDocumento : boleto.pasajero.tipoDocumento
+          }
         }
 
         if (boleto.promocion) {
