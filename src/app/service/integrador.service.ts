@@ -13,9 +13,6 @@ export class IntegradorService {
     // urlBase = 'http://clamber.pullman.cl'    
     // urlBase = 'http://qa.pullman.cl'
 
-    // sinProxy= false 
-    //urlBase = 'http://pullmanapi.pasajeschile.cl'
-    // urlBase = 'http://clamber.pullman.cl'    
     constructor(private http: HttpClient) {
     }
 
