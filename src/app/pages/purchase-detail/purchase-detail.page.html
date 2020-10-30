@@ -32,14 +32,11 @@
   <div class="cabeceraTitulo" *ngIf="showSelection">
     Seleccione Comuna
   </div>
-
   <ion-progress-bar type="indeterminate" *ngIf="loading" color="secondary"></ion-progress-bar>
-
 </ion-header>
 
 
 <ion-content>
-
   <div style="width: 100%;height: 100%; background-color: var(--ion-color-primary);padding:0;">
     <div style=" height: 100%; background-color: white ;margin: 0px 0px 0px 0px;">
       <ion-grid style="height: 100%;" class="ion-no-padding ion-no-margin ion-justify-content-center  ">
@@ -47,7 +44,18 @@
           style="height: 100%;position: relative;">
 
           <!-- solo cuando hay que elegir origen o destino -->
-          <ion-row *ngIf="showSelection" style="background-color: var(--ion-color-primary);width: 100%;">
+          <ion-row *ngIf="showSelection" style="background-color: var(--ion-color-primary);width: 100%;">            
+            <ion-col size="12" style="background-color: var(--ion-color-primary) ">
+              <div class="cabeceraSubTitulo" *ngIf="type === 'origen'">
+                <span>Este campo debe ser llenado con la comuna de su hogar, la comuna de su trabajo o la comuna que se encuentra visitando previamente al viaje.</span>
+              </div>
+            
+              <div class="cabeceraSubTitulo" *ngIf="type === 'destino'">
+                <span>Este campo debe ser llenado con la comuna donde residirá en destino, la comuna donde trabajará en el destino o la comuna que visitará en el destino.</span>
+              </div>
+            </ion-col>
+          </ion-row>
+          <ion-row *ngIf="showSelection" style="background-color: var(--ion-color-primary);width: 100%;">            
             <ion-col size="12" style="background-color: var(--ion-color-primary) ">
               <div style="height: 100%; width: 100%;background-color: var(--ion-color-primary);">
 

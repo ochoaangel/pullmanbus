@@ -56,11 +56,13 @@ export class PaymentMethodsPage implements OnInit {
   totalFinal: number;
 
   acuerdo = { acuerdo: false };
-  ticket;
+  ticket = {
+    comprasDetalles : []
+  }
   usuario;
   registrado: boolean;
 
-  compraDetalles;
+  compraDetalles = [];
 
   DatosFormulario = {
     convenioUp: null,
@@ -88,6 +90,12 @@ export class PaymentMethodsPage implements OnInit {
 
 
   ngOnInit() {
+    if (this.mys.ticket === undefined) {
+      //this.showPopCart.dismiss();
+      this.router.navigateByUrl('/buy-your-ticket');
+      return;
+    }
+    this.compraDetalles = [];
     this.ionViewWillEnter();
     this.mys.carritoEliminar.subscribe(x => {
       console.log('xxxxxxxxxxxxxxxxx', x);
@@ -116,15 +124,12 @@ export class PaymentMethodsPage implements OnInit {
 
       }
     });
-
-
   }
 
   ionViewWillEnter() {
-
+    console.log("ionViewWillEnter");    
     this.compraDetalles = this.mys.ticket.comprasDetalles;
-    console.log('this.compraDetalles', this.compraDetalles);
-
+    console.log('this.compraDetalles', this.compraDetalles);    
     this.mys.getUser().subscribe(usuario => {
       if (usuario) {
         this.usuario = usuario;
@@ -140,10 +145,6 @@ export class PaymentMethodsPage implements OnInit {
         this.registrado = false;
       }
     });
-
-
-
-
     let info = localStorage.getItem('ticket');
     if (info) {
       this.totalFinal = JSON.parse(localStorage.getItem('totalFinal'));
@@ -156,6 +157,7 @@ export class PaymentMethodsPage implements OnInit {
       localStorage.setItem('totalFinal', JSON.stringify(this.totalFinal));
       localStorage.setItem('ticket', JSON.stringify(this.ticket));
     }
+    
   }
 
 
