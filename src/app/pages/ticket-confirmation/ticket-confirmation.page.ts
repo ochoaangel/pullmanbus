@@ -66,7 +66,7 @@ export class TicketConfirmationPage implements OnInit {
 
       // preparo el dato a enviar a la api
       let dataToSend = {
-        idIntegrador: 1001,
+        idIntegrador: this.confirmed.idIntegrador,
         boleto: this.confirmed.init.form.boleto,
         clase: this.confirmed.init.filtros.clase,
         empresa: this.confirmed.init.filtros.empresa,
@@ -318,7 +318,7 @@ export class TicketConfirmationPage implements OnInit {
               "empresa": resp.empresa,
               "fecha": moment(this.myData.fecha).format('YYYYMMDD'),
               "form": this.myData,
-              "claseFiltro": resp.claseFiltro
+              "claseFiltro": resp.claseFiltro,
             }
             this.mys.confirm = null;
             this.mys.confirmSelected = null;
@@ -339,7 +339,8 @@ export class TicketConfirmationPage implements OnInit {
                 clase: resp.clase,
                 claseFiltro: resp.claseFiltro,
                 empresa: resp.empresa
-              }
+              },
+              idIntegrador:resp.idIntegrador
             };
             console.log('paraConfirmarBoleto desdeticketConfirmation', paraConfirmarBoleto);
             this.mys.confirm = paraConfirmarBoleto;

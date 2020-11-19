@@ -1,8 +1,8 @@
 {
   "name": "pullmanbus",
-  "version": "0.0.1",
-  "author": "Ionic Framework",
-  "homepage": "https://ionicframework.com/",
+  "version": "3.1.0",
+  "author": "WIT LA",
+  "homepage": "https://www.wit.la/",
   "scripts": {
     "ng": "ng",
     "start": "ionic serve -- --proxy-config proxy.conf.json",

@@ -286,7 +286,7 @@
                             Tipo Documento
                           </div>
       
-                          <ion-select interface="popover" [interfaceOptions]="cityOptions"
+                          <ion-select interface="popover" 
                             class="ion-no-padding ion-no-margin" multiple="false"
                             cancel-text="Cancelar" [(ngModel)]="pasaje.pasajero.tipoDocumento" #tipoDocumento name="tipoDocumento" required>
                             <ion-select-option *ngFor="let tipo of listaTipoDocumento" value="{{tipo.valor}}">
@@ -343,7 +343,7 @@
                           Nacionalidad
                         </div>
     
-                        <ion-select interface="popover" [interfaceOptions]="cityOptions"
+                        <ion-select interface="popover"
                           class="ion-no-padding ion-no-margin" multiple="false"
                           cancel-text="Cancelar" [(ngModel)]="pasaje.pasajero.nacionalidad" #nacionalidad name="nacionalidad" required>
                           <ion-select-option *ngFor="let nacionalidad of listaNacionalidad" value="{{nacionalidad.valor}}">
