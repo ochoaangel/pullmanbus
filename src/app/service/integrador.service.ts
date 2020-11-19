@@ -371,4 +371,46 @@ export class IntegradorService {
         this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy;
         return this.http.post<any[]>(urlFinal, params);
     }
+    buscarListaTipoDocumento(): Observable<any[]> {
+        let urlFinal;
+        let dirProxy = '/srv-privado-web/rest/pasajero/buscarListaTipoDocumento';
+        this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy;
+        return this.http.post<any[]>(urlFinal, {});
+    }
+    buscarListaNacionalidad(): Observable<any[]> {
+        let urlFinal;
+        let dirProxy = '/srv-privado-web/rest/pasajero/buscarListaNacionalidad';
+        this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy;
+        return this.http.post<any[]>(urlFinal, {});
+    }
+    obtenerListaCiudad(): Observable<any[]> {
+        let urlFinal;
+        let dirProxy = '/srv-privado-web/rest/parametros/obtenerListaCiudad';
+        this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy;
+        return this.http.post<any[]>(urlFinal, {});
+    }
+    buscarPasajero(pasajero:any): Observable<any[]> {
+        let urlFinal;
+        let dirProxy = '/srv-privado-web/rest/pasajero/buscarPorNumeroDocumento';
+        this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy;
+        return this.http.post<any>(urlFinal, pasajero);
+    }   
+    guardarRelacionPasajero(pasajero: any): Observable<any[]> {
+        let urlFinal;
+        let dirProxy = '/srv-privado-web/rest/pasajero/guardarRelacionPasajero';
+        this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy;
+        return this.http.post<any>(urlFinal, pasajero);
+    } 
+    buscarRegistroPasajero(boleto: any): Observable<any[]> {
+        let urlFinal;
+        let dirProxy = '/integrador-web/rest/operacion/buscarRegistro/' + boleto;
+        this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy;
+        return this.http.get<any[]>(urlFinal);
+    }  
+    modificarRegistroPasajero(pasajero: any): Observable<any[]> {
+        let urlFinal;
+        let dirProxy = '/integrador-web/rest/operacion/modificarRegistro';
+        this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy;
+        return this.http.post<any>(urlFinal, pasajero);
+    }    
 }

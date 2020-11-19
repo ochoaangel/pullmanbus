@@ -20,6 +20,7 @@ export class PaymentMethodsPage implements OnInit {
   leaveOnExit;
   showPopCart;
   // rutShow = false
+  tickets:any;
 
   constructor(
     private mys: MyserviceService,
@@ -29,7 +30,7 @@ export class PaymentMethodsPage implements OnInit {
 
   ) {
     this.loading = 2;
-
+    this.tickets = this.mys.ticket;
     this.integradorService.getListConvenio().subscribe(convenio => {
       this.listaConvenio = convenio;
       this.loading -= 1;
@@ -56,11 +57,13 @@ export class PaymentMethodsPage implements OnInit {
   totalFinal: number;
 
   acuerdo = { acuerdo: false };
-  ticket;
+  ticket = {
+    comprasDetalles : []
+  }
   usuario;
   registrado: boolean;
 
-  compraDetalles;
+  compraDetalles = [];
 
   DatosFormulario = {
     convenioUp: null,
@@ -88,6 +91,12 @@ export class PaymentMethodsPage implements OnInit {
 
 
   ngOnInit() {
+    if (this.mys.ticket === undefined) {
+      //this.showPopCart.dismiss();
+      this.router.navigateByUrl('/buy-your-ticket');
+      return;
+    }
+    this.compraDetalles = [];
     this.ionViewWillEnter();
     this.mys.carritoEliminar.subscribe(x => {
       console.log('xxxxxxxxxxxxxxxxx', x);
@@ -121,10 +130,9 @@ export class PaymentMethodsPage implements OnInit {
   }
 
   ionViewWillEnter() {
-
+    console.log("ionViewWillEnter");    
     this.compraDetalles = this.mys.ticket.comprasDetalles;
-    console.log('this.compraDetalles', this.compraDetalles);
-
+    console.log('this.compraDetalles', this.compraDetalles);    
     this.mys.getUser().subscribe(usuario => {
       if (usuario) {
         this.usuario = usuario;
@@ -140,10 +148,6 @@ export class PaymentMethodsPage implements OnInit {
         this.registrado = false;
       }
     });
-
-
-
-
     let info = localStorage.getItem('ticket');
     if (info) {
       this.totalFinal = JSON.parse(localStorage.getItem('totalFinal'));
@@ -156,6 +160,7 @@ export class PaymentMethodsPage implements OnInit {
       localStorage.setItem('totalFinal', JSON.stringify(this.totalFinal));
       localStorage.setItem('ticket', JSON.stringify(this.ticket));
     }
+    
   }
 
 
@@ -244,7 +249,19 @@ export class PaymentMethodsPage implements OnInit {
           datoConvenio: this.datosConvenio != null ? this.datosConvenio.listaAtributo[0].valor : '',
           bus: boleto.piso == '1' ? boleto.service.busPiso1 : boleto.service.busPiso2,
           piso: boleto.piso,
-          integrador: boleto.service.integrador
+          integrador: boleto.service.integrador,
+          pasajero : {
+            comunaDestino : boleto.pasajero.comunaDestino,
+            comunaOrigen : boleto.pasajero.comunaOrigen,
+            documento : boleto.pasajero.numeroDocumento,
+            email : boleto.pasajero.email,
+            nacionalidad : boleto.pasajero.nacionalidad,
+            nombre : boleto.pasajero.nombre,
+            apellido : boleto.pasajero.apellido,
+            telefono : boleto.pasajero.telefono,
+            telefonoEmergencia : boleto.pasajero.telefonoEmergencia,
+            tipoDocumento : boleto.pasajero.tipoDocumento
+          }
         }
 
         if (boleto.promocion) {

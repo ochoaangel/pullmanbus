@@ -4,14 +4,15 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { PurchaseDetailPageRoutingModule } from './purchase-detail-routing.module';
 
-import { PurchaseDetailPage } from './purchase-detail.page';
+
 import { PipesModule } from 'src/app/pipes/pipes.module';
 import { PopMenuComponent } from 'src/app/components/pop-menu/pop-menu.component';
 import { ComponentsModule } from 'src/app/components/components.module';
-import { PopLanguageComponent } from 'src/app/components/pop-language/pop-language.component';
 import { PopCartComponent } from 'src/app/components/pop-cart/pop-cart.component';
+import { PopLanguageComponent } from 'src/app/components/pop-language/pop-language.component';
+import { PassengerDataRoutingModule } from './passenger-data-routing.module';
+import { PassengerDataPage } from './passenger-data.page';
 import { TextMaskModule } from 'angular2-text-mask';
 
 @NgModule({
@@ -20,11 +21,11 @@ import { TextMaskModule } from 'angular2-text-mask';
     CommonModule,
     FormsModule,
     IonicModule,
-    PurchaseDetailPageRoutingModule,
+    PassengerDataRoutingModule,
     PipesModule,
     ComponentsModule,
     TextMaskModule
   ],
-  declarations: [PurchaseDetailPage]
+  declarations: [PassengerDataPage]
 })
-export class PurchaseDetailPageModule { }
+export class PassengerDataModule { }

@@ -1,0 +1,293 @@
+<ion-header no-border>
+  <div class="cabeceraGeneral">
+    <div style="display: inline; width: 5%;"></div>
+    <div style="display: inline; width: 10%;/*border-color: white; border: solid
+      1px;margin: 5px; */">
+      <!-- Es -->
+    </div>
+    <div style="width: 60%; height: 100%; display: flex; align-items: center;
+      justify-content: center;" routerLink="/home">
+      <img src="assets/images/titulo.png" style="height: 90%;object-fit:
+        scale-down;position: relative; z-index: 10;" />
+    </div>
+    <div style="display: inline; width: 10%;"></div>
+  </div>
+  <div class="cabeceraTitulo" *ngIf="!showSelection" >
+    Datos Pasajero
+  </div>
+  <div class="cabeceraTitulo" *ngIf="showSelection" >
+    Seleccione Comuna
+  </div>
+  <ion-progress-bar type="indeterminate" *ngIf="loading" color="secondary"></ion-progress-bar>
+</ion-header>
+<ion-content
+  style="border-left: 3vw solid var(--ion-color-primary); border-right: 3vw solid var(--ion-color-primary); background-color: var(--ion-color-primary); --background: var(--ion-color-primary);">
+  <div style="width: 100%; height: -webkit-fill-available;background-color: var(--ion-color-primary);">
+    <div style="height: 100%; background-color: var(--ion-color-primary) ;margin: 0px 0px 0px 0px;">
+      <ion-grid *ngIf="showSelection" 
+        style="height: 100%;background-color: var(--ion-color-primary);" 
+        class="ion-no-margin ion-no-padding">
+        <!-- solo cuando hay que elegir origen o destino -->
+        <ion-row style="background-color: var(--ion-color-primary);width: 100%;">
+          <ion-col size="12" style="background-color: var(--ion-color-primary) ">
+            <div style="height: 100%; width: 100%;background-color: var(--ion-color-primary);">
+
+              <div style="display: flex; flex-direction: row; align-items: center;
+                justify-content: center; background-color: #f2f2f2;
+                border-radius: 15px; padding: 5px; margin: 10px;">
+                <div style="width: 10% ;justify-content: center;">
+                  <ion-icon style="font-size: 2rem; color: var(--ion-color-primary);" name="md-search"></ion-icon>
+                </div>
+                <!-- input buscador -->
+                <ion-input style="width: 90%" type="text" placeholder="Buscar aquí.." (keyup)="teclaInput($event)"
+                  #focusInput class="inputComuna">
+                </ion-input>
+              </div>
+
+              <!-- bucle filtro -->
+              <ion-item (click)="seleccion(item)" style="color: black;outline: none; text-transform: none; height:
+                3rem; border: 1px solid var(--ion-color-primary); border-radius: 10px; cursor: pointer;
+                text-align: center;" *ngFor="let item of listaComunaFiltrada">
+                <ion-icon style="color: var(--ion-color-primary);padding-left: 8vw; font-size: 1rem;" name="pin">
+                </ion-icon>
+                <ion-text style="padding-left: 0.5rem;">{{item.nombre | titlecase}}</ion-text>
+              </ion-item>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <ion-grid 
+        *ngIf="!showSelection" 
+        style="background-color: var(--ion-color-primary);" class="ion-no-margin ion-no-padding"> 
+        <ion-row class=" ion-no-padding  ion-no-margin ion-justify-content-center">
+          <ion-col size="12">
+            <div style="position: relative;" class="overIonInput">
+              <ion-input 
+                placeholder="Boleto" 
+                type="text" 
+                name="boleto" 
+                [(ngModel)]="boleto"
+                required clearOnEdit></ion-input>
+            </div>
+          </ion-col>
+        </ion-row>
+        <ion-row style="text-align: center;">
+          <ion-col size="12" (click)="buscarDatosBoleto()">
+            <input type="button" 
+              class="ingresar" 
+              value="Buscar Datos Boleto" 
+              style="width: 10rem;" />
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <ion-grid 
+        *ngIf="!showSelection && verBoleto" 
+        style="background-color: white;"> 
+        <ion-row>
+          <ion-col size="6" class="columnaDoble">
+              <div style="color: var(--ion-color-primary); font-size: 0.6rem;">
+                Tipo Documento
+              </div>
+
+              <ion-select interface="popover" 
+                class="ion-no-padding ion-no-margin" multiple="false"
+                cancel-text="Cancelar" [(ngModel)]="pasajero.tipoDocumento" name="tipoDocumento" required>
+                <ion-select-option *ngFor="let tipo of listaTipoDocumento" value="{{tipo.valor}}">
+                  {{tipo.descripcion}}
+                </ion-select-option>
+              </ion-select>
+          </ion-col>
+          <ion-col size="6" class="columnaDoble">
+            <div style="color: var(--ion-color-primary); font-size: 0.6rem;">
+              Numero Documento
+            </div> 
+            <div class="overIonInput">    
+              <input 
+                *ngIf="pasajero.tipoDocumento === 'R'"
+                placeholder="RUT" type="text" name="rut" 
+                [textMask]={mask:rutFunction,guide:false}
+                [(ngModel)]="pasajero.documento" #rut required clearOnEdit maxlength="12"
+                class="inputRut" 
+                (blur)="buscarDatosPasajero()"/>
+              <input 
+                *ngIf="pasajero.tipoDocumento != 'R'"
+                placeholder="Numero Documento" type="text" name="nDocumento" 
+                [(ngModel)]="pasajero.documento" #nDocumento required clearOnEdit maxlength="12"
+                class="inputRut"
+                (blur)="buscarDatosPasajero()"/>
+            </div>    
+          </ion-col>                          
+        </ion-row>
+        <ion-row>
+          <ion-col size="6" class="columnaDoble">
+            <div style="color: var(--ion-color-primary); font-size: 0.6rem;">
+              Nombre
+            </div>  
+            <div style="position: relative;" class="overIonInput">
+              <ion-input placeholder="Nombre" type="text" name="nombre" minlength="3" #nombre
+                [(ngModel)]="pasajero.nombre" required clearOnEdit
+                maxlength="50"></ion-input>
+            </div>
+          </ion-col>
+          <ion-col size="6" class="columnaDoble">
+            <div style="color: var(--ion-color-primary); font-size: 0.6rem;">
+              Apellido
+            </div>  
+            <div class="overIonInput">
+              <ion-input placeholder="Apellido" type="text" name="apellido" #apellido
+                [(ngModel)]="pasajero.apellido" minlength="3" maxlength="80" required clearOnEdit>
+              </ion-input>
+            </div>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="6" class="columnaDoble">
+            <div style="color: var(--ion-color-primary); font-size: 0.6rem;">
+              Nacionalidad
+            </div>
+
+            <ion-select interface="popover" 
+              class="ion-no-padding ion-no-margin" multiple="false"
+              cancel-text="Cancelar" [(ngModel)]="pasajero.nacionalidad" #nacionalidad name="nacionalidad" required>
+              <ion-select-option *ngFor="let nacionalidad of listaNacionalidad" value="{{nacionalidad.valor}}">
+                {{nacionalidad.descripcion}}
+              </ion-select-option>
+            </ion-select>
+          </ion-col>
+          <ion-col size="6" class="columnaDoble">
+            <div style="color: var(--ion-color-primary); font-size: 0.6rem;">
+              Correo
+            </div>    
+            <div class="overIonInput">
+              <ion-input placeholder="Correo" type="email" name="email"
+                pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" #email [(ngModel)]="pasajero.email"
+                required clearOnEdit
+                maxlength="100"></ion-input>
+            </div>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="6" class="columnaDoble">
+            <div style="color: var(--ion-color-primary); font-size: 0.6rem;">
+              Contacto Telefónico
+            </div>
+            <div class="overIonInput">
+              <ion-input placeholder="Contacto Telefónico" type="phone" name="phone" pattern="^[0-9]{9,10}$" #telefono
+                [(ngModel)]="pasajero.telefono" required clearOnEdit
+                maxlength="12"
+                (keypress)="validar($event, 'telefono')"></ion-input>
+            </div>
+          </ion-col>
+          <ion-col size="6" class="columnaDoble">
+            <div style="color: var(--ion-color-primary); font-size: 0.6rem;">
+              Contacto Telefónico Emergencia
+            </div>
+            <div class="overIonInput">
+              <ion-input placeholder="Contacto Emergencia" type="phone" name="phoneE" pattern="^[0-9]{9,10}$" #telefonoEmergencia
+                [(ngModel)]="pasajero.telefonoEmergencia" required clearOnEdit
+                maxlength="12"
+                (keypress)="validar($event, 'telefono')"></ion-input>
+            </div>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="6" class="columnaDoble">
+            <div style="color: var(--ion-color-primary); font-size: 0.6rem;">
+              Comuna Residencia Origen
+            </div>
+
+            <div
+            style="text-align: center; width: 100%;max-height: 30px; border: 1px solid var(--ion-color-primary); border-radius: 5px;background-color:white">
+            <ion-button fill="clear" style="color: white; width: 100%; outline: none; text-transform: none;max-height: 22px;"
+              [disabled]="loading" (click)="btnSelecccionar('origen')">
+
+              <div style="display: flex; flex-direction: row; width: 100%;">
+                <div
+                  style="display: flex;color: black; width: 93%;align-items: center; font-size: 1rem; font-size: 1.5rem;">
+                  <ion-text *ngIf="pasajero.comunaOrigen === undefined" style="font-size: 0.9rem;color: black;">
+                    Seleccione..</ion-text>
+                  <ion-text *ngIf="pasajero.comunaOrigen != undefined" style="font-size: 0.9rem;color: black;">
+                    {{ pasajero.comunaOrigenDescripcion | titlecase }}
+                  </ion-text>
+                </div>
+                <div style="display: flex;color: black; width: 7%;justify-content: flex-end;">
+                  <ion-icon class="iconEditable" style="margin:0; color: var(--ion-color-primary);;"
+                    name="arrow-dropdown">
+                  </ion-icon>
+                </div>
+              </div>
+            </ion-button>
+          </div>
+          </ion-col>
+          <ion-col size="6" class="columnaDoble">
+            <div style="color: var(--ion-color-primary); font-size: 0.6rem;">
+              Comuna Residencia Destino
+            </div>
+            <div
+            style="text-align: center; width: 100%;max-height: 30px; border: 1px solid var(--ion-color-primary); border-radius: 5px;background-color:white">
+            <ion-button fill="clear" style="color: white; width: 100%; outline: none; text-transform: none;max-height: 22px;"
+              [disabled]="loading" (click)="btnSelecccionar('destino')">
+
+              <div style="display: flex; flex-direction: row; width: 100%;">
+                <div
+                  style="display: flex;color: black; width: 93%;align-items: center; font-size: 1rem; font-size: 1.5rem;">
+                  <ion-text *ngIf="pasajero.comunaDestino === undefined" style="font-size: 0.9rem;color: black;">
+                    Seleccione..</ion-text>
+                  <ion-text *ngIf="pasajero.comunaDestino != undefined" style="font-size: 0.9rem;color: black;">
+                    {{ pasajero.comunaDestinoDescripcion | titlecase }}
+                  </ion-text>
+                </div>
+                <div style="display: flex;color: black; width: 7%;justify-content: flex-end;">
+                  <ion-icon class="iconEditable" style="margin:0; color: var(--ion-color-primary);;"
+                    name="arrow-dropdown">
+                  </ion-icon>
+                </div>
+              </div>
+            </ion-button>
+          </div>
+          </ion-col>
+        </ion-row>
+        <ion-row style="text-align: center;">
+          <ion-col size="6" style="margin-top: 2vh; margin-bottom: 2vh;">                        
+            <ion-button fill="clear"
+              (click)="limpiarDatosPasajero('ALL')"
+              style="color: white; outline: none;  --padding-start: 0;--padding-end: 0; --background: #0f69ec;text-transform: none; font-size: 0.8rem;width: 7rem;max-height: 2rem;">
+              Limpiar
+            </ion-button>
+          </ion-col>
+          <ion-col size="6" style="margin-top: 2vh; margin-bottom: 2vh;">                                                
+            <ion-button fill="clear"
+            (click)="guardarDatosPasajero()"
+              style="color: white; outline: none;  --padding-start: 0;--padding-end: 0; --background: #0f69ec;text-transform: none; font-size: 0.8rem;width: 7rem;max-height: 2rem;">
+              Guardar
+            </ion-button>
+          </ion-col>
+        </ion-row>
+              
+      </ion-grid>
+    </div>
+  </div>
+</ion-content>
+<ion-footer no-border style="width: 100vw;background-color: var(--ion-color-primary);color:  white;">
+  <div style="width: 100%; display: flex;justify-content: center;">
+    <ion-button
+      *ngIf="showSelection"
+      slot="start" fill="clear" style="color: white; width: 100%;
+      outline: none;" (click)="atras()">
+      <div style="display: inline; text-align: left ;padding-left: 10px; text-transform: none;">
+        <ion-icon style="margin-bottom: -2px;" src="assets/icon/previous.svg"></ion-icon>
+        Atrás
+      </div>
+    </ion-button>
+    <ion-button 
+      *ngIf="!showSelection"
+      slot="start" fill="clear" style="color: white; width: 100%;
+      outline: none;" (click)="volver()">
+      <div style="display: inline; text-align: left ;padding-left: 10px; text-transform: none;">
+        <ion-icon style="margin-bottom: -2px;" src="assets/icon/previous.svg"></ion-icon>
+        Atrás
+      </div>
+    </ion-button>
+  </div>
+</ion-footer>
