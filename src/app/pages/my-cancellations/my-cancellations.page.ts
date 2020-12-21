@@ -25,6 +25,12 @@ export class MyCancellationsPage implements OnInit {
   bancoOptions = { header: 'Banco' };
 
   myData = {
+    tiposDeCredito: [
+      {
+        codigo: 'TarjetaCredito',
+        nombre: 'Tarjeta de Crédito'
+      }
+    ],
     tiposDeCuentas: [
       {
         codigo: 'CuentaCorriente',
@@ -127,6 +133,7 @@ export class MyCancellationsPage implements OnInit {
     rutTitular: '',
     banco: ''
   };
+  orden = ""
   constructor(
     private mys: MyserviceService,
     private integrador: IntegradorService,
@@ -136,15 +143,17 @@ export class MyCancellationsPage implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.boletosAll = []
   }
 
   ionViewWillEnter() {
     this.mys.getUser().subscribe(usuario => {
       this.usuario = usuario;
       console.log('usuario desde LocalStorage:', usuario);
-      this.loading++;
+      
       let data = { email: (usuario.usuario.email).toLowerCase() };
-
+    });
+      /*
       this.integrador.buscarTransaccionPorEmail(data).subscribe(transacciones => {
 
         this.loading--;
@@ -161,6 +170,7 @@ export class MyCancellationsPage implements OnInit {
             let myParams = { codigo: transaccion.codigo };
             this.integrador.buscarBoletoPorCodigo(myParams).subscribe(boletos => {
               this.loading--;
+              console.log(boletos);
               boletos.forEach(boleto => {
                 let estadoBoleto = '';
 
@@ -192,9 +202,26 @@ export class MyCancellationsPage implements OnInit {
 
 
       });
-    });
+      */
+
   }
 
+  buscarBoletos(){
+    this.integrador.buscarBoletosTransaccion(this.orden.trim()).subscribe(
+      resp => this.boletosAll = resp,
+      error => console.log(error),
+      ()=>{
+        console.log(this.boletosAll)
+        if(this.boletosAll.length == 0){
+          this.mys.alertShow('Verifique', 'alert', 'No se encontraron Boletos asociados a la orden ingresada.');
+        }else{
+          this.boletosAll.forEach(boleto => {
+            boleto.selected = false;
+          })
+        }
+      }
+    )
+  }
 
   async popMenu(event) {
     const popoverMenu = await this.popoverCtrl.create({
@@ -236,34 +263,58 @@ export class MyCancellationsPage implements OnInit {
   }
 
   anular() {
-    if (!this.myData.rutTitular) {
-      this.mys.alertShow('Verifique', 'alert', 'Ingrese rut del Titular');
-    } else if (!/^[0-9]+[-|-]{1}[0-9kK]{1}$/.test(this.myData.rutTitular)) {
-      this.mys.alertShow('Verifique', 'alert', 'Ingrese rut del Titular v�lido, sin puntos ni espacios');
-    } else if (!this.myData.banco) {
-      this.mys.alertShow('Verifique', 'alert', 'Seleccione un Banco');
-    } else if (!this.myData.tipoDeCuenta) {
-      this.mys.alertShow('Verifique', 'alert', 'Seleccione tipo de cuenta');
-    } else if (!this.myData.numeroDeCuenta) {
-      this.mys.alertShow('Verifique', 'alert', 'Ingrese un numero de cuenta');
-    } else {
-
-      // ver si hay boletos this.nBoletosSeleccionados.
+    let respuesta = false;
+    if(this.boletosAll[0].tipoCompra === 'VD'){
+      if (!this.myData.rutTitular) {
+        this.mys.alertShow('Verifique', 'alert', 'Ingrese rut del Titular');
+        return false
+      } else if (!/^[0-9]+[-|-]{1}[0-9kK]{1}$/.test(this.myData.rutTitular)) {
+        this.mys.alertShow('Verifique', 'alert', 'Ingrese rut del Titular valido, sin puntos ni espacios');
+        return false
+      } else if (!this.myData.banco) {
+        this.mys.alertShow('Verifique', 'alert', 'Seleccione un Banco');
+        return false
+      } else if (!this.myData.tipoDeCuenta) {
+        this.mys.alertShow('Verifique', 'alert', 'Seleccione tipo de cuenta');
+        return false
+      } else if (!this.myData.numeroDeCuenta) {
+        this.mys.alertShow('Verifique', 'alert', 'Ingrese un numero de cuenta');
+        return false
+      }
+      respuesta = true;
+    }else if(this.boletosAll[0].tipoCompra === 'VN'){
+      if (!this.myData.tipoDeCuenta) {
+        this.mys.alertShow('Verifique', 'alert', 'Seleccione tipo de cuenta');
+        return false
+      }
+      respuesta = true;
+    }     
+    if(respuesta){
       let seleccionados = this.boletosAll.filter(x => x.selected);
       if (seleccionados.length > 0) {
         this.presentAlertConfirmAnulacion();
       } else {
-        this.mys.alertShow('Verifique', 'alert', `Seleccione boletos para anular.<br> Intente nuevamente..'}`);
+        this.mys.alertShow('Verifique', 'alert', 'Seleccione boletos para anular.<br> Intente nuevamente..');
       }
     }
-
   }
 
   ionViewWillLeave() {
     this.boletosAll = [];
   }
 
-  checkboxChanged() {
+  checkboxChanged(i) {
+    if(this.boletosAll[i].tipoServicio === 'pet' || this.boletosAll[i].tipoServicio === 'asociado'){
+      this.boletosAll.forEach(boleto => {
+        if(boleto.asiento == this.boletosAll[i].asientoAsociado
+          && boleto.imprimeVoucher.servicio == this.boletosAll[i].imprimeVoucher.servicio
+          && boleto.imprimeVoucher.fechaHoraSalida == this.boletosAll[i].imprimeVoucher.fechaHoraSalida){
+          boleto.selected = this.boletosAll[i].selected
+          return
+        }
+      })
+    }
+    /*
     //console.log('CHANGED_this.boletosAll', this.boletosAll);
     let nSelected = 0;
     this.boletosAll.forEach(element => {
@@ -271,6 +322,7 @@ export class MyCancellationsPage implements OnInit {
     });
     this.nBoletosSeleccionados = nSelected;
     //console.log('nSelected', nSelected);
+    */
   }
 
   actualizar() {
@@ -314,7 +366,8 @@ export class MyCancellationsPage implements OnInit {
                 };
                 this.loading++;
                 console.clear()
-                console.log(JSON.stringify(data))
+                console.log(data)
+                
                 this.integrador.anularBoleto(data).subscribe((resultado: any) => {
                   this.loading--;
                   console.log(JSON.stringify(resultado))
@@ -327,15 +380,15 @@ export class MyCancellationsPage implements OnInit {
                   } else {
                     this.mys.alertShow('Verifique', 'alert', `Boleto ${data.boleto}  <br> Fecha: ${boleto.imprimeVoucher.fechaSalida} <br> Hora: ${boleto.imprimeVoucher.horaSalida} <br> Asiento: ${boleto.imprimeVoucher.asiento} <br> ${resultado.mensaje || 'Error al devolver el Boleto, Verifique los datos e intente nuevamente..'}`);
                   }
-                });
-
-                if (contador === this.nBoletosSeleccionados) {
-                  this.nBoletosSeleccionados = 0;
-                  this.ionViewWillEnter();
-                }
+                });               
               }
             });
-
+            this.orden = "";
+            this.boletosAll = [];
+            this.myData.banco = ""
+            this.myData.tipoDeCuenta = ""
+            this.myData.numeroDeCuenta = ""
+            this.myData.rutTitular = ""
           }
         }
       ]
@@ -343,5 +396,4 @@ export class MyCancellationsPage implements OnInit {
 
     await alert.present();
   }
-
 }

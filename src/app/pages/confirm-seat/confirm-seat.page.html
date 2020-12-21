@@ -260,14 +260,18 @@
                                       <ion-button fill="clear" style="margin-left: 4vw; color: var(--ion-color-primary); outline:
                                     none;padding:0;font-size: 0vw; display: contents;"
                                         (click)="presionadoAsiento('1',y,x)" [disabled]="loadingSeat>0">
-                                        <img src="assets/icon/png/Asiento-ocupado.png"
+                                        <img src="assets/icon/png/seat-busy.png" class="seat-class"
                                           *ngIf="asiento.estado==='ocupado'" />
-                                        <img src="assets/icon/png/Asiento-disponible.png"
-                                          *ngIf="asiento.estado==='libre'" />
-                                        <img src="assets/icon/png/Asiento-seleccionado.png"
+                                        <img src="assets/icon/png/seat-free.png" class="seat-class"
+                                          *ngIf="asiento.estado==='libre' && asiento.tipo != 'asociado'" />
+                                        <img src="assets/icon/png/seat-taken.png" class="seat-class"
                                           *ngIf="asiento.estado==='seleccionado'" />
+                                        <img src="assets/icon/png/seat-busy.png" class="seat-class"
+                                          *ngIf="asiento.tipo === 'asociado'" />
+                                        <img src="assets/icon/png/seat-pet-busy.png" class="pet-seat-class"
+                                          *ngIf="asiento.tipo === 'pet'" />
                                         <ion-text
-                                          style="color: red; color: white;position: absolute;font-size: 0.8rem;top: 1rem;font-weight: bold;text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;">
+                                          style="color: red; color: white;position: absolute;font-size: 0.8rem;top: 1.1rem;font-weight: bold;">
                                           {{asiento.asiento === "%"? '':asiento.asiento}}
                                         </ion-text>
                                       </ion-button>
@@ -289,12 +293,16 @@
                                       (click)="presionadoAsiento('2',y,x)"
                                       *ngIf="asiento.estado ==='libre' || asiento.estado ==='ocupado'  || asiento.estado ==='seleccionado'"
                                       [disabled]="loadingSeat>0">
-                                      <img src="assets/icon/png/Asiento-ocupado.png"
+                                      <img src="assets/icon/png/seat-busy.png" class="seat-class"
                                         *ngIf="asiento.estado==='ocupado'" />
-                                      <img src="assets/icon/png/Asiento-disponible.png"
+                                      <img src="assets/icon/png/seat-free.png" class="seat-class"
                                         *ngIf="asiento.estado==='libre'" />
-                                      <img src="assets/icon/png/Asiento-seleccionado.png"
-                                        *ngIf="asiento.estado==='seleccionado'" />
+                                      <img src="assets/icon/png/seat-taken.png" class="seat-class"
+                                        *ngIf="asiento.estado==='seleccionado'" />   
+                                      <img src="assets/icon/png/seat-busy.png" class="seat-class"
+                                        *ngIf="asiento.tipo === 'asociado'" />
+                                      <img src="assets/icon/png/seat-pet-busy.png" class="pet-seat-class"
+                                        *ngIf="asiento.tipo === 'pet'" />
                                       <ion-text
                                         style="color: red; color: white;position: absolute;font-size: 0.8rem;top: 1rem;font-weight: bold;text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;">
                                         {{asiento.asiento === "%"? '':asiento.asiento}}

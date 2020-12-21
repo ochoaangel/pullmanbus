@@ -264,7 +264,8 @@
                     </ion-button>
 
                     <ion-button fill="clear"
-                      (click)="EliminarPasaje(pasaje.way, pasaje.idServicio, pasaje.asiento, pasaje.fila, pasaje.columna,pasaje.piso)"
+                      *ngIf="pasaje.tipo != 'pet'"
+                      (click)="eliminaBoleto(pasaje.way, pasaje.idServicio, pasaje.asiento, pasaje.fila, pasaje.columna,pasaje.piso)"
                       style="color: white; outline: none;  --padding-start: 0;--padding-end: 0; --background: #0f69ec;text-transform: none; font-size: 0.8rem;width: 7rem;max-height: 2rem;">
                       Eliminar
                     </ion-button>
@@ -272,7 +273,12 @@
                     <img src="assets/images/icono_bus_flecha.png" 
                       style="width : 3rem;" 
                       (click)="datosPasajero(pasaje)" 
-                      title="Datos Pasajero">
+                      title="Datos Pasajero"
+                      *ngIf="pasaje.tipo != 'pet'">
+
+                    <img style="width : 3rem;" 
+                      src="assets/icon/png/icono_pata_verde.svg" 
+                      *ngIf="pasaje.tipo === 'pet'"/>
                   </div>
                 </div>
               </div>
@@ -286,7 +292,7 @@
                             Tipo Documento
                           </div>
       
-                          <ion-select interface="popover" [interfaceOptions]="cityOptions"
+                          <ion-select interface="popover"
                             class="ion-no-padding ion-no-margin" multiple="false"
                             cancel-text="Cancelar" [(ngModel)]="pasaje.pasajero.tipoDocumento" #tipoDocumento name="tipoDocumento" required>
                             <ion-select-option *ngFor="let tipo of listaTipoDocumento" value="{{tipo.valor}}">
@@ -343,7 +349,7 @@
                           Nacionalidad
                         </div>
     
-                        <ion-select interface="popover" [interfaceOptions]="cityOptions"
+                        <ion-select interface="popover"
                           class="ion-no-padding ion-no-margin" multiple="false"
                           cancel-text="Cancelar" [(ngModel)]="pasaje.pasajero.nacionalidad" #nacionalidad name="nacionalidad" required>
                           <ion-select-option *ngFor="let nacionalidad of listaNacionalidad" value="{{nacionalidad.valor}}">

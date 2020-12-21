@@ -147,15 +147,19 @@
 
           <div *ngIf="encabezado.boletos">
             <ion-row style="background-color:#FF621D; font-size: 12px; color: white; margin-top: 10px;">
-              <ion-col size="8">Boleto</ion-col>
-              <ion-col size="4">Descarga</ion-col>
+              <ion-col size="7">Boleto</ion-col>
+              <ion-col size="3">Descarga</ion-col>
+              <ion-col size="2"></ion-col>
             </ion-row>
             <ion-row *ngFor="let bol of encabezado.boletos">
-              <ion-col size="8" style="font-size: 12px; margin-top: 10px;">{{bol.boleto}}</ion-col>
-              <ion-col size="4">
+              <ion-col size="7" style="font-size: 12px; margin-top: 10px;">{{bol.boleto}}</ion-col>
+              <ion-col size="3">
                 <button (click)="btnDescargaPasaje(bol.boleto,bol.codigo)" block>
                   <img src="assets/images/download.png" width="24">
                 </button>
+              </ion-col>
+              <ion-col size="2">
+                <img src="assets/icon/png/icono_pata_verde.svg" *ngIf="bol.tipoServicio === 'pet'" style="width:2rem;"/>
               </ion-col>
             </ion-row>
           </div>

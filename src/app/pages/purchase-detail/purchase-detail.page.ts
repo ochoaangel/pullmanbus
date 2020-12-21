@@ -142,19 +142,21 @@ export class PurchaseDetailPage implements OnInit {
     this.router.navigateByUrl(destino);
   }// fin continuar
 
-  EliminarPasaje(way, idServicio, asiento, y, x, piso) {
-
-
+  eliminaBoleto(way, idServicio, asiento, y, x, piso){
     let pasajeAeliminar;
-
-    // elimino el asiento de this.comprasDetalles
     if (this.ticket.comprasDetalles.length > 0) {
       pasajeAeliminar = this.ticket.comprasDetalles
         .filter(x => (x.idServicio === idServicio && x.asiento === asiento))[0];
+      this.eliminarPasaje(pasajeAeliminar,way, idServicio, asiento, y, x, piso)
     }
-
-    console.log('pasajeCompleto', pasajeAeliminar);
-
+    if(pasajeAeliminar.tipo === 'asociado'){
+      let pasajeAeliminarMascota;
+      pasajeAeliminarMascota = this.ticket.comprasDetalles
+      .filter(x => (x.idServicio === idServicio && x.asiento === pasajeAeliminar.asientoAsociado))[0];
+      this.eliminarPasaje(pasajeAeliminarMascota,way, idServicio, pasajeAeliminarMascota.asiento, pasajeAeliminarMascota.fila, pasajeAeliminarMascota.columna, piso)
+    }    
+  }
+  eliminarPasaje(pasajeAeliminar, way, idServicio, asiento, y, x, piso) {
     let asientoToDelete = {
       servicio: pasajeAeliminar.idServicio,
       fecha: pasajeAeliminar.service.fechaSalida,
@@ -198,25 +200,34 @@ export class PurchaseDetailPage implements OnInit {
     let texto = way + '_' + idServicio + '_' + asiento;
     if (way === 'go') {
       ticket.goAllService.forEach(item => {
-
         if (item.idServicio === idServicio) {
-          item.my_Bus[piso][y][x]['estado'] = 'libre';
-          let index3 = item.my_comprasByService.indexOf(texto);
-          if (index3 !== -1) { item.my_comprasByService.splice(index3, 1); }
+          if(item.my_Bus != undefined){
+            if(item.my_Bus[piso][y][x]['tipo'] === 'pet')            
+              item.my_Bus[piso][y][x]['estado'] = 'pet-free';
+            else
+              item.my_Bus[piso][y][x]['estado'] = 'libre';          
+            let index3 = item.my_comprasByService.indexOf(texto);
+            if (index3 !== -1) { 
+              item.my_comprasByService.splice(index3, 1); 
+            }
+          }
         }
       });
-
       let index3 = ticket.goCompras.indexOf(texto);
       if (index3 !== -1) { ticket.goCompras.splice(index3, 1); }
-
-
     } else {
       ticket.backAllService.forEach(item => {
-
         if (item.idServicio === idServicio) {
-          item.my_Bus[piso][y][x]['estado'] = 'libre';
-          let index3 = item.my_comprasByService.indexOf(texto);
-          if (index3 !== -1) { item.my_comprasByService.splice(index3, 1); }
+          if(item.my_Bus != undefined){
+            if(item.my_Bus[piso][y][x]['tipo'] === 'pet')            
+              item.my_Bus[piso][y][x]['estado'] = 'pet-free';
+            else
+              item.my_Bus[piso][y][x]['estado'] = 'libre';  
+            let index3 = item.my_comprasByService.indexOf(texto);
+            if (index3 !== -1) { 
+              item.my_comprasByService.splice(index3, 1); 
+            }
+          }
         }
       });
       let index3 = ticket.backCompras.indexOf(texto);

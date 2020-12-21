@@ -101,7 +101,7 @@ export class TicketChangePage implements OnInit {
               this.mys.alertShow('Error!!', 'alert', validado.mensaje || 'El boleto no es de ida o no se ha entregado..');
             }
           } else {
-            this.mys.alertShow('Error!!', 'alert', 'Este Boleto No puede ser cambiado..');
+            this.mys.alertShow('Error!!', 'alert', validado.resultado.mensaje);
           }
         });
     } else {

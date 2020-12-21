@@ -78,6 +78,34 @@
             </div>
           </div>
 
+          <!--POPUP PETFRIENDLY-->
+          <div *ngIf="popupPetFriendly" style="position: fixed; width: 98%; background-color: rgba(red, green, blue, alpha); top: 30%; right: 2%; max-height: 300px;
+            display: flex; flex-direction: row;z-index: 3;">
+            <div style="width: 100%;background: #85C4D7;border-radius: 0 2rem  2rem 0;
+              color: var(--ion-color-dark);display: flex; flex-direction: column;border: 1px solid var(--ion-color-light);
+              justify-content: center; align-items: center;
+              border-top: 1px solid var(--ion-color-primary);
+              border-right: 1px solid var(--ion-color-primary);
+              border-bottom: 1px solid var(--ion-color-primary);
+              ">
+              <div style="font-size: 4vw; margin: 0.5rem 0; text-align: center;padding-top: 45px;">
+                <img src="assets/images/pet-alert.png" style="width: 3rem;"/>
+              </div>
+              <div style="font-size: 4vw; margin: 0.5rem 0; text-align: center;">
+                <p style="padding-top:20px;color:white;">
+                  Estas eligiendo un asiento dentro del espacio destinado a mascotas a bordo.
+                </p>
+                <p style="color:white;">¿Quieres continuar y reservarlo?</p>
+              </div>
+              <div style="display: flex;flex-direction: row; margin: 0.5rem 0;width: 80%;padding-bottom: 25px;">
+                <ion-button style="width: 50%;" (click)="btnSiServicePet()" color="secondary" expand="block">Si
+                </ion-button>
+                <ion-button style="width: 50%;" (click)="btnNoServicePet()" color="secondary" expand="block">No
+                </ion-button>
+              </div>
+            </div>
+          </div>
+
           <!-- [ngStyle]="{'color':employee.country === 'India' ? 'orange' : 'red' }" -->
           <ion-col size="12" style="text-align: center;" [ngStyle]="{'opacity': promoEtapa2 ? '0.2' : '1' }"
             class="ion-no-margin ion-no-padding">
@@ -134,7 +162,7 @@
 
                     <div style="display: flex; flex-direction: row;">
                       <div class="myServiceRow" style="width:85%; font-weight: bold;">
-                        {{svc.terminalSalida  | titlecase }}
+                        {{svc.terminalOrigen  | titlecase }}
                       </div>
 
                     </div>
@@ -268,14 +296,16 @@
                     <ion-button fill="clear" (click)="getItinerario(svc.idServicio)"
                       style="color: white; outline: none;  --padding-start: 0;--padding-end: 0; color: var(--ion-color-primary); text-transform: none; font-size: 0.8rem;max-height: 2rem;">
                       <ion-icon name="list"></ion-icon>Itinerario
-                    </ion-button>
+                    </ion-button>                    
                   </div>
                 </div>
 
-
+                <div class="myServiceColumn" style="width: 24%;text-align: right;">
+                  <div style="display: flex; justify-content: center; align-items: center; width: 100%;">
+                    <img src="assets/icon/png/icono_pata_verde.svg" *ngIf="svc.mascota === '1'"/>
+                  </div>
+                </div>
               </div>
-
-
               <!-- asientos del servicio -->
               <div style="width: 100%;height: 100%; background-color: var(--ion-color-primary)" *ngIf="svc.checked">
                 <div style="height: 100%; background-color: white ;margin: 0px 0px 0px
@@ -311,7 +341,7 @@
                                 </div>
                               </div>
 
-                              <div style="width: 100%; text-align: center;font-size: 0.9rem;">
+                              <div style="width: 100%; text-align: center;font-size: 0.9rem;padding-bottom: 10px;">
                                 <div *ngIf="piso1">
                                   {{svc.servicioPrimerPiso | titlecase}} - ${{svc.tarifaPrimerPisoInternet}}
                                   {{svc.idaVueltaPisoUno? '(Asientos con promoción)':null }}</div>
@@ -332,14 +362,20 @@
                                       <ion-button fill="clear" style="margin-left: 4vw; color: var(--ion-color-primary); outline:
                                     none;padding:0;font-size: 0vw; display: contents;"
                                         (click)="presionadoAsiento('1',y,x)" [disabled]="loadingSeat>0">
-                                        <img src="assets/icon/png/Asiento-ocupado.png"
+                                        <img src="assets/icon/png/seat-busy.png" class="seat-class"
                                           *ngIf="asiento.estado==='ocupado'" />
-                                        <img src="assets/icon/png/Asiento-disponible.png"
+                                        <img src="assets/icon/png/seat-free.png" class="seat-class"
                                           *ngIf="asiento.estado==='libre'" />
-                                        <img src="assets/icon/png/Asiento-seleccionado.png"
+                                        <img src="assets/icon/png/seat-taken.png" class="seat-class"
                                           *ngIf="asiento.estado==='seleccionado'" />
+                                        <img src="assets/icon/png/seat-pet-free.png" class="pet-seat-class"
+                                          *ngIf="asiento.estado==='pet-free'" />
+                                        <img src="assets/icon/png/seat-pet-taken.png" class="pet-seat-class"
+                                          *ngIf="asiento.estado==='pet-taken'" />
+                                        <img src="assets/icon/png/seat-pet-busy.png" class="pet-seat-class"
+                                          *ngIf="asiento.estado==='pet-busy'" />
                                         <ion-text
-                                          style="color: red; color: white;position: absolute;font-size: 0.8rem;top: 1rem;font-weight: bold;text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;">
+                                          style="color: white;position: absolute;font-size: 0.8rem;top: 1.3rem;font-weight: bold;">
                                           {{asiento.asiento === "%"? '':asiento.asiento}}
                                         </ion-text>
                                       </ion-button>
@@ -361,14 +397,20 @@
                                       (click)="presionadoAsiento('2',y,x)"
                                       *ngIf="asiento.estado ==='libre' || asiento.estado ==='ocupado'  || asiento.estado ==='seleccionado'"
                                       [disabled]="loadingSeat>0">
-                                      <img src="assets/icon/png/Asiento-ocupado.png"
+                                      <img src="assets/icon/png/seat-busy.png" class="seat-class"
                                         *ngIf="asiento.estado==='ocupado'" />
-                                      <img src="assets/icon/png/Asiento-disponible.png"
+                                      <img src="assets/icon/png/seat-free.png" class="seat-class"
                                         *ngIf="asiento.estado==='libre'" />
-                                      <img src="assets/icon/png/Asiento-seleccionado.png"
+                                      <img src="assets/icon/png/seat-taken.png" class="seat-class"
                                         *ngIf="asiento.estado==='seleccionado'" />
+                                      <img src="assets/icon/png/seat-pet-free.png" class="pet-seat-class"
+                                        *ngIf="asiento.estado==='pet-free'" />
+                                      <img src="assets/icon/png/seat-pet-taken.png" class="pet-seat-class"
+                                        *ngIf="asiento.estado==='pet-taken'" />
+                                      <img src="assets/icon/png/seat-pet-busy.png" class="pet-seat-class"
+                                        *ngIf="asiento.estado==='pet-busy'" />
                                       <ion-text
-                                        style="color: red; color: white;position: absolute;font-size: 0.8rem;top: 1rem;font-weight: bold;text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;">
+                                        style="color: red; color: white;position: absolute;font-size: 0.8rem;top: 1.3rem;font-weight: bold;">
                                         {{asiento.asiento === "%"? '':asiento.asiento}}
                                       </ion-text>
                                     </ion-button>
@@ -445,6 +487,7 @@
         <ion-select-option value="precio">Precio</ion-select-option>
         <ion-select-option value="horario">Horario</ion-select-option>
         <ion-select-option value="promociones">Promociones</ion-select-option>
+        <ion-select-option value="pet">Mascota a bordo</ion-select-option>
       </ion-select>
     </div>
 

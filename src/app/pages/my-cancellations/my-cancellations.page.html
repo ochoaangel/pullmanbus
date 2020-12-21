@@ -38,12 +38,7 @@
       <ion-grid class=" ion-no-padding ion-no-margin" style="height: 100%;">
         <ion-row class=" ion-no-padding  ion-no-margin ion-justify-content-center" style="height: 100%">
           <ion-col class=" ion-no-padding ion-no-margin" size="12" style="text-align: center;">
-
-
-
-
-            <div *ngIf="boletosAll.length>0">
-
+            <div>
               <ion-row>
                 <ion-text color="primary">
                   <p>Debe seleccionar el o los boletos que desea devolver. La devolución debe ser realizada por lo menos
@@ -56,87 +51,69 @@
                 </ion-text>
               </ion-row>
 
-
-              <!-- linea1 -->
               <ion-row>
                 <ion-col size="6">
+                  <div class="overIonInput">
+                    <ion-input type="text" placeholder="Orden" [(ngModel)]="orden"
+                      #numeroDeCuenta name='orden'></ion-input>
+                  </div>
+                </ion-col>
+                <ion-col size="6">
+                  <ion-button
+                    style="width: -webkit-fill-available; transform: none;--background:var(--ion-color-secondary);margin: 0px;"
+                    (click)="buscarBoletos()">
+                    <div>Consultar</div>
+                  </ion-button>
+                </ion-col>
+              </ion-row>
 
+              <!-- linea1 -->
+              <ion-row *ngIf="boletosAll.length > 0">
+                <ion-col size="6" *ngIf="boletosAll[0].tipoCompra === 'VN'">
                   <ion-select [interfaceOptions]="tipoDeCuentaOptions" class=" ion-no-padding ion-no-margin"
                     multiple="false" placeholder="Tipo de Cuenta" cancel-text="Cancelar"
                     [(ngModel)]="myData.tipoDeCuenta" #tipoDeCuenta name='tipoDeCuenta' required>
-
+                    <ion-select-option *ngFor="let tipoDeCuenta of myData.tiposDeCredito"
+                      value="{{tipoDeCuenta.codigo}}">
+                      {{tipoDeCuenta.nombre}}
+                    </ion-select-option>
+                  </ion-select>
+                </ion-col>
+                <ion-col size="6" *ngIf="boletosAll[0].tipoCompra === 'VD'">
+                  <ion-select [interfaceOptions]="tipoDeCuentaOptions" class=" ion-no-padding ion-no-margin"
+                    multiple="false" placeholder="Tipo de Cuenta" cancel-text="Cancelar"
+                    [(ngModel)]="myData.tipoDeCuenta" #tipoDeCuenta name='tipoDeCuenta' required>
                     <ion-select-option *ngFor="let tipoDeCuenta of myData.tiposDeCuentas"
                       value="{{tipoDeCuenta.codigo}}">
                       {{tipoDeCuenta.nombre}}
                     </ion-select-option>
                   </ion-select>
                 </ion-col>
-
-                <ion-col size="6">
+                <ion-col size="6" *ngIf="boletosAll[0].tipoCompra === 'VD'">
                   <div class="overIonInput">
                     <ion-input type="text" placeholder="Número de Cuenta" [(ngModel)]="myData.numeroDeCuenta"
                       #numeroDeCuenta name='numeroDeCuenta'></ion-input>
                   </div>
                 </ion-col>
               </ion-row>
-
               <!-- linea2 -->
-              <ion-row>
-                <ion-col size="6">
-
+              <ion-row *ngIf="boletosAll.length > 0">
+                <ion-col size="6" *ngIf="boletosAll[0].tipoCompra === 'VD'">
                   <ion-select [interfaceOptions]="bancoOptions" class=" ion-no-padding ion-no-margin" multiple="false"
                     placeholder="Banco" cancel-text="Cancelar" [(ngModel)]="myData.banco" #banco name='banco' required>
-
                     <ion-select-option *ngFor="let banco of this.myData.bancos" value="{{banco.codigo}}">
                       {{banco.nombre}}
                     </ion-select-option>
                   </ion-select>
                 </ion-col>
-
-                <ion-col size="6">
-
+                <ion-col size="6" *ngIf="boletosAll[0].tipoCompra === 'VD'">
                   <div class="overIonInput">
                     <ion-input type="text" placeholder="RUT del titular de la cuenta" [(ngModel)]="myData.rutTitular"
                       #rutTitular name='rutTitular'></ion-input>
                   </div>
                 </ion-col>
               </ion-row>
-
-              <!-- linea3 -->
-              <ion-row>
-                <ion-col size="12">
-
-                  <ion-button
-                    style="width: -webkit-fill-available; transform: none;--background:var(--ion-color-secondary)"
-                    (click)="anular()" [disabled]="nBoletosSeleccionados<1">
-                    <div *ngIf="nBoletosSeleccionados>0">Devolver seleccionados</div>
-                    <div *ngIf="nBoletosSeleccionados<1">Seleccione Boletos para devolver</div>
-                  </ion-button>
-                </ion-col>
-              </ion-row>
-
             </div>
-
-            <!-- mensajes -->
-            <ion-row style="padding-top: 10px;" *ngIf="boletosAll.length<1">
-              <ion-col size="12" style="padding:0px 3vw" *ngIf="loading>=1">
-                Buscando boletos..
-              </ion-col>
-              <ion-col size="12" style="padding:0px 3vw" *ngIf="loading<1">
-                No se han encontraron boletos Activos para devolver..
-              </ion-col>
-            </ion-row>
-
-            <ion-row *ngIf="loading === 0">
-              <ion-col size="12">
-                <ion-button
-                  style="width: -webkit-fill-available; transform: none;--background:var(--ion-color-secondary)"
-                  (click)="actualizar()">
-                  <div>Actualizar</div>
-                </ion-button>
-              </ion-col>
-            </ion-row>
-
 
             <ion-row class=" ion-no-padding ion-no-margin" class="ticket"
               *ngFor="let boleto of boletosAll;  let i=index">
@@ -148,7 +125,7 @@
                 <ion-col size="3" class=" ion-no-padding ion-no-margin" class="cabeceraCadaTicket">Fecha/Hora Salida
                 </ion-col>
                 <ion-col size="2" class=" ion-no-padding ion-no-margin" class="cabeceraCadaTicket">Asiento</ion-col>
-                <ion-col size="1" class=" ion-no-padding ion-no-margin" class="cabeceraCadaTicket"></ion-col>
+                <ion-col size="1" class=" ion-no-padding ion-no-margin" class="cabeceraCadaTicket"></ion-col>                
               </ion-row>
 
               <ion-row class=" ion-no-padding ion-no-margin" style="width: 100%;">
@@ -159,14 +136,28 @@
                 <ion-col size="3" class=" ion-no-padding ion-no-margin" class="infoCadaTicket">
                   {{boleto.imprimeVoucher.fechaSalida}}<br>{{boleto.imprimeVoucher.horaSalida}} </ion-col>
                 <ion-col size="2" class=" ion-no-padding ion-no-margin" class="infoCadaTicket">
-                  {{boleto.imprimeVoucher.asiento}}</ion-col>
+                  {{boleto.imprimeVoucher.asiento}}
+                  <img src="assets/icon/png/icono_pata_verde.svg" *ngIf="boleto.tipoServicio === 'pet'"
+                  style="width: 2rem;"/>
+                </ion-col>
                 <ion-col size="1" class=" ion-no-padding ion-no-margin" class="infoCadaTicket">
-                  <ion-checkbox mode="ios" style="position: relative; left: -7px; height: 5vw; width: 5vw;"
-                    [(ngModel)]="boletosAll[i].selected" (ionChange)="checkboxChanged()">
-                  </ion-checkbox>
+                  <ion-checkbox     
+                    *ngIf="boleto.puedeImprimir"                
+                    mode="ios" style="position: relative; left: -7px; height: 5vw; width: 5vw;"
+                    [(ngModel)]="boletosAll[i].selected" (ionChange)="checkboxChanged(i)">
+                  </ion-checkbox>                  
                 </ion-col>
               </ion-row>
 
+            </ion-row>
+            <ion-row *ngIf="boletosAll.length > 0">
+              <ion-col size="12">
+                <ion-button
+                  style="width: -webkit-fill-available; transform: none;--background:var(--ion-color-secondary);margin: 0px;"
+                  (click)="anular()">
+                  <div>Anular</div>
+                </ion-button>
+              </ion-col>
             </ion-row>
           </ion-col>
         </ion-row>

@@ -12,6 +12,14 @@
   font-size: 0.6rem;
   border-bottom: 1px solid white;
 }
+.petCell {
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+  background-color: lightsteelblue;
+  font-size: 0.6rem;
+  border-bottom: 1px solid white;
+}
 
 .headerRow {
   display: table-row;

@@ -417,5 +417,11 @@ export class IntegradorService {
         let dirProxy = '/integrador-web/rest/operacion/modificarRegistro';
         this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy;
         return this.http.post<any>(urlFinal, pasajero);
-    }    
+    }  
+    buscarBoletosTransaccion(orden: any): Observable<any[]> {
+        let urlFinal;
+        let dirProxy = '/srv-privado-web/rest/compra/obtenerBoleto';
+        this.sinProxy ? urlFinal = this.urlBase + dirProxy : urlFinal = dirProxy;
+        return this.http.post<any[]>(urlFinal, {codigo : orden});
+    }  
 }

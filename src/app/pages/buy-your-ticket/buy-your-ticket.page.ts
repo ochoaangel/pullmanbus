@@ -58,7 +58,7 @@ export class BuyYourTicketPage implements OnInit {
   promociones;  // recibe colecciones
 
   comprasDetalles = [];
-
+  petService = false
 
   constructor(
     private httpClient: HttpClient,
@@ -140,7 +140,6 @@ export class BuyYourTicketPage implements OnInit {
 
 
   btnSearch() {
-
     this.ticket = this.mys.ticket ? {
       comprasDetalles: this.mys.ticket.comprasDetalles,
       comprasDetallesPosicion: this.mys.ticket.comprasDetallesPosicion,
@@ -174,8 +173,9 @@ export class BuyYourTicketPage implements OnInit {
     } else if (this.backDate && (moment(this.backDate).isSameOrBefore(moment(this.goDate)))) {
       this.mys.alertShow('Verifique', 'alert', 'Fecha de ida debe ser <br> antes que <br>fecha de regreso<br> Intente nuevamente..');
     } else {
-
+      this.ticket.petService = this.petService;
       this.mys.ticket = this.ticket;
+      console.log(this.mys.ticket)
       this.router.navigateByUrl('/ticket');
     }
 
