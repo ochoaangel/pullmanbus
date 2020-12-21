@@ -29,7 +29,7 @@ export class PaymentMethodsPage implements OnInit {
 
   ) {
     this.loading = 2;
-
+    this.tickets = this.mys.ticket;
     this.integradorService.getListConvenio().subscribe(convenio => {
       this.listaConvenio = convenio;
       this.loading -= 1;
@@ -123,6 +123,8 @@ export class PaymentMethodsPage implements OnInit {
         }
       }
     });
+
+
   }
 
   ionViewWillEnter() {

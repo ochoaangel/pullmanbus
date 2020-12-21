@@ -292,7 +292,7 @@
                             Tipo Documento
                           </div>
       
-                          <ion-select interface="popover"
+                          <ion-select interface="popover" 
                             class="ion-no-padding ion-no-margin" multiple="false"
                             cancel-text="Cancelar" [(ngModel)]="pasaje.pasajero.tipoDocumento" #tipoDocumento name="tipoDocumento" required>
                             <ion-select-option *ngFor="let tipo of listaTipoDocumento" value="{{tipo.valor}}">
