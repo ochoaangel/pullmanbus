@@ -259,6 +259,9 @@ export class ConfirmSeatPage implements OnInit {
 
 
   presionadoAsiento(piso: string, y: number, x: number) {
+    if(this.bus[piso][y][x]['tipo']==='pet' || this.bus[piso][y][x]['tipo']==='asociado'){
+      return;
+    }
     if (this.bus[piso][y][x]['estado'] === 'libre' && this.comprasDetalles.length > 0) {
       this.mys.alertShow('¡Verifique!', 'alert', 'Se debe seleccionar solo un asiento para confirmarlo.<br> Al estar seguro del asiento seleccionado, presione continuar..');
 

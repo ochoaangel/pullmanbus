@@ -17,9 +17,16 @@
     <div class="normalCell">{{compra.service.terminaLlegada}}</div>
     <div class="normalCell">{{compra.asiento}}</div>
     <div class="normalCell">${{compra.valor.toLocaleString('de-DE')}}</div>
-    <div class="normalCell" (click)="eliminarBoleto(i)">
-      <ion-icon name="close-circle" style="font-size: 1rem; color: var(--ion-color-primary);margin: 3px -8px;">
+    <div class="normalCell" (click)="eliminarBoleto(i)" *ngIf="compra.tipo != 'pet'">
+      <ion-icon 
+        name="close-circle" 
+        style="font-size: 1rem; color: var(--ion-color-primary);margin: 3px -8px;"
+        >
       </ion-icon>
+    </div>
+    <div class="petCell" *ngIf="compra.tipo === 'pet'">
+      <img style="width : 2rem;" 
+        src="assets/icon/png/icono_pata_verde.svg"/>
     </div>
   </div>
 

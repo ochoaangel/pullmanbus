@@ -95,11 +95,11 @@ export class PaymentMethodsPage implements OnInit {
       //this.showPopCart.dismiss();
       this.router.navigateByUrl('/buy-your-ticket');
       return;
-    }
+    }    
+    this.tickets = this.mys.ticket;
     this.compraDetalles = [];
     this.ionViewWillEnter();
     this.mys.carritoEliminar.subscribe(x => {
-      console.log('xxxxxxxxxxxxxxxxx', x);
       this.compraDetalles = this.compraDetalles.filter(compras => !(x.asiento === compras.asiento && x.idServicio === compras.idServicio))
       console.log('this.compraDetalles', this.compraDetalles);
       if (this.compraDetalles.length < 1) {
@@ -114,15 +114,14 @@ export class PaymentMethodsPage implements OnInit {
         });
         console.log('totalCalculado', total);
         this.mys.ticket.comprasDetalles = this.compraDetalles;
+        
         this.mys.total = total;
         // caso cuando hay descuentos
         if (this.mostrarTarifaAtachada) {
           this.validarDatosConvenio();
-
         } else {
           this.totalFinal = total;
         }
-
       }
     });
 
@@ -261,7 +260,9 @@ export class PaymentMethodsPage implements OnInit {
             telefono : boleto.pasajero.telefono,
             telefonoEmergencia : boleto.pasajero.telefonoEmergencia,
             tipoDocumento : boleto.pasajero.tipoDocumento
-          }
+          },
+          tipoServicio : boleto.tipo, 
+          asientoAsociado : boleto.asientoAsociado
         }
 
         if (boleto.promocion) {

@@ -29,6 +29,7 @@ export class TicketPage implements OnInit {
   loadingSeat = 0;
 
   allServices = [];
+  allServicesResp = [];
   serviceSelectedNumber;
   serviceSelected;
 
@@ -99,7 +100,12 @@ export class TicketPage implements OnInit {
 
 
 
-
+  popupPetFriendly = false;
+  petSeat = {
+    piso: null,
+    y:null,
+    x:null
+  }
   constructor(
     private httpClient: HttpClient,
     private router: Router,
@@ -116,12 +122,19 @@ export class TicketPage implements OnInit {
       console.log('nowService', this.nowService);
       if (this.nowService && this.nowService.idServicio === eliminar.idServicio) {
         console.log('es el servicio abierto en este momento');
-        this.bus[eliminar.piso][eliminar.fila][eliminar.columna]['estado'] = 'libre';
+        if(this.bus[eliminar.piso][eliminar.fila][eliminar.columna]['tipo'] === 'pet')
+          this.bus[eliminar.piso][eliminar.fila][eliminar.columna]['estado'] = 'pet-free';
+        else{
+          this.bus[eliminar.piso][eliminar.fila][eliminar.columna]['estado'] = 'libre';
+        }
       } else {
         console.log('NO es el servicio abierto en este momento');
         let indexService = this.allServices.findIndex(x => x.idServicio === eliminar.idServicio);
         console.log('antes Bus', this.allServices[indexService]['my_Bus']);
-        this.allServices[indexService]['my_Bus'][eliminar.piso][eliminar.fila][eliminar.columna]['estado'] = 'libre';
+        if(this.allServices[indexService]['my_Bus'][eliminar.piso][eliminar.fila][eliminar.columna]['tipo'] === 'pet')
+          this.allServices[indexService]['my_Bus'][eliminar.piso][eliminar.fila][eliminar.columna]['estado'] = 'pet-free';
+        else
+          this.allServices[indexService]['my_Bus'][eliminar.piso][eliminar.fila][eliminar.columna]['estado'] = 'libre';
         console.log('Despues Bus', this.allServices[indexService]['my_Bus']);
       }
 
@@ -232,6 +245,11 @@ export class TicketPage implements OnInit {
       this.allServices = data;
       console.log('this.allServices', this.allServices);
       console.log('this.allServicesTRUE', this.allServices.filter(x => x.promocion));
+      this.allServicesResp = [...this.allServices]
+      if(this.mys.ticket.petService){   
+        this.filterSelected = 'pet'     
+        this.allServices = this.allServices.filter(x => x.mascota === '1')      
+      }
 
       this.loadingService = false;
       this.allServices.forEach(servicio => {
@@ -280,9 +298,9 @@ export class TicketPage implements OnInit {
         'tipoBusPiso1': this.allServices[nServiceSeleccion].busPiso1,
         'tipoBusPiso2': this.allServices[nServiceSeleccion].busPiso2,
         'fechaServicio': this.allServices[nServiceSeleccion].fechaServicio,
-        'integrador': this.allServices[nServiceSeleccion].integrador
+        'integrador': this.allServices[nServiceSeleccion].integrador,
+        'clasePiso1':this.allServices[nServiceSeleccion].idClaseBusPisoUno
       };
-
       setTimeout(() => {
         this.integradorService.getPlanillaVertical(servicio).subscribe(myBusFromApi => {
           console.log('myBusFromApi', myBusFromApi);
@@ -301,57 +319,67 @@ export class TicketPage implements OnInit {
           this.comprasByService = this.allServices[nServiceSeleccion]['my_comprasByService'];
           this.serviceSelectedNumber = nServiceSeleccion;
           this.serviceSelected = this.allServices[nServiceSeleccion];
-
           this.bus = this.allServices[this.serviceSelectedNumber].my_Bus;
-
-
-
           // verificar si se ha comprado en este servicio
           let nowIdService = this.allServices[nServiceSeleccion]['idServicio'];
           let nowDateService = this.allServices[nServiceSeleccion]['fechaServicio'];
-
           this.comprasDetalles.forEach(element => {
             if (element.idServicio === nowIdService && element.service.fechaServicio === nowDateService) {
               this.bus = element.bus;
             }
           });
-
           // preparando tarifas
           this.allServices[nServiceSeleccion].tarifaPrimerPisoInternet ? this.tarifaPiso1 = parseInt(this.allServices[nServiceSeleccion].tarifaPrimerPisoInternet.replace('.', '')) : this.tarifaPiso1 = null;
           this.allServices[nServiceSeleccion].tarifaSegundoPisoInternet ? this.tarifaPiso2 = parseInt(this.allServices[nServiceSeleccion].tarifaSegundoPisoInternet.replace('.', '')) : this.tarifaPiso2 = null;
           this.tarifaPiso1 ? this.piso1 = true : this.piso1 = false;
-
           this.nowService = this.allServices[nServiceSeleccion];
-
           setTimeout(() => {
             this.content.scrollToPoint(0, this.divServicio['_results'][nServiceSeleccion].nativeElement.offsetTop, 100);
           });
-
           this.loadingBus = false;
-
         });
-
       }, 1000);
-
-
-
     } else {
       this.allServices[this.serviceSelectedNumber]['checked'] = !this.allServices[this.serviceSelectedNumber]['checked'];
       this.loadingBus = false;
     }
-
+  }
+  buscaCantidadAsientos(){
+    let i = 0
+    this.comprasDetalles.forEach(compra =>{
+      if(compra.way === this.way){
+        i++
+      }
+    })
+    return i;
+  }
+  presionadoAsiento(piso: string, y: number, x: number) {
+    console.log(this.bus[piso][y][x])
+    if(this.bus[piso][y][x].tipo === 'asociado'){
+      if(this.bus[piso][y][x].estado === 'libre'){
+        if (this.buscaCantidadAsientos() < 3){
+          this.petSeat.piso = piso;
+          this.petSeat.y = y;
+          this.petSeat.x = x;
+          this.popupPetFriendly = true;
+        }else{
+          this.mys.alertShow('¡Verifique!', 'alert', 'No puede tomar este asiento.');
+        }        
+      }else{
+        this.presionadoAsientoAccion(piso, y, x)
+      }      
+    }else{
+      this.presionadoAsientoAccion(piso, y, x)
+    }
   }
 
-
-  presionadoAsiento(piso: string, y: number, x: number) {
-    if (this.bus[piso][y][x]['estado'] === 'libre' && this.comprasDetalles.length > 3) {
-      this.mys.alertShow('¡Verifique!', 'alert', 'Máximo número de asientos permitidos de ida son 4');
-
+  presionadoAsientoAccion(piso: string, y: number, x: number) {
+    console.log("piso : " + piso + ", y : " + y + ", x : " + x);
+    if (this.bus[piso][y][x]['estado'] === 'libre' && this.buscaCantidadAsientos() > 3) {
+      if(this.way === 'go') this.mys.alertShow('¡Verifique!', 'alert', 'Máximo número de asientos permitidos de ida son 4');
+      if(this.way === 'back') this.mys.alertShow('¡Verifique!', 'alert', 'Máximo número de asientos permitidos de regreso son 4');      
     } else {
-
-
       this.comprasByService ? null : this.comprasByService = [];
-
       if (this.compras.length >= 4 && this.way === 'go' && this.bus[piso][y][x]['estado'] === 'libre') {
         this.allServices.forEach(element => {
           element['checked'] = false;
@@ -362,8 +390,7 @@ export class TicketPage implements OnInit {
           element['checked'] = false;
         });
         this.mys.alertShow('¡Verifique!', 'alert', 'Máximo número de asientos permitidos de Regreso son 4');
-      } else {
-
+      } else {        
         let asiento = {
           'servicio': this.serviceSelected.idServicio,
           'fecha': this.serviceSelected.fechaSalida,
@@ -372,114 +399,134 @@ export class TicketPage implements OnInit {
           'asiento': this.bus[piso][y][x].asiento,
           'integrador': this.serviceSelected.integrador
         };
-
-
         if (this.bus[piso][y][x]['estado'] === 'libre') {
-
-          this.loadingSeat += 1;
-
-          this.integradorService.validarAsiento(asiento).subscribe(disponible => {
-            this.loadingSeat += 1;
-            if (disponible == 0) {
-              this.integradorService.tomarAsiento(asiento).subscribe(resp => {
-                this.loadingSeat -= 2;
-                if (resp === 0) {
-                  this.mys.alertShow('¡Verifique!', 'alert', 'Error al tomar asiento.');
-                } else {
-                  // verificando si el asiento tiene promociòn o no
-                  if (
-                    this.serviceSelected.promocion &&
-                    (
-                      (this.serviceSelected.idaVueltaPisoDos && !this.piso1)
-                      ||
-                      (this.serviceSelected.idaVueltaPisoUno && this.piso1)
-                    )
-                  ) {
-                    //////////////////////////////////  Asiento CON promoción  //////////////////////////////////////
-
-                    // variable para la api buscaCaluga
-                    let myData = {
-                      origen: this.mys.ticket.origin.codigo,
-                      destino: this.mys.ticket.destiny.codigo,
-                      fechaSalida: moment(this.mys.ticket.goDate).format("YYYYMMDD"),
-                      etapa: 2
-                    };
-                    console.log('myData', myData);
-
-                    this.integradorService.buscaCaluga(myData).subscribe(respuestaBuscaCaluga => {
-
-                      // definiendo variables de tarifas
-                      let tarifaTotalNumero;
-                      let tarifaNormalNumero;
-                      let tarifaDiferencia;
-
-                      if (this.piso1) {
-                        tarifaTotalNumero = parseInt(this.serviceSelected.idaVueltaPisoUno.tarifaTotal.replace('.', ''));
-                        tarifaNormalNumero = this.serviceSelected.tarifaPrimerPisoInternet.replace('.', '');
-                      } else {
-                        tarifaTotalNumero = parseInt(this.serviceSelected.idaVueltaPisoDos.tarifaTotal.replace('.', ''));
-                        tarifaNormalNumero = this.serviceSelected.tarifaSegundoPisoInternet.replace('.', '');
-                      }
-
-                      // calculando diferencia
-                      tarifaDiferencia = tarifaTotalNumero - tarifaNormalNumero;
-
-
-                      // Mostrando el mensaje para seleccionar si está de acuerdo o no al darle valor a promocionEtapa2
-                      this.promoEtapa2 = respuestaBuscaCaluga[0];
-                      // console.log('this.promoEtapa2', this.promoEtapa2);
-                      this.promoEtapa2['contenido'] = this.promoEtapa2['contenido'].replace('{1}', tarifaDiferencia.toLocaleString('de-DE'));
-                      console.log('this.promoEtapa2', this.promoEtapa2);
-
-
-                      // almaceno variables para cuanso el el modal presione SI , ya tener los datos necesarios almacenados
-                      this.tomarAsientoPromocion = { piso, y, x, promocionTarifaTotal: tarifaTotalNumero };
-                    });
-
-
-                  } else {
-                    //////////////////////////////////  Asiento SIN promoción  //////////////////////////////////////
-                    this.tomarAsiento(piso, y, x);
-                  }
-                }
-              });
-            } else {
-              this.loadingSeat -= 2;
-              this.mys.alertShow('¡Verifique!', 'alert', 'Asiento no disponible, está siendo reservado por otro cliente.');
-              this.bus[piso][y][x]['estado'] = 'ocupado';
-            }
-          });
-
+          this.takeSeat(asiento, piso, y, x);
+          if(this.bus[piso][y][x].tipo === 'asociado'){
+            let asientoMascota = {
+              'servicio': this.serviceSelected.idServicio,
+              'fecha': this.serviceSelected.fechaSalida,
+              'origen': this.serviceSelected.idTerminalOrigen,
+              'destino': this.serviceSelected.idTerminalDestino,
+              'asiento': this.bus[piso][y][x].asientoAsociado,
+              'integrador': this.serviceSelected.integrador
+            };
+            let z = 0;
+            if(this.bus[piso][y][x-1].tipo === 'pet') z = x-1;
+            if(this.bus[piso][y][x+1].tipo === 'pet') z = x+1;
+            this.takeSeat(asientoMascota, piso, y, z);
+          }
         } else if (this.bus[piso][y][x]['estado'] === 'seleccionado') {
-          this.loadingSeat += 1;
-
-          this.integradorService.liberarAsiento(asiento).subscribe(resp => {
-            this.loadingSeat -= 1;
-            if (resp == 0) {
-              this.mys.alertShow('¡Verifique!', 'alert', 'Error al liberar asiento.');
-            } else {
-              this.liberarAsiento(piso, y, x, asiento);
-            }
-          });
-
+          this.freeSeat(asiento, piso, y, x);
+          if(this.bus[piso][y][x].tipo === 'asociado'){
+            let asientoMascota = {
+              'servicio': this.serviceSelected.idServicio,
+              'fecha': this.serviceSelected.fechaSalida,
+              'origen': this.serviceSelected.idTerminalOrigen,
+              'destino': this.serviceSelected.idTerminalDestino,
+              'asiento': this.bus[piso][y][x].asientoAsociado,              
+              'integrador': this.serviceSelected.integrador
+            };
+            let z = 0;
+            if(this.bus[piso][y][x-1].tipo === 'pet') z = x-1;
+            if(this.bus[piso][y][x+1].tipo === 'pet') z = x+1;            
+            this.freeSeat(asientoMascota, piso, y, z);
+          }
         }
         // guardo en this.allServices
-        this.allServices[this.serviceSelectedNumber].my_Bus = this.bus;
+        this.allServices[this.serviceSelectedNumber].my_Bus = this.bus;        
         this.allServices[this.serviceSelectedNumber].my_comprasByService = this.comprasByService;
         console.log('this.comprasDetallesPresionadoD', this.comprasDetalles);
-
-      } // fin de numeros asientos permitidos
-
+      } 
     }
-  } // fin presionado
+  } 
 
+  takeSeat(asiento, piso, y, x){
+    this.loadingSeat += 1;
+    this.integradorService.validarAsiento(asiento).subscribe(disponible => {
+      this.loadingSeat += 1;
+      if (disponible == 0) {
+        this.integradorService.tomarAsiento(asiento).subscribe(resp => {
+          this.loadingSeat -= 2;
+          if (resp === 0) {
+            this.mys.alertShow('¡Verifique!', 'alert', 'Error al tomar asiento.');
+          } else {
+            // verificando si el asiento tiene promociòn o no
+            if (
+              this.serviceSelected.promocion &&
+              (
+                (this.serviceSelected.idaVueltaPisoDos && !this.piso1)
+                ||
+                (this.serviceSelected.idaVueltaPisoUno && this.piso1)
+              )
+            ) {
+              //////////////////////////////////  Asiento CON promoción  //////////////////////////////////////
+              // variable para la api buscaCaluga
+              let myData = {
+                origen: this.mys.ticket.origin.codigo,
+                destino: this.mys.ticket.destiny.codigo,
+                fechaSalida: moment(this.mys.ticket.goDate).format("YYYYMMDD"),
+                etapa: 2
+              };
+              console.log('myData', myData);
+              this.integradorService.buscaCaluga(myData).subscribe(respuestaBuscaCaluga => {
+                // definiendo variables de tarifas
+                let tarifaTotalNumero;
+                let tarifaNormalNumero;
+                let tarifaDiferencia;
+                if (this.piso1) {
+                  tarifaTotalNumero = parseInt(this.serviceSelected.idaVueltaPisoUno.tarifaTotal.replace('.', ''));
+                  tarifaNormalNumero = this.serviceSelected.tarifaPrimerPisoInternet.replace('.', '');
+                } else {
+                  tarifaTotalNumero = parseInt(this.serviceSelected.idaVueltaPisoDos.tarifaTotal.replace('.', ''));
+                  tarifaNormalNumero = this.serviceSelected.tarifaSegundoPisoInternet.replace('.', '');
+                }
+                // calculando diferencia
+                tarifaDiferencia = tarifaTotalNumero - tarifaNormalNumero;
+                // Mostrando el mensaje para seleccionar si está de acuerdo o no al darle valor a promocionEtapa2
+                this.promoEtapa2 = respuestaBuscaCaluga[0];
+                // console.log('this.promoEtapa2', this.promoEtapa2);
+                this.promoEtapa2['contenido'] = this.promoEtapa2['contenido'].replace('{1}', tarifaDiferencia.toLocaleString('de-DE'));
+                console.log('this.promoEtapa2', this.promoEtapa2);
 
+                // almaceno variables para cuanso el el modal presione SI , ya tener los datos necesarios almacenados
+                this.tomarAsientoPromocion = { piso, y, x, promocionTarifaTotal: tarifaTotalNumero };
+              });
+            } else {              
+              this.tomarAsiento(piso, y, x);
+            }
+          }
+        });
+      } else {
+        this.loadingSeat -= 2;
+        this.mys.alertShow('¡Verifique!', 'alert', 'Asiento no disponible, está siendo reservado por otro cliente.');        
+        if(this.bus[piso][y][x].tipo === 'pet')
+          this.bus[piso][y][x]['estado'] = 'pet-busy';
+        else
+          this.bus[piso][y][x]['estado'] = 'ocupado';
+      }
+    });
+  }
+
+  freeSeat(asiento, piso, y, x){
+    this.loadingSeat += 1;
+    this.integradorService.liberarAsiento(asiento).subscribe(resp => {
+      this.loadingSeat -= 1;
+      if (resp == 0) {
+        this.mys.alertShow('¡Verifique!', 'alert', 'Error al liberar asiento.');
+      } else {
+        this.liberarAsiento(piso, y, x, asiento);
+      }
+    });
+  }
 
   liberarAsiento(piso, y, x, asiento) {
     console.log('LIBERAR ASIENTOOOOOO', piso, y, x, asiento);
 
     // caso asiento ya seleccionado
-    this.bus[piso][y][x]['estado'] = 'libre';
+    if(this.bus[piso][y][x].tipo === 'pet')
+      this.bus[piso][y][x]['estado'] = 'pet-free';
+    else
+      this.bus[piso][y][x]['estado'] = 'libre';
 
 
     let tarifa;
@@ -532,7 +579,10 @@ export class TicketPage implements OnInit {
     console.log('this.comprasDetalles Start Tomar Asiento', this.comprasDetalles);
 
 
-    // cambio de estado, caso asiento No seleccionado
+    // cambio de estado, caso asiento No seleccionado    
+    if(this.bus[piso][y][x].tipo === 'pet')
+    this.bus[piso][y][x]['estado'] = 'pet-taken';
+      else
     this.bus[piso][y][x]['estado'] = 'seleccionado';
 
     // verifico si tiene promoción pongo la tarifa recibida, sino, pongo las normales}
@@ -588,7 +638,9 @@ export class TicketPage implements OnInit {
         "telefonoEmergencia":"",
         "terms":false,
         "dialog":false 
-      }
+      },
+      tipo: this.bus[piso][y][x]['tipo'],
+      asientoAsociado: this.bus[piso][y][x]['asientoAsociado'],
     };
 
     this.comprasDetalles.push(resumen);
@@ -685,6 +737,12 @@ export class TicketPage implements OnInit {
 
 
   orderCambio() {
+    this.allServices = [...this.allServicesResp]
+    if(this.filterSelected === 'pet'){
+      this.allServicesResp = [...this.allServices]
+      this.allServices = this.allServices.filter(x => x.mascota === '1')  
+      return
+    }
     switch (this.orderSelected) {
 
       case 'precioAsc':
@@ -728,7 +786,6 @@ export class TicketPage implements OnInit {
       case 'empresaDsc':
         this.allServices = _.sortBy(this.allServices, 'empresa').reverse();
         break;
-
       default:
         break;
     }
@@ -815,6 +872,21 @@ export class TicketPage implements OnInit {
       this.loadingBus = false;
     }, 1000);
     this.mys.showItinerario(idServicio);
+  }
+
+  btnSiServicePet() {
+    this.popupPetFriendly = false;
+    this.presionadoAsientoAccion(this.petSeat.piso, this.petSeat.y, this.petSeat.x)
+    this.petSeat.piso = null;
+    this.petSeat.y = null;
+    this.petSeat.x = null;    
+  }
+
+  btnNoServicePet() {
+    this.popupPetFriendly = false;
+    this.petSeat.piso = null;
+    this.petSeat.y = null;
+    this.petSeat.x = null;  
   }
 
 }// fin Ticket
