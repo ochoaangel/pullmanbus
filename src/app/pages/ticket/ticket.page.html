@@ -391,10 +391,9 @@
                                   *ngFor="let columna of bus['2'] ; let y= index">
                                   <div style="width: 100%; display: flex;"
                                     *ngFor="let asiento of columna ; let x= index">
-
                                     <ion-button fill="clear" style="margin-left: 4vw; color: var(--ion-color-primary); outline:
                                     none;padding:0;font-size: 0vw;display: contents;"
-                                      (click)="presionadoAsiento('2',y,x)"                                      
+                                      (click)="presionadoAsiento('2',y,x)"
                                       [disabled]="loadingSeat>0">
                                       <img src="assets/icon/png/seat-busy.png" class="seat-class"
                                         *ngIf="asiento.estado==='ocupado'" />
