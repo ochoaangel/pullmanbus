@@ -173,7 +173,6 @@ export class TicketPage implements OnInit {
         } else {
           this.compras = this.ticket.goCompras || [];
           this.allServices = this.ticket.goAllService || this.getServicesAndBus('go');
-          console.log(this.mys.ticket.petService)
         }
 
         console.log('this.mys.ticket en GO', this.mys.ticket);
@@ -291,7 +290,6 @@ export class TicketPage implements OnInit {
     this.allServices[nServiceSeleccion]['checked'] = estadoPrevio;
     this.loadingBus = true;
     // });
-    console.log(this.allServices[nServiceSeleccion])
     if (this.serviceSelectedNumber !== nServiceSeleccion) {
       let servicio = {
         'idServicio': this.allServices[nServiceSeleccion].idServicio,

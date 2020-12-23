@@ -392,6 +392,8 @@ export class PurchaseDetailPage implements OnInit {
           pasajero.direccion = datoPasajero.direccion
           pasajero.terms = false;
           pasajero.telefonoEmergencia = undefined
+        }else{
+          this.limpiarDatosPasajero(pasajero,'');
         }
       }
     )
@@ -399,25 +401,64 @@ export class PurchaseDetailPage implements OnInit {
   guardarDatosPasajero(pasajero){
     let mensaje : any;
     console.log(pasajero)
-    this.integradorService.guardarRelacionPasajero(pasajero).subscribe(
-      resp => mensaje = resp,
-      error => console.log(error),
-      ()=>{
-        if(mensaje.exito){
-          this.mys.alertShow(
-            'Éxito!!',
-            'checkmark-circle',
-            mensaje.mensaje
-          );
-        }else{
-          this.mys.alertShow(
-            'Error!!',
-            'alert',
-            mensaje.mensaje
-          );
+    if(this.validarForm(pasajero)){
+      this.integradorService.guardarRelacionPasajero(pasajero).subscribe(
+        resp => mensaje = resp,
+        error => console.log(error),
+        ()=>{
+          if(mensaje.exito){
+            this.mys.alertShow(
+              'Éxito!!',
+              'checkmark-circle',
+              mensaje.mensaje
+            );
+          }else{
+            this.mys.alertShow(
+              'Error!!',
+              'alert',
+              mensaje.mensaje
+            );
+          }
         }
-      }
-    )
+      )
+    }
+  }
+
+  validarForm(pasajero){
+    if(pasajero.tipoDocumento === ""){
+      this.mys.alertShow(
+        'Error!!',
+        'alert',
+        'Debe ingresar tipo de documento del pasajero.'
+      );
+      return false;
+    }
+    if(pasajero.documento === ""){
+      this.mys.alertShow(
+        'Error!!',
+        'alert',
+        'Debe ingresar numero de documento del pasajero.'
+      );
+      return false;
+    }
+    pasajero.numeroDocumento = pasajero.documento.replace(/\./gi, '');
+    if(pasajero.nombre === ""){
+      this.mys.alertShow(
+        'Error!!',
+        'alert',
+        'Debe ingresar nombre del pasajero.'
+      );
+      return false;
+    }
+    if(pasajero.apellido === ""){
+      this.mys.alertShow(
+        'Error!!',
+        'alert',
+        'Debe ingresar apellido del pasajero.'
+      );
+      return false;
+    }
+    return true;
   }
 
   limpiarDatosPasajero(pasajero, option) {

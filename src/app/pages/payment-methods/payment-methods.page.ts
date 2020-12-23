@@ -20,7 +20,8 @@ export class PaymentMethodsPage implements OnInit {
   leaveOnExit;
   showPopCart;
   // rutShow = false
-  tickets
+  tickets:any;
+
   constructor(
     private mys: MyserviceService,
     private router: Router,
