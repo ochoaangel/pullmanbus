@@ -61,7 +61,7 @@ export class TicketChangePage implements OnInit {
   }
 
   consultar() {
-
+    this.myData.boleto = this.myData.boleto.toUpperCase();
     this.existeBoleto = null;
     this.myData.integrador=undefined;
     this.myData.email='';

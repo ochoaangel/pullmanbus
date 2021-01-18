@@ -109,19 +109,20 @@ export class TicketConfirmationPage implements OnInit {
     } else {
       console.log('Ingresando a ticket-confirm SIN asiento seleccionado');
       this.confirmed = null;
+      this.exito = false;
     }
   }
 
   ngOnInit() { }
 
   consultar() {
-
     this.existeBoleto = null;
-
+    this.myData.boleto = this.myData.boleto.toUpperCase();
+    console.log(this.myData.boleto);
     if (this.myData.boleto) {
       this.loading++;
       this.integrador
-        .canjeValidar({ boleto: this.myData.boleto + '' })
+        .canjeValidar({ boleto: this.myData.boleto.toUpperCase() + '' })
         .subscribe((validado: any) => {
           this.loading--;
           // console.log('validado', validado);
@@ -129,7 +130,7 @@ export class TicketConfirmationPage implements OnInit {
           if (validado.exito) {
             this.loading++;
             this.integrador
-              .canjeBuscarInfoBoleto({ boleto: this.myData.boleto + '' })
+              .canjeBuscarInfoBoleto({ boleto: this.myData.boleto.toUpperCase() + '' })
               .subscribe((infoBoleto: any) => {
                 this.loading--;
 
@@ -265,7 +266,7 @@ export class TicketConfirmationPage implements OnInit {
   }
 
   consultarBoleto() {
-
+    this.myData.boleto = this.myData.boleto.toUpperCase();
     if (!moment(this.myData.fecha).isValid()) {
       console.log('fecha válida');
       this.mys.alertShow(
