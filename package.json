@@ -50,7 +50,7 @@
     "ng-click-outside": "^5.1.1",
     "rxjs": "~6.5.1",
     "tslib": "^1.9.0",
-    "underscore": "^1.9.1",
+    "underscore": "^1.12.1",
     "zone.js": "~0.9.1"
   },
   "devDependencies": {
